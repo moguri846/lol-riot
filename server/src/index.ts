@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import riotRoute from "./routes/riot";
 const app: express.Application = express();
 const port: number = 5000;
 
@@ -17,6 +18,8 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+
+app.use("/api/riot", riotRoute);
 
 app.listen(port, () => {
   console.log(`connected ${port}`);

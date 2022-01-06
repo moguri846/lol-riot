@@ -4,6 +4,9 @@ import riotRoute from "./routes/riot";
 const app: express.Application = express();
 const port: number = 5000;
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
 // 이 주소만 cors 허용
 const whitelist = ["http://localhost:3000"];
 

@@ -152,7 +152,7 @@ export interface Match {
       }[];
       teamId: number;
       win: boolean;
-    };
+    }[];
     tournamentCode: string;
   };
   metadata: {

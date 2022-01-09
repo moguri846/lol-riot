@@ -4,6 +4,25 @@ import { getSummonerInfo, getMatchIds, getMatchInfo } from "../API/riot";
 import { Match, Summoner } from "./interface/riot.interface";
 const router = Router();
 
+/**
+ * @swagger
+ * /api/riot/searchSummoner:
+ *   post:
+ *     tags:
+ *       - Summoner
+ *     summary: 유저 게임 리스트 가져옴
+ *     description: 유저 게임 리스트 가져옴
+ *     parameters:
+ *       - in: formData
+ *         name: summonerName
+ *         required: true
+ *         type: string
+ *     responses:
+ *       '200':
+ *         description: success
+ *       '500':
+ *         description: fail
+ */
 router.post("/searchSummoner", async (req: Request, res: Response) => {
   try {
     let matchArr: any[] = [];
@@ -86,6 +105,7 @@ router.post("/searchSummoner", async (req: Request, res: Response) => {
     res.json({ success: true, summoner: matchArr });
   } catch (err: any) {
     const status = err?.response?.status;
+
     res.status(status ? status : 500).json({ success: false });
   }
 });

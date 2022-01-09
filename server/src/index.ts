@@ -1,4 +1,5 @@
 import express from "express";
+import { swaggerUi, specs } from "./config/swagger";
 import cors from "cors";
 import riotRoute from "./routes/riot";
 const app: express.Application = express();
@@ -15,13 +16,15 @@ const corsOptions = {
     if (whitelist.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
-      callback(new Error("Not Allowed Origin!"));
+      // FIXME: origin이 undefined로 나와서 임시로 사용
+      callback(null, true);
+      // callback(new Error("Not Allowed Origin!"));
     }
   },
 };
 
 app.use(cors(corsOptions));
-
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 app.use("/api/riot", riotRoute);
 
 app.listen(port, () => {

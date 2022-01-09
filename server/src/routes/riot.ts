@@ -29,7 +29,7 @@ router.post("/searchSummoner", async (req: Request, res: Response) => {
     let myIndex = 0;
 
     // 유저 검색
-    const summoner: AxiosResponse<Summoner> = await getSummonerInfo(req.body.d);
+    const summoner: AxiosResponse<Summoner> = await getSummonerInfo(req.body.summonerName);
 
     // 유저 puuid 사용해서 matchId list
     const matchIds: AxiosResponse<string[]> = await getMatchIds(summoner.data.puuid);
@@ -43,7 +43,7 @@ router.post("/searchSummoner", async (req: Request, res: Response) => {
 
         // 내 index 확인
         for (let i = 0; i < match.data.info.participants.length; i++) {
-          if (req.body.d.toLowerCase() === match.data.info.participants[i].summonerName.toLowerCase()) {
+          if (req.body.summonerName.toLowerCase() === match.data.info.participants[i].summonerName.toLowerCase()) {
             myIndex = i;
             break;
           }

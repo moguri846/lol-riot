@@ -19,9 +19,35 @@ const router = Router();
  *         type: string
  *     responses:
  *       '200':
- *         description: success
+ *         description: 유저 게임 리스트 가져오기 성공
+ *         schema:
+ *           type: object
+ *           properties:
+ *             success:
+ *               type: boolean
+ *             match:
+ *               // FIXME: array가 안됨
+ *               type: object
+ *       '403':
+ *         description: api key 만료
+ *         schema:
+ *           type: object
+ *           properties:
+ *             success:
+ *               type: boolean
+ *               example: false
+ *             err:
+ *               type: object
  *       '500':
- *         description: fail
+ *         description: 유저 게임 리스트 가져오기 실패
+ *         schema:
+ *           type: object
+ *           properties:
+ *             success:
+ *               type: boolean
+ *               example: false
+ *             err:
+ *               type: object
  */
 router.post("/searchSummoner", async (req: Request, res: Response) => {
   try {

@@ -63,8 +63,7 @@ router.post("/searchSummoner", async (req: Request, res: Response) => {
     // matchId로 match 데이터 받아온 후 matchArr에 push
     await Promise.all(
       matchIds.data.map(async (matchId: string) => {
-        let redTeamPlayers: any[] = [];
-        let blueTeamPlayers: any[] = [];
+        let players: any[] = [];
         const match: AxiosResponse<Match> = await getMatchInfo(matchId);
 
         // 내 index 확인
@@ -75,19 +74,13 @@ router.post("/searchSummoner", async (req: Request, res: Response) => {
           }
         }
 
-        // 팀 나누기
         for (let i = 0; i < match.data.info.participants.length; i++) {
           let appendValues: any = {
             championName: match.data.info.participants[i].championName,
             summonerName: match.data.info.participants[i].summonerName,
             puuid: match.data.info.participants[i].puuid,
           };
-
-          if (i < 5) {
-            blueTeamPlayers.push(appendValues);
-          } else {
-            redTeamPlayers.push(appendValues);
-          }
+          players.push(appendValues);
         }
 
         const appendValues = {
@@ -117,8 +110,7 @@ router.post("/searchSummoner", async (req: Request, res: Response) => {
             ],
             win: match.data.info.participants[myIndex].win,
           },
-          redTeamPlayers,
-          blueTeamPlayers,
+          players,
         };
 
         matchArr.push({ ...appendValues });

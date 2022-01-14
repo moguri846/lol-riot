@@ -52,7 +52,8 @@ const router = Router();
 router.post("/searchSummoner", async (req: Request, res: Response) => {
   try {
     let matchArr: any[] = [];
-    let myIndex = 0;
+    let myIndex: number = 0;
+    let foundYou: boolean = false;
 
     // 유저 검색
     const summoner: AxiosResponse<Summoner> = await getSummonerInfo(req.body.summonerName);
@@ -66,20 +67,19 @@ router.post("/searchSummoner", async (req: Request, res: Response) => {
         let players: any[] = [];
         const match: AxiosResponse<Match> = await getMatchInfo(matchId);
 
-        // 내 index 확인
         for (let i = 0; i < match.data.info.participants.length; i++) {
-          if (req.body.summonerName.toLowerCase() === match.data.info.participants[i].summonerName.toLowerCase()) {
-            myIndex = i;
-            break;
-          }
-        }
-
-        for (let i = 0; i < match.data.info.participants.length; i++) {
-          let appendValues: any = {
+          let appendValues = {
             championName: match.data.info.participants[i].championName,
             summonerName: match.data.info.participants[i].summonerName,
             puuid: match.data.info.participants[i].puuid,
           };
+
+          if (!foundYou) {
+            if (req.body.summonerName.toLowerCase() === appendValues.summonerName.toLowerCase()) {
+              foundYou = true;
+              myIndex = i;
+            }
+          }
           players.push(appendValues);
         }
 

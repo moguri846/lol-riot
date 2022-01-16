@@ -1,1 +1,4 @@
-export {};
+const SUCCESS_MATCH = "SUCCESS_MATCH";
+const FAIL = "FAIL";
+
+export { SUCCESS_MATCH, FAIL };

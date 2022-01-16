@@ -116,6 +116,7 @@ router.post("/searchSummoner", async (req: Request, res: Response) => {
             win: match.data.info.participants[myIndex].win,
           },
           players,
+          detail: null,
         };
 
         matchArr.push({ ...appendValues });

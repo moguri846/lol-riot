@@ -233,6 +233,7 @@ router.post("/matchInfo", async (req: Request, res: Response) => {
     }
 
     let responseObj = {
+      gameId: data.info.gameId,
       redTeamPlayers,
       redTeamStatus: { ...redTeamStatus, ...data.info.teams[1] },
       blueTeamPlayers,

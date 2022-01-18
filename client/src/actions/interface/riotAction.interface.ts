@@ -1,10 +1,10 @@
-import { SUCCESS_MATCH, FAIL } from "../../actions/type";
+import { SUCCESS_MATCH, SUCCESS_DETAIL, FAIL } from "../../actions/type";
 
-export type MatchDispatchType = SuccessMatch | FailMath;
+export type MatchDispatchType<P> = SuccessMatch<P> | FailMath;
 
-export interface SuccessMatch {
-  type: typeof SUCCESS_MATCH;
-  payload: MatchType;
+export interface SuccessMatch<P = any> {
+  type: typeof SUCCESS_MATCH | typeof SUCCESS_DETAIL;
+  payload: P;
 }
 
 export interface FailMath {
@@ -52,12 +52,14 @@ export interface MatchType {
     puuid: string;
     summonerName: string;
   }[];
-  detail: {
-    redTeamPlayers: DetailPlayerType[];
-    redTeamStatus: DetailTeamStatusType;
-    blueTeamPlayers: DetailPlayerType[];
-    blueTeamStatus: DetailTeamStatusType;
-  } | null;
+  detail: MatchDetailType | null;
+}
+
+export interface MatchDetailType {
+  redTeamPlayers: DetailPlayerType[];
+  redTeamStatus: DetailTeamStatusType;
+  blueTeamPlayers: DetailPlayerType[];
+  blueTeamStatus: DetailTeamStatusType;
 }
 
 interface DetailPlayerType {

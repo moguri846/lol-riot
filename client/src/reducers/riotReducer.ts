@@ -1,5 +1,5 @@
 import { SuccessMatch } from "../actions/interface/riotAction.interface";
-import { SUCCESS_MATCH, FAIL } from "../actions/type";
+import { SUCCESS_MATCH, SUCCESS_DETAIL, FAIL } from "../actions/type";
 
 const initialState = [
   {
@@ -54,6 +54,16 @@ const reducer = (state = initialState, action: SuccessMatch) => {
   switch (action.type) {
     case SUCCESS_MATCH:
       return { ...state, ...action.payload };
+    case SUCCESS_DETAIL: {
+      Object.values(state).filter((match) => {
+        if (match.gameId === action.payload.gameId) {
+          match.detail = action.payload;
+        }
+      });
+
+      return { ...state };
+    }
+
     default:
       return { ...state };
   }

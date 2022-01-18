@@ -15,4 +15,12 @@ const getSummonerMatchList = (summonerName: string) => {
   });
 };
 
-export { getSummonerMatchList };
+const getMatchDetailInfo = (matchId: number) => {
+  return Send({
+    method: Methods.POST,
+    url: "/riot/matchInfo",
+    data: { matchId },
+  });
+};
+
+export { getSummonerMatchList, getMatchDetailInfo };

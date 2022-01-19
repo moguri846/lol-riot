@@ -49,14 +49,15 @@ const router = Router();
  *             err:
  *               type: object
  */
-router.post("/searchSummoner", async (req: Request, res: Response) => {
+router.get("/searchSummoner", async (req: Request, res: Response) => {
   try {
+    const summonerName = req.query.summonerName as string;
     let matchArr: any[] = [];
     let myIndex: number = 0;
     let foundYou: boolean = false;
 
     // 유저 검색
-    const summoner: AxiosResponse<Summoner> = await getSummonerInfo(req.body.summonerName);
+    const summoner: AxiosResponse<Summoner> = await getSummonerInfo(summonerName);
 
     // 유저 puuid 사용해서 matchId list
     const matchIds: AxiosResponse<string[]> = await getMatchIds(summoner.data.puuid);
@@ -75,7 +76,7 @@ router.post("/searchSummoner", async (req: Request, res: Response) => {
           };
 
           if (!foundYou) {
-            if (req.body.summonerName.toLowerCase() === appendValues.summonerName.toLowerCase()) {
+            if (summonerName.toLowerCase() === appendValues.summonerName.toLowerCase()) {
               foundYou = true;
               myIndex = i;
             }
@@ -179,9 +180,10 @@ router.post("/searchSummoner", async (req: Request, res: Response) => {
  *             err:
  *               type: object
  */
-router.post("/matchInfo", async (req: Request, res: Response) => {
+router.get("/matchInfo", async (req: Request, res: Response) => {
   // TODO: 모든 코드 리팩토링
   try {
+    const gameId = parseInt(req.query.gameId as string);
     let redTeamPlayers: any[] = []; // 5537285094
     let blueTeamPlayers: any[] = [];
     let redTeamStatus: any = {
@@ -192,7 +194,7 @@ router.post("/matchInfo", async (req: Request, res: Response) => {
       totalGold: 0,
       totalKills: 0,
     };
-    const { data }: AxiosResponse<Match> = await getMatchInfo(`KR_${req.body.matchId}`);
+    const { data }: AxiosResponse<Match> = await getMatchInfo(`KR_${gameId}`);
 
     // 팀 나누기
     for (let i = 0; i < data.info.participants.length; i++) {
@@ -233,7 +235,7 @@ router.post("/matchInfo", async (req: Request, res: Response) => {
     }
 
     let responseObj = {
-      gameId: data.info.gameId,
+      gameId,
       redTeamPlayers,
       redTeamStatus: { ...redTeamStatus, ...data.info.teams[1] },
       blueTeamPlayers,

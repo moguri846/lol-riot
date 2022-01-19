@@ -9,17 +9,15 @@ enum Methods {
 
 const getSummonerMatchList = (summonerName: string) => {
   return Send({
-    method: Methods.POST,
-    url: "/riot/searchSummoner",
-    data: { summonerName },
+    method: Methods.GET,
+    url: `/riot/searchSummoner?summonerName=${summonerName}`,
   });
 };
 
 const getMatchDetailInfo = (matchId: number) => {
   return Send({
-    method: Methods.POST,
-    url: "/riot/matchInfo",
-    data: { matchId },
+    method: Methods.GET,
+    url: `/riot/matchInfo?gameId=${matchId}`,
   });
 };
 

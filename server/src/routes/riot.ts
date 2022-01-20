@@ -7,13 +7,13 @@ const router = Router();
 /**
  * @swagger
  * /api/riot/searchSummoner:
- *   post:
+ *   get:
  *     tags:
  *       - Summoner
  *     summary: 유저 게임 리스트 가져옴
  *     description: 유저 게임 리스트 가져옴
  *     parameters:
- *       - in: formData
+ *       - in: query
  *         name: summonerName
  *         required: true
  *         type: string
@@ -138,14 +138,14 @@ router.get("/searchSummoner", async (req: Request, res: Response) => {
 /**
  * @swagger
  * /api/riot/matchInfo:
- *   post:
+ *   get:
  *     tags:
  *       - Summoner
  *     summary: 게임 정보 가져옴
  *     description: 게임 정보 가져옴
  *     parameters:
- *       - in: formData
- *         name: matchId
+ *       - in: query
+ *         name: gameId
  *         required: true
  *         type: string
  *     responses:
@@ -184,6 +184,7 @@ router.get("/matchInfo", async (req: Request, res: Response) => {
   // TODO: 모든 코드 리팩토링
   try {
     const gameId = parseInt(req.query.gameId as string);
+
     let redTeamPlayers: any[] = []; // 5537285094
     let blueTeamPlayers: any[] = [];
     let redTeamStatus: any = {
@@ -194,6 +195,7 @@ router.get("/matchInfo", async (req: Request, res: Response) => {
       totalGold: 0,
       totalKills: 0,
     };
+
     const { data }: AxiosResponse<Match> = await getMatchInfo(`KR_${gameId}`);
 
     // 팀 나누기

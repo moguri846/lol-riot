@@ -54,7 +54,7 @@ router.get("/searchSummoner", async (req: Request, res: Response) => {
     const summonerName = req.query.summonerName as string;
     let matchArr: any[] = [];
     let myIndex: number = 0;
-    let foundYou: boolean = false;
+    let findYou: boolean = false;
 
     // 유저 검색
     const summoner: AxiosResponse<Summoner> = await getSummonerInfo(summonerName);
@@ -75,9 +75,9 @@ router.get("/searchSummoner", async (req: Request, res: Response) => {
             puuid: match.data.info.participants[i].puuid,
           };
 
-          if (!foundYou) {
+          if (!findYou) {
             if (summonerName.toLowerCase() === appendValues.summonerName.toLowerCase()) {
-              foundYou = true;
+              findYou = true;
               myIndex = i;
             }
           }

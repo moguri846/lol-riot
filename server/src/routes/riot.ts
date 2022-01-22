@@ -54,8 +54,6 @@ router.get("/searchSummoner", async (req: Request, res: Response) => {
     const summonerName = req.query.summonerName as string;
     const type = req.query.type as string;
     let matchArr: any[] = [];
-    let myIndex: number = 0;
-    let findYou: boolean = false;
 
     // 유저 검색
     const summoner: AxiosResponse<Summoner> = await getSummonerInfo(summonerName);
@@ -66,8 +64,21 @@ router.get("/searchSummoner", async (req: Request, res: Response) => {
     // matchId로 match 데이터 받아온 후 matchArr에 push
     await Promise.all(
       matchIds.data.map(async (matchId: string) => {
+        let myIndex: number = 0;
+        let findYou: boolean = false;
         let players: any[] = [];
         const match: AxiosResponse<Match> = await getMatchInfo(matchId);
+
+        // 내 index 찾기
+        for (let i = 0; i < match.data.info.participants.length; i++) {
+          if (!findYou) {
+            if (summonerName.toLowerCase() === match.data.info.participants[i].summonerName.toLowerCase()) {
+              findYou = true;
+              myIndex = i;
+              break;
+            }
+          }
+        }
 
         if (type === "matchSummary") {
           for (let i = 0; i < match.data.info.participants.length; i++) {
@@ -76,13 +87,6 @@ router.get("/searchSummoner", async (req: Request, res: Response) => {
               summonerName: match.data.info.participants[i].summonerName,
               puuid: match.data.info.participants[i].puuid,
             };
-
-            if (!findYou) {
-              if (summonerName.toLowerCase() === appendValues.summonerName.toLowerCase()) {
-                findYou = true;
-                myIndex = i;
-              }
-            }
             players.push(appendValues);
           }
 
@@ -138,13 +142,6 @@ router.get("/searchSummoner", async (req: Request, res: Response) => {
             totalDamageDealt: 0,
             goldEarned: 0,
           };
-
-          for (let i = 0; i < match.data.info.participants.length; i++) {
-            if (summonerName === match.data.info.participants[i].summonerName) {
-              myIndex = i;
-              break;
-            }
-          }
 
           for (let i = 0; i < match.data.info.participants.length; i++) {
             if (

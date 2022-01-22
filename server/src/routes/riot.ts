@@ -1,7 +1,8 @@
-import { Router, Request, Response, response } from "express";
+import { Router, Request, Response } from "express";
 import { AxiosResponse } from "axios";
 import { getSummonerInfo, getMatchIds, getMatchInfo } from "../API/riot";
 import { Match, Summoner } from "./interface/riot.interface";
+import { resFunc } from "../common/ResSuccessOrFalse.function";
 const router = Router();
 
 /**
@@ -79,7 +80,6 @@ router.get("/searchSummoner", async (req: Request, res: Response) => {
             }
           }
         }
-
         if (type === "matchSummary") {
           for (let i = 0; i < match.data.info.participants.length; i++) {
             let appendValues = {
@@ -176,16 +176,15 @@ router.get("/searchSummoner", async (req: Request, res: Response) => {
         }
       })
     );
-
     // gameCreation기준 내림차순 정렬
     matchArr.sort((a, b) => b.gameCreation - a.gameCreation);
 
-    res.json({ success: true, summoner: matchArr });
+    resFunc({ res, status: 200, success: true, data: matchArr });
   } catch (err: any) {
     const status = err?.response?.status;
-    console.log("err", err);
+    const message = err?.response?.data.status.message;
 
-    res.status(status ? status : 500).json({ success: false });
+    resFunc({ res, status, success: false, errMessage: message || "서버 에러" });
   }
 });
 
@@ -298,11 +297,12 @@ router.get("/matchInfo", async (req: Request, res: Response) => {
       blueTeamStatus: { ...blueTeamStatus, ...data.info.teams[0] },
     };
 
-    res.json({ success: true, match: responseObj });
+    resFunc({ res, status: 200, success: true, data: responseObj });
   } catch (err: any) {
     const status = err?.response?.status;
+    const message = err?.response?.data.status.message;
 
-    res.status(status ? status : 500).json({ success: false });
+    resFunc({ res, status, success: false, errMessage: message || "서버 에러" });
   }
 });
 

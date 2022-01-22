@@ -52,6 +52,7 @@ const router = Router();
 router.get("/searchSummoner", async (req: Request, res: Response) => {
   try {
     const summonerName = req.query.summonerName as string;
+    const type = req.query.type as string;
     let matchArr: any[] = [];
     let myIndex: number = 0;
     let findYou: boolean = false;
@@ -68,59 +69,114 @@ router.get("/searchSummoner", async (req: Request, res: Response) => {
         let players: any[] = [];
         const match: AxiosResponse<Match> = await getMatchInfo(matchId);
 
-        for (let i = 0; i < match.data.info.participants.length; i++) {
-          let appendValues = {
-            championName: match.data.info.participants[i].championName,
-            summonerName: match.data.info.participants[i].summonerName,
-            puuid: match.data.info.participants[i].puuid,
+        if (type === "matchSummary") {
+          for (let i = 0; i < match.data.info.participants.length; i++) {
+            let appendValues = {
+              championName: match.data.info.participants[i].championName,
+              summonerName: match.data.info.participants[i].summonerName,
+              puuid: match.data.info.participants[i].puuid,
+            };
+
+            if (!findYou) {
+              if (summonerName.toLowerCase() === appendValues.summonerName.toLowerCase()) {
+                findYou = true;
+                myIndex = i;
+              }
+            }
+            players.push(appendValues);
+          }
+
+          const appendValues = {
+            gameCreation: match.data.info.gameCreation,
+            gameEndTimestamp: match.data.info.gameEndTimestamp ? match.data.info.gameEndTimestamp : null,
+            gameStartTimestamp: match.data.info.gameStartTimestamp,
+            gameId: match.data.info.gameId,
+            gameMode: match.data.info.gameMode,
+            player: {
+              summonerName: match.data.info.participants[myIndex].summonerName,
+              championName: match.data.info.participants[myIndex].championName,
+              kills: match.data.info.participants[myIndex].kills,
+              deaths: match.data.info.participants[myIndex].deaths,
+              assists: match.data.info.participants[myIndex].assists,
+              champLevel: match.data.info.participants[myIndex].champLevel,
+              cs:
+                match.data.info.participants[myIndex].totalMinionsKilled +
+                match.data.info.participants[myIndex].neutralMinionsKilled,
+              items: [
+                match.data.info.participants[myIndex].item0,
+                match.data.info.participants[myIndex].item1,
+                match.data.info.participants[myIndex].item2,
+                match.data.info.participants[myIndex].item6,
+                match.data.info.participants[myIndex].item3,
+                match.data.info.participants[myIndex].item4,
+                match.data.info.participants[myIndex].item5,
+              ],
+              spells: [
+                match.data.info.participants[myIndex].summoner1Id,
+                match.data.info.participants[myIndex].summoner2Id,
+              ],
+              perks: match.data.info.participants[myIndex].perks,
+              win: match.data.info.participants[myIndex].win,
+            },
+            players,
+            detail: null,
           };
 
-          if (!findYou) {
-            if (summonerName.toLowerCase() === appendValues.summonerName.toLowerCase()) {
-              findYou = true;
+          matchArr.push({ ...appendValues });
+        } else if (type === "ComparingWithEnemy") {
+          // physicalDamageDealtToChampions 가한 피해량
+          // totalDamageDealt 받은 피해량
+          // goldEarned 총 골드량
+
+          let player = {
+            physicalDamageDealtToChampions: 0,
+            totalDamageDealt: 0,
+            goldEarned: 0,
+          };
+          let enemy = {
+            physicalDamageDealtToChampions: 0,
+            totalDamageDealt: 0,
+            goldEarned: 0,
+          };
+
+          for (let i = 0; i < match.data.info.participants.length; i++) {
+            if (summonerName === match.data.info.participants[i].summonerName) {
               myIndex = i;
+              break;
             }
           }
-          players.push(appendValues);
+
+          for (let i = 0; i < match.data.info.participants.length; i++) {
+            if (
+              match.data.info.participants[myIndex].individualPosition ===
+              match.data.info.participants[i].individualPosition
+            ) {
+              if (myIndex === i) {
+                continue;
+              }
+
+              player = {
+                physicalDamageDealtToChampions: match.data.info.participants[myIndex].physicalDamageDealtToChampions,
+                totalDamageDealt: match.data.info.participants[myIndex].totalDamageDealt,
+                goldEarned: match.data.info.participants[myIndex].goldEarned,
+              };
+
+              enemy = {
+                physicalDamageDealtToChampions: match.data.info.participants[i].physicalDamageDealtToChampions,
+                totalDamageDealt: match.data.info.participants[i].totalDamageDealt,
+                goldEarned: match.data.info.participants[i].goldEarned,
+              };
+            }
+          }
+
+          const appendValues = {
+            gameCreation: match.data.info.gameCreation,
+            player,
+            enemy,
+          };
+
+          matchArr.push({ ...appendValues });
         }
-
-        const appendValues = {
-          gameCreation: match.data.info.gameCreation,
-          gameEndTimestamp: match.data.info.gameEndTimestamp ? match.data.info.gameEndTimestamp : null,
-          gameStartTimestamp: match.data.info.gameStartTimestamp,
-          gameId: match.data.info.gameId,
-          gameMode: match.data.info.gameMode,
-          player: {
-            summonerName: match.data.info.participants[myIndex].summonerName,
-            championName: match.data.info.participants[myIndex].championName,
-            kills: match.data.info.participants[myIndex].kills,
-            deaths: match.data.info.participants[myIndex].deaths,
-            assists: match.data.info.participants[myIndex].assists,
-            champLevel: match.data.info.participants[myIndex].champLevel,
-            cs:
-              match.data.info.participants[myIndex].totalMinionsKilled +
-              match.data.info.participants[myIndex].neutralMinionsKilled,
-            items: [
-              match.data.info.participants[myIndex].item0,
-              match.data.info.participants[myIndex].item1,
-              match.data.info.participants[myIndex].item2,
-              match.data.info.participants[myIndex].item6,
-              match.data.info.participants[myIndex].item3,
-              match.data.info.participants[myIndex].item4,
-              match.data.info.participants[myIndex].item5,
-            ],
-            spells: [
-              match.data.info.participants[myIndex].summoner1Id,
-              match.data.info.participants[myIndex].summoner2Id,
-            ],
-            perks: match.data.info.participants[myIndex].perks,
-            win: match.data.info.participants[myIndex].win,
-          },
-          players,
-          detail: null,
-        };
-
-        matchArr.push({ ...appendValues });
       })
     );
 
@@ -130,6 +186,7 @@ router.get("/searchSummoner", async (req: Request, res: Response) => {
     res.json({ success: true, summoner: matchArr });
   } catch (err: any) {
     const status = err?.response?.status;
+    console.log("err", err);
 
     res.status(status ? status : 500).json({ success: false });
   }

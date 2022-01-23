@@ -171,6 +171,8 @@ router.get("/searchSummoner", async (req: Request, res: Response) => {
           };
 
           matchArr.push({ ...appendValues });
+        } else {
+          throw new Error("존재하지 않은 type");
         }
       })
     );
@@ -180,7 +182,7 @@ router.get("/searchSummoner", async (req: Request, res: Response) => {
     resFunc({ res, success: true, data: matchArr });
   } catch (err: any) {
     const status = err?.response?.status;
-    const message = err?.response?.data.status.message;
+    const message = err?.response?.data.status.message || err.message;
 
     resFunc({ res, status, success: false, errMessage: message || "서버 에러" });
   }

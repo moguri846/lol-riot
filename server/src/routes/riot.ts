@@ -3,6 +3,7 @@ import { AxiosResponse } from "axios";
 import { getSummonerInfo, getMatchIds, getMatchInfo } from "../API/riot";
 import { Match, Summoner } from "./interface/riot.interface";
 import { resFunc } from "../common/ResSuccessOrFalse.function";
+import { MATCH_SUMMARY, COMPARING_WITH_ENEMY } from "./constant/riot.constant";
 const router = Router();
 
 /**
@@ -77,7 +78,7 @@ router.get("/searchSummoner", async (req: Request, res: Response) => {
           }
         }
 
-        if (type === "matchSummary") {
+        if (type === MATCH_SUMMARY) {
           for (let i = 0; i < match.data.info.participants.length; i++) {
             let appendValues = {
               championName: match.data.info.participants[i].championName,
@@ -124,7 +125,7 @@ router.get("/searchSummoner", async (req: Request, res: Response) => {
           };
 
           matchArr.push({ ...appendValues });
-        } else if (type === "ComparingWithEnemy") {
+        } else if (type === COMPARING_WITH_ENEMY) {
           // physicalDamageDealtToChampions 가한 피해량
           // totalDamageDealt 받은 피해량
           // goldEarned 총 골드량

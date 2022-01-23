@@ -179,7 +179,7 @@ router.get("/searchSummoner", async (req: Request, res: Response) => {
     // gameCreation기준 내림차순 정렬
     matchArr.sort((a, b) => b.gameCreation - a.gameCreation);
 
-    resFunc({ res, status: 200, success: true, data: matchArr });
+    resFunc({ res, success: true, data: matchArr });
   } catch (err: any) {
     const status = err?.response?.status;
     const message = err?.response?.data.status.message;
@@ -297,7 +297,7 @@ router.get("/matchInfo", async (req: Request, res: Response) => {
       blueTeamStatus: { ...blueTeamStatus, ...data.info.teams[0] },
     };
 
-    resFunc({ res, status: 200, success: true, data: responseObj });
+    resFunc({ res, success: true, data: responseObj });
   } catch (err: any) {
     const status = err?.response?.status;
     const message = err?.response?.data.status.message;

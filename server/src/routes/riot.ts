@@ -66,20 +66,17 @@ router.get("/searchSummoner", async (req: Request, res: Response) => {
     await Promise.all(
       matchIds.data.map(async (matchId: string) => {
         let myIndex: number = 0;
-        let findYou: boolean = false;
         let players: any[] = [];
         const match: AxiosResponse<Match> = await getMatchInfo(matchId);
 
         // 내 index 찾기
         for (let i = 0; i < match.data.info.participants.length; i++) {
-          if (!findYou) {
-            if (summonerName.toLowerCase() === match.data.info.participants[i].summonerName.toLowerCase()) {
-              findYou = true;
-              myIndex = i;
-              break;
-            }
+          if (summonerName.toLowerCase() === match.data.info.participants[i].summonerName.toLowerCase()) {
+            myIndex = i;
+            break;
           }
         }
+
         if (type === "matchSummary") {
           for (let i = 0; i < match.data.info.participants.length; i++) {
             let appendValues = {

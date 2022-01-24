@@ -19,6 +19,10 @@ const router = Router();
  *         name: summonerName
  *         required: true
  *         type: string
+ *       - in: query
+ *         name: type
+ *         required: true
+ *         type: string
  *     responses:
  *       '200':
  *         description: 유저 게임 리스트 가져오기 성공

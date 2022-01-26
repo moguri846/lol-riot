@@ -1,9 +1,9 @@
-import { SUCCESS_MATCH, SUCCESS_DETAIL, FAIL } from "../../actions/type";
+import { SUCCESS_MATCH_SUMMARY, SUCCESS_MATCH_SUMMARY_DETAIL, FAIL } from "../../actions/type";
 
-export type MatchDispatchType<P> = SuccessMatch<P> | FailMath;
+export type MatchDispatchType<P> = SuccessMatchSummary<P> | FailMath;
 
-export interface SuccessMatch<P = any> {
-  type: typeof SUCCESS_MATCH | typeof SUCCESS_DETAIL;
+export interface SuccessMatchSummary<P> {
+  type: typeof SUCCESS_MATCH_SUMMARY | typeof SUCCESS_MATCH_SUMMARY_DETAIL;
   payload: P;
 }
 

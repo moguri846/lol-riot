@@ -1,4 +1,5 @@
 import Send from "./interceptor";
+import { SUCCESS_MATCH_SUMMARY, SUCCESS_MATCH_SUMMARY_DETAIL } from "../actions/type";
 
 enum Methods {
   GET = "GET",
@@ -7,10 +8,13 @@ enum Methods {
   DELETE = "DELETE",
 }
 
-const getSummonerMatchList = (summonerName: string) => {
+const getSummonerMatchList = (
+  summonerName: string,
+  type: typeof SUCCESS_MATCH_SUMMARY | typeof SUCCESS_MATCH_SUMMARY_DETAIL
+) => {
   return Send({
     method: Methods.GET,
-    url: `/riot/searchSummoner?summonerName=${summonerName}`,
+    url: `/riot/searchSummoner?summonerName=${summonerName}&type=${type}`,
   });
 };
 

@@ -52,7 +52,7 @@ export interface MatchType {
     };
     spells: number[];
     summonerName: string;
-    win: true;
+    win: boolean;
   };
   players: {
     championName: string;

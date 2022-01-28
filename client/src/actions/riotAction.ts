@@ -7,14 +7,14 @@ import { MATCH_SUMMARY, FAIL, MATCH_SUMMARY_DETAIL } from "./type";
 const summonerMatchList =
   (summonerName: string, type: MatchFilterType) => async (dispatch: Dispatch<MatchDispatchType<MatchType>>) => {
     try {
-      const { data }: AxiosResponse<{ success: boolean; summoner: MatchType }> = await getSummonerMatchList(
+      const { data }: AxiosResponse<{ success: boolean; data: MatchType }> = await getSummonerMatchList(
         summonerName,
         type
       );
 
       dispatch({
         type: MATCH_SUMMARY,
-        payload: data.summoner,
+        payload: data.data,
       });
     } catch (err: any) {
       dispatch({
@@ -26,11 +26,11 @@ const summonerMatchList =
 
 const matchDetailInfo = (gameId: number) => async (dispatch: Dispatch<MatchDispatchType<MatchDetailType>>) => {
   try {
-    const { data }: AxiosResponse<{ success: boolean; match: MatchDetailType }> = await getMatchDetailInfo(gameId);
+    const { data }: AxiosResponse<{ success: boolean; data: MatchDetailType }> = await getMatchDetailInfo(gameId);
 
     dispatch({
       type: MATCH_SUMMARY_DETAIL,
-      payload: data.match,
+      payload: data.data,
     });
   } catch (err: any) {
     dispatch({

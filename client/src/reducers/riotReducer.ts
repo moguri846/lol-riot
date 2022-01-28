@@ -1,5 +1,5 @@
-import { SuccessMatch } from "../actions/interface/riotAction.interface";
-import { SUCCESS_MATCH, SUCCESS_DETAIL, FAIL } from "../actions/type";
+import { MatchDetailType, MatchType } from "../actions/interface/riotAction.interface";
+import { MATCH_SUMMARY, MATCH_SUMMARY_DETAIL, FAIL } from "../actions/type";
 
 const initialState = [
   {
@@ -50,17 +50,21 @@ const initialState = [
   },
 ];
 
-const reducer = (state = initialState, action: SuccessMatch) => {
+type ActionType =
+  | { type: typeof MATCH_SUMMARY; payload: MatchType }
+  | { type: typeof MATCH_SUMMARY_DETAIL; payload: MatchDetailType }
+  | { type: typeof FAIL; payload: { success: boolean; errMessage: string } };
+
+const reducer = (state = initialState, action: ActionType) => {
   switch (action.type) {
-    case SUCCESS_MATCH:
+    case MATCH_SUMMARY:
       return { ...state, ...action.payload };
-    case SUCCESS_DETAIL: {
+    case MATCH_SUMMARY_DETAIL: {
       Object.values(state).filter((match) => {
         if (match.gameId === action.payload.gameId) {
           match.detail = action.payload;
         }
       });
-
       return { ...state };
     }
 

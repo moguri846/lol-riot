@@ -1,7 +1,7 @@
 import { MatchDetailType, MatchType } from "../actions/interface/riotAction.interface";
 import { MATCH_SUMMARY, MATCH_SUMMARY_DETAIL, FAIL } from "../actions/type";
 
-const initialState = [
+const initialState: MatchType[] = [
   {
     gameCreation: 0,
     gameEndTimestamp: 0,
@@ -35,10 +35,10 @@ const initialState = [
           style: 0,
         },
       },
+      spells: [],
+      summonerName: "",
+      win: false,
     },
-    spells: [],
-    summonerName: "",
-    win: false,
     players: [
       {
         championName: "",

@@ -1,6 +1,11 @@
 import { SUCCESS_MATCH_SUMMARY, SUCCESS_MATCH_SUMMARY_DETAIL, FAIL } from "../../actions/type";
 
-export type MatchDispatchType<P> = SuccessMatchSummary<P> | FailMath;
+export type MatchDispatchType<T> = SuccessMatchSummary<T> | FailMath;
+
+export interface Match {
+  type: typeof SUCCESS_MATCH_SUMMARY;
+  payload: MatchType;
+}
 
 export interface SuccessMatchSummary<P> {
   type: typeof SUCCESS_MATCH_SUMMARY | typeof SUCCESS_MATCH_SUMMARY_DETAIL;
@@ -56,6 +61,7 @@ export interface MatchType {
 }
 
 export interface MatchDetailType {
+  gameId: number;
   redTeamPlayers: DetailPlayerType[];
   redTeamStatus: DetailTeamStatusType;
   blueTeamPlayers: DetailPlayerType[];

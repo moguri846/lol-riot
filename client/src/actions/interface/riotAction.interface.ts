@@ -1,16 +1,16 @@
-import { SUCCESS_MATCH_SUMMARY, SUCCESS_MATCH_SUMMARY_DETAIL, FAIL } from "../../actions/type";
+import { MATCH_SUMMARY, MATCH_SUMMARY_DETAIL, FAIL } from "../../actions/type";
 
-export type MatchFilterType = typeof SUCCESS_MATCH_SUMMARY | typeof SUCCESS_MATCH_SUMMARY_DETAIL;
+export type MatchFilterType = typeof MATCH_SUMMARY | typeof MATCH_SUMMARY_DETAIL;
 
 export type MatchDispatchType<T> = SuccessMatchSummary<T> | FailMath;
 
 export interface Match {
-  type: typeof SUCCESS_MATCH_SUMMARY;
+  type: typeof MATCH_SUMMARY;
   payload: MatchType;
 }
 
 export interface SuccessMatchSummary<P> {
-  type: typeof SUCCESS_MATCH_SUMMARY | typeof SUCCESS_MATCH_SUMMARY_DETAIL;
+  type: typeof MATCH_SUMMARY | typeof MATCH_SUMMARY_DETAIL;
   payload: P;
 }
 

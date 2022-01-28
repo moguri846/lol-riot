@@ -2,7 +2,7 @@ import { AxiosResponse } from "axios";
 import { Dispatch } from "redux";
 import { getSummonerMatchList, getMatchDetailInfo } from "../API/riot";
 import { MatchDispatchType, MatchType, MatchDetailType, MatchFilterType } from "./interface/riotAction.interface";
-import { SUCCESS_MATCH_SUMMARY, FAIL, SUCCESS_MATCH_SUMMARY_DETAIL } from "./type";
+import { MATCH_SUMMARY, FAIL, MATCH_SUMMARY_DETAIL } from "./type";
 
 const summonerMatchList =
   (summonerName: string, type: MatchFilterType) => async (dispatch: Dispatch<MatchDispatchType<MatchType>>) => {
@@ -13,7 +13,7 @@ const summonerMatchList =
       );
 
       dispatch({
-        type: SUCCESS_MATCH_SUMMARY,
+        type: MATCH_SUMMARY,
         payload: data.summoner,
       });
     } catch (err: any) {
@@ -29,7 +29,7 @@ const matchDetailInfo = (gameId: number) => async (dispatch: Dispatch<MatchDispa
     const { data }: AxiosResponse<{ success: boolean; match: MatchDetailType }> = await getMatchDetailInfo(gameId);
 
     dispatch({
-      type: SUCCESS_MATCH_SUMMARY_DETAIL,
+      type: MATCH_SUMMARY_DETAIL,
       payload: data.match,
     });
   } catch (err: any) {

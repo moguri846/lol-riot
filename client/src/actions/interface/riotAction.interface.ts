@@ -1,5 +1,7 @@
 import { SUCCESS_MATCH_SUMMARY, SUCCESS_MATCH_SUMMARY_DETAIL, FAIL } from "../../actions/type";
 
+export type MatchFilterType = typeof SUCCESS_MATCH_SUMMARY | typeof SUCCESS_MATCH_SUMMARY_DETAIL;
+
 export type MatchDispatchType<T> = SuccessMatchSummary<T> | FailMath;
 
 export interface Match {

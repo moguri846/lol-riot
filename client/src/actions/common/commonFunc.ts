@@ -1,30 +1,31 @@
 import { AxiosResponse } from "axios";
 import { Dispatch } from "redux";
-import { getSummonerMatchList, getMatchDetailInfo } from "../API/riot";
+import { getMatchDetailInfo, getSummonerMatchList } from "../../API/riot";
 import {
-  MatchDispatchType,
-  MatchType,
   MatchDetailType,
+  MatchDispatchType,
   MatchFilterType,
-} from "./interface/matchSummaryAction.interface";
-import { MATCH_SUMMARY, FAIL, MATCH_SUMMARY_DETAIL } from "./type";
+  MatchSummaryType,
+} from "../interface/matchSummaryAction.interface";
+import { FAIL, MATCH_SUMMARY_DETAIL } from "../type";
 
 const summonerMatchList =
-  (summonerName: string, type: MatchFilterType) => async (dispatch: Dispatch<MatchDispatchType<MatchType>>) => {
+  async (summonerName: string, type: MatchFilterType) =>
+  async (dispatch: Dispatch<MatchDispatchType<MatchSummaryType[]>>) => {
     try {
-      const { data }: AxiosResponse<{ success: boolean; data: MatchType }> = await getSummonerMatchList(
+      const { data }: AxiosResponse<{ success: boolean; data: MatchSummaryType[] }> = await getSummonerMatchList(
         summonerName,
         type
       );
 
       dispatch({
-        type: MATCH_SUMMARY,
+        type,
         payload: data.data,
       });
     } catch (err: any) {
       dispatch({
         type: FAIL,
-        payload: {},
+        payload: { ...err.response.data },
       });
     }
   };
@@ -40,7 +41,7 @@ const matchDetailInfo = (gameId: number) => async (dispatch: Dispatch<MatchDispa
   } catch (err: any) {
     dispatch({
       type: FAIL,
-      payload: {},
+      payload: { ...err.response.data },
     });
   }
 };

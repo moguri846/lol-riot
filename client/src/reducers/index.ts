@@ -1,9 +1,9 @@
 import { combineReducers } from "redux";
 
-import riotReducer from "./riotReducer";
+import matchSummaryReducer from "./matchSummaryReducer";
 
 const rootReducer = combineReducers({
-  riotReducer,
+  matchSummaryReducer,
 });
 
 export type RootReducer = ReturnType<typeof rootReducer>;

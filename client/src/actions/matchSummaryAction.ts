@@ -1,7 +1,12 @@
 import { AxiosResponse } from "axios";
 import { Dispatch } from "redux";
 import { getSummonerMatchList, getMatchDetailInfo } from "../API/riot";
-import { MatchDispatchType, MatchType, MatchDetailType, MatchFilterType } from "./interface/riotAction.interface";
+import {
+  MatchDispatchType,
+  MatchType,
+  MatchDetailType,
+  MatchFilterType,
+} from "./interface/matchSummaryAction.interface";
 import { MATCH_SUMMARY, FAIL, MATCH_SUMMARY_DETAIL } from "./type";
 
 const summonerMatchList =

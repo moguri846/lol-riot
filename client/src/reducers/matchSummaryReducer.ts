@@ -1,4 +1,4 @@
-import { MatchDetailType, MatchType } from "../actions/interface/riotAction.interface";
+import { MatchDetailType, MatchType } from "../actions/interface/matchSummaryAction.interface";
 import { MATCH_SUMMARY, MATCH_SUMMARY_DETAIL, FAIL } from "../actions/type";
 
 const initialState: MatchType[] = [

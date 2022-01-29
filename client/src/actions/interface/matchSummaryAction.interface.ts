@@ -1,4 +1,4 @@
-import { MATCH_SUMMARY, MATCH_SUMMARY_DETAIL, FAIL } from "../../actions/type";
+import { MATCH_SUMMARY, MATCH_SUMMARY_DETAIL, FAIL } from "../type";
 
 export type MatchFilterType = typeof MATCH_SUMMARY | typeof MATCH_SUMMARY_DETAIL;
 

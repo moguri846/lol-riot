@@ -1,25 +1,8 @@
-import { MATCH_SUMMARY, MATCH_SUMMARY_DETAIL, FAIL } from "../type";
+import { COMPARING_WITH_ENEMY, MATCH_SUMMARY } from "../../actions/type";
 
-export type MatchFilterType = typeof MATCH_SUMMARY | typeof MATCH_SUMMARY_DETAIL;
+export type MatchListFilterType = typeof MATCH_SUMMARY | typeof COMPARING_WITH_ENEMY;
 
-export type MatchDispatchType<T> = SuccessMatchSummary<T> | FailMath;
-
-export interface Match {
-  type: typeof MATCH_SUMMARY;
-  payload: MatchType;
-}
-
-export interface SuccessMatchSummary<P> {
-  type: typeof MATCH_SUMMARY | typeof MATCH_SUMMARY_DETAIL;
-  payload: P;
-}
-
-export interface FailMath {
-  type: typeof FAIL;
-  payload: object;
-}
-
-export interface MatchType {
+export interface MatchSummaryType {
   gameCreation: number;
   gameEndTimestamp: number;
   gameId: number;
@@ -59,10 +42,10 @@ export interface MatchType {
     puuid: string;
     summonerName: string;
   }[];
-  detail: MatchDetailType | null;
+  detail: MatchSummaryDetailType | null;
 }
 
-export interface MatchDetailType {
+export interface MatchSummaryDetailType {
   gameId: number;
   redTeamPlayers: DetailPlayerType[];
   redTeamStatus: DetailTeamStatusType;

@@ -1,22 +1,21 @@
 import { AxiosResponse } from "axios";
 import { Dispatch } from "redux";
-import { getMatchDetailInfo, getSummonerMatchList } from "../../API/riot";
-import {
-  MatchDetailType,
-  MatchDispatchType,
-  MatchFilterType,
-  MatchSummaryType,
-} from "../interface/matchSummaryAction.interface";
-import { FAIL, MATCH_SUMMARY_DETAIL } from "../type";
+import { getSummonerMatchList, getMatchDetailInfo } from "../../API/riot";
+import { MatchSummaryType, MatchListFilterType, MatchSummaryDetailType } from "../interface/matchSummary.interface";
+import { SuccessMatchList, SuccessMatchDetail } from "./interface/commonFunc.interface";
+import { MATCH_SUMMARY_DETAIL, FAIL, MATCH_SUMMARY } from "../type";
+import { ComparingWithEnemyType } from "../interface/comparingWithEnemy.interface";
 
-const summonerMatchList =
-  async (summonerName: string, type: MatchFilterType) =>
-  async (dispatch: Dispatch<MatchDispatchType<MatchSummaryType[]>>) => {
+const summonerMatchList = (summonerName: string, type: MatchListFilterType) => {
+  type T = typeof type extends typeof MATCH_SUMMARY ? MatchSummaryType[] : ComparingWithEnemyType[];
+  return async (dispatch: Dispatch<SuccessMatchList<T>>) => {
     try {
-      const { data }: AxiosResponse<{ success: boolean; data: MatchSummaryType[] }> = await getSummonerMatchList(
-        summonerName,
-        type
-      );
+      const {
+        data,
+      }: AxiosResponse<{
+        success: boolean;
+        data: T;
+      }> = await getSummonerMatchList(summonerName, type);
 
       dispatch({
         type,
@@ -29,10 +28,13 @@ const summonerMatchList =
       });
     }
   };
+};
 
-const matchDetailInfo = (gameId: number) => async (dispatch: Dispatch<MatchDispatchType<MatchDetailType>>) => {
+const matchDetailInfo = (gameId: number) => async (dispatch: Dispatch<SuccessMatchDetail<MatchSummaryDetailType>>) => {
   try {
-    const { data }: AxiosResponse<{ success: boolean; data: MatchDetailType }> = await getMatchDetailInfo(gameId);
+    const { data }: AxiosResponse<{ success: boolean; data: MatchSummaryDetailType }> = await getMatchDetailInfo(
+      gameId
+    );
 
     dispatch({
       type: MATCH_SUMMARY_DETAIL,

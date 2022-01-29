@@ -1,7 +1,7 @@
-import { MatchDetailType, MatchType } from "../actions/interface/matchSummaryAction.interface";
+import { MatchSummaryDetailType, MatchSummaryType } from "../actions/interface/matchSummary.interface";
 import { MATCH_SUMMARY, MATCH_SUMMARY_DETAIL, FAIL } from "../actions/type";
 
-const initialState: MatchType[] = [
+const initialState: MatchSummaryType[] = [
   {
     gameCreation: 0,
     gameEndTimestamp: 0,
@@ -51,8 +51,8 @@ const initialState: MatchType[] = [
 ];
 
 type ActionType =
-  | { type: typeof MATCH_SUMMARY; payload: MatchType }
-  | { type: typeof MATCH_SUMMARY_DETAIL; payload: MatchDetailType }
+  | { type: typeof MATCH_SUMMARY; payload: MatchSummaryType }
+  | { type: typeof MATCH_SUMMARY_DETAIL; payload: MatchSummaryDetailType }
   | { type: typeof FAIL; payload: { success: boolean; errMessage: string } };
 
 const reducer = (state = initialState, action: ActionType) => {

@@ -1,7 +1,3 @@
-import { COMPARING_WITH_ENEMY, MATCH_SUMMARY } from "../../actions/type";
-
-export type MatchListFilterType = typeof MATCH_SUMMARY | typeof COMPARING_WITH_ENEMY;
-
 export interface MatchSummaryType {
   gameCreation: number;
   gameEndTimestamp: number;

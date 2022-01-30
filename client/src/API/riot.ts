@@ -1,5 +1,5 @@
 import Send from "./interceptor";
-import { MATCH_SUMMARY, MATCH_SUMMARY_DETAIL } from "../actions/type";
+import { MatchListFilterType } from "../actions/common/interface/commonFunc.interface";
 
 enum Methods {
   GET = "GET",
@@ -8,7 +8,7 @@ enum Methods {
   DELETE = "DELETE",
 }
 
-const getSummonerMatchList = (summonerName: string, type: typeof MATCH_SUMMARY | typeof MATCH_SUMMARY_DETAIL) => {
+const getSummonerMatchList = (summonerName: string, type: MatchListFilterType) => {
   return Send({
     method: Methods.GET,
     url: `/riot/searchSummoner?summonerName=${summonerName}&type=${type}`,

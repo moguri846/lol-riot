@@ -1,7 +1,8 @@
 import { AxiosResponse } from "axios";
 import { Dispatch } from "redux";
 import { getSummonerMatchList, getMatchDetailInfo } from "../../API/riot";
-import { MatchSummaryType, MatchListFilterType, MatchSummaryDetailType } from "../interface/matchSummary.interface";
+import { MatchListFilterType } from "./interface/commonFunc.interface";
+import { MatchSummaryType, MatchSummaryDetailType } from "../interface/matchSummary.interface";
 import { SuccessMatchList, SuccessMatchDetail } from "./interface/commonFunc.interface";
 import { MATCH_SUMMARY_DETAIL, FAIL, MATCH_SUMMARY } from "../type";
 import { ComparingWithEnemyType } from "../interface/comparingWithEnemy.interface";

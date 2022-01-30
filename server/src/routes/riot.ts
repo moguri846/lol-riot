@@ -1,5 +1,6 @@
 import { Router, Request, Response } from "express";
 import { AxiosResponse } from "axios";
+import moment from "moment";
 import { getSummonerInfo, getMatchIds, getMatchInfo } from "../API/riot";
 import { Match, Summoner } from "./interface/riot.interface";
 import { resFunc } from "../common/ResSuccessOrFalse.function";
@@ -60,12 +61,18 @@ router.get("/searchSummoner", async (req: Request, res: Response) => {
     const summonerName = req.query.summonerName as string;
     const type = req.query.type as string;
     let matchArr: any[] = [];
+    let jandi: { date: string; win: number; lose: number; count: number }[] = [];
 
     // 유저 검색
     const summoner: AxiosResponse<Summoner> = await getSummonerInfo(summonerName);
 
     // 유저 puuid 사용해서 matchId list
     const matchIds: AxiosResponse<string[]> = await getMatchIds(summoner.data.puuid);
+
+    for (let i = 19; i >= 0; i--) {
+      const date = moment().subtract(i, "days").format("YYYY-MM-DD");
+      jandi.push({ date, win: 0, lose: 0, count: 0 });
+    }
 
     // matchId로 match 데이터 받아온 후 matchArr에 push
     await Promise.all(
@@ -81,7 +88,23 @@ router.get("/searchSummoner", async (req: Request, res: Response) => {
             break;
           }
         }
-
+        if (match.data.info.gameMode === "CLASSIC") {
+          if (
+            moment(match.data.info.gameCreation).format("YYYY-MM-DD") >
+            moment().subtract(19, "days").format("YYYY-MM-DD")
+          ) {
+            jandi.filter((date) => {
+              if (date.date === moment(match.data.info.gameCreation).format("YYYY-MM-DD")) {
+                return {
+                  ...date,
+                  win: match.data.info.participants[myIndex].win ? date.win++ : date.win,
+                  lose: match.data.info.participants[myIndex].win === false ? date.lose++ : date.lose,
+                  count: date.count++,
+                };
+              }
+            });
+          }
+        }
         if (type === MATCH_SUMMARY) {
           for (let i = 0; i < match.data.info.participants.length; i++) {
             let appendValues = {
@@ -183,7 +206,8 @@ router.get("/searchSummoner", async (req: Request, res: Response) => {
     // gameCreation기준 내림차순 정렬
     matchArr.sort((a, b) => b.gameCreation - a.gameCreation);
 
-    resFunc({ res, status: 200, success: true, data: matchArr });
+    resFunc({ res, status: 200, success: true, data: { matchArr, jandi } });
+    // resFunc({ res, status: 200, success: true, data: { matchArr, jandi } });
   } catch (err: any) {
     const status = err?.response?.status;
     const message = err?.response?.data.status.message || err.message;
@@ -301,7 +325,7 @@ router.get("/matchInfo", async (req: Request, res: Response) => {
       blueTeamStatus: { ...blueTeamStatus, ...data.info.teams[0] },
     };
 
-    resFunc({ res, status: 200, success: true, data: responseObj });
+    resFunc({ res, status: 200, success: true, data: { matchArr: responseObj } });
   } catch (err: any) {
     const status = err?.response?.status;
     const message = err?.response?.data.status.message;

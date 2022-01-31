@@ -45,7 +45,7 @@ const CalendarGraph = () => {
   return (
     <div style={{ height: "200px" }}>
       <div>
-        <span>최근 19일 (CLASSIC게임만 적용)</span>
+        <span>최근 19게임 (CLASSIC게임만 적용)</span>
       </div>
       <CalendarHeatmap
         startDate={makeDate(20)}

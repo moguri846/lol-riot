@@ -2,7 +2,7 @@ import { Router, Request, Response } from "express";
 import { AxiosResponse } from "axios";
 import moment from "moment";
 import { getSummonerInfo, getMatchIds, getMatchInfo } from "../API/riot";
-import { Match, Summoner } from "./interface/riot.interface";
+import { Match, Summoner, Jandi } from "./interface/riot.interface";
 import { resFunc } from "../common/ResSuccessOrFalse.function";
 import { MATCH_SUMMARY, COMPARING_WITH_ENEMY } from "./constant/riot.constant";
 const router = Router();
@@ -61,7 +61,7 @@ router.get("/searchSummoner", async (req: Request, res: Response) => {
     const summonerName = req.query.summonerName as string;
     const type = req.query.type as string;
     let matchArr: any[] = [];
-    let jandi: { date: string; win: number; lose: number; count: number }[] = [];
+    let jandi: Jandi[] = [];
 
     // 유저 검색
     const summoner: AxiosResponse<Summoner> = await getSummonerInfo(summonerName);

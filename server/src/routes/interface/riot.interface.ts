@@ -46,7 +46,7 @@ export interface Match {
       gameEndedInSurrender: boolean;
       goldEarned: number;
       goldSpent: number;
-      individualPosition: string;
+      individualPosition: "TOP" | "JUNGLE" | "MIDDLE" | "BOTTOM" | "UTILITY";
       inhibitorKills: number;
       inhibitorTakedowns: number;
       inhibitorsLost: number;

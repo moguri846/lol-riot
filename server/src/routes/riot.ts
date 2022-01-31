@@ -62,6 +62,28 @@ router.get("/searchSummoner", async (req: Request, res: Response) => {
     const type = req.query.type as string;
     let matchArr: any[] = [];
     let jandi: Jandi[] = [];
+    let line = {
+      TOP: {
+        win: 0,
+        lose: 0,
+      },
+      JUNGLE: {
+        win: 0,
+        lose: 0,
+      },
+      MIDDLE: {
+        win: 0,
+        lose: 0,
+      },
+      BOTTOM: {
+        win: 0,
+        lose: 0,
+      },
+      UTILITY: {
+        win: 0,
+        lose: 0,
+      },
+    };
 
     // 유저 검색
     const summoner: AxiosResponse<Summoner> = await getSummonerInfo(summonerName);
@@ -104,6 +126,12 @@ router.get("/searchSummoner", async (req: Request, res: Response) => {
               }
             });
           }
+
+          if (match.data.info.participants[myIndex].win) {
+            line[match.data.info.participants[myIndex].individualPosition].win++;
+          } else if (!match.data.info.participants[myIndex].win) {
+            line[match.data.info.participants[myIndex].individualPosition].lose++;
+          }
         }
         if (type === MATCH_SUMMARY) {
           for (let i = 0; i < match.data.info.participants.length; i++) {
@@ -111,6 +139,7 @@ router.get("/searchSummoner", async (req: Request, res: Response) => {
               championName: match.data.info.participants[i].championName,
               summonerName: match.data.info.participants[i].summonerName,
               puuid: match.data.info.participants[i].puuid,
+              individualPosition: match.data.info.participants[i].individualPosition,
             };
             players.push(appendValues);
           }
@@ -151,7 +180,7 @@ router.get("/searchSummoner", async (req: Request, res: Response) => {
             detail: null,
           };
 
-          matchArr.push({ ...appendValues });
+          matchArr.push({ ...appendValues, match: match.data });
         } else if (type === COMPARING_WITH_ENEMY) {
           // physicalDamageDealtToChampions 가한 피해량
           // totalDamageDealt 받은 피해량
@@ -206,8 +235,7 @@ router.get("/searchSummoner", async (req: Request, res: Response) => {
     // gameCreation기준 내림차순 정렬
     matchArr.sort((a, b) => b.gameCreation - a.gameCreation);
 
-    resFunc({ res, status: 200, success: true, data: { matchArr, jandi } });
-    // resFunc({ res, status: 200, success: true, data: { matchArr, jandi } });
+    resFunc({ res, status: 200, success: true, data: { matchArr, jandi, line } });
   } catch (err: any) {
     const status = err?.response?.status;
     const message = err?.response?.data.status.message || err.message;

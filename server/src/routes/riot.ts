@@ -235,7 +235,7 @@ router.get("/searchSummoner", async (req: Request, res: Response) => {
     // gameCreation기준 내림차순 정렬
     matchArr.sort((a, b) => b.gameCreation - a.gameCreation);
 
-    resFunc({ res, status: 200, success: true, data: { matchArr, jandi, line } });
+    resFunc({ res, status: 200, success: true, data: { summoner: summoner.data, matchArr, jandi, line } });
   } catch (err: any) {
     const status = err?.response?.status;
     const message = err?.response?.data.status.message || err.message;

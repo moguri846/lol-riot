@@ -27,7 +27,7 @@ const summonerMatchList = (summonerName: string, type: MatchListFilterType) => {
       // 게임 리스트
       dispatch({
         type,
-        payload: { matchArr: data.data.matchArr, line: data.data.line },
+        payload: data.data.matchArr,
       });
 
       // 잔디

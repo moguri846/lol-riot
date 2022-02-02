@@ -1,8 +1,8 @@
 import { Router, Request, Response } from "express";
 import { AxiosResponse } from "axios";
 import moment from "moment";
-import { getSummonerInfo, getMatchIds, getMatchInfo } from "../API/riot";
-import { Match, Summoner, Jandi } from "./interface/riot.interface";
+import { getSummonerInfo, getMatchIds, getMatchInfo, getSummonerDetailInfo } from "../API/riot";
+import { Match, Summoner, Jandi, SummonerDetailInfo } from "./interface/riot.interface";
 import { resFunc } from "../common/ResSuccessOrFalse.function";
 import { MATCH_SUMMARY, COMPARING_WITH_ENEMY } from "./constant/riot.constant";
 const router = Router();
@@ -87,6 +87,9 @@ router.get("/searchSummoner", async (req: Request, res: Response) => {
 
     // 유저 검색
     const summoner: AxiosResponse<Summoner> = await getSummonerInfo(summonerName);
+
+    // 유저 디테일 정보
+    const summonerDetailInfo: AxiosResponse<SummonerDetailInfo[] | []> = await getSummonerDetailInfo(summoner.data.id);
 
     // 유저 puuid 사용해서 matchId list
     const matchIds: AxiosResponse<string[]> = await getMatchIds(summoner.data.puuid);
@@ -235,7 +238,15 @@ router.get("/searchSummoner", async (req: Request, res: Response) => {
     // gameCreation기준 내림차순 정렬
     matchArr.sort((a, b) => b.gameCreation - a.gameCreation);
 
-    resFunc({ res, status: 200, success: true, data: { summoner: summoner.data, matchArr, jandi, line } });
+    const responseObj = {
+      summoner: summoner.data,
+      summonerDetailInfo: [...summonerDetailInfo.data],
+      matchArr,
+      jandi,
+      line,
+    };
+
+    resFunc({ res, status: 200, success: true, data: responseObj });
   } catch (err: any) {
     const status = err?.response?.status;
     const message = err?.response?.data.status.message || err.message;

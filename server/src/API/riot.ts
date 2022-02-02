@@ -12,6 +12,13 @@ const getSummonerInfo = (summoner: string) => {
   });
 };
 
+const getSummonerDetailInfo = (encryptedSummonerId: string) => {
+  return Send({
+    method: "GET",
+    url: `${RIOT_URL.KR}/league/v4/entries/by-summoner/${encryptedSummonerId}`,
+  });
+};
+
 const getMatchIds = (puuid: string) => {
   return Send({
     method: "GET",
@@ -26,4 +33,4 @@ const getMatchInfo = (matchId: string) => {
   });
 };
 
-export { getSummonerInfo, getMatchIds, getMatchInfo };
+export { getSummonerInfo, getSummonerDetailInfo, getMatchIds, getMatchInfo };

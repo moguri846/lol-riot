@@ -9,6 +9,7 @@ import {
   JANDI,
   LINE_WIN_OR_LOSE,
   SUMMONER,
+  SUMMONER_DETAIL,
 } from "../../type";
 import { Jandi } from "../../interface/jandi.interface";
 
@@ -19,7 +20,13 @@ export type SuccessMatchList<P extends MatchSummaryType[] | ComparingWithEnemyTy
 export type SuccessMatchDetailInfo<P extends MatchSummaryDetailType> = MatchDetail<P> | Fail;
 
 export interface MatchList<P> {
-  type: typeof MATCH_SUMMARY | typeof COMPARING_WITH_ENEMY | typeof JANDI | typeof LINE_WIN_OR_LOSE | typeof SUMMONER;
+  type:
+    | typeof MATCH_SUMMARY
+    | typeof COMPARING_WITH_ENEMY
+    | typeof JANDI
+    | typeof LINE_WIN_OR_LOSE
+    | typeof SUMMONER
+    | typeof SUMMONER_DETAIL;
   payload: P;
 }
 

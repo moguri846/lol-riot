@@ -4,11 +4,12 @@ import { getSummonerMatchList, getMatchDetailInfo } from "../../API/riot";
 import { MatchListFilterType } from "./interface/commonFunc.interface";
 import { MatchSummaryType, MatchSummaryDetailType } from "../interface/matchSummary.interface";
 import { SuccessMatchList, SuccessMatchDetailInfo } from "./interface/commonFunc.interface";
-import { MATCH_SUMMARY_DETAIL, FAIL, MATCH_SUMMARY, JANDI, LINE_WIN_OR_LOSE, SUMMONER } from "../type";
+import { MATCH_SUMMARY_DETAIL, FAIL, MATCH_SUMMARY, JANDI, LINE_WIN_OR_LOSE, SUMMONER, SUMMONER_DETAIL } from "../type";
 import { ComparingWithEnemyType } from "../interface/comparingWithEnemy.interface";
 import { Jandi } from "../interface/jandi.interface";
 import { LineWinOrLoseType } from "../interface/lineWinOrLose.interface";
 import { SummonerType } from "../interface/summoner.interface";
+import { SummonerDetailInfo } from "../interface/SummonerDetailInfo.interface";
 
 const summonerMatchList = (summonerName: string, type: MatchListFilterType) => {
   type T = typeof type extends typeof MATCH_SUMMARY ? MatchSummaryType[] : ComparingWithEnemyType[];
@@ -20,6 +21,7 @@ const summonerMatchList = (summonerName: string, type: MatchListFilterType) => {
         success: boolean;
         data: {
           summoner: SummonerType;
+          summonerDetailInfo: SummonerDetailInfo[];
           matchArr: T;
           jandi: Jandi[];
           line: LineWinOrLoseType[];
@@ -30,6 +32,12 @@ const summonerMatchList = (summonerName: string, type: MatchListFilterType) => {
       dispatch({
         type: SUMMONER,
         payload: data.data.summoner,
+      });
+
+      // 유저 디테일 정보
+      dispatch({
+        type: SUMMONER_DETAIL,
+        payload: data.data.summonerDetailInfo,
       });
 
       // 게임 리스트

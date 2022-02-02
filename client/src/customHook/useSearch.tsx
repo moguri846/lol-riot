@@ -6,6 +6,7 @@ import { MatchListFilterType } from "../actions/common/interface/commonFunc.inte
 import { MATCH_SUMMARY } from "../actions/type";
 
 type UseSearch = [
+  summonerName: string,
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
   onEnter: (e: React.KeyboardEvent<HTMLInputElement>) => void,
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => void
@@ -18,6 +19,7 @@ const useSearch = (): UseSearch => {
 
   useEffect(() => {
     if (params.summonerName) {
+      setSummonerName(params.summonerName);
       searchSummoner(params.summonerName, MATCH_SUMMARY);
     }
   }, []);
@@ -58,7 +60,7 @@ const useSearch = (): UseSearch => {
     navigate(`/summoner=${summonerName}`);
   };
 
-  return [onChange, onEnter, onClick];
+  return [summonerName, onChange, onEnter, onClick];
 };
 
 export default useSearch;

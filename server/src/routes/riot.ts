@@ -239,8 +239,10 @@ router.get("/searchSummoner", async (req: Request, res: Response) => {
     matchArr.sort((a, b) => b.gameCreation - a.gameCreation);
 
     const responseObj = {
-      summoner: summoner.data,
-      summonerDetailInfo: [...summonerDetailInfo.data],
+      summoner: {
+        ...summoner.data,
+        ...summonerDetailInfo.data.filter((summonerDetail) => summonerDetail.queueType === "RANKED_SOLO_5x5")[0],
+      },
       matchArr,
       jandi,
       line,

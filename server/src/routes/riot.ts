@@ -193,11 +193,13 @@ router.get("/searchSummoner", async (req: Request, res: Response) => {
             physicalDamageDealtToChampions: 0,
             totalDamageDealt: 0,
             goldEarned: 0,
+            index: 0,
           };
           let enemy = {
             physicalDamageDealtToChampions: 0,
             totalDamageDealt: 0,
             goldEarned: 0,
+            index: 0,
           };
 
           for (let i = 0; i < match.data.info.participants.length; i++) {
@@ -213,17 +215,21 @@ router.get("/searchSummoner", async (req: Request, res: Response) => {
                 physicalDamageDealtToChampions: match.data.info.participants[myIndex].physicalDamageDealtToChampions,
                 totalDamageDealt: match.data.info.participants[myIndex].totalDamageDealt,
                 goldEarned: match.data.info.participants[myIndex].goldEarned,
+                index: myIndex,
               };
 
               enemy = {
                 physicalDamageDealtToChampions: match.data.info.participants[i].physicalDamageDealtToChampions,
                 totalDamageDealt: match.data.info.participants[i].totalDamageDealt,
                 goldEarned: match.data.info.participants[i].goldEarned,
+                index: i,
               };
             }
           }
 
           const appendValues = {
+            gameId: match.data.info.gameId,
+            gameMode: match.data.info.gameMode,
             gameCreation: match.data.info.gameCreation,
             player,
             enemy,
@@ -256,6 +262,7 @@ router.get("/searchSummoner", async (req: Request, res: Response) => {
     resFunc({ res, status, success: false, errMessage: message || "서버 에러" });
   }
 });
+
 /**
  * @swagger
  * /api/riot/matchInfo:

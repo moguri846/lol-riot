@@ -33,4 +33,11 @@ const getMatchInfo = (matchId: string) => {
   });
 };
 
-export { getSummonerInfo, getSummonerDetailInfo, getMatchIds, getMatchInfo };
+const getMatchTimeLine = (matchId: string) => {
+  return Send({
+    method: "GET",
+    url: `${RIOT_URL.ASIA}/match/v5/matches/${matchId}/timeline`,
+  });
+};
+
+export { getSummonerInfo, getSummonerDetailInfo, getMatchIds, getMatchInfo, getMatchTimeLine };

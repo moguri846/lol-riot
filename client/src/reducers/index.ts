@@ -1,15 +1,15 @@
 import { combineReducers } from "redux";
 
-import summonerReducer from "./summonerReducer";
-import matchSummaryReducer from "./matchSummaryReducer";
-import jandiReducer from "./jandiReducer";
-import lineWinOrLoseReducer from "./lineWinOrLoseReducer";
+import summoner from "./summonerReducer";
+import matchSummary from "./matchSummaryReducer";
+import jandi from "./jandiReducer";
+import lineWinOrLose from "./lineWinOrLoseReducer";
 
 const rootReducer = combineReducers({
-  summonerReducer,
-  matchSummaryReducer,
-  jandiReducer,
-  lineWinOrLoseReducer,
+  summoner,
+  matchSummary,
+  jandi,
+  lineWinOrLose,
 });
 
 export type RootReducer = ReturnType<typeof rootReducer>;

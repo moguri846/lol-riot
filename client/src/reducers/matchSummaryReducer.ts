@@ -1,4 +1,4 @@
-import { ComparingWithEnemyType, IComparingWithEnemyDetail } from "../actions/interface/comparingWithEnemy.interface";
+import { ComparingWithEnemyType, IComparingWithEnemyDetail } from "../actions/interface/matchSummary.interface";
 import { FAIL, COMPARING_WITH_ENEMY, COMPARING_WITH_ENEMY_DETAIL } from "../actions/type";
 
 const playerInitialValue = {

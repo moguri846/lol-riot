@@ -1,42 +1,15 @@
 import { AxiosResponse } from "axios";
 import { Dispatch } from "redux";
 import { getSummonerMatchList, getMatchDetailInfo } from "../../API/riot";
-import { MatchListFilterType } from "./interface/commonFunc.interface";
-import {
-  MatchSummaryType,
-  MatchSummaryDetailType,
-  IMatchSummaryDetailParameter,
-} from "../interface/matchSummary.interface";
+import { IMatchDetailResponse, IMatchListResponse, MatchListFilterType } from "./interface/commonFunc.interface";
 import { SuccessMatchList, SuccessMatchDetailInfo } from "./interface/commonFunc.interface";
-import {
-  MATCH_SUMMARY_DETAIL,
-  FAIL,
-  MATCH_SUMMARY,
-  JANDI,
-  LINE_WIN_OR_LOSE,
-  SUMMONER,
-  COMPARING_WITH_ENEMY_DETAIL,
-} from "../type";
-import { ComparingWithEnemyType, IComparingWithEnemyDetail } from "../interface/comparingWithEnemy.interface";
-import { Jandi } from "../interface/jandi.interface";
-import { LineWinOrLoseType } from "../interface/lineWinOrLose.interface";
-import { SummonerType } from "../interface/summoner.interface";
+import { SUMMONER, COMPARING_WITH_ENEMY, COMPARING_WITH_ENEMY_DETAIL, JANDI, LINE_WIN_OR_LOSE, FAIL } from "../type";
+import { IComparingWithEnemyDetail, IMatchSummaryDetailParameter } from "../interface/matchSummary.interface";
 
 const summonerMatchList = (summonerName: string, type: MatchListFilterType) => {
-  type T = typeof type extends typeof MATCH_SUMMARY ? MatchSummaryType[] : ComparingWithEnemyType[];
   return async (dispatch: Dispatch<SuccessMatchList<any>>) => {
     try {
-      const {
-        data,
-      }: AxiosResponse<{
-        success: boolean;
-        data: {
-          summoner: SummonerType;
-          matchArr: ComparingWithEnemyType[];
-          jandi: Jandi[];
-          line: LineWinOrLoseType[];
-        };
-      }> = await getSummonerMatchList(summonerName, type);
+      const { data }: AxiosResponse<IMatchListResponse> = await getSummonerMatchList(summonerName, type);
 
       // 유저 정보
       dispatch({
@@ -46,7 +19,7 @@ const summonerMatchList = (summonerName: string, type: MatchListFilterType) => {
 
       // 게임 리스트
       dispatch({
-        type,
+        type: COMPARING_WITH_ENEMY,
         payload: data.data.matchArr,
       });
 
@@ -74,9 +47,7 @@ const matchDetailInfo =
   (parameterObj: IMatchSummaryDetailParameter) =>
   async (dispatch: Dispatch<SuccessMatchDetailInfo<IComparingWithEnemyDetail[]>>) => {
     try {
-      const { data }: AxiosResponse<{ success: boolean; data: IComparingWithEnemyDetail[] }> = await getMatchDetailInfo(
-        parameterObj
-      );
+      const { data }: AxiosResponse<IMatchDetailResponse> = await getMatchDetailInfo(parameterObj);
 
       dispatch({
         type: COMPARING_WITH_ENEMY_DETAIL,

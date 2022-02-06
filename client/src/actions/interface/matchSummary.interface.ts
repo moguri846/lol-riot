@@ -1,52 +1,18 @@
-export interface MatchSummaryType {
-  gameCreation: number;
-  gameEndTimestamp: number;
+export interface ComparingWithEnemyType {
   gameId: number;
   gameMode: string;
-  gameStartTimestamp: number;
-  player: {
-    assists: number;
-    champLevel: number;
-    championName: string;
-    cs: number;
-    deaths: number;
-    items: number[];
-    kills: number;
-    perks: {
-      statPerks: {
-        defense: number;
-        flex: number;
-        offense: number;
-      };
-      styles: {
-        description: string;
-        selections: {
-          perk: number;
-          var1: number;
-          var2: number;
-          var3: number;
-        }[];
-        style: number;
-      };
-    };
-    spells: number[];
-    summonerName: string;
-    win: boolean;
-  };
-  players: {
-    championName: string;
-    puuid: string;
-    summonerName: string;
-  }[];
-  detail: MatchSummaryDetailType | null;
+  gameCreation: number;
+  player: PlayerType;
+  enemy: PlayerType;
+  detail: IComparingWithEnemyDetail | null;
 }
 
-export interface MatchSummaryDetailType {
+export interface IComparingWithEnemyDetail {
   gameId: number;
-  redTeamPlayers: DetailPlayerType[];
-  redTeamStatus: DetailTeamStatusType;
-  blueTeamPlayers: DetailPlayerType[];
-  blueTeamStatus: DetailTeamStatusType;
+  timeLine: {
+    player: IDetail;
+    enemy: IDetail;
+  }[];
 }
 
 export interface IMatchSummaryDetailParameter {
@@ -54,74 +20,67 @@ export interface IMatchSummaryDetailParameter {
   player: number;
   enemy: number;
 }
-interface DetailPlayerType {
-  puuid: string;
-  summonerName: string;
-  championName: string;
-  kills: number;
-  deaths: number;
-  assists: number;
-  champLevel: number;
-  cs: number;
-  items: number[];
-  spells: number[];
-  perks: {
-    statPerks: {
-      defense: number;
-      flex: number;
-      offense: number;
-    };
-    styles: {
-      description: string;
-      selections: {
-        perk: number;
-        var1: number;
-        var2: number;
-        var3: number;
-      }[];
-      style: number;
-    }[];
+
+interface IDetail {
+  championStats: {
+    abilityHaste: number;
+    abilityPower: number;
+    armor: number;
+    armorPen: number;
+    armorPenPercent: number;
+    attackDamage: number;
+    attackSpeed: number;
+    bonusArmorPenPercent: number;
+    bonusMagicPenPercent: number;
+    ccReduction: number;
+    cooldownReduction: number;
+    health: number;
+    healthMax: number;
+    healthRegen: number;
+    lifesteal: number;
+    magicPen: number;
+    magicPenPercent: number;
+    magicResist: number;
+    movementSpeed: number;
+    omnivamp: number;
+    physicalVamp: number;
+    power: number;
+    powerMax: number;
+    powerRegen: number;
+    spellVamp: number;
   };
-  wardsPlaced: number;
-  wardsKilled: number;
-  goldEarned: number;
+  currentGold: number;
+  damageStats: {
+    magicDamageDone: number;
+    magicDamageDoneToChampions: number;
+    magicDamageTaken: number;
+    physicalDamageDone: number;
+    physicalDamageDoneToChampions: number;
+    physicalDamageTaken: number;
+    totalDamageDone: number;
+    totalDamageDoneToChampions: number;
+    totalDamageTaken: number;
+    trueDamageDone: number;
+    trueDamageDoneToChampions: number;
+    trueDamageTaken: number;
+  };
+  goldPerSecond: number;
+  jungleMinionsKilled: number;
+  level: number;
+  minionsKilled: number;
+  participantId: number;
+  position: {
+    x: number;
+    y: number;
+  };
+  timeEnemySpentControlled: number;
+  totalGold: number;
+  xp: number;
 }
 
-interface DetailTeamStatusType {
-  redTeamStatus: {
-    totalGold: number;
-    totalKills: number;
-    bans: {
-      championId: number;
-      pickTurn: number;
-    }[];
-    objectives: {
-      baron: {
-        first: boolean;
-        kills: number;
-      };
-      champion: {
-        first: boolean;
-        kills: number;
-      };
-      dragon: {
-        first: boolean;
-        kills: number;
-      };
-      inhibitor: {
-        first: boolean;
-        kills: number;
-      };
-      riftHerald: {
-        first: boolean;
-        kills: number;
-      };
-      tower: {
-        first: boolean;
-        kills: number;
-      };
-    };
-    teamId: number;
-    win: boolean;
-  };
+interface PlayerType {
+  goldEarned: number;
+  physicalDamageDealtToChampions: number;
+  totalDamageDealt: number;
+  index: number;
 }

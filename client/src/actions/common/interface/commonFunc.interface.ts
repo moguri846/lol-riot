@@ -1,25 +1,32 @@
-import { MatchSummaryDetailType, MatchSummaryType } from "../../interface/matchSummary.interface";
-import { ComparingWithEnemyType, IComparingWithEnemyDetail } from "../../interface/comparingWithEnemy.interface";
-import {
-  MATCH_SUMMARY,
-  COMPARING_WITH_ENEMY,
-  FAIL,
-  MATCH_SUMMARY_DETAIL,
-  COMPARING_WITH_ENEMY_DETAIL,
-  JANDI,
-  LINE_WIN_OR_LOSE,
-  SUMMONER,
-} from "../../type";
+import { SUMMONER, COMPARING_WITH_ENEMY, COMPARING_WITH_ENEMY_DETAIL, JANDI, LINE_WIN_OR_LOSE, FAIL } from "../../type";
 import { Jandi } from "../../interface/jandi.interface";
+import { ComparingWithEnemyType, IComparingWithEnemyDetail } from "../../interface/matchSummary.interface";
+import { SummonerType } from "../../interface/summoner.interface";
+import { LineWinOrLoseType } from "../../interface/lineWinOrLose.interface";
 
-export type MatchListFilterType = typeof MATCH_SUMMARY | typeof COMPARING_WITH_ENEMY;
-export type MatchDetailInfoFilterType = typeof MATCH_SUMMARY_DETAIL | typeof COMPARING_WITH_ENEMY_DETAIL;
+export type MatchListFilterType = typeof COMPARING_WITH_ENEMY;
+export type MatchDetailInfoFilterType = typeof COMPARING_WITH_ENEMY_DETAIL;
 
-export type SuccessMatchList<P extends MatchSummaryType[] | ComparingWithEnemyType[] | Jandi[]> = MatchList<P> | Fail;
+export type SuccessMatchList<P extends ComparingWithEnemyType[] | Jandi[]> = MatchList<P> | Fail;
 export type SuccessMatchDetailInfo<P extends IComparingWithEnemyDetail[]> = MatchDetail<P> | Fail;
 
+export interface IMatchListResponse {
+  success: boolean;
+  data: {
+    summoner: SummonerType;
+    matchArr: ComparingWithEnemyType[];
+    jandi: Jandi[];
+    line: LineWinOrLoseType[];
+  };
+}
+
+export interface IMatchDetailResponse {
+  success: boolean;
+  data: IComparingWithEnemyDetail[];
+}
+
 export interface MatchList<P> {
-  type: typeof MATCH_SUMMARY | typeof COMPARING_WITH_ENEMY | typeof JANDI | typeof LINE_WIN_OR_LOSE | typeof SUMMONER;
+  type: typeof SUMMONER | typeof COMPARING_WITH_ENEMY | typeof JANDI | typeof LINE_WIN_OR_LOSE;
   payload: P;
 }
 

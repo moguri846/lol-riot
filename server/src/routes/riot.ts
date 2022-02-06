@@ -233,6 +233,7 @@ router.get("/searchSummoner", async (req: Request, res: Response) => {
             gameCreation: match.data.info.gameCreation,
             player,
             enemy,
+            detail: null,
           };
 
           matchArr.push({ ...appendValues });

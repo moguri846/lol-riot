@@ -115,7 +115,7 @@ router.get("/searchSummoner", async (req: Request, res: Response) => {
         }
         if (match.data.info.gameMode === "CLASSIC") {
           if (
-            moment(match.data.info.gameCreation).format("YYYY-MM-DD") >
+            moment(match.data.info.gameCreation).format("YYYY-MM-DD") >=
             moment().subtract(19, "days").format("YYYY-MM-DD")
           ) {
             jandi.filter((date) => {
@@ -135,110 +135,58 @@ router.get("/searchSummoner", async (req: Request, res: Response) => {
           } else if (!match.data.info.participants[myIndex].win) {
             line[match.data.info.participants[myIndex].individualPosition].lose++;
           }
-        }
-        if (type === MATCH_SUMMARY) {
-          for (let i = 0; i < match.data.info.participants.length; i++) {
-            let appendValues = {
-              championName: match.data.info.participants[i].championName,
-              summonerName: match.data.info.participants[i].summonerName,
-              puuid: match.data.info.participants[i].puuid,
-              individualPosition: match.data.info.participants[i].individualPosition,
+          if (type === COMPARING_WITH_ENEMY) {
+            let player = {
+              physicalDamageDealtToChampions: 0,
+              totalDamageDealt: 0,
+              goldEarned: 0,
+              index: 0,
             };
-            players.push(appendValues);
-          }
+            let enemy = {
+              physicalDamageDealtToChampions: 0,
+              totalDamageDealt: 0,
+              goldEarned: 0,
+              index: 0,
+            };
 
-          const appendValues = {
-            gameCreation: match.data.info.gameCreation,
-            gameEndTimestamp: match.data.info.gameEndTimestamp ? match.data.info.gameEndTimestamp : null,
-            gameStartTimestamp: match.data.info.gameStartTimestamp,
-            gameId: match.data.info.gameId,
-            gameMode: match.data.info.gameMode,
-            player: {
-              summonerName: match.data.info.participants[myIndex].summonerName,
-              championName: match.data.info.participants[myIndex].championName,
-              kills: match.data.info.participants[myIndex].kills,
-              deaths: match.data.info.participants[myIndex].deaths,
-              assists: match.data.info.participants[myIndex].assists,
-              champLevel: match.data.info.participants[myIndex].champLevel,
-              cs:
-                match.data.info.participants[myIndex].totalMinionsKilled +
-                match.data.info.participants[myIndex].neutralMinionsKilled,
-              items: [
-                match.data.info.participants[myIndex].item0,
-                match.data.info.participants[myIndex].item1,
-                match.data.info.participants[myIndex].item2,
-                match.data.info.participants[myIndex].item6,
-                match.data.info.participants[myIndex].item3,
-                match.data.info.participants[myIndex].item4,
-                match.data.info.participants[myIndex].item5,
-              ],
-              spells: [
-                match.data.info.participants[myIndex].summoner1Id,
-                match.data.info.participants[myIndex].summoner2Id,
-              ],
-              perks: match.data.info.participants[myIndex].perks,
-              win: match.data.info.participants[myIndex].win,
-            },
-            players,
-            detail: null,
-          };
+            for (let i = 0; i < match.data.info.participants.length; i++) {
+              if (
+                match.data.info.participants[myIndex].individualPosition ===
+                match.data.info.participants[i].individualPosition
+              ) {
+                if (myIndex === i) {
+                  continue;
+                }
 
-          matchArr.push({ ...appendValues, match: match.data });
-        } else if (type === COMPARING_WITH_ENEMY) {
-          // physicalDamageDealtToChampions 가한 피해량
-          // totalDamageDealt 받은 피해량
-          // goldEarned 총 골드량
+                player = {
+                  physicalDamageDealtToChampions: match.data.info.participants[myIndex].physicalDamageDealtToChampions,
+                  totalDamageDealt: match.data.info.participants[myIndex].totalDamageDealt,
+                  goldEarned: match.data.info.participants[myIndex].goldEarned,
+                  index: myIndex,
+                };
 
-          let player = {
-            physicalDamageDealtToChampions: 0,
-            totalDamageDealt: 0,
-            goldEarned: 0,
-            index: 0,
-          };
-          let enemy = {
-            physicalDamageDealtToChampions: 0,
-            totalDamageDealt: 0,
-            goldEarned: 0,
-            index: 0,
-          };
-
-          for (let i = 0; i < match.data.info.participants.length; i++) {
-            if (
-              match.data.info.participants[myIndex].individualPosition ===
-              match.data.info.participants[i].individualPosition
-            ) {
-              if (myIndex === i) {
-                continue;
+                enemy = {
+                  physicalDamageDealtToChampions: match.data.info.participants[i].physicalDamageDealtToChampions,
+                  totalDamageDealt: match.data.info.participants[i].totalDamageDealt,
+                  goldEarned: match.data.info.participants[i].goldEarned,
+                  index: i,
+                };
               }
-
-              player = {
-                physicalDamageDealtToChampions: match.data.info.participants[myIndex].physicalDamageDealtToChampions,
-                totalDamageDealt: match.data.info.participants[myIndex].totalDamageDealt,
-                goldEarned: match.data.info.participants[myIndex].goldEarned,
-                index: myIndex,
-              };
-
-              enemy = {
-                physicalDamageDealtToChampions: match.data.info.participants[i].physicalDamageDealtToChampions,
-                totalDamageDealt: match.data.info.participants[i].totalDamageDealt,
-                goldEarned: match.data.info.participants[i].goldEarned,
-                index: i,
-              };
             }
+
+            const appendValues = {
+              gameId: match.data.info.gameId,
+              gameMode: match.data.info.gameMode,
+              gameCreation: match.data.info.gameCreation,
+              player,
+              enemy,
+              detail: null,
+            };
+
+            matchArr.push({ ...appendValues });
+          } else {
+            throw new Error("존재하지 않은 type");
           }
-
-          const appendValues = {
-            gameId: match.data.info.gameId,
-            gameMode: match.data.info.gameMode,
-            gameCreation: match.data.info.gameCreation,
-            player,
-            enemy,
-            detail: null,
-          };
-
-          matchArr.push({ ...appendValues });
-        } else {
-          throw new Error("존재하지 않은 type");
         }
       })
     );

@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { summonerMatchList } from "../actions/common/commonFunc";
+import { matchDetailInfo, summonerMatchList } from "../actions/common/commonFunc";
 import { MatchListFilterType } from "../actions/common/interface/commonFunc.interface";
-import { MATCH_SUMMARY } from "../actions/type";
+import { ComparingWithEnemyType } from "../actions/interface/comparingWithEnemy.interface";
+import { COMPARING_WITH_ENEMY } from "../actions/type";
 
 type UseSearch = [
   summonerName: string,
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
   onEnter: (e: React.KeyboardEvent<HTMLInputElement>) => void,
-  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void,
+  onMatchDetail: (s: ComparingWithEnemyType) => void
 ];
 
 const useSearch = (): UseSearch => {
@@ -20,7 +22,7 @@ const useSearch = (): UseSearch => {
   useEffect(() => {
     if (params.summonerName) {
       setSummonerName(params.summonerName);
-      searchSummoner(params.summonerName, MATCH_SUMMARY);
+      searchSummoner(params.summonerName, COMPARING_WITH_ENEMY);
     }
   }, []);
 
@@ -33,14 +35,14 @@ const useSearch = (): UseSearch => {
   const onEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       if (beforeDispatch(summonerName)) {
-        searchSummoner(summonerName, MATCH_SUMMARY);
+        searchSummoner(summonerName, COMPARING_WITH_ENEMY);
       }
     }
   };
 
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (beforeDispatch(summonerName)) {
-      searchSummoner(summonerName, MATCH_SUMMARY);
+      searchSummoner(summonerName, COMPARING_WITH_ENEMY);
     }
   };
 
@@ -49,6 +51,10 @@ const useSearch = (): UseSearch => {
       return false;
     }
     return true;
+  };
+
+  const onMatchDetail = (s: ComparingWithEnemyType) => {
+    dispatch(matchDetailInfo({ gameId: s.gameId, player: s.player.index, enemy: s.enemy.index }));
   };
 
   const searchSummoner = (summonerName: string, type: MatchListFilterType) => {
@@ -60,7 +66,7 @@ const useSearch = (): UseSearch => {
     navigate(`/summoner=${summonerName}`);
   };
 
-  return [summonerName, onChange, onEnter, onClick];
+  return [summonerName, onChange, onEnter, onClick, onMatchDetail];
 };
 
 export default useSearch;

@@ -49,6 +49,11 @@ export interface MatchSummaryDetailType {
   blueTeamStatus: DetailTeamStatusType;
 }
 
+export interface IMatchSummaryDetailParameter {
+  gameId: number;
+  player: number;
+  enemy: number;
+}
 interface DetailPlayerType {
   puuid: string;
   summonerName: string;

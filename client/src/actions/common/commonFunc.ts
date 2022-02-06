@@ -2,7 +2,11 @@ import { AxiosResponse } from "axios";
 import { Dispatch } from "redux";
 import { getSummonerMatchList, getMatchDetailInfo } from "../../API/riot";
 import { MatchListFilterType } from "./interface/commonFunc.interface";
-import { MatchSummaryType, MatchSummaryDetailType } from "../interface/matchSummary.interface";
+import {
+  MatchSummaryType,
+  MatchSummaryDetailType,
+  IMatchSummaryDetailParameter,
+} from "../interface/matchSummary.interface";
 import { SuccessMatchList, SuccessMatchDetailInfo } from "./interface/commonFunc.interface";
 import {
   MATCH_SUMMARY_DETAIL,
@@ -67,10 +71,11 @@ const summonerMatchList = (summonerName: string, type: MatchListFilterType) => {
 };
 
 const matchDetailInfo =
-  (s: ComparingWithEnemyType) => async (dispatch: Dispatch<SuccessMatchDetailInfo<IComparingWithEnemyDetail[]>>) => {
+  (parameterObj: IMatchSummaryDetailParameter) =>
+  async (dispatch: Dispatch<SuccessMatchDetailInfo<IComparingWithEnemyDetail[]>>) => {
     try {
       const { data }: AxiosResponse<{ success: boolean; data: IComparingWithEnemyDetail[] }> = await getMatchDetailInfo(
-        s
+        parameterObj
       );
 
       dispatch({

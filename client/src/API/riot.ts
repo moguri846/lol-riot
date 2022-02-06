@@ -1,5 +1,7 @@
 import Send from "./interceptor";
 import { MatchListFilterType } from "../actions/common/interface/commonFunc.interface";
+import { makeQueryString } from "./common/commonFunc";
+import { IMatchSummaryDetailParameter } from "../actions/interface/matchSummary.interface";
 
 enum Methods {
   GET = "GET",
@@ -9,16 +11,25 @@ enum Methods {
 }
 
 const getSummonerMatchList = (summonerName: string, type: MatchListFilterType) => {
+  const queryStringObj = {
+    summonerName,
+    type,
+  };
   return Send({
     method: Methods.GET,
-    url: `/riot/searchSummoner?summonerName=${summonerName}&type=${type}`,
+    url: `/riot/searchSummoner?${makeQueryString(queryStringObj)}`,
   });
 };
 
-const getMatchDetailInfo = (matchId: number) => {
+const getMatchDetailInfo = ({ gameId, player, enemy }: IMatchSummaryDetailParameter) => {
+  const queryStringObj = {
+    gameId,
+    player,
+    enemy,
+  };
   return Send({
     method: Methods.GET,
-    url: `/riot/matchInfo?gameId=${matchId}`,
+    url: `/riot/matchInfo?${makeQueryString(queryStringObj)}`,
   });
 };
 

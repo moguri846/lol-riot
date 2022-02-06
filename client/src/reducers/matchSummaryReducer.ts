@@ -24,7 +24,7 @@ type ActionType =
   | { type: typeof COMPARING_WITH_ENEMY_DETAIL; payload: IComparingWithEnemyDetail }
   | { type: typeof FAIL; payload: { success: boolean; errMessage: string } };
 
-const reducer = (state = [...initialState], action: ActionType) => {
+const reducer = (state = initialState, action: ActionType) => {
   switch (action.type) {
     case COMPARING_WITH_ENEMY:
       type CWET = [string, ComparingWithEnemyType];

@@ -4,8 +4,16 @@ import { getSummonerMatchList, getMatchDetailInfo } from "../../API/riot";
 import { MatchListFilterType } from "./interface/commonFunc.interface";
 import { MatchSummaryType, MatchSummaryDetailType } from "../interface/matchSummary.interface";
 import { SuccessMatchList, SuccessMatchDetailInfo } from "./interface/commonFunc.interface";
-import { MATCH_SUMMARY_DETAIL, FAIL, MATCH_SUMMARY, JANDI, LINE_WIN_OR_LOSE, SUMMONER } from "../type";
-import { ComparingWithEnemyType } from "../interface/comparingWithEnemy.interface";
+import {
+  MATCH_SUMMARY_DETAIL,
+  FAIL,
+  MATCH_SUMMARY,
+  JANDI,
+  LINE_WIN_OR_LOSE,
+  SUMMONER,
+  COMPARING_WITH_ENEMY_DETAIL,
+} from "../type";
+import { ComparingWithEnemyType, IComparingWithEnemyDetail } from "../interface/comparingWithEnemy.interface";
 import { Jandi } from "../interface/jandi.interface";
 import { LineWinOrLoseType } from "../interface/lineWinOrLose.interface";
 import { SummonerType } from "../interface/summoner.interface";
@@ -20,7 +28,7 @@ const summonerMatchList = (summonerName: string, type: MatchListFilterType) => {
         success: boolean;
         data: {
           summoner: SummonerType;
-          matchArr: T;
+          matchArr: ComparingWithEnemyType[];
           jandi: Jandi[];
           line: LineWinOrLoseType[];
         };
@@ -59,14 +67,14 @@ const summonerMatchList = (summonerName: string, type: MatchListFilterType) => {
 };
 
 const matchDetailInfo =
-  (gameId: number) => async (dispatch: Dispatch<SuccessMatchDetailInfo<MatchSummaryDetailType>>) => {
+  (s: ComparingWithEnemyType) => async (dispatch: Dispatch<SuccessMatchDetailInfo<IComparingWithEnemyDetail[]>>) => {
     try {
-      const { data }: AxiosResponse<{ success: boolean; data: MatchSummaryDetailType }> = await getMatchDetailInfo(
-        gameId
+      const { data }: AxiosResponse<{ success: boolean; data: IComparingWithEnemyDetail[] }> = await getMatchDetailInfo(
+        s
       );
 
       dispatch({
-        type: MATCH_SUMMARY_DETAIL,
+        type: COMPARING_WITH_ENEMY_DETAIL,
         payload: data.data,
       });
     } catch (err: any) {

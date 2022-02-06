@@ -313,18 +313,23 @@ router.get("/matchInfo", async (req: Request, res: Response) => {
     const gameId = parseInt(req.query.gameId as string);
     const playerIndex = parseInt(req.query.player as string) + 1;
     const enemyIndex = parseInt(req.query.enemy as string) + 1;
-    const responseArr = [];
+    const timeLineArr = [];
 
     const { data }: AxiosResponse<MatchTimeLine> = await getMatchTimeLine(`KR_${gameId}`);
 
     for (let i = 0; i < data.info.frames.length; i++) {
-      responseArr.push({
+      timeLineArr.push({
         player: data.info.frames[i].participantFrames[playerIndex],
         enemy: data.info.frames[i].participantFrames[enemyIndex],
       });
     }
 
-    resFunc({ res, status: 200, success: true, data: responseArr });
+    const responseObj = {
+      gameId: data.info.gameId,
+      timeLine: timeLineArr,
+    };
+
+    resFunc({ res, status: 200, success: true, data: responseObj });
   } catch (err: any) {
     const status = err?.response?.status;
     const message = err?.response?.data.status.message;

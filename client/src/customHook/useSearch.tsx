@@ -3,8 +3,9 @@ import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { matchDetailInfo, summonerMatchList } from "../actions/common/commonFunc";
 import { MatchListFilterType } from "../actions/common/interface/commonFunc.interface";
-import { ComparingWithEnemyType } from "../actions/interface/comparingWithEnemy.interface";
+import { ComparingWithEnemyType } from "../actions/interface/matchSummary.interface";
 import { COMPARING_WITH_ENEMY } from "../actions/type";
+import { RootReducer } from "../reducers";
 
 type UseSearch = [
   summonerName: string,
@@ -14,7 +15,7 @@ type UseSearch = [
   onMatchDetail: (s: ComparingWithEnemyType) => void
 ];
 
-const useSearch = (): UseSearch => {
+const useSearch = (state?: RootReducer): UseSearch => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const params = useParams<{ summonerName: string }>();

@@ -55,7 +55,12 @@ const useSearch = (state?: RootReducer): UseSearch => {
   };
 
   const onMatchDetail = (s: ComparingWithEnemyType) => {
-    dispatch(matchDetailInfo({ gameId: s.gameId, player: s.player.index, enemy: s.enemy.index }));
+    const args = {
+      gameId: s.gameId,
+      player: s.player.index,
+      enemy: s.enemy.index,
+    };
+    dispatch(matchDetailInfo(args));
   };
 
   const searchSummoner = (summonerName: string, type: MatchListFilterType) => {

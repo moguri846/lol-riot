@@ -1,15 +1,15 @@
 import React from "react";
 import CalendarHeatmap from "react-calendar-heatmap";
 import ReactTooltip from "react-tooltip";
-import { useSelector } from "react-redux";
-import { RootReducer } from "../../reducers";
 import { Jandi } from "../../actions/interface/jandi.interface";
 import moment from "moment";
 import "./style.css";
 
-const CalendarGraph = () => {
-  const jandi = useSelector((state: RootReducer) => state.jandiReducer);
+interface IProps {
+  jandi: Jandi[];
+}
 
+const CalendarGraph = ({ jandi }: IProps) => {
   const getTooltipDataAttrs = (value: any) => {
     if (value.date && value.count) {
       let winLose = (value.win / (value.win + value.lose)) * 100;
@@ -44,9 +44,6 @@ const CalendarGraph = () => {
 
   return (
     <div style={{ height: "200px" }}>
-      <div>
-        <span>최근 19게임 (CLASSIC게임만 적용)</span>
-      </div>
       <CalendarHeatmap
         startDate={makeDate(20)}
         endDate={makeDate(0)}

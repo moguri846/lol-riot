@@ -19,14 +19,14 @@
   fill: #eeeeee;
 }
 
-.react-calendar-heatmap .color-github-0-30 {
+.react-calendar-heatmap .win-rate-0-30 {
   fill: #de3163;
 }
-.react-calendar-heatmap .color-github-30-50 {
+.react-calendar-heatmap .win-rate-30-50 {
   /* fill: #82e0aa; */
   fill: #f1948a;
 }
-.react-calendar-heatmap .color-github-50-100 {
+.react-calendar-heatmap .win-rate-50-100 {
   fill: #6495ed;
 }
 /* #c0417c */

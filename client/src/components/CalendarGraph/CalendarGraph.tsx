@@ -30,11 +30,11 @@ const CalendarGraph = ({ jandi }: IProps) => {
     let winLose = (jandi.win / (jandi.win + jandi.lose)) * 100;
 
     if (winLose <= 30) {
-      return "color-github-0-30";
+      return "win-rate-0-30";
     } else if (winLose <= 50 && winLose > 30) {
-      return "color-github-30-50";
+      return "win-rate-30-50";
     } else {
-      return "color-github-50-100";
+      return "win-rate-50-100";
     }
   };
 

@@ -2,15 +2,12 @@ import React from "react";
 import { Line } from "react-chartjs-2";
 import { CategoryScale } from "chart.js";
 import Chart from "chart.js/auto";
-import { IDetail } from "../../actions/interface/matchSummary.interface";
+import { ITimeLine } from "../../actions/interface/matchSummary.interface";
 
 Chart.register(CategoryScale);
 
 interface Props {
-  timeline: {
-    player: IDetail;
-    enemy: IDetail;
-  }[];
+  timeline: ITimeLine[];
   isOpen: boolean;
 }
 

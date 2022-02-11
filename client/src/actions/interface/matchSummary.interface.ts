@@ -9,16 +9,18 @@ export interface ComparingWithEnemyType {
 
 export interface IComparingWithEnemyDetail {
   gameId: number;
-  timeLine: {
-    player: IDetail;
-    enemy: IDetail;
-  }[];
+  timeLine: ITimeLine[];
 }
 
 export interface IMatchSummaryDetailParameter {
   gameId: number;
   player: number;
   enemy: number;
+}
+
+export interface ITimeLine {
+  player: IDetail;
+  enemy: IDetail;
 }
 
 interface IDetail {

@@ -5,6 +5,7 @@ import { getSummonerInfo, getMatchIds, getMatchInfo, getSummonerDetailInfo, getM
 import { Match, Summoner, Jandi, SummonerDetailInfo, MatchTimeLine } from "./interface/riot.interface";
 import { resFunc } from "../common/ResSuccessOrFalse.function";
 import { MATCH_SUMMARY, COMPARING_WITH_ENEMY } from "./constant/riot.constant";
+import { changeSpellIdToName } from "./func/riot.func";
 const router = Router();
 
 /**
@@ -62,6 +63,7 @@ router.get("/searchSummoner", async (req: Request, res: Response) => {
     const type = req.query.type as string;
     let matchArr: any[] = [];
     let jandi: Jandi[] = [];
+
     let line = {
       TOP: {
         win: 0,
@@ -136,18 +138,24 @@ router.get("/searchSummoner", async (req: Request, res: Response) => {
             line[match.data.info.participants[myIndex].individualPosition].lose++;
           }
           if (type === COMPARING_WITH_ENEMY) {
-            let player = {
+            const initialValue = {
+              summonerName: "",
               physicalDamageDealtToChampions: 0,
               totalDamageDealt: 0,
               goldEarned: 0,
+              kills: 0,
+              deaths: 0,
+              assists: 0,
+              championName: "",
+              champLevel: 0,
+              cs: 0,
+              items: [0, 0, 0, 0, 0, 0],
+              spells: ["", ""],
               index: 0,
             };
-            let enemy = {
-              physicalDamageDealtToChampions: 0,
-              totalDamageDealt: 0,
-              goldEarned: 0,
-              index: 0,
-            };
+
+            let player = initialValue;
+            let enemy = initialValue;
 
             for (let i = 0; i < match.data.info.participants.length; i++) {
               if (
@@ -159,6 +167,28 @@ router.get("/searchSummoner", async (req: Request, res: Response) => {
                 }
 
                 player = {
+                  summonerName: match.data.info.participants[myIndex].summonerName,
+                  championName: match.data.info.participants[myIndex].championName,
+                  champLevel: match.data.info.participants[myIndex].champLevel,
+                  kills: match.data.info.participants[myIndex].kills,
+                  deaths: match.data.info.participants[myIndex].deaths,
+                  assists: match.data.info.participants[myIndex].assists,
+                  cs:
+                    match.data.info.participants[myIndex].totalMinionsKilled +
+                    match.data.info.participants[myIndex].neutralMinionsKilled,
+                  items: [
+                    match.data.info.participants[myIndex].item0,
+                    match.data.info.participants[myIndex].item1,
+                    match.data.info.participants[myIndex].item2,
+                    match.data.info.participants[myIndex].item6,
+                    match.data.info.participants[myIndex].item3,
+                    match.data.info.participants[myIndex].item4,
+                    match.data.info.participants[myIndex].item5,
+                  ],
+                  spells: [
+                    changeSpellIdToName(match.data.info.participants[myIndex].summoner1Id),
+                    changeSpellIdToName(match.data.info.participants[myIndex].summoner2Id),
+                  ],
                   physicalDamageDealtToChampions: match.data.info.participants[myIndex].physicalDamageDealtToChampions,
                   totalDamageDealt: match.data.info.participants[myIndex].totalDamageDealt,
                   goldEarned: match.data.info.participants[myIndex].goldEarned,
@@ -166,6 +196,28 @@ router.get("/searchSummoner", async (req: Request, res: Response) => {
                 };
 
                 enemy = {
+                  summonerName: match.data.info.participants[i].summonerName,
+                  championName: match.data.info.participants[i].championName,
+                  champLevel: match.data.info.participants[i].champLevel,
+                  kills: match.data.info.participants[i].kills,
+                  deaths: match.data.info.participants[i].deaths,
+                  assists: match.data.info.participants[i].assists,
+                  cs:
+                    match.data.info.participants[i].totalMinionsKilled +
+                    match.data.info.participants[i].neutralMinionsKilled,
+                  items: [
+                    match.data.info.participants[i].item0,
+                    match.data.info.participants[i].item1,
+                    match.data.info.participants[i].item2,
+                    match.data.info.participants[i].item6,
+                    match.data.info.participants[i].item3,
+                    match.data.info.participants[i].item4,
+                    match.data.info.participants[i].item5,
+                  ],
+                  spells: [
+                    changeSpellIdToName(match.data.info.participants[i].summoner1Id),
+                    changeSpellIdToName(match.data.info.participants[i].summoner2Id),
+                  ],
                   physicalDamageDealtToChampions: match.data.info.participants[i].physicalDamageDealtToChampions,
                   totalDamageDealt: match.data.info.participants[i].totalDamageDealt,
                   goldEarned: match.data.info.participants[i].goldEarned,
@@ -175,11 +227,14 @@ router.get("/searchSummoner", async (req: Request, res: Response) => {
             }
 
             const appendValues = {
-              gameId: match.data.info.gameId,
-              gameMode: match.data.info.gameMode,
               gameCreation: match.data.info.gameCreation,
+              gameId: match.data.info.gameId,
+              gameEndTimestamp: match.data.info.gameEndTimestamp ? match.data.info.gameEndTimestamp : null,
+              gameDuration: match.data.info.gameDuration,
+              gameMode: match.data.info.gameMode,
               player,
               enemy,
+              win: match.data.info.participants[myIndex].win,
               detail: null,
             };
 

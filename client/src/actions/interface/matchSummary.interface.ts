@@ -2,8 +2,11 @@ export interface ComparingWithEnemyType {
   gameId: number;
   gameMode: string;
   gameCreation: number;
+  gameEndTimestamp: number | null;
+  gameDuration: number;
   player: PlayerType;
   enemy: PlayerType;
+  win: boolean;
   detail: IComparingWithEnemyDetail | null;
 }
 
@@ -81,8 +84,17 @@ interface IDetail {
 }
 
 interface PlayerType {
-  goldEarned: number;
+  summonerName: string;
+  championName: string;
+  champLevel: number;
+  kills: number;
+  deaths: number;
+  assists: number;
+  cs: number;
+  items: number[];
+  spells: string[];
   physicalDamageDealtToChampions: number;
   totalDamageDealt: number;
+  goldEarned: number;
   index: number;
 }

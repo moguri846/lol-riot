@@ -2,9 +2,18 @@ import { ComparingWithEnemyType, IComparingWithEnemyDetail } from "../actions/in
 import { FAIL, COMPARING_WITH_ENEMY, COMPARING_WITH_ENEMY_DETAIL } from "../actions/type";
 
 const playerInitialValue = {
-  goldEarned: 0,
+  summonerName: "",
+  championName: "",
+  champLevel: 0,
+  kills: 0,
+  deaths: 0,
+  assists: 0,
+  cs: 0,
+  items: [],
+  spells: [],
   physicalDamageDealtToChampions: 0,
   totalDamageDealt: 0,
+  goldEarned: 0,
   index: 0,
 };
 
@@ -13,8 +22,11 @@ const initialState: ComparingWithEnemyType[] = [
     gameId: 0,
     gameMode: "",
     gameCreation: 0,
+    gameEndTimestamp: null,
+    gameDuration: 0,
     player: playerInitialValue,
     enemy: playerInitialValue,
+    win: false,
     detail: null,
   },
 ];

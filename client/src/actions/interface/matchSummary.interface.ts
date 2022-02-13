@@ -83,7 +83,7 @@ interface IDetail {
   xp: number;
 }
 
-interface PlayerType {
+export interface PlayerType {
   summonerName: string;
   championName: string;
   champLevel: number;

@@ -13,7 +13,7 @@ interface IProps {
   option: LineOptionsType;
 }
 
-const LineGraph = ({ timeline, option }: Props) => {
+const LineGraph = ({ timeline, option }: IProps) => {
   const labels = timeline?.map((line, index) => `${index}분`);
 
   const data = {

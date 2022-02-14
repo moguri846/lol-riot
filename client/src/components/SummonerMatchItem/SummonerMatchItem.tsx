@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import moment from "moment";
 import { ComparingWithEnemyType, PlayerType } from "../../actions/interface/matchSummary.interface";
-import useSearch from "../../customHook/useSearch";
 import LineGraph from "../LineGraph/LineGraph";
 import {
   ChampionStatus,
@@ -21,11 +20,10 @@ import { LineOptionsType } from "../common/common.interface";
 
 interface IProps {
   match: ComparingWithEnemyType;
+  onMatchDetail: (s: ComparingWithEnemyType) => void;
 }
 
-const SummonerMatchItem = ({ match }: IProps) => {
-  const [summonerName, onChange, onEnter, onClick, onMatchDetail] = useSearch();
-
+const SummonerMatchItem = ({ match, onMatchDetail }: IProps) => {
   const [players, setPlayers] = useState<PlayerType[]>([]);
   const [timelineOptions, setTimelineOptions] = useState<LineOptionsType[]>([TOTAL_GOLD, XP]);
   const [selectOption, setSelectOption] = useState<LineOptionsType>(TOTAL_GOLD);

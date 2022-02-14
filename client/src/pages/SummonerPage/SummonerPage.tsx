@@ -58,7 +58,7 @@ const SummonerPage = () => {
           </GraphContainer>
           <MatchList>
             {summoner.matchSummary.map((match) => (
-              <SummonerMatchItem key={match.gameId} match={match} />
+              <SummonerMatchItem key={match.gameId} match={match} onMatchDetail={onMatchDetail} />
             ))}
           </MatchList>
         </>

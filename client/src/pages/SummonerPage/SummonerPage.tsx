@@ -19,9 +19,9 @@ import {
 import SummonerMatchItem from "../../components/SummonerMatchItem/SummonerMatchItem";
 
 const SummonerPage = () => {
-  const summoner = useSelector((state: RootReducer) => state);
+  const { summoner, matchSummary, jandi, lineWinOrLose } = useSelector((state: RootReducer) => state);
 
-  const [summonerName, onChange, onEnter, onClick, onMatchDetail] = useSearch(summoner);
+  const [summonerName, onChange, onEnter, onClick, onMatchDetail] = useSearch();
 
   const getProfileImg = (profileIconId: number) => {
     return (
@@ -34,30 +34,30 @@ const SummonerPage = () => {
 
   return (
     <>
-      {summoner.summoner.id !== "" ? (
+      {summoner.id !== "" ? (
         <>
           <div>
             <Input type="text" placeholder="소환사 이름" value={summonerName} onChange={onChange} onKeyDown={onEnter} />
             <button onClick={onClick}>검색</button>
           </div>
           <SummonerContainer>
-            <ProfileImgContainer>{getProfileImg(summoner.summoner.profileIconId)}</ProfileImgContainer>
+            <ProfileImgContainer>{getProfileImg(summoner.profileIconId)}</ProfileImgContainer>
             <SummonerInfo>
-              <span>{summoner.summoner.name}</span>
-              <span>레벨 {summoner.summoner.summonerLevel}</span>
+              <span>{summoner.name}</span>
+              <span>레벨 {summoner.summonerLevel}</span>
             </SummonerInfo>
             <SummonerRank></SummonerRank>
           </SummonerContainer>
           <GraphContainer>
             <CalendarGraphContainer>
-              <CalendarGraph jandi={summoner.jandi} />
+              <CalendarGraph jandi={jandi} />
             </CalendarGraphContainer>
             <BarGraphContainer>
-              <BarGraph lineWinOrLose={summoner.lineWinOrLose} />
+              <BarGraph lineWinOrLose={lineWinOrLose} />
             </BarGraphContainer>
           </GraphContainer>
           <MatchList>
-            {summoner.matchSummary.map((match) => (
+            {matchSummary.map((match, idx) => (
               <SummonerMatchItem key={match.gameId} match={match} onMatchDetail={onMatchDetail} />
             ))}
           </MatchList>

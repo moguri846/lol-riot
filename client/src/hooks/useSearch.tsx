@@ -7,15 +7,15 @@ import { ComparingWithEnemyType } from "../actions/interface/matchSummary.interf
 import { COMPARING_WITH_ENEMY } from "../actions/type";
 import { RootReducer } from "../reducers";
 
-type UseSearch = [
-  summonerName: string,
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
-  onEnter: (e: React.KeyboardEvent<HTMLInputElement>) => void,
-  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void,
-  onMatchDetail: (s: ComparingWithEnemyType) => void
-];
+interface IUseSearch {
+  summonerName: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onEnter: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  onMatchDetail: (s: ComparingWithEnemyType) => void;
+}
 
-const useSearch = (state?: RootReducer): UseSearch => {
+const useSearch = (state?: RootReducer): IUseSearch => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const params = useParams<{ summonerName: string }>();
@@ -72,7 +72,7 @@ const useSearch = (state?: RootReducer): UseSearch => {
     navigate(`/summoner=${summonerName}`);
   };
 
-  return [summonerName, onChange, onEnter, onClick, onMatchDetail];
+  return { summonerName, onChange, onEnter, onClick, onMatchDetail };
 };
 
 export default useSearch;

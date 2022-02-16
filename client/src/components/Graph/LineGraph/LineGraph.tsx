@@ -2,9 +2,8 @@ import React from "react";
 import { Line } from "react-chartjs-2";
 import { CategoryScale } from "chart.js";
 import Chart from "chart.js/auto";
-import { ITimeLine } from "../../actions/interface/matchSummary.interface";
-import { TOTAL_GOLD, XP } from "./constant/LineGraph.constant";
-import { LineOptionsType } from "../common/common.interface";
+import { ITimeLine } from "../../../actions/interface/matchSummary.interface";
+import { LineOptionsType } from "./interface/LineGraph.interface";
 
 Chart.register(CategoryScale);
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import moment from "moment";
 import { ComparingWithEnemyType, PlayerType } from "../../actions/interface/matchSummary.interface";
-import LineGraph from "../LineGraph/LineGraph";
+import LineGraph from "../Graph/LineGraph/LineGraph";
 import {
   ChampionStatus,
   Item,
@@ -15,8 +15,8 @@ import {
   Player,
   PlayerStatus,
 } from "./style";
-import { TOTAL_GOLD, XP } from "../LineGraph/constant/LineGraph.constant";
-import { LineOptionsType } from "../common/common.interface";
+import { TOTAL_GOLD, XP } from "../Graph/LineGraph/constant/LineGraph.constant";
+import { LineOptionsType } from "../Graph/LineGraph/interface/LineGraph.interface";
 
 interface IProps {
   match: ComparingWithEnemyType;

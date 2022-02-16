@@ -2,7 +2,7 @@ import React from "react";
 import { Bar } from "react-chartjs-2";
 import { CategoryScale } from "chart.js";
 import Chart from "chart.js/auto";
-import { LineWinOrLoseType } from "../../actions/interface/lineWinOrLose.interface";
+import { LineWinOrLoseType } from "../../../actions/interface/lineWinOrLose.interface";
 
 Chart.register(CategoryScale);
 

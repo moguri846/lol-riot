@@ -1,7 +1,7 @@
 import React from "react";
 import CalendarHeatmap from "react-calendar-heatmap";
 import ReactTooltip from "react-tooltip";
-import { Jandi } from "../../actions/interface/jandi.interface";
+import { Jandi } from "../../../actions/interface/jandi.interface";
 import moment from "moment";
 import "./style.css";
 

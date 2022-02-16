@@ -2,8 +2,8 @@ import React from "react";
 import useSearch from "../../customHook/useSearch";
 import { Input } from "../../elememts";
 import { useSelector } from "react-redux";
-import BarGraph from "../../components/BarGraph/BarGraph";
-import CalendarGraph from "../../components/CalendarGraph/CalendarGraph";
+import BarGraph from "../../components/Graph/BarGraph/BarGraph";
+import CalendarGraph from "../../components/Graph/CalendarGraph/CalendarGraph";
 import { RootReducer } from "../../reducers";
 import "moment/locale/ko";
 import {

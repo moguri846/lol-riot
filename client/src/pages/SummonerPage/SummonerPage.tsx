@@ -1,9 +1,6 @@
 import React from "react";
-import useSearch from "../../customHook/useSearch";
-import { Input } from "../../elememts";
+import useSearch from "../../hooks/useSearch";
 import { useSelector } from "react-redux";
-import BarGraph from "../../components/Graph/BarGraph/BarGraph";
-import CalendarGraph from "../../components/Graph/CalendarGraph/CalendarGraph";
 import { RootReducer } from "../../reducers";
 import "moment/locale/ko";
 import {
@@ -17,11 +14,14 @@ import {
   MatchList,
 } from "./style";
 import SummonerMatchItem from "../../components/SummonerMatchItem/SummonerMatchItem";
+import SearchSummoner from "../../components/Organisms/SearchSummoner/SearchSummoner";
+import BarGraph from "../../components/Graph/BarGraph/BarGraph";
+import CalendarGraph from "../../components/Graph/CalendarGraph/CalendarGraph";
 
 const SummonerPage = () => {
   const { summoner, matchSummary, jandi, lineWinOrLose } = useSelector((state: RootReducer) => state);
 
-  const [summonerName, onChange, onEnter, onClick, onMatchDetail] = useSearch();
+  const { onMatchDetail } = useSearch();
 
   const getProfileImg = (profileIconId: number) => {
     return (
@@ -36,10 +36,7 @@ const SummonerPage = () => {
     <>
       {summoner.id !== "" ? (
         <>
-          <div>
-            <Input type="text" placeholder="소환사 이름" value={summonerName} onChange={onChange} onKeyDown={onEnter} />
-            <button onClick={onClick}>검색</button>
-          </div>
+          <SearchSummoner />
           <SummonerContainer>
             <ProfileImgContainer>{getProfileImg(summoner.profileIconId)}</ProfileImgContainer>
             <SummonerInfo>
@@ -63,10 +60,7 @@ const SummonerPage = () => {
           </MatchList>
         </>
       ) : (
-        <div>
-          <Input type="text" placeholder="소환사 이름" value={summonerName} onChange={onChange} onKeyDown={onEnter} />
-          <button onClick={onClick}>검색</button>
-        </div>
+        <SearchSummoner />
       )}
     </>
   );

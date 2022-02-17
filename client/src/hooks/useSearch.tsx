@@ -7,7 +7,7 @@ import { ComparingWithEnemyType } from "../actions/interface/matchSummary.interf
 import { COMPARING_WITH_ENEMY } from "../actions/type";
 import { RootReducer } from "../reducers";
 
-interface IUseSearch {
+export interface IUseSearch {
   summonerName: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onEnter: (e: React.KeyboardEvent<HTMLInputElement>) => void;
@@ -23,7 +23,7 @@ const useSearch = (state?: RootReducer): IUseSearch => {
   useEffect(() => {
     if (params.summonerName) {
       setSummonerName(params.summonerName);
-      searchSummoner(params.summonerName, COMPARING_WITH_ENEMY);
+      // searchSummoner(params.summonerName, COMPARING_WITH_ENEMY);
     }
   }, []);
 

@@ -18,6 +18,8 @@ import {
 import { TOTAL_GOLD, XP } from "../Graph/LineGraph/constant/LineGraph.constant";
 import { LineOptionsType } from "../Graph/LineGraph/interface/LineGraph.interface";
 
+import "moment/locale/ko";
+
 interface IProps {
   match: ComparingWithEnemyType;
   onMatchDetail: (s: ComparingWithEnemyType) => void;

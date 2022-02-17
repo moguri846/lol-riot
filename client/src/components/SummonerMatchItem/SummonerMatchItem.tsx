@@ -98,8 +98,8 @@ const SummonerMatchItem = ({ match, onMatchDetail }: IProps) => {
               {players.map((player, idx) => (
                 <Player key={idx} className={idx === 1 ? "enemy" : "player"}>
                   <Items className="items">
-                    {player.items.map((item) => (
-                      <Item key={item}>{getItemImg(item)}</Item>
+                    {player.items.map((item, idx) => (
+                      <Item key={idx}>{getItemImg(item)}</Item>
                     ))}
                   </Items>
                   <Kda className="kda">

@@ -7,7 +7,7 @@ import SummonerTemplate from "../../components/Templates/SummonerTemplate/Summon
 const SummonerPage = () => {
   const state = useSelector((state: RootReducer) => state);
 
-  return <>{state.summoner.puuid ? <SummonerTemplate {...state} /> : <SearchSummoner />}</>;
+  return <>{state.summoner.puuid && <SummonerTemplate {...state} />}</>;
 };
 
 export default SummonerPage;

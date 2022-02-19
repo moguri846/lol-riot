@@ -40,7 +40,6 @@ function SummonerTemplate({ summoner, matchSummary, jandi, lineWinOrLose }: IPro
 
   return (
     <>
-      <SearchSummoner />
       <SummonerContainer>
         <ProfileImgContainer>{getProfileImg(summoner.profileIconId)}</ProfileImgContainer>
         <SummonerInfo>

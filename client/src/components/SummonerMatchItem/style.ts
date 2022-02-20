@@ -67,16 +67,24 @@ const Player = styled.div`
 
 const Items = styled.ul`
   width: 165px;
+  display: flex;
+  flex-wrap: wrap;
 `;
 
 const Item = styled.li`
   width: 35px;
   height: 35px;
-  display: inline-block;
-  padding: 3px;
+  margin: 3px;
+  border-radius: 5px;
+
+  &.none {
+    background-color: #ccc;
+  }
+
   & > img {
     width: 100%;
     height: 100%;
+    border-radius: 5px;
   }
 `;
 const Kda = styled.div`

@@ -134,7 +134,8 @@ const ChampionStatus = styled.div`
     & > img {
       width: 35px;
       height: 35px;
-      padding-bottom: 5px;
+      margin: 2px 0px;
+      border-radius: 5px;
     }
   }
 `;

@@ -42,7 +42,6 @@ export interface MatchDetail<P> {
 export interface Fail {
   type: typeof FAIL;
   payload: {
-    success: boolean;
     errMessage: string;
   };
 }

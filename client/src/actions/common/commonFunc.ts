@@ -43,9 +43,10 @@ const summonerMatchList = (summonerName: string, type: MatchListFilterType) => {
         payload: lineWinOrLose,
       });
     } catch (err: any) {
+      const errMessage = err?.response?.data?.errMessage || err.message;
       dispatch({
         type: FAIL,
-        payload: { ...err.response.data },
+        payload: { errMessage },
       });
     }
   };
@@ -62,9 +63,10 @@ const matchDetailInfo =
         payload: data.data,
       });
     } catch (err: any) {
+      const errMessage = err?.response?.data?.errMessage || err.message;
       dispatch({
         type: FAIL,
-        payload: { ...err.response.data },
+        payload: { errMessage },
       });
     }
   };

@@ -68,10 +68,8 @@ router.get("/summonerInfo", async (req: Request, res: Response) => {
     const summonerDetailInfo: AxiosResponse<SummonerDetailInfo[] | []> = await getSummonerDetailInfo(summoner.data.id);
 
     const responseObj = {
-      summoner: {
-        ...summoner.data,
-        ...summonerDetailInfo.data.filter((summonerDetail) => summonerDetail.queueType === "RANKED_SOLO_5x5")[0],
-      },
+      ...summoner.data,
+      ...summonerDetailInfo.data.filter((summonerDetail) => summonerDetail.queueType === "RANKED_SOLO_5x5")[0],
     };
 
     resFunc({ res, status: 200, success: true, data: responseObj });

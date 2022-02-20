@@ -10,13 +10,17 @@ export type MatchDetailInfoFilterType = typeof COMPARING_WITH_ENEMY_DETAIL;
 export type SuccessMatchList<P extends ComparingWithEnemyType[] | Jandi[]> = MatchList<P> | Fail;
 export type SuccessMatchDetailInfo<P extends IComparingWithEnemyDetail[]> = MatchDetail<P> | Fail;
 
-export interface IMatchListResponse {
+export interface ISummoner {
+  success: boolean;
+  data: SummonerType;
+}
+
+export interface IMatchInfo {
   success: boolean;
   data: {
-    summoner: SummonerType;
     matchArr: ComparingWithEnemyType[];
     jandi: Jandi[];
-    line: LineWinOrLoseType[];
+    lineWinOrLose: LineWinOrLoseType[];
   };
 }
 

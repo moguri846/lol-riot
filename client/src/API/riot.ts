@@ -17,7 +17,7 @@ const getSummonerMatchList = (summonerName: string, type: MatchListFilterType) =
   };
   return Send({
     method: Methods.GET,
-    url: `/riot/searchSummoner?${makeQueryString(queryStringObj)}`,
+    url: `/riot/summonerInfo?${makeQueryString(queryStringObj)}`,
   });
 };
 
@@ -33,4 +33,11 @@ const getMatchDetailInfo = ({ gameId, player, enemy }: IMatchSummaryDetailParame
   });
 };
 
-export { getSummonerMatchList, getMatchDetailInfo };
+const loadSummonerMatchInfo = (puuid: string) => {
+  return Send({
+    method: Methods.GET,
+    url: `/riot/summonerMatchList?${makeQueryString({ puuid })}`,
+  });
+};
+
+export { getSummonerMatchList, getMatchDetailInfo, loadSummonerMatchInfo };

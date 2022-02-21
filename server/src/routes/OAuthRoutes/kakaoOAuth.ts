@@ -4,7 +4,7 @@ import { resFunc } from "../../common/ResSuccessOrFalse.function";
 
 const router = Router();
 
-router.get("/kakaoOAuth", async (req: Request, res: Response) => {
+router.get("/kakaoLogin", async (req: Request, res: Response) => {
   const code = req.query.code as string;
 
   try {
@@ -20,9 +20,9 @@ router.get("/kakaoLogout", async (req: Request, res: Response) => {
   try {
     const authorization = req.headers.authorization as string;
 
-    const check = await oAuthKakaoLogout(authorization);
+    const logout = await oAuthKakaoLogout(authorization);
 
-    resFunc({ res, data: check.data });
+    resFunc({ res, data: logout.data });
   } catch (err: any) {
     resFunc({ res, err });
   }

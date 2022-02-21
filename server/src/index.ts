@@ -1,7 +1,7 @@
 import express from "express";
 import { swaggerUi, specs } from "./config/swagger";
 import cors from "cors";
-import oauthRoute from "./routes/oauth";
+import oauthRoute from "./routes/oAuth";
 import riotRoute from "./routes/riot";
 const app: express.Application = express();
 const port: number = 5000;

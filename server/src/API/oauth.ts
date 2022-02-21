@@ -32,4 +32,21 @@ const oAuthKakaoLogout = (authorization: string) => {
   );
 };
 
-export { oAuthkakao, oAuthKakaoLogout };
+const oAuthNaver = (code: string, state: string) => {
+  return axios.get(
+    `https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&client_id=KD5PgEAABsz2g6DYyfT6&client_secret=l_DgmvOEKE&redirect_uri=${encodeURI(
+      "http://localhost:3000/api/oauth/naver"
+    )}&code=${code}&state=${state}`,
+    {
+      headers: { "X-Naver-Client-Id": "KD5PgEAABsz2g6DYyfT6", "X-Naver-Client-Secret": "l_DgmvOEKE" },
+    }
+  );
+};
+
+const oAuthNaverLogout = (authorization: string) => {
+  return axios.get(
+    `https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=KD5PgEAABsz2g6DYyfT6&client_secret=l_DgmvOEKE&access_token=${authorization}&service_provider=NAVER`
+  );
+};
+
+export { oAuthkakao, oAuthKakaoLogout, oAuthNaver, oAuthNaverLogout };

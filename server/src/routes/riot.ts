@@ -72,13 +72,9 @@ router.get("/summonerInfo", async (req: Request, res: Response) => {
       ...summonerDetailInfo.data.filter((summonerDetail) => summonerDetail.queueType === "RANKED_SOLO_5x5")[0],
     };
 
-    resFunc({ res, status: 200, success: true, data: responseObj });
+    resFunc({ res, data: responseObj });
   } catch (err: any) {
-    const status = err?.response?.status;
-    const message = err?.response?.data.status.message || err.message;
-    console.log("err", err.response);
-
-    resFunc({ res, status, success: false, errMessage: message || "서버 에러" });
+    resFunc({ res, err });
   }
 });
 
@@ -267,12 +263,9 @@ router.get("/summonerMatchList", async (req: Request, res: Response) => {
       line,
     };
 
-    resFunc({ res, status: 200, success: true, data: responseObj });
+    resFunc({ res, data: responseObj });
   } catch (err: any) {
-    const status = err?.response?.status;
-    const message = err?.response?.data.status.message || err.message;
-
-    resFunc({ res, status, success: false, errMessage: message || "서버 에러" });
+    resFunc({ res, err });
   }
 });
 
@@ -342,12 +335,9 @@ router.get("/matchInfo", async (req: Request, res: Response) => {
       timeLine: timeLineArr,
     };
 
-    resFunc({ res, status: 200, success: true, data: responseObj });
+    resFunc({ res, data: responseObj });
   } catch (err: any) {
-    const status = err?.response?.status;
-    const message = err?.response?.data.status.message;
-
-    resFunc({ res, status, success: false, errMessage: message || "서버 에러" });
+    resFunc({ res, err });
   }
 });
 

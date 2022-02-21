@@ -1,6 +1,7 @@
 import express from "express";
 import { swaggerUi, specs } from "./config/swagger";
 import cors from "cors";
+import oauthRoute from "./routes/oauth";
 import riotRoute from "./routes/riot";
 const app: express.Application = express();
 const port: number = 5000;
@@ -25,6 +26,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
+app.use("/api/oauth", oauthRoute);
 app.use("/api/riot", riotRoute);
 
 app.listen(port, () => {

@@ -1,10 +1,11 @@
 import axios from "axios";
+import { kakaoConfig, naverConfig } from "../config/config";
 
 const oAuthkakao = (code: string) => {
   const bodyData: any = {
     grant_type: "authorization_code",
-    client_id: "15b4640728c25a319b0c80171c4c1c3f",
-    redirect_uri: "http://localhost:3000/oauth/kakao",
+    client_id: kakaoConfig.clientId,
+    redirect_uri: kakaoConfig.redirectUri,
     code,
   };
 
@@ -34,11 +35,11 @@ const oAuthKakaoLogout = (authorization: string) => {
 
 const oAuthNaver = (code: string, state: string) => {
   return axios.get(
-    `https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&client_id=KD5PgEAABsz2g6DYyfT6&client_secret=l_DgmvOEKE&redirect_uri=${encodeURI(
-      "http://localhost:3000/api/oauth/naver"
-    )}&code=${code}&state=${state}`,
+    `https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&client_id=${
+      naverConfig.clientId
+    }&client_secret=l_DgmvOEKE&redirect_uri=${encodeURI(naverConfig.redirectUri)}&code=${code}&state=${state}`,
     {
-      headers: { "X-Naver-Client-Id": "KD5PgEAABsz2g6DYyfT6", "X-Naver-Client-Secret": "l_DgmvOEKE" },
+      headers: { "X-Naver-Client-Id": naverConfig.clientId, "X-Naver-Client-Secret": naverConfig.secret },
     }
   );
 };

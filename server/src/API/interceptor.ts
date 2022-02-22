@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
-import { APIKey } from "../config/apiKey";
+import { riotConfig } from "../config/config";
 
 const instance: AxiosInstance = axios.create({});
 
@@ -7,7 +7,7 @@ instance.interceptors.request.use(
   (config: AxiosRequestConfig) => {
     // 헤더에 토큰 추가
     config.headers = {
-      "X-Riot-Token": APIKey,
+      "X-Riot-Token": riotConfig.apiKey,
     };
 
     return config;
@@ -17,6 +17,8 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
   (response: AxiosResponse) => {
+    console.log("response riot", response);
+
     return response;
   },
   (err) => Promise.reject(err)

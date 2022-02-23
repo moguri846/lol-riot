@@ -1,39 +1,20 @@
 import Send from "./interceptor";
 import { makeQueryString } from "./common/commonFunc";
 
-const kakaoLogin = (code: string) => {
-  const queryStringObj = {
-    code,
-  };
+const oAuthLogin = ({ code, state, type }: { code: string; state?: string; type: string }) => {
+  const queryStringObj = state ? { code, state } : { code };
+
   return Send({
     method: "GET",
-    url: `/oauth/kakao/kakaoLogin?${makeQueryString(queryStringObj)}`,
+    url: `/oauth/${type}/login?${makeQueryString(queryStringObj)}`,
   });
 };
 
-const naverLogin = (code: string, state: string) => {
-  const queryStringObj = {
-    code,
-    state,
-  };
+const oAuthLogout = (type: string) => {
   return Send({
     method: "GET",
-    url: `/oauth/naver/naverLogin?${makeQueryString(queryStringObj)}`,
+    url: `/oauth/${type}/logout`,
   });
 };
 
-const kakaoLogout = () => {
-  return Send({
-    method: "GET",
-    url: `/oauth/kakao/kakaoLogout`,
-  });
-};
-
-const naverLogout = () => {
-  return Send({
-    method: "GET",
-    url: `/oauth/naver/naverLogout`,
-  });
-};
-
-export { kakaoLogin, naverLogin, kakaoLogout, naverLogout };
+export { oAuthLogin, oAuthLogout };

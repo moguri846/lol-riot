@@ -4,7 +4,7 @@ import { resFunc } from "../../common/ResSuccessOrFalse.function";
 
 const router = Router();
 
-router.get("/naverLogin", async (req: Request, res: Response) => {
+router.get("/login", async (req: Request, res: Response) => {
   try {
     const code = req.query.code as string;
     const state = req.query.state as string;
@@ -17,7 +17,7 @@ router.get("/naverLogin", async (req: Request, res: Response) => {
   }
 });
 
-router.get("/naverLogout", async (req: Request, res: Response) => {
+router.get("/logout", async (req: Request, res: Response) => {
   try {
     const authorization = req.headers.authorization?.slice(6) as string;
     console.log("authorization", authorization);

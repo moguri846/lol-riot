@@ -4,7 +4,7 @@ import { resFunc } from "../../common/ResSuccessOrFalse.function";
 
 const router = Router();
 
-router.get("/kakaoLogin", async (req: Request, res: Response) => {
+router.get("/login", async (req: Request, res: Response) => {
   const code = req.query.code as string;
 
   try {
@@ -16,7 +16,7 @@ router.get("/kakaoLogin", async (req: Request, res: Response) => {
   }
 });
 
-router.get("/kakaoLogout", async (req: Request, res: Response) => {
+router.get("/logout", async (req: Request, res: Response) => {
   try {
     const authorization = req.headers.authorization as string;
 

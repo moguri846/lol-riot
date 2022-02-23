@@ -1,7 +1,7 @@
 import Send from "./interceptor";
-import { MatchListFilterType } from "../actions/common/interface/commonFunc.interface";
+import { MatchListFilterType } from "../actions/riot/common/interface/commonFunc.interface";
 import { makeQueryString } from "./common/commonFunc";
-import { IMatchSummaryDetailParameter } from "../actions/interface/matchSummary.interface";
+import { IMatchSummaryDetailParameter } from "../actions/riot/interface/matchSummary.interface";
 
 enum Methods {
   GET = "GET",

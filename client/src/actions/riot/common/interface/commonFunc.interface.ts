@@ -1,4 +1,11 @@
-import { SUMMONER, COMPARING_WITH_ENEMY, COMPARING_WITH_ENEMY_DETAIL, JANDI, LINE_WIN_OR_LOSE, FAIL } from "../../type";
+import {
+  SUMMONER,
+  COMPARING_WITH_ENEMY,
+  COMPARING_WITH_ENEMY_DETAIL,
+  JANDI,
+  LINE_WIN_OR_LOSE,
+  FAIL,
+} from "../../constant/riot.constant";
 import { Jandi } from "../../interface/jandi.interface";
 import { ComparingWithEnemyType, IComparingWithEnemyDetail } from "../../interface/matchSummary.interface";
 import { SummonerType } from "../../interface/summoner.interface";

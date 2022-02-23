@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import moment from "moment";
-import { ComparingWithEnemyType, PlayerType } from "../../actions/interface/matchSummary.interface";
+import { ComparingWithEnemyType, PlayerType } from "../../actions/riot/interface/matchSummary.interface";
 import LineGraph from "../Graph/LineGraph/LineGraph";
 import {
   ChampionStatus,

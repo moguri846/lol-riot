@@ -1,5 +1,5 @@
-import { SummonerType } from "../../actions/interface/summoner.interface";
-import { SUMMONER } from "../../actions/type";
+import { SummonerType } from "../../actions/riot/interface/summoner.interface";
+import { SUMMONER } from "../../actions/riot/constant/riot.constant";
 
 const inititalState: SummonerType = {
   accountId: "",

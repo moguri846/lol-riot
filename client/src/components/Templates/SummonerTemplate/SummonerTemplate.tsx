@@ -1,12 +1,11 @@
 import React from "react";
-import { Jandi } from "../../../actions/interface/jandi.interface";
-import { LineWinOrLoseType } from "../../../actions/interface/lineWinOrLose.interface";
-import { ComparingWithEnemyType } from "../../../actions/interface/matchSummary.interface";
-import { SummonerType } from "../../../actions/interface/summoner.interface";
+import { Jandi } from "../../../actions/riot/interface/jandi.interface";
+import { LineWinOrLoseType } from "../../../actions/riot/interface/lineWinOrLose.interface";
+import { ComparingWithEnemyType } from "../../../actions/riot/interface/matchSummary.interface";
+import { SummonerType } from "../../../actions/riot/interface/summoner.interface";
 import useSearch from "../../../hooks/useSearch";
 import BarGraph from "../../Graph/BarGraph/BarGraph";
 import CalendarGraph from "../../Graph/CalendarGraph/CalendarGraph";
-import SearchSummoner from "../../Organisms/SearchSummoner/SearchSummoner";
 import SummonerMatchItem from "../../SummonerMatchItem/SummonerMatchItem";
 import {
   SummonerContainer,

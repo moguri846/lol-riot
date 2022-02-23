@@ -1,10 +1,22 @@
 import { AxiosResponse } from "axios";
 import { Dispatch } from "redux";
 import { getSummonerMatchList, getMatchDetailInfo, loadSummonerMatchInfo } from "../../API/riot";
-import { IMatchDetailResponse, IMatchInfo, ISummoner, MatchListFilterType } from "./interface/commonFunc.interface";
-import { SuccessMatchList, SuccessMatchDetailInfo } from "./interface/commonFunc.interface";
-import { SUMMONER, COMPARING_WITH_ENEMY, COMPARING_WITH_ENEMY_DETAIL, JANDI, LINE_WIN_OR_LOSE, FAIL } from "../type";
-import { IComparingWithEnemyDetail, IMatchSummaryDetailParameter } from "../interface/matchSummary.interface";
+import {
+  IMatchDetailResponse,
+  IMatchInfo,
+  ISummoner,
+  MatchListFilterType,
+} from "./common/interface/commonFunc.interface";
+import { SuccessMatchList, SuccessMatchDetailInfo } from "./common/interface/commonFunc.interface";
+import {
+  SUMMONER,
+  COMPARING_WITH_ENEMY,
+  COMPARING_WITH_ENEMY_DETAIL,
+  JANDI,
+  LINE_WIN_OR_LOSE,
+  FAIL,
+} from "./constant/riot.constant";
+import { IComparingWithEnemyDetail, IMatchSummaryDetailParameter } from "./interface/matchSummary.interface";
 
 const summonerMatchList = (summonerName: string, type: MatchListFilterType) => {
   return async (dispatch: Dispatch<SuccessMatchList<any>>) => {

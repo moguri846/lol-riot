@@ -1,5 +1,5 @@
-import { ComparingWithEnemyType, IComparingWithEnemyDetail } from "../../actions/interface/matchSummary.interface";
-import { FAIL, COMPARING_WITH_ENEMY, COMPARING_WITH_ENEMY_DETAIL } from "../../actions/type";
+import { ComparingWithEnemyType, IComparingWithEnemyDetail } from "../../actions/riot/interface/matchSummary.interface";
+import { FAIL, COMPARING_WITH_ENEMY, COMPARING_WITH_ENEMY_DETAIL } from "../../actions/riot/constant/riot.constant";
 
 const playerInitialValue = {
   summonerName: "",

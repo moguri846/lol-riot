@@ -2,13 +2,7 @@ import Send from "./interceptor";
 import { MatchListFilterType } from "../actions/riot/common/interface/commonFunc.interface";
 import { makeQueryString } from "./common/commonFunc";
 import { IMatchSummaryDetailParameter } from "../actions/riot/interface/matchSummary.interface";
-
-enum Methods {
-  GET = "GET",
-  POST = "POST",
-  PUT = "PUT",
-  DELETE = "DELETE",
-}
+import { Methods } from "./common/methods";
 
 const getSummonerMatchList = (summonerName: string, type: MatchListFilterType) => {
   const queryStringObj = {

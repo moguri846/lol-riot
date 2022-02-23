@@ -1,11 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { RootReducer } from "../../reducers";
-import SearchSummoner from "../../components/Organisms/SearchSummoner/SearchSummoner";
 import SummonerTemplate from "../../components/Templates/SummonerTemplate/SummonerTemplate";
+import { RootReducerType } from "../../reducers/rootReducer";
 
 const SummonerPage = () => {
-  const state = useSelector((state: RootReducer) => state);
+  const state = useSelector((state: RootReducerType) => state.riot);
 
   return <>{state.summoner.puuid && <SummonerTemplate {...state} />}</>;
 };

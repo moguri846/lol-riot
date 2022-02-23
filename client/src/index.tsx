@@ -6,7 +6,7 @@ import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import ReduxThunk from "redux-thunk";
-import reducer from "./reducers/index";
+import reducer from "./reducers/rootReducer";
 import { composeWithDevTools } from "redux-devtools-extension";
 
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(ReduxThunk)));

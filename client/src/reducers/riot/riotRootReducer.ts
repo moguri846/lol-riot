@@ -5,13 +5,13 @@ import matchSummary from "./matchSummaryReducer";
 import jandi from "./jandiReducer";
 import lineWinOrLose from "./lineWinOrLoseReducer";
 
-const rootReducer = combineReducers({
+const riotRootReducer = combineReducers({
   summoner,
   matchSummary,
   jandi,
   lineWinOrLose,
 });
 
-export type RootReducer = ReturnType<typeof rootReducer>;
+export type RiotRootReducerType = ReturnType<typeof riotRootReducer>;
 
-export default rootReducer;
+export default riotRootReducer;

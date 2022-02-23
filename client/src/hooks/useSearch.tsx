@@ -5,7 +5,7 @@ import { matchDetailInfo, summonerMatchList } from "../actions/common/commonFunc
 import { MatchListFilterType } from "../actions/common/interface/commonFunc.interface";
 import { ComparingWithEnemyType } from "../actions/interface/matchSummary.interface";
 import { COMPARING_WITH_ENEMY } from "../actions/type";
-import { RootReducer } from "../reducers";
+import { RiotRootReducerType } from "../reducers/riot/riotRootReducer";
 
 export interface IUseSearch {
   summonerName: string;
@@ -15,7 +15,7 @@ export interface IUseSearch {
   onMatchDetail: (s: ComparingWithEnemyType) => void;
 }
 
-const useSearch = (state?: RootReducer): IUseSearch => {
+const useSearch = (state?: RiotRootReducerType): IUseSearch => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const params = useParams<{ summonerName: string }>();

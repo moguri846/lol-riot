@@ -1,5 +1,5 @@
-import { Jandi } from "../actions/interface/jandi.interface";
-import { JANDI } from "../actions/type";
+import { Jandi } from "../../actions/interface/jandi.interface";
+import { JANDI } from "../../actions/type";
 
 const inititalState: Jandi[] = [
   {

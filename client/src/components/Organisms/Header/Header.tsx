@@ -28,7 +28,9 @@ const Header = () => {
           />
         </S.InputFormContainer>
         <S.LoginButtonContainer>
-          <Button>로그인</Button>
+          <Link to="/login">
+            <Button>로그인</Button>
+          </Link>
         </S.LoginButtonContainer>
       </S.HeadeTop>
       <S.HeaderBottom>

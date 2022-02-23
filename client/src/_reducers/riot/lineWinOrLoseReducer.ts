@@ -1,5 +1,5 @@
-import { LineWinOrLoseType } from "../../actions/riot/interface/lineWinOrLose.interface";
-import { LINE_WIN_OR_LOSE } from "../../actions/riot/constant/riot.constant";
+import { LineWinOrLoseType } from "../../_actions/riot/interface/lineWinOrLose.interface";
+import { LINE_WIN_OR_LOSE } from "../../_actions/riot/constant/riot.constant";
 
 const inititalState: LineWinOrLoseType[] = [
   {

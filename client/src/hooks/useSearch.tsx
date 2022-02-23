@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { matchDetailInfo, summonerMatchList } from "../actions/riot/riotActions";
-import { MatchListFilterType } from "../actions/riot/interface/dispatch.interface";
-import { ComparingWithEnemyType } from "../actions/riot/interface/matchSummary.interface";
-import { COMPARING_WITH_ENEMY } from "../actions/riot/constant/riot.constant";
-import { RiotRootReducerType } from "../reducers/riot/riotRootReducer";
+import { matchDetailInfo, summonerMatchList } from "../_actions/riot/riotActions";
+import { MatchListFilterType } from "../_actions/riot/interface/dispatch.interface";
+import { ComparingWithEnemyType } from "../_actions/riot/interface/matchSummary.interface";
+import { COMPARING_WITH_ENEMY } from "../_actions/riot/constant/riot.constant";
+import { RiotRootReducerType } from "../_reducers/riot/riotRootReducer";
 
 export interface IUseSearch {
   summonerName: string;

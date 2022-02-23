@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import SummonerTemplate from "../../components/Templates/SummonerTemplate/SummonerTemplate";
-import { RootReducerType } from "../../reducers/rootReducer";
+import { RootReducerType } from "../../_reducers/rootReducer";
 
 const SummonerPage = () => {
   const state = useSelector((state: RootReducerType) => state.riot);

@@ -1,5 +1,5 @@
-import { Jandi } from "../../actions/riot/interface/jandi.interface";
-import { JANDI } from "../../actions/riot/constant/riot.constant";
+import { Jandi } from "../../_actions/riot/interface/jandi.interface";
+import { JANDI } from "../../_actions/riot/constant/riot.constant";
 
 const inititalState: Jandi[] = [
   {

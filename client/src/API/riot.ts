@@ -1,7 +1,7 @@
 import Send from "./interceptor";
-import { MatchListFilterType } from "../actions/riot/interface/dispatch.interface";
+import { MatchListFilterType } from "../_actions/riot/interface/dispatch.interface";
 import { makeQueryString } from "./common/commonFunc";
-import { IMatchSummaryDetailParameter } from "../actions/riot/interface/matchSummary.interface";
+import { IMatchSummaryDetailParameter } from "../_actions/riot/interface/matchSummary.interface";
 import { Methods } from "./common/methods";
 
 const getSummonerMatchList = (summonerName: string, type: MatchListFilterType) => {

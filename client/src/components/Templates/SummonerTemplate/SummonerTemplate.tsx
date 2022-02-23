@@ -1,8 +1,8 @@
 import React from "react";
-import { Jandi } from "../../../actions/riot/interface/jandi.interface";
-import { LineWinOrLoseType } from "../../../actions/riot/interface/lineWinOrLose.interface";
-import { ComparingWithEnemyType } from "../../../actions/riot/interface/matchSummary.interface";
-import { SummonerType } from "../../../actions/riot/interface/summoner.interface";
+import { Jandi } from "../../../_actions/riot/interface/jandi.interface";
+import { LineWinOrLoseType } from "../../../_actions/riot/interface/lineWinOrLose.interface";
+import { ComparingWithEnemyType } from "../../../_actions/riot/interface/matchSummary.interface";
+import { SummonerType } from "../../../_actions/riot/interface/summoner.interface";
 import useSearch from "../../../hooks/useSearch";
 import BarGraph from "../../Graph/BarGraph/BarGraph";
 import CalendarGraph from "../../Graph/CalendarGraph/CalendarGraph";

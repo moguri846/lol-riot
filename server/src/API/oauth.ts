@@ -7,6 +7,7 @@ const oAuthkakao = (code: string) => {
     client_id: kakaoConfig.clientId,
     redirect_uri: kakaoConfig.redirectUri,
     code,
+    client_secret: kakaoConfig.secret,
   };
 
   const queryStringBody = Object.keys(bodyData)

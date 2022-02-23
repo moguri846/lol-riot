@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { matchDetailInfo, summonerMatchList } from "../actions/riot/riotActions";
-import { MatchListFilterType } from "../actions/riot/common/interface/commonFunc.interface";
+import { MatchListFilterType } from "../actions/riot/interface/dispatch.interface";
 import { ComparingWithEnemyType } from "../actions/riot/interface/matchSummary.interface";
 import { COMPARING_WITH_ENEMY } from "../actions/riot/constant/riot.constant";
 import { RiotRootReducerType } from "../reducers/riot/riotRootReducer";

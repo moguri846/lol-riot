@@ -4,12 +4,12 @@ import {
   COMPARING_WITH_ENEMY_DETAIL,
   JANDI,
   LINE_WIN_OR_LOSE,
-  FAIL,
-} from "../../constant/riot.constant";
-import { Jandi } from "../../interface/jandi.interface";
-import { ComparingWithEnemyType, IComparingWithEnemyDetail } from "../../interface/matchSummary.interface";
-import { SummonerType } from "../../interface/summoner.interface";
-import { LineWinOrLoseType } from "../../interface/lineWinOrLose.interface";
+} from "../constant/riot.constant";
+import { Jandi } from "./jandi.interface";
+import { ComparingWithEnemyType, IComparingWithEnemyDetail } from "./matchSummary.interface";
+import { SummonerType } from "./summoner.interface";
+import { LineWinOrLoseType } from "./lineWinOrLose.interface";
+import { Fail } from "../../common/interface/common.interface";
 
 export type MatchListFilterType = typeof COMPARING_WITH_ENEMY;
 export type MatchDetailInfoFilterType = typeof COMPARING_WITH_ENEMY_DETAIL;
@@ -44,11 +44,4 @@ export interface MatchList<P> {
 export interface MatchDetail<P> {
   type: typeof COMPARING_WITH_ENEMY_DETAIL;
   payload: P;
-}
-
-export interface Fail {
-  type: typeof FAIL;
-  payload: {
-    errMessage: string;
-  };
 }

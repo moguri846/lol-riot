@@ -83,7 +83,7 @@ router.get("/summonerMatchList", async (req: Request, res: Response) => {
     const puuid = req.query.puuid as string;
     let matchArr: any[] = [];
     let jandi: Jandi[] = [];
-    let line = {
+    let lineWinOrLose = {
       TOP: {
         win: 0,
         lose: 0,
@@ -164,9 +164,9 @@ router.get("/summonerMatchList", async (req: Request, res: Response) => {
           }
 
           if (match.data.info.participants[myIndex].win) {
-            line[match.data.info.participants[myIndex].individualPosition].win++;
+            lineWinOrLose[match.data.info.participants[myIndex].individualPosition].win++;
           } else if (!match.data.info.participants[myIndex].win) {
-            line[match.data.info.participants[myIndex].individualPosition].lose++;
+            lineWinOrLose[match.data.info.participants[myIndex].individualPosition].lose++;
           }
           for (let i = 0; i < match.data.info.participants.length; i++) {
             if (
@@ -260,8 +260,10 @@ router.get("/summonerMatchList", async (req: Request, res: Response) => {
     const responseObj = {
       matchArr,
       jandi,
-      line,
+      lineWinOrLose,
     };
+
+    console.log("responseObj", responseObj);
 
     resFunc({ res, data: responseObj });
   } catch (err: any) {

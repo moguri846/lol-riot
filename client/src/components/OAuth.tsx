@@ -1,28 +1,25 @@
 import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { oAuthLogin } from "../API/oauth";
+import { useDispatch } from "react-redux";
+import { loginOAuth } from "../_actions/user/userActions";
+import { IOAuthLoginPrameter, OAuthType } from "../_actions/user/interface/user.interface";
 
 const OAuth = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const type = location.pathname.slice(7);
+    const type: OAuthType = location.pathname.slice(7).toUpperCase() as OAuthType;
 
     const [key, code, state] = location.search.split("=");
 
-    const test = async ({ code, state, type }: { code: string; state: string; type: string }) => {
+    const test = async ({ code, state, type }: IOAuthLoginPrameter) => {
       try {
-        const { data } = await oAuthLogin({ code, state, type });
+        await dispatch(loginOAuth({ code, state, type }));
 
-        localStorage.setItem("ACCESS_TOKEN", data.data.access_token);
-        localStorage.setItem("REFRESH_TOKEN", data.data.refresh_token);
-        localStorage.setItem("EXPIRES_IN", data.data.expires_in);
-        localStorage.setItem("OAUTH_TYPE", type);
-
-        if (data.success) {
-          navigate("/");
-        }
+        navigate("/");
       } catch (err: any) {
         alert(`무언가 이상해요! ${err.message}`);
       }

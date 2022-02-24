@@ -1,8 +1,9 @@
 import Send from "./interceptor";
 import { makeQueryString } from "./common/commonFunc";
 import { Methods } from "./common/methods";
+import { IOAuthLoginPrameter } from "../_actions/user/interface/user.interface";
 
-const oAuthLogin = ({ code, state, type }: { code: string; state?: string; type: string }) => {
+const oAuthLogin = ({ code, state, type }: IOAuthLoginPrameter) => {
   const queryStringObj = state ? { code, state } : { code };
 
   return Send({

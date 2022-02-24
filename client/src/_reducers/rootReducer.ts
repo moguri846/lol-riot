@@ -4,7 +4,7 @@ import user from "./user/userRootReducer";
 
 const rootReducer = combineReducers({
   riot,
-  // user,
+  user,
 });
 
 export type RootReducerType = ReturnType<typeof rootReducer>;

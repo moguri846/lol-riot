@@ -1,7 +1,8 @@
 import { combineReducers } from "redux";
+import token from "./tokenReducer";
 
 const userRootReducer = combineReducers({
-  //   user,
+  token,
 });
 
 export type UserRootReducerType = ReturnType<typeof userRootReducer>;

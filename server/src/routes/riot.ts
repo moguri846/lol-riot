@@ -263,8 +263,6 @@ router.get("/summonerMatchList", async (req: Request, res: Response) => {
       lineWinOrLose,
     };
 
-    console.log("responseObj", responseObj);
-
     resFunc({ res, data: responseObj });
   } catch (err: any) {
     resFunc({ res, err });

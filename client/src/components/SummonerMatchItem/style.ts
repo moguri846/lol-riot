@@ -31,7 +31,7 @@ const MatchItemContainer = styled.li`
     transition: .35s cubic-bezier(0, 1.65, 1, 1);
 `;
 
-const MatchItem = styled.li`
+const MatchItem = styled.div`
   display: flex;
   padding: 5px;
   & > div {

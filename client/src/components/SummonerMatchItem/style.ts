@@ -5,10 +5,18 @@ const MatchItemContainer = styled.li`
 
   &.win {
     background-color: #85c1e9;
+
+    & > details > summary > div> div:nth-of-type(1) > .win-lose {
+      color: #21618C;
+    }
   }
 
   &.lose {
     background-color: #ec7063;
+
+    & > details > summary > div> div:nth-of-type(1) > .win-lose {
+      color: #7B241C;
+    }
   }
 
   & > details > summary::marker {
@@ -44,6 +52,10 @@ const MatchInfo = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  & > .win-lose {
+    font-weight: bold;
+  }
 `;
 
 const MatchStatusContainer = styled.div`

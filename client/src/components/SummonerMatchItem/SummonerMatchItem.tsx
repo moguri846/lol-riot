@@ -107,10 +107,10 @@ const SummonerMatchItem = ({ match, onMatchDetail }: IProps) => {
         <summary onClick={() => onMatchDetail(match)}>
           <MatchItem>
             <MatchInfo>
-              <span>{match.gameMode}</span>
-              <span>{match.win ? "승리" : "패배"}</span>
-              <span>{gameDuration(match.gameEndTimestamp, match.gameDuration)}</span>
-              <span>{moment(match.gameCreation).startOf("hour").fromNow()}</span>
+              <span className="game-mode">{match.gameMode}</span>
+              <span className="win-lose">{match.win ? "승리" : "패배"}</span>
+              <span className="game-duration">{gameDuration(match.gameEndTimestamp, match.gameDuration)}</span>
+              <span className="game-creation">{moment(match.gameCreation).startOf("hour").fromNow()}</span>
             </MatchInfo>
             <MatchStatusContainer>
               {players.map((player, idx) => (

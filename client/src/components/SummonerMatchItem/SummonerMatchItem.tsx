@@ -86,6 +86,21 @@ const SummonerMatchItem = ({ match, onMatchDetail }: IProps) => {
     }
   };
 
+  const gameDuration = (gameEndTimestamp: number | null, gameDuration: number) => {
+    let m;
+    let s;
+
+    if (gameEndTimestamp) {
+      m = Math.floor((gameEndTimestamp % 3600) / 60);
+      s = Math.floor(gameEndTimestamp % 60);
+    } else {
+      const date = new Date(gameDuration);
+      m = date.getMinutes();
+      s = date.getSeconds();
+    }
+    return `${m}분 ${s}초`;
+  };
+
   return (
     <MatchItemContainer className={match.win ? "win" : "lose"}>
       <details>
@@ -94,6 +109,7 @@ const SummonerMatchItem = ({ match, onMatchDetail }: IProps) => {
             <MatchInfo>
               <span>{match.gameMode}</span>
               <span>{match.win ? "승리" : "패배"}</span>
+              <span>{gameDuration(match.gameEndTimestamp, match.gameDuration)}</span>
               <span>{moment(match.gameCreation).startOf("hour").fromNow()}</span>
             </MatchInfo>
             <MatchStatusContainer>

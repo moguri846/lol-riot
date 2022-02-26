@@ -2,6 +2,7 @@ import React from "react";
 import useSearch from "../../../hooks/useSearch";
 import SearchSummonerInputForm from "../../Molecules/SearchSummonerInputForm/SearchSummonerInputForm";
 import * as S from "./style";
+import { Link } from "react-router-dom";
 
 interface IProps {
   title: string;
@@ -12,7 +13,9 @@ const SearchSummoner = ({ title }: IProps) => {
 
   return (
     <>
-      <S.Title>{title}</S.Title>
+      <S.Title>
+        <Link to="/">{title}</Link>
+      </S.Title>
       <S.SearchUserContainer>
         <S.SearchFormContainer>
           <SearchSummonerInputForm

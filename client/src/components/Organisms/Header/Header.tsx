@@ -42,9 +42,6 @@ const Header = () => {
       <S.HeaderBottom>
         <nav>
           <S.Ul>
-            <S.Li onClick={selecetHandler} className="selected">
-              홈
-            </S.Li>
             <S.Li onClick={selecetHandler}>랭킹</S.Li>
             <S.Li onClick={selecetHandler}>커뮤니티</S.Li>
           </S.Ul>

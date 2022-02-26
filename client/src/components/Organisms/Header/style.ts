@@ -23,21 +23,6 @@ const HeadeTop = styled.div`
   }
 `;
 
-const Ttile = styled.h1``;
-
-const InputFormContainer = styled.div`
-  width: 300px;
-  display: flex;
-
-  & > input {
-    flex: 5;
-  }
-
-  & > button {
-    flex: 1;
-  }
-`;
-
 const LoginButtonContainer = styled.div``;
 
 const HeaderBottom = styled.div`
@@ -59,4 +44,4 @@ const Li = styled.li`
   }
 `;
 
-export { Header, HeadeTop, Ttile, InputFormContainer, LoginButtonContainer, HeaderBottom, Ul, Li };
+export { Header, HeadeTop, LoginButtonContainer, HeaderBottom, Ul, Li };

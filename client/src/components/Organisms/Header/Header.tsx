@@ -1,12 +1,12 @@
 import React from "react";
 import useSearch from "../../../hooks/useSearch";
 import { Button } from "../../Atoms/Button/style";
-import SearchSummonerInputForm from "../../Molecules/SearchSummonerInputForm/SearchSummonerInputForm";
 import { Link } from "react-router-dom";
 import * as S from "./style";
 import { useDispatch, useSelector } from "react-redux";
 import { RootReducerType } from "../../../_reducers/rootReducer";
 import { logoutOAuth } from "../../../_actions/user/userActions";
+import SearchSummoner from "../SearchSummoner/SearchSummoner";
 
 const Header = () => {
   const { summonerName, onChange, onEnter, onClick } = useSearch();
@@ -28,15 +28,7 @@ const Header = () => {
   return (
     <S.Header>
       <S.HeadeTop>
-        <S.Ttile>Search My Name</S.Ttile>
-        <S.InputFormContainer>
-          <SearchSummonerInputForm
-            summonerName={summonerName}
-            onChange={onChange}
-            onEnter={onEnter}
-            onClick={onClick}
-          />
-        </S.InputFormContainer>
+        <SearchSummoner title="Search My Name" />
         <S.LoginButtonContainer>
           {isLogin ? (
             <Button onClick={logout}>로그아웃</Button>

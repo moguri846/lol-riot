@@ -16,7 +16,7 @@ import {
   VALID_TOKEN,
 } from "./constant/user.constant";
 import { OAuthLogin, OAuthLogout, OAuthTokenCheck, ReissueType } from "./interface/dispatch.interface";
-import { IOAuthLoginPrameter, IOAuthLoginResponse, IToken, OAuthType } from "./interface/user.interface";
+import { IOAuthLoginPrameter, IOAuthLoginResponse, IToken, ITokenStatus, OAuthType } from "./interface/user.interface";
 
 const loginOAuth = (loginPrameter: IOAuthLoginPrameter) => async (dispatch: Dispatch<OAuthLogin>) => {
   try {
@@ -71,7 +71,7 @@ const oAuthTokenCheck = () => async (dispatch: Dispatch<OAuthTokenCheck>) => {
   const expiresIn = parseInt(localStorage.getItem(EXPIRES_IN) as string);
   const now = moment().valueOf();
   const diffTime = expiresIn - now;
-  const tokenStatus: { type: ReissueType | typeof FAIL; isLogin: boolean; message: string } = {
+  const tokenStatus: ITokenStatus = {
     type: NON_EXISTENT_TOKEN,
     isLogin: false,
     message: "존재하지 않은 토큰",

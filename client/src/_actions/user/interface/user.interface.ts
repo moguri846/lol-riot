@@ -1,4 +1,6 @@
+import { FAIL } from "../../common/constant/common.constant";
 import { KAKAO, NAVER } from "../constant/user.constant";
+import { ReissueType } from "./dispatch.interface";
 
 export type OAuthType = typeof KAKAO | typeof NAVER;
 
@@ -11,6 +13,12 @@ export interface IOAuthLoginPrameter {
 export interface IOAuthLoginResponse {
   success: boolean;
   data: IToken;
+}
+
+export interface ITokenStatus {
+  type: ReissueType | typeof FAIL;
+  isLogin: boolean;
+  message: string;
 }
 
 export interface IToken {

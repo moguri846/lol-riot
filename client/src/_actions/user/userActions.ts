@@ -1,17 +1,22 @@
 import { AxiosResponse } from "axios";
+import moment from "moment";
 import { Dispatch } from "redux";
-import { oAuthLogin, oAuthLogout } from "../../API/oauth";
+import { oAuthLogin, oAuthLogout, oAuthReissueToken } from "../../API/oauth";
 import { FAIL } from "../common/constant/common.constant";
 import {
   ACCESS_TOKEN,
+  EXPIRED_TOKEN,
   EXPIRES_IN,
+  NON_EXISTENT_TOKEN,
   OAUTH_LOGIN,
   OAUTH_LOGOUT,
   OAUTH_TYPE,
   REFRESH_TOKEN,
+  REISSUE_TOKEN,
+  VALID_TOKEN,
 } from "./constant/user.constant";
-import { OAuthLogin, IOAuthLoginResponse, IToken } from "./interface/dispatch.interface";
-import { IOAuthLoginPrameter, OAuthType } from "./interface/user.interface";
+import { OAuthLogin, OAuthLogout, OAuthTokenCheck, ReissueType } from "./interface/dispatch.interface";
+import { IOAuthLoginPrameter, IOAuthLoginResponse, IToken, OAuthType } from "./interface/user.interface";
 
 const loginOAuth = (loginPrameter: IOAuthLoginPrameter) => async (dispatch: Dispatch<OAuthLogin>) => {
   try {
@@ -21,7 +26,10 @@ const loginOAuth = (loginPrameter: IOAuthLoginPrameter) => async (dispatch: Disp
 
     dispatch({
       type: OAUTH_LOGIN,
-      payload: data.data,
+      payload: {
+        isLogin: true,
+        message: "로그인",
+      },
     });
   } catch (err: any) {
     const errMessage = err?.response?.data?.errMessage || err.message;
@@ -34,7 +42,7 @@ const loginOAuth = (loginPrameter: IOAuthLoginPrameter) => async (dispatch: Disp
   }
 };
 
-const logoutOAuth = () => async (dispatch: Dispatch<any>) => {
+const logoutOAuth = () => async (dispatch: Dispatch<OAuthLogout>) => {
   try {
     const type = localStorage.getItem("OAUTH_TYPE") as string;
 
@@ -44,7 +52,10 @@ const logoutOAuth = () => async (dispatch: Dispatch<any>) => {
 
     dispatch({
       type: OAUTH_LOGOUT,
-      payload: data,
+      payload: {
+        isLogin: false,
+        message: "로그아웃",
+      },
     });
   } catch (err: any) {
     const errMessage = err?.response?.data?.errMessage || err.message;
@@ -56,11 +67,88 @@ const logoutOAuth = () => async (dispatch: Dispatch<any>) => {
   }
 };
 
-export { loginOAuth, logoutOAuth };
+const oAuthTokenCheck = () => async (dispatch: Dispatch<OAuthTokenCheck>) => {
+  const expiresIn = parseInt(localStorage.getItem(EXPIRES_IN) as string);
+  const now = moment().valueOf();
+  const diffTime = expiresIn - now;
+  const tokenStatus: { type: ReissueType | typeof FAIL; isLogin: boolean; message: string } = {
+    type: NON_EXISTENT_TOKEN,
+    isLogin: false,
+    message: "존재하지 않은 토큰",
+  };
 
-const saveLocalStorage = (token: IToken, oAuthType: OAuthType) => {
+  if (diffTime) {
+    // diffTime이 10분 이하 && 2분 이상인 경우
+    if (diffTime <= 600000 && diffTime >= 150000) {
+      try {
+        const { data }: AxiosResponse<IToken> = await reissueToken();
+
+        saveLocalStorage(data);
+
+        tokenStatus.type = REISSUE_TOKEN;
+        tokenStatus.isLogin = true;
+        tokenStatus.message = "토큰 갱신";
+      } catch (err: any) {
+        tokenStatus.type = FAIL;
+        tokenStatus.message = err.message;
+
+        dispatch({
+          type: FAIL,
+          payload: {
+            isLogin: tokenStatus.isLogin,
+            errMessage: tokenStatus.message,
+          },
+        });
+
+        return tokenStatus;
+      }
+
+      // diffTime이 2분 미만인 경우
+    } else if (diffTime < 150000) {
+      tokenStatus.type = EXPIRED_TOKEN;
+      tokenStatus.message = "만료된 토큰";
+    } else {
+      tokenStatus.type = VALID_TOKEN;
+      tokenStatus.isLogin = true;
+      tokenStatus.message = "유효한 토큰";
+    }
+  } else {
+    tokenStatus.type = NON_EXISTENT_TOKEN;
+    tokenStatus.message = "존재하지 않은 토큰";
+  }
+
+  dispatch({
+    type: tokenStatus.type,
+    payload: {
+      isLogin: tokenStatus.isLogin,
+      message: tokenStatus.message,
+    },
+  });
+
+  return tokenStatus;
+};
+
+const reissueToken = async () => {
+  try {
+    const type = localStorage.getItem("OAUTH_TYPE") as OAuthType;
+
+    const { data } = await oAuthReissueToken(type.toLowerCase());
+    return data;
+  } catch (err: any) {
+    const errMessage = err?.response?.data?.errMessage || err.message;
+    throw errMessage;
+  }
+};
+
+export { loginOAuth, oAuthTokenCheck, reissueToken, logoutOAuth };
+
+const saveLocalStorage = (token: IToken, oAuthType?: OAuthType) => {
   localStorage.setItem(ACCESS_TOKEN, token.access_token);
-  localStorage.setItem(REFRESH_TOKEN, token.refresh_token);
-  localStorage.setItem(EXPIRES_IN, String(token.expires_in));
-  localStorage.setItem(OAUTH_TYPE, oAuthType);
+  localStorage.setItem(EXPIRES_IN, String(moment().add(token.expires_in, "second").valueOf()));
+  if (token.refresh_token) {
+    localStorage.setItem(REFRESH_TOKEN, token.refresh_token);
+  }
+  if (oAuthType) {
+    localStorage.setItem(OAUTH_TYPE, oAuthType);
+  }
 };

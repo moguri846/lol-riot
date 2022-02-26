@@ -12,7 +12,7 @@ const Header = () => {
   const { summonerName, onChange, onEnter, onClick } = useSearch();
   const dispatch = useDispatch();
 
-  const isLogin = useSelector((state: RootReducerType) => state.user.token);
+  const isLogin = useSelector((state: RootReducerType) => state.user.token.access_token);
 
   const selecetHandler = (e: React.MouseEvent<HTMLLIElement>) => {
     const lis = document.querySelectorAll("ul li");
@@ -38,7 +38,7 @@ const Header = () => {
           />
         </S.InputFormContainer>
         <S.LoginButtonContainer>
-          {isLogin.access_token ? (
+          {isLogin ? (
             <Button onClick={logout}>로그아웃</Button>
           ) : (
             <Link to="/login">

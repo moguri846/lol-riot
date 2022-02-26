@@ -1,5 +1,5 @@
 import { Router, Request, Response } from "express";
-import { oAuthkakao, oAuthKakaoLogout } from "../../API/oauth";
+import { oAuthkakao, oAuthKakaoLogout, oAuthKakaoReissueToken } from "../../API/oauth";
 import { resFunc } from "../../common/ResSuccessOrFalse.function";
 
 const router = Router();
@@ -12,6 +12,16 @@ router.get("/login", async (req: Request, res: Response) => {
 
     resFunc({ res, data: kakao.data });
   } catch (err: any) {
+    resFunc({ res, err });
+  }
+});
+
+router.post("/reissueToken", async (req: Request, res: Response) => {
+  try {
+    const refreshToken = req.body.refreshToken as string;
+    const reissue = await oAuthKakaoReissueToken(refreshToken);
+    resFunc({ res, data: reissue.data });
+  } catch (err) {
     resFunc({ res, err });
   }
 });

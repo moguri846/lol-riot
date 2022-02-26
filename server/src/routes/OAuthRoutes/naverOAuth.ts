@@ -1,5 +1,5 @@
 import { Request, Response, Router } from "express";
-import { oAuthNaver, oAuthNaverLogout } from "../../API/oauth";
+import { oAuthNaver, oAuthNaverLogout, oAuthNaverReissueToken } from "../../API/oauth";
 import { resFunc } from "../../common/ResSuccessOrFalse.function";
 
 const router = Router();
@@ -17,10 +17,21 @@ router.get("/login", async (req: Request, res: Response) => {
   }
 });
 
+router.post("/reissueToken", async (req: Request, res: Response) => {
+  try {
+    const refreshToken = req.body.refreshToken as string;
+
+    const reissue = await oAuthNaverReissueToken(refreshToken);
+
+    resFunc({ res, data: reissue.data });
+  } catch (err) {
+    resFunc({ res, err });
+  }
+});
+
 router.get("/logout", async (req: Request, res: Response) => {
   try {
     const authorization = req.headers.authorization?.slice(6) as string;
-    console.log("authorization", authorization);
 
     const logout = await oAuthNaverLogout(authorization);
 

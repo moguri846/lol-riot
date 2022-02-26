@@ -9,10 +9,9 @@ import { logoutOAuth } from "../../../_actions/user/userActions";
 import SearchSummoner from "../SearchSummoner/SearchSummoner";
 
 const Header = () => {
-  const { summonerName, onChange, onEnter, onClick } = useSearch();
   const dispatch = useDispatch();
 
-  const isLogin = useSelector((state: RootReducerType) => state.user.token.access_token);
+  const isLogin = useSelector((state: RootReducerType) => state.user.token.isLogin);
 
   const selecetHandler = (e: React.MouseEvent<HTMLLIElement>) => {
     const lis = document.querySelectorAll("ul li");

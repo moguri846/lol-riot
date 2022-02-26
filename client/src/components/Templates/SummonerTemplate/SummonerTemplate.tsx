@@ -44,8 +44,8 @@ function SummonerTemplate({ summoner, matchSummary, jandi, lineWinOrLose }: IPro
         <SummonerInfo>
           <span>{summoner.name}</span>
           <span>레벨 {summoner.summonerLevel}</span>
+          <SummonerRank></SummonerRank>
         </SummonerInfo>
-        <SummonerRank></SummonerRank>
       </SummonerContainer>
       <GraphContainer>
         <CalendarGraphContainer>

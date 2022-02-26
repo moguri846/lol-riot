@@ -3,16 +3,23 @@ import styled from "styled-components";
 const SummonerContainer = styled.div`
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
+  margin-top: 30px;
 `;
 
 const ProfileImgContainer = styled.div`
-  width: 100px;
+  & > img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+  }
 `;
 
 const SummonerInfo = styled.div``;
 
-const SummonerRank = styled.div``;
+const SummonerRank = styled.div`
+  display: flex;
+`;
 
 const GraphContainer = styled.div`
   width: 100%;

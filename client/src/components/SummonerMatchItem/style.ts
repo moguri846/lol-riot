@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 const MatchItemContainer = styled.li`
   margin-bottom: 10px;
+  cursor: pointer;
 
   &.win {
     background-color: #85c1e9;

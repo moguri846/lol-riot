@@ -1,20 +1,19 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { ITokenStatus } from "../../_actions/user/interface/user.interface";
 import { logoutOAuth, oAuthTokenCheck } from "../../_actions/user/userActions";
-import { RootReducerType } from "../../_reducers/rootReducer";
 
 const auth = (SpecificComponent: React.FC, option: boolean | null) => {
   const AuthenticationCheck = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const user = useSelector((state: RootReducerType) => state.user.token);
 
     useEffect(() => {
       const check = async () => {
-        await dispatch(oAuthTokenCheck());
+        const { isLogin, message } = (await dispatch(oAuthTokenCheck())) as unknown as ITokenStatus;
 
-        if (user.isLogin) {
+        if (isLogin) {
           if (option === false) {
             navigate("/");
           }
@@ -22,7 +21,8 @@ const auth = (SpecificComponent: React.FC, option: boolean | null) => {
           if (option) {
             navigate("/login");
           }
-          if (user.message === "만료된 토큰") {
+
+          if (message === "만료된 토큰") {
             dispatch(logoutOAuth());
           }
         }

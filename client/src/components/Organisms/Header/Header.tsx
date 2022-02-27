@@ -54,7 +54,7 @@ const Header = () => {
         <div className="famous-saying">
           <Flicking circular horizontal={false} plugins={[new AutoPlay({ duration: 3000 })]}>
             {famousSayingJson.map((item) => (
-              <div>
+              <div key={item.name}>
                 {item.say} - {item.name}
               </div>
             ))}

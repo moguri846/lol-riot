@@ -91,8 +91,8 @@ const SummonerMatchItem = ({ match, onMatchDetail }: IProps) => {
     let s;
 
     if (gameEndTimestamp) {
-      m = Math.floor((gameEndTimestamp % 3600) / 60);
-      s = Math.floor(gameEndTimestamp % 60);
+      m = Math.floor((gameDuration % 3600) / 60);
+      s = Math.floor(gameDuration % 60);
     } else {
       const date = new Date(gameDuration);
       m = date.getMinutes();

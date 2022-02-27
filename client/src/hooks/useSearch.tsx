@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useLocation } from "react-router-dom";
 import { matchDetailInfo, summonerMatchList } from "../_actions/riot/riotActions";
 import { MatchListFilterType } from "../_actions/riot/interface/dispatch.interface";
 import { ComparingWithEnemyType } from "../_actions/riot/interface/matchSummary.interface";
 import { COMPARING_WITH_ENEMY } from "../_actions/riot/constant/riot.constant";
-import { RiotRootReducerType } from "../_reducers/riot/riotRootReducer";
+import { RootReducerType } from "../_reducers/rootReducer";
 
 export interface IUseSearch {
   summonerName: string;
@@ -15,19 +15,22 @@ export interface IUseSearch {
   onMatchDetail: (s: ComparingWithEnemyType) => void;
 }
 
-const useSearch = (state?: RiotRootReducerType): IUseSearch => {
+const useSearch = (): IUseSearch => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const params = useParams<{ summonerName: string }>();
+  const location = useLocation();
 
-  useEffect(() => {
-    if (params.summonerName) {
-      setSummonerName(params.summonerName);
-      // searchSummoner(params.summonerName, COMPARING_WITH_ENEMY);
-    }
-  }, []);
+  const state = useSelector((state: RootReducerType) => state);
 
   const [summonerName, setSummonerName] = useState<string>("");
+
+  useEffect(() => {
+    if (location.pathname !== "/" && state?.riot.summoner.puuid === "") {
+      const summonerName = decodeURIComponent(location.pathname.slice(10));
+      setSummonerName(summonerName);
+      dispatch(summonerMatchList(summonerName, COMPARING_WITH_ENEMY));
+    }
+  }, []);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSummonerName(e.currentTarget.value);

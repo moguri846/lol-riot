@@ -28,6 +28,10 @@ const LoginButtonContainer = styled.div``;
 const HeaderBottom = styled.div`
   justify-content: space-around;
   align-items: center;
+
+  & > div > .flicking-viewport {
+    height: 20px;
+  }
 `;
 
 const Ul = styled.ul`

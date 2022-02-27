@@ -1,12 +1,17 @@
 import React from "react";
-import useSearch from "../../../hooks/useSearch";
 import { Button } from "../../Atoms/Button/style";
 import { Link } from "react-router-dom";
-import * as S from "./style";
 import { useDispatch, useSelector } from "react-redux";
 import { RootReducerType } from "../../../_reducers/rootReducer";
 import { logoutOAuth } from "../../../_actions/user/userActions";
+import Flicking from "@egjs/react-flicking";
+import { AutoPlay } from "@egjs/flicking-plugins";
 import SearchSummoner from "../SearchSummoner/SearchSummoner";
+import * as S from "./style";
+import "@egjs/react-flicking/dist/flicking.css";
+
+// TODO: DB로 옮기기
+import famousSayingJson from "../../../json/famousSaying.json";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -45,7 +50,16 @@ const Header = () => {
             <S.Li onClick={selecetHandler}>커뮤니티</S.Li>
           </S.Ul>
         </nav>
-        <div className="famous-saying">명언</div>
+
+        <div className="famous-saying">
+          <Flicking circular horizontal={false} plugins={[new AutoPlay({ duration: 3000 })]}>
+            {famousSayingJson.map((item) => (
+              <div>
+                {item.say} - {item.name}
+              </div>
+            ))}
+          </Flicking>
+        </div>
       </S.HeaderBottom>
     </S.Header>
   );

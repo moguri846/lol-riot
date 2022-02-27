@@ -101,10 +101,16 @@ const SummonerMatchItem = ({ match, onMatchDetail }: IProps) => {
     return `${m}분 ${s}초`;
   };
 
+  const onMatchDetailToggle = (match: ComparingWithEnemyType) => {
+    if (!match.detail) {
+      onMatchDetail(match);
+    }
+  };
+
   return (
     <MatchItemContainer className={match.win ? "win" : "lose"}>
       <details>
-        <summary onClick={() => onMatchDetail(match)}>
+        <summary onClick={() => onMatchDetailToggle(match)}>
           <MatchItem>
             <MatchInfo>
               <span className="game-mode">{match.gameMode}</span>

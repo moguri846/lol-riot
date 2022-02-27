@@ -25,7 +25,7 @@ const useSearch = (): IUseSearch => {
   const [summonerName, setSummonerName] = useState<string>("");
 
   useEffect(() => {
-    if (location.pathname !== "/" && state?.riot.summoner.puuid === "") {
+    if (location.pathname.includes("/summoner") && state?.riot.summoner.puuid === "") {
       const summonerName = decodeURIComponent(location.pathname.slice(10));
       setSummonerName(summonerName);
       dispatch(summonerMatchList(summonerName, COMPARING_WITH_ENEMY));

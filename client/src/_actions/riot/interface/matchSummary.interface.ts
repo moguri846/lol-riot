@@ -80,6 +80,7 @@ interface IDetail {
   };
   timeEnemySpentControlled: number;
   totalGold: number;
+  totalCs: number;
   xp: number;
 }
 

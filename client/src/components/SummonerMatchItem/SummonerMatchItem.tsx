@@ -8,6 +8,8 @@ import {
   Items,
   Kda,
   LineGraphContainer,
+  LineGraphOptionItem,
+  LineGraphOptionList,
   MatchInfo,
   MatchItem,
   MatchItemContainer,
@@ -15,7 +17,7 @@ import {
   Player,
   PlayerStatus,
 } from "./style";
-import { TOTAL_GOLD, XP } from "../Graph/LineGraph/constant/LineGraph.constant";
+import { TOTAL_CS, TOTAL_GOLD, XP } from "../Graph/LineGraph/constant/LineGraph.constant";
 import { LineOptionsType } from "../Graph/LineGraph/interface/LineGraph.interface";
 import { getDataDragonImg } from "../../pages/common/commonFunc";
 
@@ -28,7 +30,7 @@ interface IProps {
 
 const SummonerMatchItem = ({ match, onMatchDetail }: IProps) => {
   const [players, setPlayers] = useState<PlayerType[]>([]);
-  const [timelineOptions, setTimelineOptions] = useState<LineOptionsType[]>([TOTAL_GOLD, XP]);
+  const [timelineOptions, setTimelineOptions] = useState<LineOptionsType[]>([TOTAL_GOLD, TOTAL_CS, XP]);
   const [selectOption, setSelectOption] = useState<LineOptionsType>(TOTAL_GOLD);
 
   useEffect(() => {
@@ -41,6 +43,9 @@ const SummonerMatchItem = ({ match, onMatchDetail }: IProps) => {
     switch (e.currentTarget.id) {
       case TOTAL_GOLD:
         option = TOTAL_GOLD;
+        break;
+      case TOTAL_CS:
+        option = TOTAL_CS;
         break;
       case XP:
         option = XP;
@@ -57,6 +62,8 @@ const SummonerMatchItem = ({ match, onMatchDetail }: IProps) => {
     switch (eng) {
       case TOTAL_GOLD:
         return "골드";
+      case TOTAL_CS:
+        return "미니언";
       case XP:
         return "경험치";
       default:
@@ -127,13 +134,18 @@ const SummonerMatchItem = ({ match, onMatchDetail }: IProps) => {
           </MatchItem>
         </summary>
         <LineGraphContainer>
-          <ul>
+          <LineGraphOptionList>
             {timelineOptions.map((option) => (
-              <li onClick={onSelectOption} id={option} key={option}>
+              <LineGraphOptionItem
+                className={option === selectOption ? "selected" : ""}
+                onClick={onSelectOption}
+                id={option}
+                key={option}
+              >
                 {engToKor(option)}
-              </li>
+              </LineGraphOptionItem>
             ))}
-          </ul>
+          </LineGraphOptionList>
           <LineGraph timeline={match.detail?.timeLine} option={selectOption} />
         </LineGraphContainer>
       </details>

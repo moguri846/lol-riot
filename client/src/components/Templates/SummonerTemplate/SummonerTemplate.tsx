@@ -7,6 +7,8 @@ import useSearch from "../../../hooks/useSearch";
 import BarGraph from "../../Graph/BarGraph/BarGraph";
 import CalendarGraph from "../../Graph/CalendarGraph/CalendarGraph";
 import SummonerMatchItem from "../../SummonerMatchItem/SummonerMatchItem";
+import { getDataDragonImg } from "../../../pages/common/commonFunc";
+
 import {
   SummonerContainer,
   ProfileImgContainer,
@@ -28,19 +30,10 @@ interface IProps {
 function SummonerTemplate({ summoner, matchSummary, jandi, lineWinOrLose }: IProps) {
   const { onMatchDetail } = useSearch();
 
-  const getProfileImg = (profileIconId: number) => {
-    return (
-      <img
-        src={`https://ddragon.leagueoflegends.com/cdn/12.3.1/img/profileicon/${profileIconId}.png`}
-        alt={`${profileIconId}`}
-      />
-    );
-  };
-
   return (
     <>
       <SummonerContainer>
-        <ProfileImgContainer>{getProfileImg(summoner.profileIconId)}</ProfileImgContainer>
+        <ProfileImgContainer>{getDataDragonImg("profileicon", summoner.profileIconId)}</ProfileImgContainer>
         <SummonerInfo>
           <span>{summoner.name}</span>
           <span>레벨 {summoner.summonerLevel}</span>

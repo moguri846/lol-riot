@@ -17,6 +17,7 @@ import {
 } from "./style";
 import { TOTAL_GOLD, XP } from "../Graph/LineGraph/constant/LineGraph.constant";
 import { LineOptionsType } from "../Graph/LineGraph/interface/LineGraph.interface";
+import { getDataDragonImg } from "../../pages/common/commonFunc";
 
 import "moment/locale/ko";
 
@@ -33,29 +34,6 @@ const SummonerMatchItem = ({ match, onMatchDetail }: IProps) => {
   useEffect(() => {
     setPlayers([{ ...match.player }, { ...match.enemy }]);
   }, []);
-
-  const getChampionImg = (championName: string) => {
-    return (
-      <img
-        src={`https://ddragon.leagueoflegends.com/cdn/12.3.1/img/champion/${championName}.png`}
-        alt={`${championName}`}
-      />
-    );
-  };
-
-  const getItemImg = (itemId: number) => {
-    return <img src={`http://ddragon.leagueoflegends.com/cdn/12.3.1/img/item/${itemId}.png`} alt={`${itemId}`} />;
-  };
-
-  const spellImg = (spellName: string) => {
-    return (
-      <img
-        key={spellName}
-        src={`http://ddragon.leagueoflegends.com/cdn/12.3.1/img/spell/${spellName}.png`}
-        alt={`${spellName}`}
-      />
-    );
-  };
 
   const onSelectOption = (e: React.MouseEvent<HTMLLIElement>) => {
     let option: LineOptionsType;
@@ -124,7 +102,7 @@ const SummonerMatchItem = ({ match, onMatchDetail }: IProps) => {
                   <Items className="items">
                     {player.items.map((item, idx) => (
                       <React.Fragment key={idx}>
-                        {item === 0 ? <Item className="none" /> : <Item>{getItemImg(item)}</Item>}
+                        {item === 0 ? <Item className="none" /> : <Item>{getDataDragonImg("item", item)}</Item>}
                       </React.Fragment>
                     ))}
                   </Items>
@@ -138,8 +116,10 @@ const SummonerMatchItem = ({ match, onMatchDetail }: IProps) => {
                     <span className="cs">CS {player.cs}</span>
                   </PlayerStatus>
                   <ChampionStatus className="champion-status">
-                    <div className="spell-img-container">{player.spells.map((spell) => spellImg(spell))}</div>
-                    <div className="champion-img-container">{getChampionImg(player.championName)}</div>
+                    <div className="spell-img-container">
+                      {player.spells.map((spell) => getDataDragonImg("spell", spell))}
+                    </div>
+                    <div className="champion-img-container">{getDataDragonImg("champion", player.championName)}</div>
                   </ChampionStatus>
                 </Player>
               ))}

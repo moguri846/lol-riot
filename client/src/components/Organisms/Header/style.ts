@@ -10,8 +10,9 @@ const Header = styled.header`
   border-bottom: 1px solid black;
 
   & > div {
-    width: 650px;
+    width: 760px;
     display: flex;
+    justify-content: space-around;
   }
 `;
 
@@ -26,7 +27,6 @@ const HeadeTop = styled.div`
 const LoginButtonContainer = styled.div``;
 
 const HeaderBottom = styled.div`
-  justify-content: space-around;
   align-items: center;
 
   & > div > .flicking-viewport {

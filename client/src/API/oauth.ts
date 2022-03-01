@@ -24,7 +24,7 @@ const oAuthReissueToken = (type: string) => {
 
 const oAuthMyInfo = (type: string) => {
   return Send({
-    method: Methods.POST,
+    method: Methods.GET,
     url: `/oauth/${type}/myInfo`,
   });
 };

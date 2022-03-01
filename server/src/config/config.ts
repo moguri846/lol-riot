@@ -2,6 +2,10 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+const mongoDBConfig = {
+  mongoDBUri: process.env.MONGODB_URI as string,
+};
+
 const riotConfig = {
   apiKey: process.env.RIOT_API_KEY as string,
 };
@@ -18,4 +22,4 @@ const naverConfig = {
   redirectUri: process.env.NAVER_REDIRECT_URI as string,
 };
 
-export { riotConfig, kakaoConfig, naverConfig };
+export { mongoDBConfig, riotConfig, kakaoConfig, naverConfig };

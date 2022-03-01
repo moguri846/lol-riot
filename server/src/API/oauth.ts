@@ -76,6 +76,14 @@ const oAuthNaver = (code: string, state: string) => {
   );
 };
 
+const oAuthNaverMyInfo = (authorization: string) => {
+  return axios.get("https://openapi.naver.com/v1/nid/me", {
+    headers: {
+      Authorization: authorization,
+    },
+  });
+};
+
 const oAuthNaverReissueToken = (refreshToken: string) => {
   const bodyData: any = {
     grant_type: "refresh_token",
@@ -103,6 +111,7 @@ export {
   oAuthKakaoMe,
   oAuthKakaoLogout,
   oAuthNaver,
+  oAuthNaverMyInfo,
   oAuthNaverReissueToken,
   oAuthNaverLogout,
 };

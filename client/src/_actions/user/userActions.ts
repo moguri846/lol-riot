@@ -51,7 +51,7 @@ const myInfoOAuth = () => async (dispatch: Dispatch<OAuthMyInfo>) => {
 
     const {
       data: { data: info },
-    } = await oAuthMyInfo(type);
+    } = await oAuthMyInfo(type.toLowerCase());
 
     dispatch({
       type: MY_INFO,

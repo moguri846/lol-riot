@@ -325,8 +325,18 @@ router.get("/matchInfo", async (req: Request, res: Response) => {
 
     for (let i = 0; i < data.info.frames.length; i++) {
       timeLineArr.push({
-        player: data.info.frames[i].participantFrames[playerIndex],
-        enemy: data.info.frames[i].participantFrames[enemyIndex],
+        player: {
+          totalCs:
+            data.info.frames[i].participantFrames[playerIndex].jungleMinionsKilled +
+            data.info.frames[i].participantFrames[playerIndex].minionsKilled,
+          ...data.info.frames[i].participantFrames[playerIndex],
+        },
+        enemy: {
+          totalCs:
+            data.info.frames[i].participantFrames[enemyIndex].jungleMinionsKilled +
+            data.info.frames[i].participantFrames[enemyIndex].minionsKilled,
+          ...data.info.frames[i].participantFrames[enemyIndex],
+        },
       });
     }
 

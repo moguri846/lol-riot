@@ -36,4 +36,15 @@ router.post("/updatePost", (req: Request, res: Response) => {
   });
 });
 
+router.get("/deletePost", (req: Request, res: Response) => {
+  const id = req.query.id;
+
+  Post.deleteOne({ _id: id }).exec((err: any) => {
+    if (err) {
+      resFunc({ res, err });
+    }
+    resFunc({ res });
+  });
+});
+
 export default router;

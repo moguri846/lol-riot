@@ -6,6 +6,7 @@ import SummonerPage from "../pages/SummonerPage/SummonerPage";
 import LoginPage from "../pages/LoginPage/LoginPage";
 import OAuth from "../components/OAuth";
 import Auth from "../hoc/Auth/Auth";
+import PostPage from "../pages/PostPage/PostPage";
 
 /*
   null => 누구나 가능
@@ -20,6 +21,7 @@ const Router = () => {
       <Route path="/summoner=:summonerName" element={Auth(SummonerPage, null)} />
       <Route path="/login" element={Auth(LoginPage, false)} />
       <Route path="/oauth/:type" element={Auth(OAuth, false)} />
+      <Route path="/post/:type" element={Auth(PostPage, true)} />
     </Routes>
   );
 };

@@ -40,6 +40,18 @@ const oAuthKakaoReissueToken = (refreshToken: string) => {
   });
 };
 
+const oAuthKakaoMe = (authorization: string) => {
+  return axios.post(
+    "https://kapi.kakao.com/v2/user/me",
+    {},
+    {
+      headers: {
+        Authorization: authorization,
+      },
+    }
+  );
+};
+
 const oAuthKakaoLogout = (authorization: string) => {
   return axios.post(
     `https://kapi.kakao.com/v1/user/logout`,
@@ -85,4 +97,12 @@ const oAuthNaverLogout = (authorization: string) => {
   );
 };
 
-export { oAuthkakao, oAuthKakaoReissueToken, oAuthKakaoLogout, oAuthNaver, oAuthNaverReissueToken, oAuthNaverLogout };
+export {
+  oAuthkakao,
+  oAuthKakaoReissueToken,
+  oAuthKakaoMe,
+  oAuthKakaoLogout,
+  oAuthNaver,
+  oAuthNaverReissueToken,
+  oAuthNaverLogout,
+};

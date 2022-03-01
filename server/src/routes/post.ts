@@ -24,4 +24,16 @@ router.get("/getPosts", (req: Request, res: Response) => {
   });
 });
 
+router.post("/updatePost", (req: Request, res: Response) => {
+  const id = req.query.id;
+  const { title, content } = req.body;
+
+  Post.updateOne({ _id: id }, { $set: { title, content } }).exec((err: any) => {
+    if (err) {
+      resFunc({ res, err });
+    }
+    resFunc({ res });
+  });
+});
+
 export default router;

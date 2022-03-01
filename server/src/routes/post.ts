@@ -5,7 +5,7 @@ import { Post } from "../models/post";
 const router = Router();
 
 router.post("/create", (req: Request, res: Response) => {
-  const post = new Post(req.body);
+  const post = new Post(req.body.post);
 
   post.save((err: any) => {
     if (err) {

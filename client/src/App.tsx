@@ -13,7 +13,7 @@ const Wrap = styled.div`
 `;
 
 const Main = styled.main`
-  width: 960px;
+  width: 760px;
   display: flex;
   flex-direction: column;
   justify-content: center;

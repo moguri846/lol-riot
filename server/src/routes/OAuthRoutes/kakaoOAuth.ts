@@ -26,7 +26,7 @@ router.post("/reissueToken", async (req: Request, res: Response) => {
   }
 });
 
-router.post("/myInfo", async (req: Request, res: Response) => {
+router.get("/myInfo", async (req: Request, res: Response) => {
   try {
     const authorization = req.headers.authorization as string;
     const myInfo = await oAuthKakaoMe(authorization);

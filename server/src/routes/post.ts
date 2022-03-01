@@ -15,4 +15,13 @@ router.post("/create", (req: Request, res: Response) => {
   });
 });
 
+router.get("/getPosts", (req: Request, res: Response) => {
+  Post.find().exec((err: any, posts: any) => {
+    if (err) {
+      resFunc({ res, err });
+    }
+    resFunc({ res, data: posts });
+  });
+});
+
 export default router;

@@ -22,6 +22,13 @@ const oAuthReissueToken = (type: string) => {
   });
 };
 
+const oAuthMyInfo = (type: string) => {
+  return Send({
+    method: Methods.POST,
+    url: `/oauth/${type}/myInfo`,
+  });
+};
+
 const oAuthLogout = (type: string) => {
   return Send({
     method: Methods.GET,
@@ -29,4 +36,4 @@ const oAuthLogout = (type: string) => {
   });
 };
 
-export { oAuthLogin, oAuthReissueToken, oAuthLogout };
+export { oAuthLogin, oAuthReissueToken, oAuthMyInfo, oAuthLogout };

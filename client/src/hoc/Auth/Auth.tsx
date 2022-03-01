@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { ITokenStatus } from "../../_actions/user/interface/user.interface";
-import { logoutOAuth, oAuthTokenCheck } from "../../_actions/user/userActions";
+import { logoutOAuth, myInfoOAuth, oAuthTokenCheck } from "../../_actions/user/userActions";
 
 const auth = (SpecificComponent: React.FC, option: boolean | null) => {
   const AuthenticationCheck = () => {
@@ -17,6 +17,8 @@ const auth = (SpecificComponent: React.FC, option: boolean | null) => {
           if (option === false) {
             navigate("/");
           }
+
+          dispatch(myInfoOAuth());
         } else {
           if (option) {
             navigate("/login");

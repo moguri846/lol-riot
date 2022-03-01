@@ -1,6 +1,7 @@
 import { Fail } from "../../common/interface/common.interface";
 import {
   EXPIRED_TOKEN,
+  MY_INFO,
   NON_EXISTENT_TOKEN,
   OAUTH_LOGIN,
   OAUTH_LOGOUT,
@@ -9,6 +10,7 @@ import {
 } from "../constant/user.constant";
 
 export type OAuthLogin = ISuccessOAuthLogin | Fail;
+export type OAuthMyInfo = ISuccessOAuthMyInfo | Fail;
 export type OAuthLogout = ISuccessOAuthLogout | Fail;
 export type OAuthTokenCheck = IReissueOAuthPayload | Fail;
 
@@ -23,6 +25,13 @@ interface ISuccessOAuthPayload {
 
 export interface ISuccessOAuthLogin extends ISuccessOAuthPayload {
   type: typeof OAUTH_LOGIN;
+}
+
+export interface ISuccessOAuthMyInfo {
+  type: typeof MY_INFO;
+  payload: {
+    email: string;
+  };
 }
 
 export interface ISuccessOAuthLogout extends ISuccessOAuthPayload {

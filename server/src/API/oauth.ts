@@ -1,5 +1,6 @@
 import axios from "axios";
 
+// KAKAO
 const kakaoLogin = (body: any) => {
   return axios.post("https://kauth.kakao.com/oauth/token", queryStringBody(body));
 };
@@ -16,6 +17,7 @@ const kakaoLogout = (config: any) => {
   return axios.post(`https://kapi.kakao.com/v1/user/logout`, {}, config);
 };
 
+// NAVER
 const naverlogin = (body: any) => {
   return axios.post(`https://nid.naver.com/oauth2.0/token`, queryStringBody(body));
 };

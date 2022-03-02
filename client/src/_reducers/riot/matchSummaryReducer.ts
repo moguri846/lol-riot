@@ -1,11 +1,12 @@
 import {
   ComparingWithEnemyType,
   IComparingWithEnemyDetail,
+  IPlayer,
 } from "../../_actions/riot/interface/matchSummary.interface";
 import { COMPARING_WITH_ENEMY, COMPARING_WITH_ENEMY_DETAIL } from "../../_actions/riot/constant/riot.constant";
 import { FAIL } from "../../_actions/common/constant/common.constant";
 
-const playerInitialValue = {
+const playerInitialValue: IPlayer = {
   summonerName: "",
   championName: "",
   champLevel: 0,
@@ -15,10 +16,6 @@ const playerInitialValue = {
   cs: 0,
   items: [],
   spells: [],
-  physicalDamageDealtToChampions: 0,
-  totalDamageDealt: 0,
-  goldEarned: 0,
-  index: 0,
 };
 
 const initialState: ComparingWithEnemyType[] = [
@@ -29,8 +26,10 @@ const initialState: ComparingWithEnemyType[] = [
     gameEndTimestamp: null,
     gameDuration: 0,
     player: playerInitialValue,
-    enemy: playerInitialValue,
+    players: [{ championName: "", summonerName: "" }],
     win: false,
+    myIndex: 0,
+    enemyIndex: 0,
     detail: null,
   },
 ];

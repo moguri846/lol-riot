@@ -4,10 +4,12 @@ export interface ComparingWithEnemyType {
   gameCreation: number;
   gameEndTimestamp: number | null;
   gameDuration: number;
-  player: PlayerType;
-  enemy: PlayerType;
+  player: IPlayer;
+  players: Pick<IPlayer, "championName" | "summonerName">[];
   win: boolean;
   detail: IComparingWithEnemyDetail | null;
+  myIndex: number;
+  enemyIndex: number;
 }
 
 export interface IComparingWithEnemyDetail {
@@ -84,7 +86,7 @@ interface IDetail {
   xp: number;
 }
 
-export interface PlayerType {
+export interface IPlayer {
   summonerName: string;
   championName: string;
   champLevel: number;
@@ -94,8 +96,4 @@ export interface PlayerType {
   cs: number;
   items: number[];
   spells: string[];
-  physicalDamageDealtToChampions: number;
-  totalDamageDealt: number;
-  goldEarned: number;
-  index: number;
 }

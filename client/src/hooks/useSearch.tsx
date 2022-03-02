@@ -60,8 +60,8 @@ const useSearch = (): IUseSearch => {
   const onMatchDetail = (s: ComparingWithEnemyType) => {
     const args = {
       gameId: s.gameId,
-      player: s.player.index,
-      enemy: s.enemy.index,
+      player: s.myIndex,
+      enemy: s.enemyIndex,
     };
     dispatch(matchDetailInfo(args));
   };

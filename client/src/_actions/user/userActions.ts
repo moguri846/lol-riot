@@ -71,9 +71,9 @@ const logoutOAuth = () => async (dispatch: Dispatch<OAuthLogout>) => {
   try {
     const type = localStorage.getItem("OAUTH_TYPE") as string;
 
-    localStorage.clear();
+    const { data } = await oAuthLogout(type.toLowerCase());
 
-    const { data } = await oAuthLogout(type);
+    localStorage.clear();
 
     dispatch({
       type: OAUTH_LOGOUT,

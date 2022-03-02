@@ -24,6 +24,7 @@ export interface MatchTimeLine {
         type: string;
       }[];
       participantFrames: {
+        totalCs: number;
         championStats: {
           abilityHaste: number;
           abilityPower: number;

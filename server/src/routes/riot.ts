@@ -193,6 +193,17 @@ router.get("/summonerMatchList", async (req: Request, res: Response) => {
             changeSpellIdToName(match.data.info.participants[myIndex].summoner1Id),
             changeSpellIdToName(match.data.info.participants[myIndex].summoner2Id),
           ],
+          wardsKilled: match.data.info.participants[myIndex].wardsKilled,
+          wardsPlaced: match.data.info.participants[myIndex].wardsPlaced,
+          detectorWardsPlaced: match.data.info.participants[myIndex].detectorWardsPlaced,
+        };
+
+        const enemy = {
+          championName: match.data.info.participants[enemyIndex].championName,
+          kills: match.data.info.participants[enemyIndex].kills,
+          wardsKilled: match.data.info.participants[enemyIndex].wardsKilled,
+          wardsPlaced: match.data.info.participants[enemyIndex].wardsPlaced,
+          detectorWardsPlaced: match.data.info.participants[enemyIndex].detectorWardsPlaced,
         };
 
         for (let i = 0; i < match.data.info.participants.length; i++) {
@@ -209,6 +220,7 @@ router.get("/summonerMatchList", async (req: Request, res: Response) => {
           gameDuration: match.data.info.gameDuration,
           gameMode: match.data.info.gameMode,
           player,
+          enemy,
           players,
           win: match.data.info.participants[myIndex].win,
           myIndex,
@@ -291,16 +303,16 @@ router.get("/matchInfo", async (req: Request, res: Response) => {
     for (let i = 0; i < data.info.frames.length; i++) {
       timeLineArr.push({
         player: {
+          ...data.info.frames[i].participantFrames[playerIndex],
           totalCs:
             data.info.frames[i].participantFrames[playerIndex].jungleMinionsKilled +
             data.info.frames[i].participantFrames[playerIndex].minionsKilled,
-          ...data.info.frames[i].participantFrames[playerIndex],
         },
         enemy: {
+          ...data.info.frames[i].participantFrames[enemyIndex],
           totalCs:
             data.info.frames[i].participantFrames[enemyIndex].jungleMinionsKilled +
             data.info.frames[i].participantFrames[enemyIndex].minionsKilled,
-          ...data.info.frames[i].participantFrames[enemyIndex],
         },
       });
     }
@@ -308,6 +320,24 @@ router.get("/matchInfo", async (req: Request, res: Response) => {
     const responseObj = {
       gameId: data.info.gameId,
       timeLine: timeLineArr,
+      player: {
+        totalCs: timeLineArr[timeLineArr.length - 1].player.totalCs,
+        totalGold: data.info.frames[data.info.frames.length - 1].participantFrames[playerIndex].totalGold,
+        totalDamageTaken:
+          data.info.frames[data.info.frames.length - 1].participantFrames[playerIndex].damageStats.totalDamageTaken,
+        totalDamageDoneToChampions:
+          data.info.frames[data.info.frames.length - 1].participantFrames[playerIndex].damageStats
+            .totalDamageDoneToChampions,
+      },
+      enemy: {
+        totalCs: timeLineArr[timeLineArr.length - 1].enemy.totalCs,
+        totalGold: data.info.frames[data.info.frames.length - 1].participantFrames[enemyIndex].totalGold,
+        totalDamageTaken:
+          data.info.frames[data.info.frames.length - 1].participantFrames[enemyIndex].damageStats.totalDamageTaken,
+        totalDamageDoneToChampions:
+          data.info.frames[data.info.frames.length - 1].participantFrames[enemyIndex].damageStats
+            .totalDamageDoneToChampions,
+      },
     };
 
     resFunc({ res, data: responseObj });

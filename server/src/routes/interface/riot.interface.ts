@@ -142,7 +142,7 @@ export interface Match {
       gameEndedInSurrender: boolean;
       goldEarned: number;
       goldSpent: number;
-      individualPosition: "TOP" | "JUNGLE" | "MIDDLE" | "BOTTOM" | "UTILITY";
+      individualPosition: "TOP" | "JUNGLE" | "MIDDLE" | "BOTTOM" | "UTILITY" | "Invalid";
       inhibitorKills: number;
       inhibitorTakedowns: number;
       inhibitorsLost: number;

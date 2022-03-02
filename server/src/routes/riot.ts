@@ -83,7 +83,7 @@ router.get("/summonerMatchList", async (req: Request, res: Response) => {
     const puuid = req.query.puuid as string;
     let matchArr: any[] = [];
     let jandi: Jandi[] = [];
-    let lineWinOrLose = {
+    let lineWinOrLose: any = {
       TOP: {
         win: 0,
         lose: 0,
@@ -117,6 +117,8 @@ router.get("/summonerMatchList", async (req: Request, res: Response) => {
     // matchId로 match 데이터 받아온 후 matchArr에 push
     await Promise.all(
       matchIds.data.map(async (matchId: string) => {
+        const players: any[] = [];
+        let enemyIndex: number = 0;
         let myIndex: number = 0;
         const match: AxiosResponse<Match> = await getMatchInfo(matchId);
 
@@ -128,130 +130,93 @@ router.get("/summonerMatchList", async (req: Request, res: Response) => {
           }
         }
 
-        if (match.data.info.gameMode === "CLASSIC") {
-          const initialValue = {
-            summonerName: "",
-            physicalDamageDealtToChampions: 0,
-            totalDamageDealt: 0,
-            goldEarned: 0,
-            kills: 0,
-            deaths: 0,
-            assists: 0,
-            championName: "",
-            champLevel: 0,
-            cs: 0,
-            items: [0, 0, 0, 0, 0, 0],
-            spells: ["", ""],
-            index: 0,
-          };
-
-          let player = initialValue;
-          let enemy = initialValue;
+        // 상대 index 찾기
+        for (let i = 0; i < match.data.info.participants.length; i++) {
           if (
-            moment(match.data.info.gameCreation).format("YYYY-MM-DD") >=
-            moment().subtract(19, "days").format("YYYY-MM-DD")
+            match.data.info.participants[myIndex].individualPosition ===
+            match.data.info.participants[i].individualPosition
           ) {
-            jandi.filter((date) => {
-              if (date.date === moment(match.data.info.gameCreation).format("YYYY-MM-DD")) {
-                return {
-                  ...date,
-                  win: match.data.info.participants[myIndex].win ? date.win++ : date.win,
-                  lose: match.data.info.participants[myIndex].win === false ? date.lose++ : date.lose,
-                  count: date.count++,
-                };
-              }
-            });
+            if (myIndex === i) {
+              continue;
+            }
+            enemyIndex = i;
+            break;
           }
+        }
 
+        // 일별 승패
+        if (
+          moment(match.data.info.gameCreation).format("YYYY-MM-DD") >=
+          moment().subtract(19, "days").format("YYYY-MM-DD")
+        ) {
+          jandi.filter((date) => {
+            if (date.date === moment(match.data.info.gameCreation).format("YYYY-MM-DD")) {
+              return {
+                ...date,
+                win: match.data.info.participants[myIndex].win && date.win++,
+                lose: match.data.info.participants[myIndex].win === false && date.lose++,
+                count: date.count++,
+              };
+            }
+          });
+        }
+
+        // 라인별 승패
+        if (match.data.info.participants[myIndex].individualPosition !== "Invalid") {
           if (match.data.info.participants[myIndex].win) {
             lineWinOrLose[match.data.info.participants[myIndex].individualPosition].win++;
-          } else if (!match.data.info.participants[myIndex].win) {
+          } else {
             lineWinOrLose[match.data.info.participants[myIndex].individualPosition].lose++;
           }
-          for (let i = 0; i < match.data.info.participants.length; i++) {
-            if (
-              match.data.info.participants[myIndex].individualPosition ===
-              match.data.info.participants[i].individualPosition
-            ) {
-              if (myIndex === i) {
-                continue;
-              }
-
-              player = {
-                summonerName: match.data.info.participants[myIndex].summonerName,
-                championName: match.data.info.participants[myIndex].championName,
-                champLevel: match.data.info.participants[myIndex].champLevel,
-                kills: match.data.info.participants[myIndex].kills,
-                deaths: match.data.info.participants[myIndex].deaths,
-                assists: match.data.info.participants[myIndex].assists,
-                cs:
-                  match.data.info.participants[myIndex].totalMinionsKilled +
-                  match.data.info.participants[myIndex].neutralMinionsKilled,
-                items: [
-                  match.data.info.participants[myIndex].item0,
-                  match.data.info.participants[myIndex].item1,
-                  match.data.info.participants[myIndex].item2,
-                  match.data.info.participants[myIndex].item6,
-                  match.data.info.participants[myIndex].item3,
-                  match.data.info.participants[myIndex].item4,
-                  match.data.info.participants[myIndex].item5,
-                ],
-                spells: [
-                  changeSpellIdToName(match.data.info.participants[myIndex].summoner1Id),
-                  changeSpellIdToName(match.data.info.participants[myIndex].summoner2Id),
-                ],
-                physicalDamageDealtToChampions: match.data.info.participants[myIndex].physicalDamageDealtToChampions,
-                totalDamageDealt: match.data.info.participants[myIndex].totalDamageDealt,
-                goldEarned: match.data.info.participants[myIndex].goldEarned,
-                index: myIndex,
-              };
-
-              enemy = {
-                summonerName: match.data.info.participants[i].summonerName,
-                championName: match.data.info.participants[i].championName,
-                champLevel: match.data.info.participants[i].champLevel,
-                kills: match.data.info.participants[i].kills,
-                deaths: match.data.info.participants[i].deaths,
-                assists: match.data.info.participants[i].assists,
-                cs:
-                  match.data.info.participants[i].totalMinionsKilled +
-                  match.data.info.participants[i].neutralMinionsKilled,
-                items: [
-                  match.data.info.participants[i].item0,
-                  match.data.info.participants[i].item1,
-                  match.data.info.participants[i].item2,
-                  match.data.info.participants[i].item6,
-                  match.data.info.participants[i].item3,
-                  match.data.info.participants[i].item4,
-                  match.data.info.participants[i].item5,
-                ],
-                spells: [
-                  changeSpellIdToName(match.data.info.participants[i].summoner1Id),
-                  changeSpellIdToName(match.data.info.participants[i].summoner2Id),
-                ],
-                physicalDamageDealtToChampions: match.data.info.participants[i].physicalDamageDealtToChampions,
-                totalDamageDealt: match.data.info.participants[i].totalDamageDealt,
-                goldEarned: match.data.info.participants[i].goldEarned,
-                index: i,
-              };
-              break;
-            }
-          }
-
-          const appendValues = {
-            gameCreation: match.data.info.gameCreation,
-            gameId: match.data.info.gameId,
-            gameEndTimestamp: match.data.info.gameEndTimestamp ? match.data.info.gameEndTimestamp : null,
-            gameDuration: match.data.info.gameDuration,
-            gameMode: match.data.info.gameMode,
-            player,
-            enemy,
-            win: match.data.info.participants[myIndex].win,
-            detail: null,
-          };
-
-          matchArr.push({ ...appendValues });
         }
+
+        const player = {
+          summonerName: match.data.info.participants[myIndex].summonerName,
+          championName: match.data.info.participants[myIndex].championName,
+          champLevel: match.data.info.participants[myIndex].champLevel,
+          kills: match.data.info.participants[myIndex].kills,
+          deaths: match.data.info.participants[myIndex].deaths,
+          assists: match.data.info.participants[myIndex].assists,
+          cs:
+            match.data.info.participants[myIndex].totalMinionsKilled +
+            match.data.info.participants[myIndex].neutralMinionsKilled,
+          items: [
+            match.data.info.participants[myIndex].item0,
+            match.data.info.participants[myIndex].item1,
+            match.data.info.participants[myIndex].item2,
+            match.data.info.participants[myIndex].item6,
+            match.data.info.participants[myIndex].item3,
+            match.data.info.participants[myIndex].item4,
+            match.data.info.participants[myIndex].item5,
+          ],
+          spells: [
+            changeSpellIdToName(match.data.info.participants[myIndex].summoner1Id),
+            changeSpellIdToName(match.data.info.participants[myIndex].summoner2Id),
+          ],
+        };
+
+        for (let i = 0; i < match.data.info.participants.length; i++) {
+          players.push({
+            summonerName: match.data.info.participants[i].summonerName,
+            championName: match.data.info.participants[i].championName,
+          });
+        }
+
+        const appendValues = {
+          gameCreation: match.data.info.gameCreation,
+          gameId: match.data.info.gameId,
+          gameEndTimestamp: match.data.info.gameEndTimestamp ? match.data.info.gameEndTimestamp : null,
+          gameDuration: match.data.info.gameDuration,
+          gameMode: match.data.info.gameMode,
+          player,
+          players,
+          win: match.data.info.participants[myIndex].win,
+          myIndex,
+          enemyIndex,
+          detail: null,
+        };
+
+        matchArr.push({ ...appendValues });
       })
     );
     // gameCreation기준 내림차순 정렬

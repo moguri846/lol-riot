@@ -16,6 +16,9 @@ const playerInitialValue: IPlayer = {
   cs: 0,
   items: [],
   spells: [],
+  wardsPlaced: 0,
+  detectorWardsPlaced: 0,
+  wardsKilled: 0,
 };
 
 const initialState: ComparingWithEnemyType[] = [
@@ -25,6 +28,13 @@ const initialState: ComparingWithEnemyType[] = [
     gameCreation: 0,
     gameEndTimestamp: null,
     gameDuration: 0,
+    enemy: {
+      championName: "",
+      kills: 0,
+      wardsPlaced: 0,
+      detectorWardsPlaced: 0,
+      wardsKilled: 0,
+    },
     player: playerInitialValue,
     players: [{ championName: "", summonerName: "" }],
     win: false,

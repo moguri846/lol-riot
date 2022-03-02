@@ -5,6 +5,7 @@ export interface ComparingWithEnemyType {
   gameEndTimestamp: number | null;
   gameDuration: number;
   player: IPlayer;
+  enemy: Pick<IPlayer, "championName" | "kills" | "wardsPlaced" | "detectorWardsPlaced" | "wardsKilled">;
   players: Pick<IPlayer, "championName" | "summonerName">[];
   win: boolean;
   detail: IComparingWithEnemyDetail | null;
@@ -15,6 +16,18 @@ export interface ComparingWithEnemyType {
 export interface IComparingWithEnemyDetail {
   gameId: number;
   timeLine: ITimeLine[];
+  player: {
+    totalCs: number;
+    totalGold: number;
+    totalDamageTaken: number;
+    totalDamageDoneToChampions: number;
+  };
+  enemy: {
+    totalCs: number;
+    totalGold: number;
+    totalDamageTaken: number;
+    totalDamageDoneToChampions: number;
+  };
 }
 
 export interface IMatchSummaryDetailParameter {
@@ -96,4 +109,7 @@ export interface IPlayer {
   cs: number;
   items: number[];
   spells: string[];
+  wardsPlaced: number;
+  detectorWardsPlaced: number;
+  wardsKilled: number;
 }

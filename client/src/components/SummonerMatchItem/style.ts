@@ -189,13 +189,13 @@ const ChampionStatus = styled.div`
   }
 `;
 
-const LineGraphOptionList = styled.ul`
+const OptionList = styled.ul`
   display: flex;
   justify-content: center;
   cursor: pointer;
 `;
 
-const LineGraphOptionItem = styled.li`
+const OptionItem = styled.li`
   margin: 10px;
 
   &.selected {
@@ -225,7 +225,7 @@ export {
   Items,
   Item,
   Players,
-  LineGraphOptionList,
-  LineGraphOptionItem,
+  OptionList,
+  OptionItem,
   LineGraphContainer,
 };

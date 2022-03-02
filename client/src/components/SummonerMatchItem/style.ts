@@ -3,9 +3,8 @@ import styled from "styled-components";
 const MatchItemContainer = styled.li`
   margin-bottom: 10px;
   cursor: pointer;
-
   &.win {
-    background-color: #85c1e9;
+    background-color: #9ad0f5;
 
     & > details > summary > div> div:nth-of-type(1) > .win-lose {
       color: #21618C;
@@ -13,7 +12,7 @@ const MatchItemContainer = styled.li`
   }
 
   &.lose {
-    background-color: #ec7063;
+    background-color: #EF9A9A;
 
     & > details > summary > div> div:nth-of-type(1) > .win-lose {
       color: #7B241C;
@@ -49,10 +48,14 @@ const MatchItem = styled.div`
 `;
 
 const MatchInfo = styled.div`
-  width: 80px;
+  width: 90px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  & > .game-mode {
+    font-weight: bold;
+  }
 
   & > .win-lose {
     font-weight: bold;
@@ -60,21 +63,8 @@ const MatchInfo = styled.div`
 `;
 
 const MatchStatusContainer = styled.div`
-  & > .enemy {
-    flex-direction: row-reverse;
-
-    & > .champion-status {
-      flex-direction: row-reverse;
-    }
-  }
-`;
-
-const Player = styled.div`
-  display: flex;
-  align-items: center;
-
   & > * {
-    margin-right: 10px;
+    margin-right: 5px;
   }
 `;
 
@@ -82,6 +72,43 @@ const Items = styled.ul`
   width: 165px;
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
+`;
+
+const Players = styled.ul`
+  width: 250px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin: 0px;
+`;
+
+const Player = styled.li`
+  width: 120px;
+  display: flex;
+
+  &.me {
+    font-weight: bold;
+  }
+
+  & > div {
+    height: 16px;
+    margin: 2px 0px;
+  }
+
+  & > .summoner-name {
+    margin-left: 5px;
+    font-size: 11px;
+    line-height: 17px;
+  }
+
+  & > .champion-img > img {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const Item = styled.li`
@@ -101,15 +128,20 @@ const Item = styled.li`
   }
 `;
 const Kda = styled.div`
-  width: 70px;
+  width: 100px;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 
   & > span {
-    width: 100%;
+    width: 20%;
     text-align: center;
+    font-weight: bold;
+  }
+
+  & > .deaths {
+    color: #c6443e;
   }
 `;
 
@@ -120,6 +152,10 @@ const PlayerStatus = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  & > div > span {
+    font-weight: bold;
+  }
 `;
 
 const ChampionStatus = styled.div`
@@ -145,8 +181,8 @@ const ChampionStatus = styled.div`
     align-items: center;
 
     & > img {
-      width: 35px;
-      height: 35px;
+      width: 30px;
+      height: 30px;
       margin: 2px 0px;
       border-radius: 5px;
     }
@@ -188,6 +224,7 @@ export {
   Player,
   Items,
   Item,
+  Players,
   LineGraphOptionList,
   LineGraphOptionItem,
   LineGraphContainer,

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import moment from "moment";
-import { ComparingWithEnemyType, PlayerType } from "../../_actions/riot/interface/matchSummary.interface";
+import { ComparingWithEnemyType } from "../../_actions/riot/interface/matchSummary.interface";
 import LineGraph from "../Graph/LineGraph/LineGraph";
 import {
   ChampionStatus,
@@ -15,6 +15,7 @@ import {
   MatchItemContainer,
   MatchStatusContainer,
   Player,
+  Players,
   PlayerStatus,
 } from "./style";
 import { TOTAL_CS, TOTAL_GOLD, XP } from "../Graph/LineGraph/constant/LineGraph.constant";
@@ -29,13 +30,8 @@ interface IProps {
 }
 
 const SummonerMatchItem = ({ match, onMatchDetail }: IProps) => {
-  const [players, setPlayers] = useState<PlayerType[]>([]);
   const [timelineOptions, setTimelineOptions] = useState<LineOptionsType[]>([TOTAL_GOLD, TOTAL_CS, XP]);
   const [selectOption, setSelectOption] = useState<LineOptionsType>(TOTAL_GOLD);
-
-  useEffect(() => {
-    setPlayers([{ ...match.player }, { ...match.enemy }]);
-  }, []);
 
   const onSelectOption = (e: React.MouseEvent<HTMLLIElement>) => {
     let option: LineOptionsType;
@@ -104,32 +100,42 @@ const SummonerMatchItem = ({ match, onMatchDetail }: IProps) => {
               <span className="game-creation">{moment(match.gameCreation).startOf("hour").fromNow()}</span>
             </MatchInfo>
             <MatchStatusContainer>
-              {players.map((player, idx) => (
-                <Player key={idx} className={idx === 1 ? "enemy" : "player"}>
-                  <Items className="items">
-                    {player.items.map((item, idx) => (
-                      <React.Fragment key={idx}>
-                        {item === 0 ? <Item className="none" /> : <Item>{getDataDragonImg("item", item)}</Item>}
-                      </React.Fragment>
-                    ))}
-                  </Items>
-                  <Kda className="kda">
-                    <span>
-                      {player.kills} / {player.deaths} / {player.assists}
-                    </span>
-                  </Kda>
-                  <PlayerStatus className="player-status">
-                    <span className="level">레벨 {player.champLevel}</span>
-                    <span className="cs">CS {player.cs}</span>
-                  </PlayerStatus>
-                  <ChampionStatus className="champion-status">
-                    <div className="spell-img-container">
-                      {player.spells.map((spell) => getDataDragonImg("spell", spell))}
-                    </div>
-                    <div className="champion-img-container">{getDataDragonImg("champion", player.championName)}</div>
-                  </ChampionStatus>
-                </Player>
-              ))}
+              <ChampionStatus className="champion-status">
+                <div className="champion-img-container">{getDataDragonImg("champion", match.player.championName)}</div>
+                <div className="spell-img-container">
+                  {match.player.spells.map((spell) => getDataDragonImg("spell", spell))}
+                </div>
+              </ChampionStatus>
+              <Kda className="kda">
+                <span className="kill">{match.player.kills}</span>/<span className="deaths">{match.player.deaths}</span>
+                /<span className="assists">{match.player.assists}</span>
+              </Kda>
+              <PlayerStatus className="player-status">
+                <div className="lelvel">
+                  레벨 <span>{match.player.champLevel}</span>
+                </div>
+                <div className="cs">
+                  CS <span>{match.player.cs}</span>
+                </div>
+              </PlayerStatus>
+              <Items className="items">
+                {match.player.items.map((item, idx) => (
+                  <React.Fragment key={idx}>
+                    {item === 0 ? <Item className="none" /> : <Item>{getDataDragonImg("item", item)}</Item>}
+                  </React.Fragment>
+                ))}
+              </Items>
+              <Players>
+                {match.players.map((player) => (
+                  <Player
+                    key={player.summonerName}
+                    className={match.player.summonerName === player.summonerName ? "me" : ""}
+                  >
+                    <div className="champion-img">{getDataDragonImg("champion", player.championName)}</div>
+                    <div className="summoner-name">{player.summonerName}</div>
+                  </Player>
+                ))}
+              </Players>
             </MatchStatusContainer>
           </MatchItem>
         </summary>

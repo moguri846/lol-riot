@@ -7,6 +7,7 @@ import LoginPage from "../pages/LoginPage/LoginPage";
 import OAuth from "../components/OAuth";
 import Auth from "../hoc/Auth/Auth";
 import PostPage from "../pages/PostPage/PostPage";
+import ArticlePage from "../pages/ArticlePage/ArticlePage";
 
 /*
   null => 누구나 가능
@@ -22,6 +23,7 @@ const Router = () => {
       <Route path="/login" element={Auth(LoginPage, false)} />
       <Route path="/oauth/:type" element={Auth(OAuth, false)} />
       <Route path="/post/:type" element={Auth(PostPage, true)} />
+      <Route path="/article/:id" element={Auth(ArticlePage, null)} />
     </Routes>
   );
 };

@@ -16,7 +16,9 @@ router.post("/create", (req: Request, res: Response) => {
 });
 
 router.get("/getPosts", (req: Request, res: Response) => {
-  Post.find().exec((err: any, posts: any) => {
+  const category = req.query.category;
+
+  Post.find({ category }).exec((err: any, posts: any) => {
     if (err) {
       resFunc({ res, err });
     }

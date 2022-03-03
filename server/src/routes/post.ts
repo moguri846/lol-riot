@@ -19,12 +19,23 @@ router.post("/create", (req: Request, res: Response) => {
 router.get("/getCategoryPosts", (req: Request, res: Response) => {
   const category = req.query.category;
 
-  Post.find({ category }).exec((err: any, posts: any) => {
-    if (err) {
-      resFunc({ res, err });
-    }
-    resFunc({ res, data: posts });
-  });
+  if (category === MOST_POPULAR) {
+    Post.find()
+      .sort({ views: 1 })
+      .exec((err: any, posts: any) => {
+        if (err) {
+          resFunc({ res, err });
+        }
+        resFunc({ res, data: posts });
+      });
+  } else {
+    Post.find({ category }).exec((err: any, posts: any) => {
+      if (err) {
+        resFunc({ res, err });
+      }
+      resFunc({ res, data: posts });
+    });
+  }
 });
 
 router.get("/getPost", (req: Request, res: Response) => {

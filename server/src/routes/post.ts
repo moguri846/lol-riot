@@ -1,6 +1,7 @@
 import { Request, Response, Router } from "express";
 import { resFunc } from "../common/ResSuccessOrFalse.function";
 import { Post } from "../models/post";
+import { MOST_POPULAR } from "./constant/post.constant";
 
 const router = Router();
 
@@ -15,7 +16,7 @@ router.post("/create", (req: Request, res: Response) => {
   });
 });
 
-router.get("/getPosts", (req: Request, res: Response) => {
+router.get("/getCategoryPosts", (req: Request, res: Response) => {
   const category = req.query.category;
 
   Post.find({ category }).exec((err: any, posts: any) => {
@@ -23,6 +24,17 @@ router.get("/getPosts", (req: Request, res: Response) => {
       resFunc({ res, err });
     }
     resFunc({ res, data: posts });
+  });
+});
+
+router.get("/getPost", (req: Request, res: Response) => {
+  const id = req.query.id;
+
+  Post.findOneAndUpdate({ _id: id }, { $inc: { views: 1 } }).exec((err, post) => {
+    if (err) {
+      resFunc({ res, err });
+    }
+    resFunc({ res, data: post });
   });
 });
 

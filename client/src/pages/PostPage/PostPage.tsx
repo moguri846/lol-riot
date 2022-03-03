@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { RootReducerType } from "../../_reducers/rootReducer";
 import { useLocation, useNavigate } from "react-router-dom";
 import { createPost } from "../../API/post";
+import { DUO, FREE } from "../IndexPage/constant/indexPage.constant";
 
 interface IPost {
   category: string;
@@ -71,8 +72,8 @@ const PostPage = () => {
       <S.SelectContainer>
         <S.Select id="category" onChange={handleChangePostValue}>
           <option value="">카테고리를 선택해 주세요.</option>
-          <option value="free">자유</option>
-          <option value="duo">듀오</option>
+          <option value={FREE}>자유</option>
+          <option value={DUO}>듀오</option>
         </S.Select>
       </S.SelectContainer>
       <S.InputTitleContainer>

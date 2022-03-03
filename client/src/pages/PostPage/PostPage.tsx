@@ -8,6 +8,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { createPost } from "../../API/post";
 
 interface IPost {
+  category: string;
   title: string;
   content: string;
 }
@@ -19,11 +20,12 @@ const PostPage = () => {
   const info = useSelector((state: RootReducerType) => state.user.info);
 
   const [post, setPost] = useState<IPost>({
+    category: "",
     title: "",
     content: "",
   });
 
-  const handlePostValueChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChangePostValue = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const target = e.currentTarget.id;
 
     setPost({
@@ -32,9 +34,10 @@ const PostPage = () => {
     });
   };
 
-  const handleSubmit = async ({ title, content }: IPost) => {
+  const handleSubmit = async ({ category, title, content }: IPost) => {
     const body = {
       writer: info.email,
+      category,
       title,
       content,
     };
@@ -53,7 +56,7 @@ const PostPage = () => {
   };
 
   const handleCheckPostValue = () => {
-    if (post.title && post.content) {
+    if (post.category && post.title && post.content) {
       handleSubmit(post);
     } else {
       alert("모든 곳에 값을 넣어주세요!");
@@ -65,11 +68,18 @@ const PostPage = () => {
       <S.PostTitleContainer>
         <h1>{location.pathname.slice(6).toUpperCase()}</h1>
       </S.PostTitleContainer>
+      <S.SelectContainer>
+        <S.Select id="category" onChange={handleChangePostValue}>
+          <option value="">카테고리를 선택해 주세요.</option>
+          <option value="free">자유</option>
+          <option value="duo">듀오</option>
+        </S.Select>
+      </S.SelectContainer>
       <S.InputTitleContainer>
-        <Input id="title" placeholder="제목을 입력해 주세요" onChange={handlePostValueChange} />
+        <Input id="title" placeholder="제목을 입력해 주세요" onChange={handleChangePostValue} />
       </S.InputTitleContainer>
       <S.InputContentContainer>
-        <textarea id="content" onChange={handlePostValueChange}></textarea>
+        <textarea id="content" onChange={handleChangePostValue}></textarea>
       </S.InputContentContainer>
       <Button onClick={handleCheckPostValue}>생성하기</Button>
     </S.PostContainer>

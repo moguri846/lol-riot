@@ -15,6 +15,15 @@ const PostContainer = styled.div`
   }
 `;
 
+const SelectContainer = styled.div`
+  width: 100%;
+`;
+
+const Select = styled.select`
+  width: 100%;
+  padding: 6px;
+`;
+
 const PostTitleContainer = styled.div`
   text-align: center;
 `;
@@ -46,4 +55,4 @@ const InputContentContainer = styled.div`
   }
 `;
 
-export { PostContainer, PostTitleContainer, InputTitleContainer, InputContentContainer };
+export { PostContainer, SelectContainer, Select, PostTitleContainer, InputTitleContainer, InputContentContainer };

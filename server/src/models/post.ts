@@ -4,6 +4,9 @@ const postSchema = new mongoose.Schema({
   writer: {
     type: String,
   },
+  category: {
+    type: String,
+  },
   title: {
     type: String,
   },

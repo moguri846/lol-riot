@@ -46,13 +46,14 @@ const ProgressBarContainer = styled.div`
 
 const Progress = styled.div`
   height: 100%;
+  transition: 1.5s cubic-bezier(0.07, 0.94, 0.51, 0.99);
 
   &.player {
-    background-color: blue;
+    background-color: #1f26f7;
   }
 
   &.enemy {
-    background-color: red;
+    background-color: #f3360d;
   }
 `;
 

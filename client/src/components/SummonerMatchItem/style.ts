@@ -128,7 +128,7 @@ const Item = styled.li`
   }
 `;
 const Kda = styled.div`
-  width: 100px;
+  width: 80px;
   height: 100%;
   display: flex;
   justify-content: center;

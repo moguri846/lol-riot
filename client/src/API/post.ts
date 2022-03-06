@@ -10,6 +10,17 @@ const createPost = (post: any) => {
   });
 };
 
+const getPost = (id: string) => {
+  const queryStringObj = {
+    id,
+  };
+
+  return Send({
+    method: Methods.GET,
+    url: `/post/getPost?${makeQueryString(queryStringObj)}`,
+  });
+};
+
 const getCategoryPosts = (category: string) => {
   const queryStringObj = {
     category,
@@ -40,4 +51,4 @@ const deletePost = (id: number) => {
   });
 };
 
-export { createPost, getCategoryPosts, updatePost, deletePost };
+export { createPost, getPost, getCategoryPosts, updatePost, deletePost };

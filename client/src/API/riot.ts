@@ -4,7 +4,7 @@ import { makeQueryString } from "./common/commonFunc";
 import { IMatchSummaryDetailParameter } from "../_actions/riot/interface/matchSummary.interface";
 import { Methods } from "./common/methods";
 
-const getSummonerMatchList = (summonerName: string, type: MatchListFilterType) => {
+const loadSummonerInfo = (summonerName: string, type: MatchListFilterType) => {
   const queryStringObj = {
     summonerName,
     type,
@@ -15,7 +15,14 @@ const getSummonerMatchList = (summonerName: string, type: MatchListFilterType) =
   });
 };
 
-const getMatchDetailInfo = ({ gameId, player, enemy }: IMatchSummaryDetailParameter) => {
+const loadMatchInfo = (puuid: string) => {
+  return Send({
+    method: Methods.GET,
+    url: `/riot/summonerMatchList?${makeQueryString({ puuid })}`,
+  });
+};
+
+const loadMatchDetailInfo = ({ gameId, player, enemy }: IMatchSummaryDetailParameter) => {
   const queryStringObj = {
     gameId,
     player,
@@ -27,11 +34,4 @@ const getMatchDetailInfo = ({ gameId, player, enemy }: IMatchSummaryDetailParame
   });
 };
 
-const loadSummonerMatchInfo = (puuid: string) => {
-  return Send({
-    method: Methods.GET,
-    url: `/riot/summonerMatchList?${makeQueryString({ puuid })}`,
-  });
-};
-
-export { getSummonerMatchList, getMatchDetailInfo, loadSummonerMatchInfo };
+export { loadSummonerInfo, loadMatchDetailInfo, loadMatchInfo };

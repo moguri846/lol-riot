@@ -28,7 +28,7 @@ const useSearch = (): IUseSearch => {
     if (location.pathname.includes("/summoner") && state?.riot.summoner.puuid === "") {
       const summonerName = decodeURIComponent(location.pathname.slice(10));
       setSummonerName(summonerName);
-      dispatch(summonerMatchList(summonerName, COMPARING_WITH_ENEMY));
+      searchSummoner(summonerName, COMPARING_WITH_ENEMY);
     }
   }, []);
 
@@ -40,6 +40,7 @@ const useSearch = (): IUseSearch => {
     if (e.key === "Enter") {
       if (beforeDispatch(summonerName)) {
         searchSummoner(summonerName, COMPARING_WITH_ENEMY);
+        routerPush(summonerName);
       }
     }
   };
@@ -47,6 +48,7 @@ const useSearch = (): IUseSearch => {
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (beforeDispatch(summonerName)) {
       searchSummoner(summonerName, COMPARING_WITH_ENEMY);
+      routerPush(summonerName);
     }
   };
 
@@ -68,7 +70,6 @@ const useSearch = (): IUseSearch => {
 
   const searchSummoner = (summonerName: string, type: MatchListFilterType) => {
     dispatch(summonerMatchList(summonerName, type));
-    routerPush(summonerName);
   };
 
   const routerPush = (summonerName: string) => {

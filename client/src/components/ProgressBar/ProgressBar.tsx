@@ -28,7 +28,7 @@ const ProgressBar = ({ title, players }: IProps) => {
       <h1>{title}</h1>
       <S.PlayerContainer>
         {players?.map((player, idx) => (
-          <S.Player>
+          <S.Player key={idx}>
             <S.Icon>{getDataDragonImg("champion", player.champion)}</S.Icon>
             <S.ProgressBarContainer>
               <span>{player.value || 0}</span>

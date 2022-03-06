@@ -13,12 +13,37 @@ const ProfileImgContainer = styled.div`
     height: 120px;
     border-radius: 50%;
   }
+
+  & > .level {
+    text-align: center;
+
+    & > span > span {
+      font-weight: bold;
+    }
+  }
 `;
 
-const SummonerInfo = styled.div``;
+const SummonerInfo = styled.div`
+  & > .info > .name {
+    font-weight: bold;
+    font-size: 20px;
+  }
+
+  & > .info > .win-lose {
+    display: flex;
+    justify-content: space-evenly;
+    font-size: 16px;
+  }
+`;
 
 const SummonerRank = styled.div`
   display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  & > .tier-rank > .rank {
+    font-weight: bold;
+  }
 `;
 
 const GraphContainer = styled.div`

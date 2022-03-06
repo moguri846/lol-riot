@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
-import { matchDetailInfo, summonerMatchList } from "../_actions/riot/riotActions";
+import { summonerInfo, matchInfo, matchDetailInfo } from "../_actions/riot/riotActions";
 import { MatchListFilterType } from "../_actions/riot/interface/dispatch.interface";
 import { ComparingWithEnemyType } from "../_actions/riot/interface/matchSummary.interface";
 import { COMPARING_WITH_ENEMY } from "../_actions/riot/constant/riot.constant";
 import { RootReducerType } from "../_reducers/rootReducer";
+import { statusAction } from "../_actions/status/statusActions";
+import { LOADING, FULFILLED } from "../_actions/status/constant/status.constant";
+import { SummonerType } from "../_actions/riot/interface/summoner.interface";
 
 export interface IUseSearch {
   summonerName: string;
@@ -68,8 +71,16 @@ const useSearch = (): IUseSearch => {
     dispatch(matchDetailInfo(args));
   };
 
-  const searchSummoner = (summonerName: string, type: MatchListFilterType) => {
-    dispatch(summonerMatchList(summonerName, type));
+  const searchSummoner = async (summonerName: string, type: MatchListFilterType) => {
+    dispatch(statusAction(LOADING, { summoner: true, match: true }));
+
+    const summoner = (await dispatch(summonerInfo(summonerName, type))) as unknown as SummonerType;
+
+    dispatch(statusAction(FULFILLED, { summoner: false }));
+
+    await dispatch(matchInfo(summoner.puuid));
+
+    dispatch(statusAction(FULFILLED, { match: false }));
   };
 
   const routerPush = (summonerName: string) => {

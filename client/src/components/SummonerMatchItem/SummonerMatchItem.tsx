@@ -9,17 +9,17 @@ import { getDataDragonImg } from "../../pages/common/commonFunc";
 
 import "moment/locale/ko";
 import ProgressBar from "../ProgressBar/ProgressBar";
+import { ANALYSIS, TIMELINE } from "./constant/SummonerMatchItem.constant";
+import { OptionType } from "./interface/SummonerMatchItem.interface";
 
 interface IProps {
   match: ComparingWithEnemyType;
   onMatchDetail: (s: ComparingWithEnemyType) => void;
 }
 
-type OptionType = "GB" | "ETC";
-
 const SummonerMatchItem = ({ match, onMatchDetail }: IProps) => {
-  const [options, setOptions] = useState<OptionType[]>(["GB", "ETC"]);
-  const [selectOption, setSelectOption] = useState<OptionType>("GB");
+  const [options, setOptions] = useState<OptionType[]>([ANALYSIS, TIMELINE]);
+  const [selectOption, setSelectOption] = useState<OptionType>(ANALYSIS);
   const [timelineOptions, setTimelineOptions] = useState<LineOptionsType[]>([TOTAL_GOLD, TOTAL_CS, XP]);
   const [selectTimeLineOption, setSelectTimeLineOption] = useState<LineOptionsType>(TOTAL_GOLD);
 
@@ -52,9 +52,9 @@ const SummonerMatchItem = ({ match, onMatchDetail }: IProps) => {
         return "미니언";
       case XP:
         return "경험치";
-      case "GB":
+      case ANALYSIS:
         return "경기 분석";
-      case "ETC":
+      case TIMELINE:
         return "타임라인";
       default:
         return "";
@@ -86,14 +86,14 @@ const SummonerMatchItem = ({ match, onMatchDetail }: IProps) => {
     let option: OptionType;
 
     switch (e.currentTarget.id) {
-      case "GB":
-        option = "GB";
+      case ANALYSIS:
+        option = ANALYSIS;
         break;
-      case "ETC":
-        option = "ETC";
+      case TIMELINE:
+        option = TIMELINE;
         break;
       default:
-        option = "GB";
+        option = ANALYSIS;
         break;
     }
     setSelectOption(option);
@@ -162,7 +162,7 @@ const SummonerMatchItem = ({ match, onMatchDetail }: IProps) => {
             </S.OptionItem>
           ))}
         </S.OptionList>
-        {selectOption === "GB" && (
+        {selectOption === ANALYSIS && (
           <ul style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-around" }}>
             <li>
               <ProgressBar
@@ -220,7 +220,7 @@ const SummonerMatchItem = ({ match, onMatchDetail }: IProps) => {
             </li>
           </ul>
         )}
-        {selectOption === "ETC" && (
+        {selectOption === TIMELINE && (
           <S.LineGraphContainer>
             <S.OptionList>
               {timelineOptions.map((option) => (

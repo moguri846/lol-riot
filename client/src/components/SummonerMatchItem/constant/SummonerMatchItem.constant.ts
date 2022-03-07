@@ -1,0 +1,4 @@
+const ANALYSIS = "ANALYSIS";
+const TIMELINE = "TIMELINE";
+
+export { ANALYSIS, TIMELINE };

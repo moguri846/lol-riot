@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { ITokenStatus } from "../../_actions/user/interface/user.interface";
-import { logoutOAuth, myInfoOAuth, oAuthTokenCheck } from "../../_actions/user/userActions";
+import { myInfoOAuth, oAuthTokenCheck } from "../../_actions/user/userActions";
 
 const auth = (SpecificComponent: React.FC, option: boolean | null) => {
   const AuthenticationCheck = () => {
@@ -25,7 +25,7 @@ const auth = (SpecificComponent: React.FC, option: boolean | null) => {
           }
 
           if (message === "만료된 토큰") {
-            dispatch(logoutOAuth());
+            localStorage.clear();
           }
         }
       };

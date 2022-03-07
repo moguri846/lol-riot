@@ -3,7 +3,7 @@ import { JANDI } from "../../_actions/riot/constant/riot.constant";
 
 const inititalState: Jandi[] = [
   {
-    date: "2022-01-11",
+    date: "",
     win: 0,
     lose: 0,
     count: 0,

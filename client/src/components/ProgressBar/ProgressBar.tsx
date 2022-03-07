@@ -31,7 +31,7 @@ const ProgressBar = ({ title, players }: IProps) => {
           <S.Player key={idx}>
             <S.Icon>{getDataDragonImg("champion", player.champion)}</S.Icon>
             <S.ProgressBarContainer>
-              <span>{player.value || "-"}</span>
+              <span>{player.value?.toLocaleString() || "-"}</span>
               <S.Progress
                 className={idx === 0 ? "player" : "enemy"}
                 style={{

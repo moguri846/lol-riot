@@ -72,7 +72,7 @@ function SummonerTemplate({ summoner, matchSummary, jandi, lineWinOrLose, loadin
               {getDataDragonImg("profileicon", summoner.profileIconId)}
               <div className="level">
                 <span>
-                  Level. <span>{summoner.summonerLevel}</span>
+                  Level. <span>{summoner.summonerLevel.toLocaleString()}</span>
                 </span>
               </div>
             </ProfileImgContainer>
@@ -89,7 +89,7 @@ function SummonerTemplate({ summoner, matchSummary, jandi, lineWinOrLose, loadin
                   <span className="rank">{summoner.rank}</span>
                 </div>
                 <div className="league-points">
-                  <span className="lp">{summoner.leaguePoints} LP</span> /{" "}
+                  <span className="lp">{summoner.leaguePoints.toLocaleString()} LP</span> /{" "}
                   <span className="wins">{summoner.wins}승</span> / <span className="losses"> {summoner.losses}패</span>
                 </div>
                 <div className="win-rate">

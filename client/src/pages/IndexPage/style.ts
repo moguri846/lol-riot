@@ -36,7 +36,6 @@ const FindDuoPost = styled.div`
 
 const PostBottom = styled.div`
   width: 100%;
-  height: 50vh;
 
   & > div {
     padding: 10px;

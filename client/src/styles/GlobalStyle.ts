@@ -92,6 +92,7 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 body {
   background: var(--baseBackground);
+  height: 100vh;
 }
 body,
 button,

@@ -2,22 +2,7 @@ import React, { useState } from "react";
 import moment from "moment";
 import { ComparingWithEnemyType } from "../../_actions/riot/interface/matchSummary.interface";
 import LineGraph from "../Graph/LineGraph/LineGraph";
-import {
-  ChampionStatus,
-  Item,
-  Items,
-  Kda,
-  LineGraphContainer,
-  OptionList,
-  OptionItem,
-  MatchInfo,
-  MatchItem,
-  MatchItemContainer,
-  MatchStatusContainer,
-  Player,
-  Players,
-  PlayerStatus,
-} from "./style";
+import * as S from "./style";
 import { TOTAL_CS, TOTAL_GOLD, XP } from "../Graph/LineGraph/constant/LineGraph.constant";
 import { LineOptionsType } from "../Graph/LineGraph/interface/LineGraph.interface";
 import { getDataDragonImg } from "../../pages/common/commonFunc";
@@ -115,68 +100,68 @@ const SummonerMatchItem = ({ match, onMatchDetail }: IProps) => {
   };
 
   return (
-    <MatchItemContainer className={match.win ? "win" : "lose"}>
+    <S.MatchItemContainer className={match.win ? "win" : "lose"}>
       <details>
         <summary onClick={() => onMatchDetailToggle(match)}>
-          <MatchItem>
-            <MatchInfo>
+          <S.MatchItem>
+            <S.MatchInfo>
               <span className="game-mode">{match.gameMode}</span>
               <span className="win-lose">{match.win ? "승리" : "패배"}</span>
               <span className="game-duration">{gameDuration(match.gameEndTimestamp, match.gameDuration)}</span>
               <span className="game-creation">{moment(match.gameCreation).startOf("minute").fromNow()}</span>
-            </MatchInfo>
-            <MatchStatusContainer>
-              <ChampionStatus className="champion-status">
+            </S.MatchInfo>
+            <S.MatchStatusContainer>
+              <S.ChampionStatus className="champion-status">
                 <div className="champion-img-container">{getDataDragonImg("champion", match.player.championName)}</div>
                 <div className="spell-img-container">
                   {match.player.spells.map((spell) => getDataDragonImg("spell", spell))}
                 </div>
-              </ChampionStatus>
-              <Kda className="kda">
+              </S.ChampionStatus>
+              <S.Kda className="kda">
                 <span className="kill">{match.player.kills}</span>/<span className="deaths">{match.player.deaths}</span>
                 /<span className="assists">{match.player.assists}</span>
-              </Kda>
-              <PlayerStatus className="player-status">
+              </S.Kda>
+              <S.PlayerStatus className="player-status">
                 <div className="lelvel">
                   레벨 <span>{match.player.champLevel}</span>
                 </div>
                 <div className="cs">
                   CS <span>{match.player.cs}</span>
                 </div>
-              </PlayerStatus>
-              <Items className="items">
+              </S.PlayerStatus>
+              <S.Items className="items">
                 {match.player.items.map((item, idx) => (
                   <React.Fragment key={idx}>
-                    {item === 0 ? <Item className="none" /> : <Item>{getDataDragonImg("item", item)}</Item>}
+                    {item === 0 ? <S.Item className="none" /> : <S.Item>{getDataDragonImg("item", item)}</S.Item>}
                   </React.Fragment>
                 ))}
-              </Items>
-              <Players>
+              </S.Items>
+              <S.Players>
                 {match.players.map((player) => (
-                  <Player
+                  <S.Player
                     key={player.summonerName}
                     className={match.player.summonerName === player.summonerName ? "me" : ""}
                   >
                     <div className="champion-img">{getDataDragonImg("champion", player.championName)}</div>
                     <div className="summoner-name">{player.summonerName}</div>
-                  </Player>
+                  </S.Player>
                 ))}
-              </Players>
-            </MatchStatusContainer>
-          </MatchItem>
+              </S.Players>
+            </S.MatchStatusContainer>
+          </S.MatchItem>
         </summary>
-        <OptionList>
+        <S.OptionList>
           {options.map((option) => (
-            <OptionItem
+            <S.OptionItem
               className={option === selectOption ? "selected" : ""}
               onClick={handleSelectOption}
               id={option}
               key={option}
             >
               {engToKor(option)}
-            </OptionItem>
+            </S.OptionItem>
           ))}
-        </OptionList>
+        </S.OptionList>
         {selectOption === "GB" && (
           <ul style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-around" }}>
             <li>
@@ -236,24 +221,24 @@ const SummonerMatchItem = ({ match, onMatchDetail }: IProps) => {
           </ul>
         )}
         {selectOption === "ETC" && (
-          <LineGraphContainer>
-            <OptionList>
+          <S.LineGraphContainer>
+            <S.OptionList>
               {timelineOptions.map((option) => (
-                <OptionItem
+                <S.OptionItem
                   className={option === selectTimeLineOption ? "selected" : ""}
                   onClick={onSelectOption}
                   id={option}
                   key={option}
                 >
                   {engToKor(option)}
-                </OptionItem>
+                </S.OptionItem>
               ))}
-            </OptionList>
+            </S.OptionList>
             <LineGraph timeline={match.detail?.timeLine} option={selectTimeLineOption} />
-          </LineGraphContainer>
+          </S.LineGraphContainer>
         )}
       </details>
-    </MatchItemContainer>
+    </S.MatchItemContainer>
   );
 };
 

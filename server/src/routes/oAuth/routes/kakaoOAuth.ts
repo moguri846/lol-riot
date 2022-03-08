@@ -1,29 +1,26 @@
-import axios from "axios";
-import { Request, Response, Router } from "express";
-import { naverlogin, naverReissueToken, naverMyInfo, naverLogout } from "../../API/oauth";
+import { Router, Request, Response } from "express";
+import { kakaoLogin, kakaoReissueToken, kakaoMyInfo, kakaoLogout } from "../../../API/oauth";
 import { resFunc } from "../../common/ResSuccessOrFalse.function";
-import { naverConfig } from "../../config/config";
+import { kakaoConfig } from "../../../config/config";
 
 const router = Router();
 
 router.get("/login", async (req: Request, res: Response) => {
   try {
     const code = req.query.code as string;
-    const state = req.query.state as string;
 
     const body: any = {
       grant_type: "authorization_code",
-      client_id: naverConfig.clientId,
-      redirect_uri: encodeURI(naverConfig.redirectUri),
-      client_secret: naverConfig.secret,
+      client_id: kakaoConfig.clientId,
+      redirect_uri: kakaoConfig.redirectUri,
       code,
-      state,
+      client_secret: kakaoConfig.secret,
     };
 
-    const naver = await naverlogin(body);
+    const kakao = await kakaoLogin(body);
 
-    resFunc({ res, data: naver.data });
-  } catch (err) {
+    resFunc({ res, data: kakao.data });
+  } catch (err: any) {
     resFunc({ res, err });
   }
 });
@@ -34,13 +31,12 @@ router.post("/reissueToken", async (req: Request, res: Response) => {
 
     const body: any = {
       grant_type: "refresh_token",
-      client_id: naverConfig.clientId,
-      client_secret: naverConfig.secret,
+      client_id: kakaoConfig.clientId,
+      client_secret: kakaoConfig.secret,
       refresh_token: refreshToken,
     };
 
-    const reissue = await naverReissueToken(body);
-
+    const reissue = await kakaoReissueToken(body);
     resFunc({ res, data: reissue.data });
   } catch (err) {
     resFunc({ res, err });
@@ -57,9 +53,9 @@ router.get("/myInfo", async (req: Request, res: Response) => {
       },
     };
 
-    const info = await naverMyInfo(config);
+    const myInfo = await kakaoMyInfo(config);
 
-    resFunc({ res, data: { email: info.data.response.email } });
+    resFunc({ res, data: { email: myInfo.data.kakao_account.email } });
   } catch (err) {
     resFunc({ res, err });
   }
@@ -67,17 +63,15 @@ router.get("/myInfo", async (req: Request, res: Response) => {
 
 router.get("/logout", async (req: Request, res: Response) => {
   try {
-    const authorization = req.headers.authorization?.slice(6) as string;
+    const authorization = req.headers.authorization as string;
 
-    const body: any = {
-      grant_type: "delete",
-      client_id: naverConfig.clientId,
-      client_secret: naverConfig.secret,
-      access_token: authorization,
-      service_provider: "NAVER",
+    const config = {
+      headers: {
+        Authorization: authorization,
+      },
     };
 
-    const logout = await naverLogout(body);
+    const logout = await kakaoLogout(config);
 
     resFunc({ res, data: logout.data });
   } catch (err: any) {

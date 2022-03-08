@@ -1,6 +1,6 @@
 import { Router } from "express";
-import kakaoRoute from "./OAuthRoutes/kakaoOAuth";
-import naverRoute from "./OAuthRoutes/naverOAuth";
+import kakaoRoute from "./routes/kakaoOAuth";
+import naverRoute from "./routes/naverOAuth";
 
 const router = Router();
 

@@ -1,10 +1,14 @@
 import express from "express";
-import { swaggerUi, specs } from "./config/swagger";
 import cors from "cors";
-import oauthRoute from "./routes/oauth";
-import riotRoute from "./routes/riot";
-import postRoute from "./routes/post";
+import mongoose from "mongoose";
+import { swaggerUi, specs } from "./config/swagger";
+
+import oAuthRoute from "./routes/oAuth/oAuth";
+import riotRoute from "./routes/riot/riot";
+import postRoute from "./routes/post/post";
+
 import { mongoDBConfig } from "./config/config";
+
 const app: express.Application = express();
 const port: number = 5000;
 
@@ -26,7 +30,6 @@ const corsOptions = {
   },
 };
 
-const mongoose = require("mongoose");
 const connect = mongoose
   .connect(mongoDBConfig.mongoDBUri)
   .then(() => console.log("MongoDB Connected..."))
@@ -34,7 +37,7 @@ const connect = mongoose
 
 app.use(cors(corsOptions));
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
-app.use("/api/oauth", oauthRoute);
+app.use("/api/oauth", oAuthRoute);
 app.use("/api/riot", riotRoute);
 app.use("/api/post", postRoute);
 

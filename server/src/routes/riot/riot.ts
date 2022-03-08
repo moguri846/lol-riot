@@ -1,11 +1,11 @@
 import { Router, Request, Response } from "express";
 import { AxiosResponse } from "axios";
 import moment from "moment";
-import { getSummonerInfo, getMatchIds, getMatchInfo, getSummonerDetailInfo, getMatchTimeLine } from "../API/riot";
+import { getSummonerInfo, getMatchIds, getMatchInfo, getSummonerDetailInfo, getMatchTimeLine } from "../../API/riot";
 import { Match, Summoner, Jandi, SummonerDetailInfo, MatchTimeLine } from "./interface/riot.interface";
 import { resFunc } from "../common/ResSuccessOrFalse.function";
 import { MATCH_SUMMARY, COMPARING_WITH_ENEMY } from "./constant/riot.constant";
-import { changeSpellIdToName } from "./func/riot.func";
+import { changeSpellIdToName } from "./function/riot.func";
 const router = Router();
 
 /**

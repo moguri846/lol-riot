@@ -1,6 +1,6 @@
 import { Request, Response, Router } from "express";
 import { resFunc } from "../common/ResSuccessOrFalse.function";
-import { Post } from "../models/post";
+import { Post } from "../../models/post";
 import { MOST_POPULAR } from "./constant/post.constant";
 
 const router = Router();

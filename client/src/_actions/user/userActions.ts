@@ -35,13 +35,14 @@ const loginOAuth = (loginPrameter: IOAuthLoginPrameter) => async (dispatch: Disp
 
     saveLocalStorage(token, loginPrameter.type);
   } catch (err: any) {
-    const errMessage = err?.response?.data?.errMessage || err.message;
+    const errMessage = err?.response?.data?.data || err.message;
+
     dispatch({
       type: FAIL,
       payload: { errMessage },
     });
 
-    alert(`무언가 이상해요! ${errMessage}`);
+    throw errMessage;
   }
 };
 
@@ -58,12 +59,14 @@ const myInfoOAuth = () => async (dispatch: Dispatch<OAuthMyInfo>) => {
       payload: info,
     });
   } catch (err: any) {
-    const errMessage = err?.response?.data?.errMessage || err.message;
+    const errMessage = err?.response?.data?.data || err.message;
+
     dispatch({
       type: FAIL,
       payload: { errMessage },
     });
-    alert(`무언가 이상해요! ${errMessage}`);
+
+    throw errMessage;
   }
 };
 
@@ -83,12 +86,14 @@ const logoutOAuth = () => async (dispatch: Dispatch<OAuthLogout>) => {
       },
     });
   } catch (err: any) {
-    const errMessage = err?.response?.data?.errMessage || err.message;
+    const errMessage = err?.response?.data?.data || err.message;
+
     dispatch({
       type: FAIL,
       payload: { errMessage },
     });
-    alert(`무언가 이상해요! ${errMessage}`);
+
+    throw errMessage;
   }
 };
 
@@ -160,7 +165,8 @@ const reissueToken = async () => {
     const { data } = await oAuthReissueToken(type.toLowerCase());
     return data;
   } catch (err: any) {
-    const errMessage = err?.response?.data?.errMessage || err.message;
+    const errMessage = err?.response?.data?.data || err.message;
+
     throw errMessage;
   }
 };

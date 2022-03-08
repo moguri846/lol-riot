@@ -12,7 +12,6 @@ import {
   LINE_WIN_OR_LOSE,
 } from "./constant/riot.constant";
 import { IComparingWithEnemyDetail, IMatchSummaryDetailParameter } from "./interface/matchSummary.interface";
-import { SummonerType } from "./interface/summoner.interface";
 
 const summonerInfo = (summonerName: string, type: MatchListFilterType) => {
   return async (dispatch: Dispatch<SuccessMatchList<any>>) => {
@@ -29,11 +28,14 @@ const summonerInfo = (summonerName: string, type: MatchListFilterType) => {
 
       return summoner;
     } catch (err: any) {
-      const errMessage = err?.response?.data?.errMessage || err.message;
+      const errMessage = err?.response?.data?.data || err.message;
+
       dispatch({
         type: FAIL,
         payload: { errMessage },
       });
+
+      throw errMessage;
     }
   };
 };
@@ -65,10 +67,13 @@ const matchInfo = (puuid: string) => async (dispatch: Dispatch<any>) => {
     });
   } catch (err: any) {
     const errMessage = err?.response?.data?.errMessage || err.message;
+
     dispatch({
       type: FAIL,
       payload: { errMessage },
     });
+
+    throw errMessage;
   }
 };
 
@@ -83,11 +88,14 @@ const matchDetailInfo =
         payload: data.data,
       });
     } catch (err: any) {
-      const errMessage = err?.response?.data?.errMessage || err.message;
+      const errMessage = err?.response?.data?.data || err.message;
+
       dispatch({
         type: FAIL,
         payload: { errMessage },
       });
+
+      throw errMessage;
     }
   };
 

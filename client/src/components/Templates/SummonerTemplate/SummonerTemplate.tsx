@@ -3,7 +3,6 @@ import { Jandi } from "../../../_actions/riot/interface/jandi.interface";
 import { LineWinOrLoseType } from "../../../_actions/riot/interface/lineWinOrLose.interface";
 import { ComparingWithEnemyType } from "../../../_actions/riot/interface/matchSummary.interface";
 import { SummonerType } from "../../../_actions/riot/interface/summoner.interface";
-import useSearch from "../../../hooks/useSearch";
 import Skeleton from "react-loading-skeleton";
 import BarGraph from "../../Graph/BarGraph/BarGraph";
 import CalendarGraph from "../../Graph/CalendarGraph/CalendarGraph";
@@ -31,8 +30,6 @@ interface IProps {
 }
 
 function SummonerTemplate({ summoner, matchSummary, jandi, lineWinOrLose, loading }: IProps) {
-  const { onMatchDetail } = useSearch();
-
   return (
     <>
       <SummonerContainer>
@@ -126,7 +123,7 @@ function SummonerTemplate({ summoner, matchSummary, jandi, lineWinOrLose, loadin
           </GraphContainer>
           <MatchList>
             {matchSummary.map((match) => (
-              <SummonerMatchItem key={match.gameId} match={match} onMatchDetail={onMatchDetail} />
+              <SummonerMatchItem key={match.gameId} match={match} />
             ))}
           </MatchList>
         </>

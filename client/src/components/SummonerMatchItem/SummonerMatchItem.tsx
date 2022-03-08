@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import moment from "moment";
 import { ComparingWithEnemyType } from "../../_actions/riot/interface/matchSummary.interface";
 import LineGraph from "../Graph/LineGraph/LineGraph";
+import { useSnackbar } from "notistack";
 import * as S from "./style";
 import { TOTAL_CS, TOTAL_GOLD, XP } from "../Graph/LineGraph/constant/LineGraph.constant";
 import { LineOptionsType } from "../Graph/LineGraph/interface/LineGraph.interface";
@@ -11,13 +13,16 @@ import "moment/locale/ko";
 import ProgressBar from "../ProgressBar/ProgressBar";
 import { ANALYSIS, TIMELINE } from "./constant/SummonerMatchItem.constant";
 import { OptionType } from "./interface/SummonerMatchItem.interface";
+import { matchDetailInfo } from "../../_actions/riot/riotActions";
 
 interface IProps {
   match: ComparingWithEnemyType;
-  onMatchDetail: (s: ComparingWithEnemyType) => void;
 }
 
-const SummonerMatchItem = ({ match, onMatchDetail }: IProps) => {
+const SummonerMatchItem = ({ match }: IProps) => {
+  const dispatch = useDispatch();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
   const [options, setOptions] = useState<OptionType[]>([ANALYSIS, TIMELINE]);
   const [selectOption, setSelectOption] = useState<OptionType>(ANALYSIS);
   const [timelineOptions, setTimelineOptions] = useState<LineOptionsType[]>([TOTAL_GOLD, TOTAL_CS, XP]);
@@ -76,12 +81,6 @@ const SummonerMatchItem = ({ match, onMatchDetail }: IProps) => {
     return `${m}분 ${s}초`;
   };
 
-  const onMatchDetailToggle = (match: ComparingWithEnemyType) => {
-    if (!match.detail) {
-      onMatchDetail(match);
-    }
-  };
-
   const handleSelectOption = (e: React.MouseEvent<HTMLLIElement>) => {
     let option: OptionType;
 
@@ -99,10 +98,32 @@ const SummonerMatchItem = ({ match, onMatchDetail }: IProps) => {
     setSelectOption(option);
   };
 
+  const handleMatchDetailToggle = (match: ComparingWithEnemyType) => {
+    if (!match.detail) {
+      handleMatchDetail(match);
+    }
+  };
+
+  const handleMatchDetail = (match: ComparingWithEnemyType) => {
+    try {
+      const args = {
+        gameId: match.gameId,
+        player: match.myIndex,
+        enemy: match.enemyIndex,
+      };
+
+      dispatch(matchDetailInfo(args));
+    } catch (err: any) {
+      enqueueSnackbar(err, {
+        variant: "error",
+      });
+    }
+  };
+
   return (
     <S.MatchItemContainer className={match.win ? "win" : "lose"}>
       <details>
-        <summary onClick={() => onMatchDetailToggle(match)}>
+        <summary onClick={() => handleMatchDetailToggle(match)}>
           <S.MatchItem>
             <S.MatchInfo>
               <span className="game-mode">{match.gameMode}</span>

@@ -67,11 +67,11 @@ const useSearch = (): IUseSearch => {
     try {
       dispatch(statusAction(LOADING, { summoner: true, match: true }));
 
-      const summoner = (await dispatch(summonerInfo(summonerName, type))) as unknown as SummonerType;
+      const { puuid } = (await dispatch(summonerInfo(summonerName, type))) as unknown as SummonerType;
 
       dispatch(statusAction(FULFILLED, { summoner: false }));
 
-      await dispatch(matchInfo(summoner.puuid));
+      await dispatch(matchInfo(puuid));
 
       dispatch(statusAction(FULFILLED, { match: false }));
     } catch (err: any) {

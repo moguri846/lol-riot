@@ -50,7 +50,6 @@ const Header = () => {
             <S.Li onClick={selecetHandler}>커뮤니티</S.Li>
           </S.Ul>
         </nav>
-
         <div className="famous-saying">
           <Flicking circular horizontal={false} plugins={[new AutoPlay({ duration: 3000 })]}>
             {famousSayingJson.map((item) => (

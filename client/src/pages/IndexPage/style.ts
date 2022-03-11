@@ -5,8 +5,13 @@ const PostTop = styled.div`
   height: 50vh;
   display: flex;
 
-  & > div {
-    padding: 10px;
+  @media screen and (max-width: 740px) {
+    flex-direction: column;
+
+    & > div {
+      width: 100%;
+      height: 100%;
+    }
   }
 `;
 
@@ -36,10 +41,6 @@ const FindDuoPost = styled.div`
 
 const PostBottom = styled.div`
   width: 100%;
-
-  & > div {
-    padding: 10px;
-  }
 `;
 
 const FreePost = styled.div`

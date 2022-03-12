@@ -163,8 +163,10 @@ const SummonerMatchItem = ({ match }: IProps) => {
                     key={player.summonerName}
                     className={match.player.summonerName === player.summonerName ? "me" : ""}
                   >
-                    <div className="champion-img">{getDataDragonImg("champion", player.championName)}</div>
-                    <div className="summoner-name">{player.summonerName}</div>
+                    <a href={`/summoner=${player.summonerName}`}>
+                      <div className="champion-img">{getDataDragonImg("champion", player.championName)}</div>
+                      <div className="summoner-name">{player.summonerName}</div>
+                    </a>
                   </S.Player>
                 ))}
               </S.Players>

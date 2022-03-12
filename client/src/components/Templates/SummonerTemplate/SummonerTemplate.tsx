@@ -8,16 +8,7 @@ import BarGraph from "../../Graph/BarGraph/BarGraph";
 import CalendarGraph from "../../Graph/CalendarGraph/CalendarGraph";
 import SummonerMatchItem from "../../SummonerMatchItem/SummonerMatchItem";
 import { getDataDragonImg } from "../../../pages/common/commonFunc";
-import {
-  SummonerContainer,
-  ProfileImgContainer,
-  SummonerInfo,
-  SummonerRank,
-  GraphContainer,
-  CalendarGraphContainer,
-  BarGraphContainer,
-  MatchList,
-} from "./style";
+import * as S from "./style";
 
 import "react-loading-skeleton/dist/skeleton.css";
 import { IStatus } from "../../../_actions/status/interface/status.interface";
@@ -32,22 +23,22 @@ interface IProps {
 function SummonerTemplate({ summoner, matchSummary, jandi, lineWinOrLose, loading }: IProps) {
   return (
     <>
-      <SummonerContainer>
+      <S.SummonerContainer>
         {loading.summoner ? (
           <>
-            <ProfileImgContainer>
+            <S.ProfileImgContainer>
               <Skeleton width="120px" height="120px" circle />
               <div className="level">
                 <span>
                   <Skeleton width="120px" height="21px" />
                 </span>
               </div>
-            </ProfileImgContainer>
-            <SummonerInfo>
+            </S.ProfileImgContainer>
+            <S.SummonerInfo>
               <div className="info">
                 <Skeleton width="154px" height="27px" />
               </div>
-              <SummonerRank>
+              <S.SummonerRank>
                 <div className="queue-type">
                   <Skeleton width="154px" height="21px" />
                 </div>
@@ -60,24 +51,24 @@ function SummonerTemplate({ summoner, matchSummary, jandi, lineWinOrLose, loadin
                 <div className="win-rate">
                   <Skeleton width="154px" height="21px" />
                 </div>
-              </SummonerRank>
-            </SummonerInfo>
+              </S.SummonerRank>
+            </S.SummonerInfo>
           </>
         ) : (
           <>
-            <ProfileImgContainer>
+            <S.ProfileImgContainer>
               {getDataDragonImg("profileicon", summoner.profileIconId)}
               <div className="level">
                 <span>
                   Level. <span>{summoner.summonerLevel.toLocaleString()}</span>
                 </span>
               </div>
-            </ProfileImgContainer>
-            <SummonerInfo>
+            </S.ProfileImgContainer>
+            <S.SummonerInfo>
               <div className="info">
                 <span className="name">{summoner.name}</span>
               </div>
-              <SummonerRank>
+              <S.SummonerRank>
                 <div className="queue-type">
                   <span>{summoner.queueType}</span>
                 </div>
@@ -92,40 +83,40 @@ function SummonerTemplate({ summoner, matchSummary, jandi, lineWinOrLose, loadin
                 <div className="win-rate">
                   <span>승률 {Math.ceil((summoner.wins / (summoner.wins + summoner.losses)) * 100)}%</span>
                 </div>
-              </SummonerRank>
-            </SummonerInfo>
+              </S.SummonerRank>
+            </S.SummonerInfo>
           </>
         )}
-      </SummonerContainer>
+      </S.SummonerContainer>
       {loading.match ? (
         <>
-          <GraphContainer>
-            <CalendarGraphContainer>
+          <S.GraphContainer>
+            <S.CalendarGraphContainer>
               <Skeleton width="95px" height="200px" />
-            </CalendarGraphContainer>
-            <BarGraphContainer>
+            </S.CalendarGraphContainer>
+            <S.BarGraphContainer>
               <Skeleton width="380px" height="190px" />
-            </BarGraphContainer>
-          </GraphContainer>
-          <MatchList>
+            </S.BarGraphContainer>
+          </S.GraphContainer>
+          <S.MatchList>
             <Skeleton width="760px" height="110px" />
-          </MatchList>
+          </S.MatchList>
         </>
       ) : (
         <>
-          <GraphContainer>
-            <CalendarGraphContainer>
+          <S.GraphContainer>
+            <S.CalendarGraphContainer>
               <CalendarGraph jandi={jandi} />
-            </CalendarGraphContainer>
-            <BarGraphContainer>
+            </S.CalendarGraphContainer>
+            <S.BarGraphContainer>
               <BarGraph lineWinOrLose={lineWinOrLose} />
-            </BarGraphContainer>
-          </GraphContainer>
-          <MatchList>
+            </S.BarGraphContainer>
+          </S.GraphContainer>
+          <S.MatchList>
             {matchSummary.map((match) => (
               <SummonerMatchItem key={match.gameId} match={match} />
             ))}
-          </MatchList>
+          </S.MatchList>
         </>
       )}
     </>

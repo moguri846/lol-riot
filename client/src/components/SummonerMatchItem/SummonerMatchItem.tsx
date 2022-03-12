@@ -104,7 +104,7 @@ const SummonerMatchItem = ({ match }: IProps) => {
     }
   };
 
-  const handleMatchDetail = (match: ComparingWithEnemyType) => {
+  const handleMatchDetail = async (match: ComparingWithEnemyType) => {
     try {
       const args = {
         gameId: match.gameId,
@@ -112,7 +112,7 @@ const SummonerMatchItem = ({ match }: IProps) => {
         enemy: match.enemyIndex,
       };
 
-      dispatch(matchDetailInfo(args));
+      await dispatch(matchDetailInfo(args));
     } catch (err: any) {
       enqueueSnackbar(err, {
         variant: "error",

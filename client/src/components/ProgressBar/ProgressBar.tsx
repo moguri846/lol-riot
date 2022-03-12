@@ -5,7 +5,7 @@ import { toLocaleString } from "../common/function/common.function";
 
 interface IProps {
   title: string;
-  players: { value: number | undefined; champion: string }[];
+  players: { value: number | null | undefined; champion: string }[];
 }
 
 const ProgressBar = ({ title, players }: IProps) => {

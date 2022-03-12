@@ -50,27 +50,40 @@ const GraphContainer = styled.div`
   width: 100%;
   height: 250px;
   display: flex;
-  & > * {
-    width: 100%;
+
+  @media screen and (max-width: 460px) {
     height: 100%;
+    flex-direction: column;
+
+    & > div {
+      width: 100%;
+    }
   }
 `;
 
 const CalendarGraphContainer = styled.div`
+  width: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  & > span {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 const BarGraphContainer = styled.div`
+  width: 380px;
   display: flex;
   justify-content: center;
   align-items: center;
-`;
 
-const LineGraphContainer = styled.div`
-  width: 100%;
-  height: 100%;
+  & > span {
+    width: 100%;
+  }
 `;
 
 const MatchList = styled.ul`
@@ -85,6 +98,5 @@ export {
   GraphContainer,
   CalendarGraphContainer,
   BarGraphContainer,
-  LineGraphContainer,
   MatchList,
 };

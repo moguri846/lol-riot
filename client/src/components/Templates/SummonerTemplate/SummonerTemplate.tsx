@@ -8,11 +8,11 @@ import BarGraph from "../../Graph/BarGraph/BarGraph";
 import CalendarGraph from "../../Graph/CalendarGraph/CalendarGraph";
 import SummonerMatchItem from "../../SummonerMatchItem/SummonerMatchItem";
 import { getDataDragonImg } from "../../../pages/common/commonFunc";
-import * as S from "./style";
-
-import "react-loading-skeleton/dist/skeleton.css";
 import { IStatus } from "../../../_actions/status/interface/status.interface";
 import { toLocaleString } from "../../common/function/common.function";
+import * as S from "./style";
+import "react-loading-skeleton/dist/skeleton.css";
+
 interface IProps {
   summoner: SummonerType;
   matchSummary: ComparingWithEnemyType[];
@@ -92,16 +92,18 @@ function SummonerTemplate({ summoner, matchSummary, jandi, lineWinOrLose, loadin
       </S.SummonerContainer>
       {loading.match ? (
         <>
+          <br />
           <S.GraphContainer>
             <S.CalendarGraphContainer>
-              <Skeleton width="95px" height="200px" />
+              <Skeleton width="25%" height="225px" />
             </S.CalendarGraphContainer>
             <S.BarGraphContainer>
-              <Skeleton width="380px" height="190px" />
+              <Skeleton width="100%" height="225px" />
             </S.BarGraphContainer>
           </S.GraphContainer>
+          <br />
           <S.MatchList>
-            <Skeleton width="760px" height="110px" />
+            <Skeleton width="100%" height="110px" />
           </S.MatchList>
         </>
       ) : (

@@ -40,15 +40,17 @@ const MatchItemContainer = styled.li`
 `;
 
 const MatchItem = styled.div`
+  height: 110px;
   display: flex;
-  padding: 5px;
-  & > div {
-    display: flex;
+
+  @media screen and (max-width: 760px) {
+    flex-direction: column;
   }
 `;
 
 const MatchInfo = styled.div`
   width: 90px;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -60,101 +62,31 @@ const MatchInfo = styled.div`
   & > .win-lose {
     font-weight: bold;
   }
+
+  @media screen and (max-width: 760px) {
+    width: 100%;
+    flex-direction: row;
+    justify-content: flex-start;
+    & > span {
+      margin: 0px 5px;
+    }
+  }
 `;
 
 const MatchStatusContainer = styled.div`
+  display: flex;
   & > * {
     margin-right: 5px;
   }
-`;
 
-const Items = styled.ul`
-  width: 165px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-`;
-
-const Players = styled.ul`
-  width: 250px;
-  height: 100px;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  margin: 0px;
-`;
-
-const Player = styled.li`
-  width: 120px;
-  display: flex;
-
-  &.me {
-    font-weight: bold;
-  }
-
-  & > div {
-    height: 16px;
-    margin: 2px 0px;
-  }
-
-  & > .summoner-name {
-    margin-left: 5px;
-    font-size: 11px;
-    line-height: 17px;
-  }
-
-  & > .champion-img > img {
+  @media screen and (max-width: 760px) {
     width: 100%;
     height: 100%;
-  }
-`;
+    justify-content: space-between;
 
-const Item = styled.li`
-  width: 35px;
-  height: 35px;
-  margin: 3px;
-  border-radius: 5px;
-
-  &.none {
-    background-color: #ccc;
-  }
-
-  & > img {
-    width: 100%;
-    height: 100%;
-    border-radius: 5px;
-  }
-`;
-const Kda = styled.div`
-  width: 80px;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  & > span {
-    width: 20%;
-    text-align: center;
-    font-weight: bold;
-  }
-
-  & > .deaths {
-    color: #c6443e;
-  }
-`;
-
-const PlayerStatus = styled.div`
-  width: 60px;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  & > div > span {
-    font-weight: bold;
+    & > * {
+      margin-right: 0px;
+    }
   }
 `;
 
@@ -164,7 +96,6 @@ const ChampionStatus = styled.div`
   & > .champion-img-container {
     display: flex;
     align-items: center;
-    // margin-right: 5px;
 
     & > img {
       width: 50px;
@@ -187,6 +118,139 @@ const ChampionStatus = styled.div`
       border-radius: 5px;
     }
   }
+
+  @media screen and (max-width: 760px) {
+    & > .champion-img-container > img {
+      width: 45px;
+      height: 45px;
+    }
+
+    & > .spell-img-container > img {
+      width: 25px;
+      height: 25px;
+  }
+`;
+
+const Kda = styled.div`
+  width: 80px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & > span {
+    width: 20%;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  & > .deaths {
+    color: #c6443e;
+  }
+  @media screen and (max-width: 760px) {
+    width: 60px;
+    justify-content: space-evenly;
+    font-size: 13px;
+  }
+`;
+
+const PlayerStatus = styled.div`
+  width: 60px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  & > div > span {
+    font-weight: bold;
+  }
+`;
+
+const Items = styled.ul`
+  width: 165px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  @media screen and (max-width: 760px) {
+    width: 115px;
+    align-content: center;
+  }
+`;
+
+const Item = styled.li`
+  width: 35px;
+  height: 35px;
+  margin: 3px;
+
+  &.none {
+    border-radius: 5px;
+    background-color: #ccc;
+  }
+
+  & > img {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+  }
+
+  @media screen and (max-width: 760px) {
+    width: 22px;
+    height: 22px;
+  }
+`;
+
+const Players = styled.ul`
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin: 0px;
+
+  @media screen and (max-width: 760px) {
+    display: none;
+  }
+`;
+
+const Player = styled.li`
+  width: 120px;
+
+  &.me {
+    font-weight: bold;
+  }
+
+  & > a {
+    display: flex;
+  }
+
+  & a > div {
+    height: 16px;
+    margin: 2px 0px;
+  }
+
+  & > a > .summoner-name {
+    margin-left: 5px;
+    font-size: 11px;
+    line-height: 17px;
+  }
+
+  & > a > .champion-img > img {
+    width: 16px;
+    height: 100%;
+  }
+`;
+
+const LineGraphContainer = styled.div`
+  width: 100%;
+  height: 100%;
+
+  & > * {
+    background-color: #ffffff;
+    transition: 1s cubic-bezier(0, 1.65, 1, 1);
+  }
 `;
 
 const OptionList = styled.ul`
@@ -200,16 +264,6 @@ const OptionItem = styled.li`
 
   &.selected {
     border-bottom: 1px solid black;
-  }
-`;
-
-const LineGraphContainer = styled.div`
-  width: 100%;
-  height: 100%;
-
-  & > * {
-    background-color: #ffffff;
-    transition: 1s cubic-bezier(0, 1.65, 1, 1);
   }
 `;
 

@@ -1,6 +1,7 @@
 import React from "react";
 import * as S from "./style";
 import { getDataDragonImg } from "../../pages/common/commonFunc";
+import { toLocaleString } from "../common/function/common.function";
 
 interface IProps {
   title: string;
@@ -31,7 +32,7 @@ const ProgressBar = ({ title, players }: IProps) => {
           <S.Player key={idx}>
             <S.Icon>{getDataDragonImg("champion", player.champion)}</S.Icon>
             <S.ProgressBarContainer>
-              <span>{player.value?.toLocaleString() || "-"}</span>
+              <span>{player.value ? toLocaleString(player.value) : "-"}</span>
               <S.Progress
                 className={idx === 0 ? "player" : "enemy"}
                 style={{

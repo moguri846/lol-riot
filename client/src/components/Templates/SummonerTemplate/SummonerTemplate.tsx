@@ -12,6 +12,7 @@ import * as S from "./style";
 
 import "react-loading-skeleton/dist/skeleton.css";
 import { IStatus } from "../../../_actions/status/interface/status.interface";
+import { toLocaleString } from "../../common/function/common.function";
 interface IProps {
   summoner: SummonerType;
   matchSummary: ComparingWithEnemyType[];
@@ -60,7 +61,7 @@ function SummonerTemplate({ summoner, matchSummary, jandi, lineWinOrLose, loadin
               {getDataDragonImg("profileicon", summoner.profileIconId)}
               <div className="level">
                 <span>
-                  Level. <span>{summoner.summonerLevel.toLocaleString()}</span>
+                  Level. <span>{toLocaleString(summoner.summonerLevel)}</span>
                 </span>
               </div>
             </S.ProfileImgContainer>
@@ -77,8 +78,9 @@ function SummonerTemplate({ summoner, matchSummary, jandi, lineWinOrLose, loadin
                   <span className="rank">{summoner.rank}</span>
                 </div>
                 <div className="league-points">
-                  <span className="lp">{summoner.leaguePoints.toLocaleString()} LP</span> /{" "}
-                  <span className="wins">{summoner.wins}승</span> / <span className="losses"> {summoner.losses}패</span>
+                  <span className="lp">{toLocaleString(summoner.leaguePoints)} LP</span> /{" "}
+                  <span className="wins">{toLocaleString(summoner.wins)}승</span> /{" "}
+                  <span className="losses"> {toLocaleString(summoner.losses)}패</span>
                 </div>
                 <div className="win-rate">
                   <span>승률 {Math.ceil((summoner.wins / (summoner.wins + summoner.losses)) * 100)}%</span>

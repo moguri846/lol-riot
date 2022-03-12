@@ -191,8 +191,8 @@ const SummonerMatchItem = ({ match }: IProps) => {
               <ProgressBar
                 title="적 처치"
                 players={[
-                  { value: match.player.kills, champion: match.player.championName },
-                  { value: match.enemy.kills, champion: match.enemy.championName },
+                  { value: match.detail && match.player.kills, champion: match.player.championName },
+                  { value: match.detail && match.enemy.kills, champion: match.enemy.championName },
                 ]}
               />
             </li>
@@ -218,8 +218,8 @@ const SummonerMatchItem = ({ match }: IProps) => {
               <ProgressBar
                 title="와드 설치"
                 players={[
-                  { value: match.player.wardsPlaced, champion: match.player.championName },
-                  { value: match.enemy.wardsPlaced, champion: match.enemy.championName },
+                  { value: match.detail && match.player.wardsPlaced, champion: match.player.championName },
+                  { value: match.detail && match.enemy.wardsPlaced, champion: match.enemy.championName },
                 ]}
               />
             </li>

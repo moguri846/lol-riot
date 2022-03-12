@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { getPost } from "../../API/post";
+import useSnackBar from "../../hooks/useSnackBar";
 import * as S from "./style";
 
 const ArticlePage = () => {
   const location = useLocation();
+
+  const { snackbar } = useSnackBar();
 
   const [article, setArticle] = useState({
     category: "",
@@ -26,7 +29,7 @@ const ArticlePage = () => {
 
         setArticle(article);
       } catch (err: any) {
-        alert(`무언가 이상해요! ${err.message}`);
+        snackbar(err, "error");
       }
     };
     getArticle();

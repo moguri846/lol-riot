@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getCategoryPosts } from "../../API/post";
 import ArticleSummary from "../../components/ArticleSummary/ArticleSummary";
+import useSnackBar from "../../hooks/useSnackBar";
 import { DUO, FREE, MOST_POPULAR } from "./constant/indexPage.constant";
 import { CategoryType, Post } from "./interface/indexPage.interface";
 import * as S from "./style";
@@ -9,6 +10,8 @@ const IndexPage = () => {
   const [mostPopularPosts, setMostPopularPosts] = useState<Post[]>([]);
   const [duoPosts, setDuoPosts] = useState<Post[]>([]);
   const [freePosts, setFreePosts] = useState<Post[]>([]);
+
+  const { snackbar } = useSnackBar();
 
   const getPosts = async (category: CategoryType) => {
     const {
@@ -35,7 +38,7 @@ const IndexPage = () => {
 
     try {
     } catch (err: any) {
-      alert(`무언가 이상해요! ${err.message}`);
+      snackbar(err, "error");
     }
   };
 

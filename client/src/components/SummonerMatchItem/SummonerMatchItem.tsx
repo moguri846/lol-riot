@@ -3,8 +3,7 @@ import { useDispatch } from "react-redux";
 import moment from "moment";
 import { ComparingWithEnemyType } from "../../_actions/riot/interface/matchSummary.interface";
 import LineGraph from "../Graph/LineGraph/LineGraph";
-import { useSnackbar } from "notistack";
-import * as S from "./style";
+import useSnackBar from "../../hooks/useSnackBar";
 import { TOTAL_CS, TOTAL_GOLD, XP } from "../Graph/LineGraph/constant/LineGraph.constant";
 import { LineOptionsType } from "../Graph/LineGraph/interface/LineGraph.interface";
 import { getDataDragonImg } from "../../pages/common/commonFunc";
@@ -15,13 +14,14 @@ import { ANALYSIS, TIMELINE } from "./constant/SummonerMatchItem.constant";
 import { OptionType } from "./interface/SummonerMatchItem.interface";
 import { matchDetailInfo } from "../../_actions/riot/riotActions";
 
+import * as S from "./style";
 interface IProps {
   match: ComparingWithEnemyType;
 }
 
 const SummonerMatchItem = ({ match }: IProps) => {
   const dispatch = useDispatch();
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const { snackbar } = useSnackBar();
 
   const [options, setOptions] = useState<OptionType[]>([ANALYSIS, TIMELINE]);
   const [selectOption, setSelectOption] = useState<OptionType>(ANALYSIS);
@@ -114,9 +114,7 @@ const SummonerMatchItem = ({ match }: IProps) => {
 
       await dispatch(matchDetailInfo(args));
     } catch (err: any) {
-      enqueueSnackbar(err, {
-        variant: "error",
-      });
+      snackbar(err, "error");
     }
   };
 

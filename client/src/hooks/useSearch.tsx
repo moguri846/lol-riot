@@ -8,7 +8,7 @@ import { RootReducerType } from "../_reducers/rootReducer";
 import { statusAction } from "../_actions/status/statusActions";
 import { LOADING, FULFILLED } from "../_actions/status/constant/status.constant";
 import { SummonerType } from "../_actions/riot/interface/summoner.interface";
-import { useSnackbar } from "notistack";
+import useSnackBar from "./useSnackBar";
 
 export interface IUseSearch {
   summonerName: string;
@@ -21,12 +21,11 @@ const useSearch = (): IUseSearch => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+  const { snackbar } = useSnackBar();
 
   const state = useSelector((state: RootReducerType) => state);
 
   const [summonerName, setSummonerName] = useState<string>("");
-
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   useEffect(() => {
     if (location.pathname.includes("/summoner") && state?.riot.summoner.puuid === "") {
@@ -75,9 +74,7 @@ const useSearch = (): IUseSearch => {
 
       dispatch(statusAction(FULFILLED, { match: false }));
     } catch (err: any) {
-      enqueueSnackbar(err, {
-        variant: "error",
-      });
+      snackbar(err, "error");
     }
   };
 

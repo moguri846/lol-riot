@@ -61,6 +61,11 @@ const LoginButtonContainer = styled.div`
     top: 6px;
     right: 0px;
     margin: 0px;
+
+    & > button {
+      border: none;
+    }
+
     & > a > button {
       border: none;
     }

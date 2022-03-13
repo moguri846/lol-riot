@@ -13,8 +13,8 @@ import {
 } from "./constant/riot.constant";
 import { IComparingWithEnemyDetail, IMatchSummaryDetailParameter } from "./interface/matchSummary.interface";
 
-const summonerInfo = (summonerName: string, type: MatchListFilterType) => {
-  return async (dispatch: Dispatch<SuccessMatchList<any>>) => {
+const summonerInfo =
+  (summonerName: string, type: MatchListFilterType) => async (dispatch: Dispatch<SuccessMatchList<any>>) => {
     try {
       const {
         data: { data: summoner },
@@ -38,7 +38,6 @@ const summonerInfo = (summonerName: string, type: MatchListFilterType) => {
       throw errMessage;
     }
   };
-};
 
 const matchInfo = (puuid: string) => async (dispatch: Dispatch<any>) => {
   try {

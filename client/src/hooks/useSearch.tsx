@@ -57,6 +57,7 @@ const useSearch = (): IUseSearch => {
 
   const beforeDispatch = (summonerName: string) => {
     if (!summonerName) {
+      snackbar("소환사 이름을 입력해주세요!", "warning");
       return false;
     }
     return true;

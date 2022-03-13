@@ -19,6 +19,18 @@ interface IProps {
   match: ComparingWithEnemyType;
 }
 
+const progressObjs: {
+  title: string;
+  key: "kills" | "totalGold" | "totalDamageDoneToChampions" | "wardsPlaced" | "totalDamageTaken" | "totalCs";
+}[] = [
+  { title: "적 처치", key: "kills" },
+  { title: "골드 획득량", key: "totalGold" },
+  { title: "가한 피해량", key: "totalDamageDoneToChampions" },
+  { title: "와드 설치", key: "wardsPlaced" },
+  { title: "받은 피해량", key: "totalDamageTaken" },
+  { title: "CS", key: "totalCs" },
+];
+
 const SummonerMatchItem = ({ match }: IProps) => {
   const dispatch = useDispatch();
   const { snackbar } = useSnackBar();
@@ -185,60 +197,27 @@ const SummonerMatchItem = ({ match }: IProps) => {
         </S.OptionList>
         {selectOption === ANALYSIS && (
           <ul style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-around" }}>
-            <li>
-              <ProgressBar
-                title="적 처치"
-                players={[
-                  { value: match.detail && match.player.kills, champion: match.player.championName },
-                  { value: match.detail && match.enemy.kills, champion: match.enemy.championName },
-                ]}
-              />
-            </li>
-            <li>
-              <ProgressBar
-                title="골드 획득량"
-                players={[
-                  { value: match.detail?.player.totalGold, champion: match.player.championName },
-                  { value: match.detail?.enemy.totalGold, champion: match.enemy.championName },
-                ]}
-              />
-            </li>
-            <li>
-              <ProgressBar
-                title="가한 피해량"
-                players={[
-                  { value: match.detail?.player.totalDamageDoneToChampions, champion: match.player.championName },
-                  { value: match.detail?.enemy.totalDamageDoneToChampions, champion: match.enemy.championName },
-                ]}
-              />
-            </li>
-            <li>
-              <ProgressBar
-                title="와드 설치"
-                players={[
-                  { value: match.detail && match.player.wardsPlaced, champion: match.player.championName },
-                  { value: match.detail && match.enemy.wardsPlaced, champion: match.enemy.championName },
-                ]}
-              />
-            </li>
-            <li>
-              <ProgressBar
-                title="받은 피해량"
-                players={[
-                  { value: match.detail?.player.totalDamageTaken, champion: match.player.championName },
-                  { value: match.detail?.enemy.totalDamageTaken, champion: match.enemy.championName },
-                ]}
-              />
-            </li>
-            <li>
-              <ProgressBar
-                title="CS"
-                players={[
-                  { value: match.detail?.player.totalCs, champion: match.player.championName },
-                  { value: match.detail?.enemy.totalCs, champion: match.enemy.championName },
-                ]}
-              />
-            </li>
+            {progressObjs.map(({ title, key }) => {
+              const isPlayerData = key === "kills" || key === "wardsPlaced";
+
+              return (
+                <li key={key}>
+                  <ProgressBar
+                    title={title}
+                    players={[
+                      {
+                        value: match.detail ? (isPlayerData ? match.player[key] : match.detail?.player[key]) : 0,
+                        champion: match.player.championName,
+                      },
+                      {
+                        value: match.detail ? (isPlayerData ? match.enemy[key] : match.detail?.enemy[key]) : 0,
+                        champion: match.enemy.championName,
+                      },
+                    ]}
+                  />
+                </li>
+              );
+            })}
           </ul>
         )}
         {selectOption === TIMELINE && (

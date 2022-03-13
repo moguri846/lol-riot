@@ -92,16 +92,14 @@ function SummonerTemplate({ summoner, matchSummary, jandi, lineWinOrLose, loadin
       </S.SummonerContainer>
       {loading.match ? (
         <>
-          <br />
           <S.GraphContainer>
             <S.CalendarGraphContainer>
-              <Skeleton width="25%" height="225px" />
+              <Skeleton width="25%" height="200px" />
             </S.CalendarGraphContainer>
             <S.BarGraphContainer>
-              <Skeleton width="100%" height="225px" />
+              <Skeleton width="100%" height="200px" />
             </S.BarGraphContainer>
           </S.GraphContainer>
-          <br />
           <S.MatchList>
             <Skeleton width="100%" height="110px" />
           </S.MatchList>

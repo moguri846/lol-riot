@@ -1,8 +1,10 @@
 import React from "react";
 
+import * as S from "./style";
+
 const LoginPage = () => {
   return (
-    <div>
+    <S.LoginContainer>
       <a
         href={`https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_KAKAO_REDIRECT_URI}&response_type=code`}
       >
@@ -15,7 +17,7 @@ const LoginPage = () => {
       >
         <img src="/assets/oAuthImage/btnG_완성형.png" alt="btnG_완성형" />
       </a>
-    </div>
+    </S.LoginContainer>
   );
 };
 

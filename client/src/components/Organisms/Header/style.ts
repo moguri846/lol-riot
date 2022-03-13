@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const Header = styled.header`
   width: 100%;
-  height: 100px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -31,32 +31,39 @@ const Header = styled.header`
 const HeadeTop = styled.div`
   display: flex;
   align-items: center;
+  position: relative;
 
   & > * {
     margin: 0px 10px;
   }
 
   @media screen and (max-width: 760px) {
+    flex-direction: column;
+
     & > h1 {
-      display: none;
+      width: 100%;
+      text-align: left;
     }
-  }
-  @media screen and (max-width: 450px) {
+
     & > div:nth-of-type(1) {
       width: 100%;
-    }
-    & > div:nth-of-type(1) > div {
-      width: 100%;
-    }
-    & > div {
-      margin: 0px;
+
+      & > div {
+        width: 100%;
+      }
     }
   }
 `;
 
 const LoginButtonContainer = styled.div`
-  @media screen and (max-width: 450px) {
-    display: none;
+  @media screen and (max-width: 760px) {
+    position: absolute;
+    top: 6px;
+    right: 0px;
+    margin: 0px;
+    & > a > button {
+      border: none;
+    }
   }
 `;
 

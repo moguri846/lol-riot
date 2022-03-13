@@ -51,8 +51,9 @@ const GraphContainer = styled.div`
   height: 250px;
   display: flex;
 
-  @media screen and (max-width: 460px) {
+  @media screen and (max-width: 480px) {
     height: 100%;
+    margin: 10px 0px;
     flex-direction: column;
 
     & > div {

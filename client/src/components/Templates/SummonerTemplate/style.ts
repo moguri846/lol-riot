@@ -24,6 +24,10 @@ const ProfileImgContainer = styled.div`
 `;
 
 const SummonerInfo = styled.div`
+  & > .info {
+    text-align: center;
+  }
+
   & > .info > .name {
     font-weight: bold;
     font-size: 20px;

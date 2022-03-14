@@ -74,7 +74,7 @@ function SummonerTemplate({ summoner, matchSummary, jandi, lineWinOrLose, loadin
                   <span>{summoner.queueType}</span>
                 </div>
                 <div className="tier-rank">
-                  <span className="tier">{summoner.tier} </span>
+                  <span className="tier">{summoner.tier || "Unranked"} </span>
                   <span className="rank">{summoner.rank}</span>
                 </div>
                 <div className="league-points">
@@ -83,7 +83,7 @@ function SummonerTemplate({ summoner, matchSummary, jandi, lineWinOrLose, loadin
                   <span className="losses"> {toLocaleString(summoner.losses)}패</span>
                 </div>
                 <div className="win-rate">
-                  <span>승률 {Math.ceil((summoner.wins / (summoner.wins + summoner.losses)) * 100)}%</span>
+                  <span>승률 {Math.ceil((summoner.wins / (summoner.wins + summoner.losses)) * 100) || 0}%</span>
                 </div>
               </S.SummonerRank>
             </S.SummonerInfo>

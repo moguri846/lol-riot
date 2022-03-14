@@ -21,7 +21,7 @@ router.get("/getCategoryPosts", (req: Request, res: Response) => {
 
   if (category === MOST_POPULAR) {
     Post.find()
-      .sort({ views: 1 })
+      .sort({ views: -1 })
       .exec((err: any, posts: any) => {
         if (err) {
           resFunc({ res, err });

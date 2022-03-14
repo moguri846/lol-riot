@@ -206,11 +206,11 @@ const SummonerMatchItem = ({ match }: IProps) => {
                     title={title}
                     players={[
                       {
-                        value: match.detail ? (isPlayerData ? match.player[key] : match.detail?.player[key]) : 0,
+                        value: match.detail ? (isPlayerData ? match.player[key] : match.detail?.player[key]) : null,
                         champion: match.player.championName,
                       },
                       {
-                        value: match.detail ? (isPlayerData ? match.enemy[key] : match.detail?.enemy[key]) : 0,
+                        value: match.detail ? (isPlayerData ? match.enemy[key] : match.detail?.enemy[key]) : null,
                         champion: match.enemy.championName,
                       },
                     ]}

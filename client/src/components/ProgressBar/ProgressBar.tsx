@@ -5,20 +5,20 @@ import { toLocaleString } from "../common/function/common.function";
 
 interface IProps {
   title: string;
-  players: { value: number | null | undefined; champion: string }[];
+  players: { value: number | null; champion: string }[];
 }
 
 const ProgressBar = ({ title, players }: IProps) => {
   const progressValue = (idx: number) => {
-    const player0 = players[0];
-    const player1 = players[1];
+    const player0 = players[0].value;
+    const player1 = players[1].value;
 
-    if (player0.value && player1.value) {
+    if (player0 !== null && player1 !== null) {
       if (idx === 0) {
-        return `${player0.value > player1.value ? 100 : Math.floor((player0.value / player1.value) * 100)}%`;
+        return `${player0 > player1 ? 100 : Math.floor((player0 / player1) * 100)}%`;
       }
 
-      return `${player1.value > player0.value ? 100 : Math.floor((player1.value / player0.value) * 100)}%`;
+      return `${player1 > player0 ? 100 : Math.floor((player1 / player0) * 100)}%`;
     }
 
     return 0;
@@ -32,7 +32,7 @@ const ProgressBar = ({ title, players }: IProps) => {
           <S.Player key={idx}>
             <S.Icon>{getDataDragonImg("champion", player.champion)}</S.Icon>
             <S.ProgressBarContainer>
-              <span>{player.value ? toLocaleString(player.value) : "-"}</span>
+              <span>{player.value !== null ? toLocaleString(player.value) : "-"}</span>
               <S.Progress
                 className={idx === 0 ? "player" : "enemy"}
                 style={{

@@ -80,9 +80,10 @@ const SpectatorPlayerList = styled.ul`
 `;
 
 const SpectatorPlayer = styled.li`
+  width: 49%;
   display: flex;
   justify-content: space-between;
-  padding: 5px;
+  padding: 4px;
 
   & > .name {
     font-weight: bold;

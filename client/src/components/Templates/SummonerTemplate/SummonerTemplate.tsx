@@ -12,16 +12,17 @@ import { IStatus } from "../../../_actions/status/interface/status.interface";
 import { toLocaleString } from "../../common/function/common.function";
 import * as S from "./style";
 import "react-loading-skeleton/dist/skeleton.css";
-
+import { ISpectator } from "../../../_actions/riot/interface/spectator.interface";
 interface IProps {
   summoner: SummonerType;
+  spectator: ISpectator;
   matchSummary: ComparingWithEnemyType[];
   jandi: Jandi[];
   lineWinOrLose: LineWinOrLoseType[];
   loading: IStatus;
 }
 
-function SummonerTemplate({ summoner, matchSummary, jandi, lineWinOrLose, loading }: IProps) {
+function SummonerTemplate({ summoner, matchSummary, spectator, jandi, lineWinOrLose, loading }: IProps) {
   return (
     <>
       <S.SummonerContainer>
@@ -90,6 +91,18 @@ function SummonerTemplate({ summoner, matchSummary, jandi, lineWinOrLose, loadin
           </>
         )}
       </S.SummonerContainer>
+      <S.Spectator>
+        <S.SpectatorPlayerList>
+          {spectator.players.map((player) => (
+            <React.Fragment key={player.summonerName}>
+              <S.SpectatorPlayer className={player.teamId === 100 ? "blue" : "red"}>
+                <span className="name">{player.summonerName}</span>
+                <div className="champion-img">{getDataDragonImg("champion", player.championName)}</div>
+              </S.SpectatorPlayer>
+            </React.Fragment>
+          ))}
+        </S.SpectatorPlayerList>
+      </S.Spectator>
       {loading.match ? (
         <>
           <S.GraphContainer>

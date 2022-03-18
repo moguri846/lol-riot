@@ -66,6 +66,47 @@ const GraphContainer = styled.div`
   }
 `;
 
+const Spectator = styled.div`
+  width: 100%;
+  height: 200px;
+`;
+
+const SpectatorPlayerList = styled.ul`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+`;
+
+const SpectatorPlayer = styled.li`
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+
+  & > .name {
+    font-weight: bold;
+  }
+  & > .name:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  & > .champion-img {
+    width: 30px;
+    height: 30px;
+
+    & > img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &.red {
+    flex-direction: row-reverse;
+  }
+`;
+
 const CalendarGraphContainer = styled.div`
   width: 50%;
   display: flex;
@@ -100,6 +141,9 @@ export {
   ProfileImgContainer,
   SummonerInfo,
   SummonerRank,
+  Spectator,
+  SpectatorPlayerList,
+  SpectatorPlayer,
   GraphContainer,
   CalendarGraphContainer,
   BarGraphContainer,

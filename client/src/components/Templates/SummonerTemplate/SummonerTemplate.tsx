@@ -96,7 +96,9 @@ function SummonerTemplate({ summoner, matchSummary, spectator, jandi, lineWinOrL
           {spectator.players.map((player) => (
             <React.Fragment key={player.summonerName}>
               <S.SpectatorPlayer className={player.teamId === 100 ? "blue" : "red"}>
-                <span className="name">{player.summonerName}</span>
+                <span className="name">
+                  <a href={`/summoner=${player.summonerName}`}>{player.summonerName}</a>
+                </span>
                 <S.ChampionStatus>
                   <ul className="spells">
                     {player.spells.map((spell) => (

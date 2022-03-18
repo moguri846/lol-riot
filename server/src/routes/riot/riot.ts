@@ -290,7 +290,6 @@ router.get("/spectatorInfo", async (req: Request, res: Response) => {
       gameMode: spectator.gameMode,
       gameStartTime: spectator.gameStartTime,
       players,
-      t: spectator.participants,
       bannedChampions,
     };
 

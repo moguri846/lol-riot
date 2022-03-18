@@ -22,22 +22,27 @@ import { useDispatch } from "react-redux";
 import { spectatorInfo } from "../../../_actions/riot/riotActions";
 import { loadingAction } from "../../../_actions/loading/loadingActions";
 import { FULFILLED, LOADING } from "../../../_actions/loading/constant/loading.constant";
+import useSnackBar from "../../../hooks/useSnackBar";
+import { IRiotFail } from "../../../_actions/riot/interface/fail.interface";
 
 interface IProps {
+  loading: ILoading;
   summoner: SummonerType;
   spectator: ISpectator;
-  matchSummary: ComparingWithEnemyType[];
   jandi: Jandi[];
   lineWinOrLose: LineWinOrLoseType[];
-  loading: ILoading;
+  matchSummary: ComparingWithEnemyType[];
+  fail: IRiotFail;
 }
 
-function SummonerTemplate({ summoner, matchSummary, spectator, jandi, lineWinOrLose, loading }: IProps) {
+function SummonerTemplate({ summoner, matchSummary, spectator, jandi, lineWinOrLose, loading, fail }: IProps) {
   const dispatch = useDispatch();
+
+  const { snackbar } = useSnackBar();
 
   const [spectatorToggle, setSpectatorToggle] = useState(false);
 
-  const handleSpectatorToggle = () => {
+  const handleSpectatorToggle = async () => {
     setSpectatorToggle(!spectatorToggle);
 
     if (spectatorToggle) {
@@ -47,11 +52,14 @@ function SummonerTemplate({ summoner, matchSummary, spectator, jandi, lineWinOrL
     try {
       setSatusInfo(LOADING, { spectator: true });
 
-      getSpectatorInfo(summoner.id);
+      await getSpectatorInfo(summoner.id);
 
       setSatusInfo(FULFILLED, { spectator: false });
     } catch (err: any) {
       setSatusInfo(FULFILLED, { spectator: false });
+      console.log("err", err);
+
+      snackbar(err, "error");
     }
   };
 
@@ -59,8 +67,12 @@ function SummonerTemplate({ summoner, matchSummary, spectator, jandi, lineWinOrL
     dispatch(loadingAction(type, status));
   };
 
-  const getSpectatorInfo = (id: string) => {
-    dispatch(spectatorInfo(id));
+  const getSpectatorInfo = async (id: string) => {
+    try {
+      await dispatch(spectatorInfo(id));
+    } catch (err) {
+      throw err;
+    }
   };
 
   return (
@@ -140,30 +152,47 @@ function SummonerTemplate({ summoner, matchSummary, spectator, jandi, lineWinOrL
             </>
           ) : (
             <>
-              <S.SpectatorPlayerList>
-                {spectator.players.map((player) => (
-                  <React.Fragment key={player.summonerName}>
-                    <S.SpectatorPlayer className={player.teamId === 100 ? "blue" : "red"}>
-                      <span className="name">
-                        <a href={`/summoner=${player.summonerName}`}>{player.summonerName}</a>
-                      </span>
-                      <S.ChampionStatus>
-                        <ul className="spells">
-                          {player.spells.map((spell) => (
-                            <li key={spell}>{getDataDragonImg("spell", spell)}</li>
-                          ))}
-                        </ul>
-                        <div className="champion-img">{getDataDragonImg("champion", player.championName)}</div>
-                      </S.ChampionStatus>
-                    </S.SpectatorPlayer>
-                  </React.Fragment>
-                ))}
-              </S.SpectatorPlayerList>
-              <S.BannedChampionList>
-                {spectator.bannedChampions.map((bannedChampion) => (
-                  <S.BannedChampion>{getDataDragonImg("champion", bannedChampion.championName)}</S.BannedChampion>
-                ))}
-              </S.BannedChampionList>
+              {fail.spectator ? (
+                <>
+                  {fail.spectator.status === 404 ? (
+                    <div className="not-found">
+                      <h1>{summoner.name}님은 게임 중이 아닙니다.</h1>
+                    </div>
+                  ) : (
+                    <div className="error">
+                      <h1>{fail.spectator.status}</h1>
+                      <p>{fail.spectator.errMessage}</p>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <>
+                  <S.SpectatorPlayerList>
+                    {spectator.players.map((player) => (
+                      <React.Fragment key={player.summonerName}>
+                        <S.SpectatorPlayer className={player.teamId === 100 ? "blue" : "red"}>
+                          <span className="name">
+                            <a href={`/summoner=${player.summonerName}`}>{player.summonerName}</a>
+                          </span>
+                          <S.ChampionStatus>
+                            <ul className="spells">
+                              {player.spells.map((spell) => (
+                                <li key={spell}>{getDataDragonImg("spell", spell)}</li>
+                              ))}
+                            </ul>
+                            <div className="champion-img">{getDataDragonImg("champion", player.championName)}</div>
+                          </S.ChampionStatus>
+                        </S.SpectatorPlayer>
+                      </React.Fragment>
+                    ))}
+                  </S.SpectatorPlayerList>
+                  <S.BannedChampionList>
+                    {spectator.bannedChampions.map((bannedChampion) => (
+                      <S.BannedChampion>{getDataDragonImg("champion", bannedChampion.championName)}</S.BannedChampion>
+                    ))}
+                  </S.BannedChampionList>
+                </>
+              )}
             </>
           )}
         </S.Spectator>

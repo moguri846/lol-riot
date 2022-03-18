@@ -111,6 +111,11 @@ function SummonerTemplate({ summoner, matchSummary, spectator, jandi, lineWinOrL
             </React.Fragment>
           ))}
         </S.SpectatorPlayerList>
+        <S.BannedChampionList>
+          {spectator.bannedChampions.map((bannedChampion) => (
+            <S.BannedChampion>{getDataDragonImg("champion", bannedChampion.championName)}</S.BannedChampion>
+          ))}
+        </S.BannedChampionList>
       </S.Spectator>
       {loading.match ? (
         <>

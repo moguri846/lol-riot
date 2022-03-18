@@ -68,12 +68,12 @@ const GraphContainer = styled.div`
 
 const Spectator = styled.div`
   width: 100%;
-  height: 190px;
+  height: 230px;
 `;
 
 const SpectatorPlayerList = styled.ul`
   width: 100%;
-  height: 100%;
+  height: 200px;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
@@ -131,6 +131,22 @@ const ChampionStatus = styled.div`
   }
 `;
 
+const BannedChampionList = styled.ul`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+`;
+
+const BannedChampion = styled.li`
+  width: 30px;
+  height: 30px;
+
+  & > img {
+    width: 100%;
+    height: 100%;
+  }
+`;
+
 const CalendarGraphContainer = styled.div`
   width: 50%;
   display: flex;
@@ -169,6 +185,8 @@ export {
   SpectatorPlayerList,
   SpectatorPlayer,
   ChampionStatus,
+  BannedChampionList,
+  BannedChampion,
   GraphContainer,
   CalendarGraphContainer,
   BarGraphContainer,

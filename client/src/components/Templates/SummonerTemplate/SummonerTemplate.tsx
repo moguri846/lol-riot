@@ -57,7 +57,6 @@ function SummonerTemplate({ summoner, matchSummary, spectator, jandi, lineWinOrL
       setSatusInfo(FULFILLED, { spectator: false });
     } catch (err: any) {
       setSatusInfo(FULFILLED, { spectator: false });
-      console.log("err", err);
 
       snackbar(err, "error");
     }

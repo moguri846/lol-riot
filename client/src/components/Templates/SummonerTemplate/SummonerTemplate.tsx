@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Jandi } from "../../../_actions/riot/interface/jandi.interface";
 import { LineWinOrLoseType } from "../../../_actions/riot/interface/lineWinOrLose.interface";
 import { ComparingWithEnemyType } from "../../../_actions/riot/interface/matchSummary.interface";
@@ -13,6 +13,7 @@ import { toLocaleString } from "../../common/function/common.function";
 import * as S from "./style";
 import "react-loading-skeleton/dist/skeleton.css";
 import { ISpectator } from "../../../_actions/riot/interface/spectator.interface";
+import Button from "../../Atoms/Button/Button";
 interface IProps {
   summoner: SummonerType;
   spectator: ISpectator;
@@ -23,6 +24,12 @@ interface IProps {
 }
 
 function SummonerTemplate({ summoner, matchSummary, spectator, jandi, lineWinOrLose, loading }: IProps) {
+  const [spectatorToggle, setSpectatorToggle] = useState(false);
+
+  const handleSpectatorToggle = () => {
+    setSpectatorToggle(!spectatorToggle);
+  };
+
   return (
     <>
       <S.SummonerContainer>
@@ -87,65 +94,71 @@ function SummonerTemplate({ summoner, matchSummary, spectator, jandi, lineWinOrL
                   <span>승률 {Math.ceil((summoner.wins / (summoner.wins + summoner.losses)) * 100) || 0}%</span>
                 </div>
               </S.SummonerRank>
+              <Button onClick={handleSpectatorToggle}>{spectatorToggle ? "종합 정보" : "인게임 정보"}</Button>
             </S.SummonerInfo>
           </>
         )}
       </S.SummonerContainer>
-      <S.Spectator>
-        <S.SpectatorPlayerList>
-          {spectator.players.map((player) => (
-            <React.Fragment key={player.summonerName}>
-              <S.SpectatorPlayer className={player.teamId === 100 ? "blue" : "red"}>
-                <span className="name">
-                  <a href={`/summoner=${player.summonerName}`}>{player.summonerName}</a>
-                </span>
-                <S.ChampionStatus>
-                  <ul className="spells">
-                    {player.spells.map((spell) => (
-                      <li key={spell}>{getDataDragonImg("spell", spell)}</li>
-                    ))}
-                  </ul>
-                  <div className="champion-img">{getDataDragonImg("champion", player.championName)}</div>
-                </S.ChampionStatus>
-              </S.SpectatorPlayer>
-            </React.Fragment>
-          ))}
-        </S.SpectatorPlayerList>
-        <S.BannedChampionList>
-          {spectator.bannedChampions.map((bannedChampion) => (
-            <S.BannedChampion>{getDataDragonImg("champion", bannedChampion.championName)}</S.BannedChampion>
-          ))}
-        </S.BannedChampionList>
-      </S.Spectator>
-      {loading.match ? (
-        <>
-          <S.GraphContainer>
-            <S.CalendarGraphContainer>
-              <Skeleton width="25%" height="200px" />
-            </S.CalendarGraphContainer>
-            <S.BarGraphContainer>
-              <Skeleton width="100%" height="200px" />
-            </S.BarGraphContainer>
-          </S.GraphContainer>
-          <S.MatchList>
-            <Skeleton width="100%" height="110px" />
-          </S.MatchList>
-        </>
+      {spectatorToggle ? (
+        <S.Spectator>
+          <S.SpectatorPlayerList>
+            {spectator.players.map((player) => (
+              <React.Fragment key={player.summonerName}>
+                <S.SpectatorPlayer className={player.teamId === 100 ? "blue" : "red"}>
+                  <span className="name">
+                    <a href={`/summoner=${player.summonerName}`}>{player.summonerName}</a>
+                  </span>
+                  <S.ChampionStatus>
+                    <ul className="spells">
+                      {player.spells.map((spell) => (
+                        <li key={spell}>{getDataDragonImg("spell", spell)}</li>
+                      ))}
+                    </ul>
+                    <div className="champion-img">{getDataDragonImg("champion", player.championName)}</div>
+                  </S.ChampionStatus>
+                </S.SpectatorPlayer>
+              </React.Fragment>
+            ))}
+          </S.SpectatorPlayerList>
+          <S.BannedChampionList>
+            {spectator.bannedChampions.map((bannedChampion) => (
+              <S.BannedChampion>{getDataDragonImg("champion", bannedChampion.championName)}</S.BannedChampion>
+            ))}
+          </S.BannedChampionList>
+        </S.Spectator>
       ) : (
         <>
-          <S.GraphContainer>
-            <S.CalendarGraphContainer>
-              <CalendarGraph jandi={jandi} />
-            </S.CalendarGraphContainer>
-            <S.BarGraphContainer>
-              <BarGraph lineWinOrLose={lineWinOrLose} />
-            </S.BarGraphContainer>
-          </S.GraphContainer>
-          <S.MatchList>
-            {matchSummary.map((match) => (
-              <SummonerMatchItem key={match.gameId} match={match} />
-            ))}
-          </S.MatchList>
+          {loading.match ? (
+            <>
+              <S.GraphContainer>
+                <S.CalendarGraphContainer>
+                  <Skeleton width="25%" height="200px" />
+                </S.CalendarGraphContainer>
+                <S.BarGraphContainer>
+                  <Skeleton width="100%" height="200px" />
+                </S.BarGraphContainer>
+              </S.GraphContainer>
+              <S.MatchList>
+                <Skeleton width="100%" height="110px" />
+              </S.MatchList>
+            </>
+          ) : (
+            <>
+              <S.GraphContainer>
+                <S.CalendarGraphContainer>
+                  <CalendarGraph jandi={jandi} />
+                </S.CalendarGraphContainer>
+                <S.BarGraphContainer>
+                  <BarGraph lineWinOrLose={lineWinOrLose} />
+                </S.BarGraphContainer>
+              </S.GraphContainer>
+              <S.MatchList>
+                {matchSummary.map((match) => (
+                  <SummonerMatchItem key={match.gameId} match={match} />
+                ))}
+              </S.MatchList>
+            </>
+          )}
         </>
       )}
     </>

@@ -35,11 +35,12 @@ const loginOAuth = (loginPrameter: IOAuthLoginPrameter) => async (dispatch: Disp
 
     saveLocalStorage(token, loginPrameter.type);
   } catch (err: any) {
-    const errMessage = err?.response?.data?.data || err.message;
+    const status = err.response.status;
+    const errMessage = err.response.data.data || err.message;
 
     dispatch({
       type: FAIL,
-      payload: { errMessage },
+      payload: { status, errMessage },
     });
 
     throw errMessage;
@@ -59,11 +60,12 @@ const myInfoOAuth = () => async (dispatch: Dispatch<OAuthMyInfo>) => {
       payload: info,
     });
   } catch (err: any) {
-    const errMessage = err?.response?.data?.data || err.message;
+    const status = err.response.status;
+    const errMessage = err.response.data.data || err.message;
 
     dispatch({
       type: FAIL,
-      payload: { errMessage },
+      payload: { status, errMessage },
     });
 
     throw errMessage;
@@ -86,11 +88,12 @@ const logoutOAuth = () => async (dispatch: Dispatch<OAuthLogout>) => {
       },
     });
   } catch (err: any) {
-    const errMessage = err?.response?.data?.data || err.message;
+    const status = err.response.status;
+    const errMessage = err.response.data.data || err.message;
 
     dispatch({
       type: FAIL,
-      payload: { errMessage },
+      payload: { status, errMessage },
     });
 
     throw errMessage;
@@ -119,12 +122,14 @@ const oAuthTokenCheck = () => async (dispatch: Dispatch<OAuthTokenCheck>) => {
         tokenStatus.isLogin = true;
         tokenStatus.message = "토큰 갱신";
       } catch (err: any) {
+        const status = err.response.status;
         tokenStatus.type = FAIL;
         tokenStatus.message = err.message;
 
         dispatch({
           type: FAIL,
           payload: {
+            status,
             isLogin: tokenStatus.isLogin,
             errMessage: tokenStatus.message,
           },
@@ -165,7 +170,7 @@ const reissueToken = async () => {
     const { data } = await oAuthReissueToken(type.toLowerCase());
     return data;
   } catch (err: any) {
-    const errMessage = err?.response?.data?.data || err.message;
+    const errMessage = err.response.data.data || err.message;
 
     throw errMessage;
   }

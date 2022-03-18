@@ -1,7 +1,13 @@
 import { AxiosResponse } from "axios";
 import { Dispatch } from "redux";
 import { loadSummonerInfo, loadMatchInfo, loadMatchDetailInfo, loadSpectatorInfo } from "../../API/riot";
-import { FAIL } from "../common/constant/common.constant";
+import {
+  GAME_INFO_FAIL,
+  MATCH_DETAIL_FAIL,
+  REMOVE_RIOT_FAIL,
+  SPECTATOR_FAIL,
+  SUMMONER_FAIL,
+} from "./constant/riot.constant";
 import { IMatchDetailResponse, IMatchInfo, ISummoner, MatchListFilterType } from "./interface/dispatch.interface";
 import { SuccessMatchList, SuccessMatchDetailInfo } from "./interface/dispatch.interface";
 import {
@@ -30,11 +36,12 @@ const summonerInfo =
 
       return summoner;
     } catch (err: any) {
-      const errMessage = err?.response?.data?.data || err.message;
+      const status = err.response.status;
+      const errMessage = err.response.data.data || err.message;
 
       dispatch({
-        type: FAIL,
-        payload: { errMessage },
+        type: SUMMONER_FAIL,
+        payload: { status, errMessage },
       });
 
       throw errMessage;
@@ -67,11 +74,12 @@ const matchInfo = (puuid: string) => async (dispatch: Dispatch<any>) => {
       payload: lineWinOrLose,
     });
   } catch (err: any) {
-    const errMessage = err?.response?.data?.errMessage || err.message;
+    const status = err.status;
+    const errMessage = err.response.data.data || err.message;
 
     dispatch({
-      type: FAIL,
-      payload: { errMessage },
+      type: GAME_INFO_FAIL,
+      payload: { status, errMessage },
     });
 
     throw errMessage;
@@ -89,11 +97,12 @@ const spectatorInfo = (encryptedSummonerId: string) => async (dispatch: Dispatch
       payload: spectator,
     });
   } catch (err: any) {
-    const errMessage = err?.response?.data?.errMessage || err.message;
+    const status = err.response.status;
+    const errMessage = err.response.data.data || err.message;
 
     dispatch({
-      type: FAIL,
-      payload: { errMessage },
+      type: SPECTATOR_FAIL,
+      payload: { status, errMessage },
     });
 
     throw errMessage;
@@ -111,11 +120,12 @@ const matchDetailInfo =
         payload: data.data,
       });
     } catch (err: any) {
-      const errMessage = err?.response?.data?.data || err.message;
+      const status = err.response.status;
+      const errMessage = err.response.data.data || err.message;
 
       dispatch({
-        type: FAIL,
-        payload: { errMessage },
+        type: MATCH_DETAIL_FAIL,
+        payload: { status, errMessage },
       });
 
       throw errMessage;

@@ -5,6 +5,7 @@ import spectator from "./spectatorReducer";
 import matchSummary from "./matchSummaryReducer";
 import jandi from "./jandiReducer";
 import lineWinOrLose from "./lineWinOrLoseReducer";
+import fail from "./failReducer";
 
 const riotRootReducer = combineReducers({
   summoner,
@@ -12,6 +13,7 @@ const riotRootReducer = combineReducers({
   matchSummary,
   jandi,
   lineWinOrLose,
+  fail,
 });
 
 export type RiotRootReducerType = ReturnType<typeof riotRootReducer>;

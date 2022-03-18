@@ -1,11 +1,18 @@
 import { Router, Request, Response } from "express";
 import { AxiosResponse } from "axios";
 import moment from "moment";
-import { getSummonerInfo, getMatchIds, getMatchInfo, getSummonerDetailInfo, getMatchTimeLine } from "../../API/riot";
-import { Match, Summoner, Jandi, SummonerDetailInfo, MatchTimeLine } from "./interface/riot.interface";
+import {
+  getSummonerInfo,
+  getMatchIds,
+  getMatchInfo,
+  getSummonerDetailInfo,
+  getMatchTimeLine,
+  loadSpectatorInfo,
+} from "../../API/riot";
+import { Match, Summoner, Jandi, SummonerDetailInfo, MatchTimeLine, ISpectator } from "./interface/riot.interface";
 import { resFunc } from "../common/ResSuccessOrFalse.function";
 import { MATCH_SUMMARY, COMPARING_WITH_ENEMY } from "./constant/riot.constant";
-import { changeSpellIdToName } from "./function/riot.func";
+import { changeChampionIdToName, changeSpellIdToName } from "./function/riot.func";
 const router = Router();
 
 /**
@@ -242,6 +249,53 @@ router.get("/summonerMatchList", async (req: Request, res: Response) => {
 
     resFunc({ res, data: responseObj });
   } catch (err: any) {
+    resFunc({ res, err });
+  }
+});
+
+router.get("/spectatorInfo", async (req: Request, res: Response) => {
+  try {
+    const encryptedSummonerId = req.query.encryptedSummonerId as string;
+
+    const players: any[] = [];
+    const bannedChampions: any[] = [];
+
+    const { data: spectator }: AxiosResponse<ISpectator> = await loadSpectatorInfo(encryptedSummonerId);
+
+    for (let i = 0; i < spectator.participants.length; i++) {
+      const appendValues = {
+        ...spectator.participants[i],
+        championName: changeChampionIdToName(spectator.participants[i].championId),
+        spells: [
+          changeSpellIdToName(spectator.participants[i].spell1Id),
+          changeSpellIdToName(spectator.participants[i].spell2Id),
+        ],
+        idx: i,
+      };
+      console.log(appendValues.summonerName);
+
+      players.push(appendValues);
+    }
+
+    for (let i = 0; i < spectator.bannedChampions.length; i++) {
+      const appendValues = {
+        ...spectator.bannedChampions[i],
+        championName: changeChampionIdToName(spectator.bannedChampions[i].championId),
+      };
+      bannedChampions.push(appendValues);
+    }
+
+    const responseObj = {
+      gmaeId: spectator.gameId,
+      gameMode: spectator.gameMode,
+      gameStartTime: spectator.gameStartTime,
+      players,
+      t: spectator.participants,
+      bannedChampions,
+    };
+
+    resFunc({ res, data: responseObj });
+  } catch (err) {
     resFunc({ res, err });
   }
 });

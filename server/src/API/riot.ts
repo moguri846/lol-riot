@@ -30,6 +30,13 @@ const getMatchIds = (puuid: string) => {
   });
 };
 
+const loadSpectatorInfo = (encryptedSummonerId: string) => {
+  return Send({
+    method: "GET",
+    url: `${commonUrl(REGION.KR)}/spectator/v4/active-games/by-summoner/${encryptedSummonerId}`,
+  });
+};
+
 const getMatchInfo = (matchId: string) => {
   return Send({
     method: "GET",
@@ -44,4 +51,4 @@ const getMatchTimeLine = (matchId: string) => {
   });
 };
 
-export { getSummonerInfo, getSummonerDetailInfo, getMatchIds, getMatchInfo, getMatchTimeLine };
+export { getSummonerInfo, getSummonerDetailInfo, getMatchIds, loadSpectatorInfo, getMatchInfo, getMatchTimeLine };

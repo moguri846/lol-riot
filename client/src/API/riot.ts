@@ -22,6 +22,17 @@ const loadMatchInfo = (puuid: string) => {
   });
 };
 
+const loadSpectatorInfo = (encryptedSummonerId: string) => {
+  const queryStringObj = {
+    encryptedSummonerId,
+  };
+
+  return Send({
+    method: Methods.GET,
+    url: `/riot/spectatorInfo?${makeQueryString(queryStringObj)}`,
+  });
+};
+
 const loadMatchDetailInfo = ({ gameId, player, enemy }: IMatchSummaryDetailParameter) => {
   const queryStringObj = {
     gameId,
@@ -34,4 +45,4 @@ const loadMatchDetailInfo = ({ gameId, player, enemy }: IMatchSummaryDetailParam
   });
 };
 
-export { loadSummonerInfo, loadMatchDetailInfo, loadMatchInfo };
+export { loadSummonerInfo, loadMatchDetailInfo, loadSpectatorInfo, loadMatchInfo };

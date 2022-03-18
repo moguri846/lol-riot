@@ -68,7 +68,7 @@ const GraphContainer = styled.div`
 
 const Spectator = styled.div`
   width: 100%;
-  height: 200px;
+  height: 190px;
 `;
 
 const SpectatorPlayerList = styled.ul`
@@ -92,18 +92,42 @@ const SpectatorPlayer = styled.li`
     text-decoration: underline;
   }
 
+  &.red {
+    flex-direction: row-reverse;
+
+    & > div {
+      flex-direction: row-reverse;
+    }
+  }
+`;
+
+const ChampionStatus = styled.div`
+  & {
+    display: flex;
+    align-items: center;
+
+    & > .spells > li {
+      width: 12px;
+      height: 12px;
+      padding: 1px;
+
+      display: flex;
+
+      & > img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
   & > .champion-img {
-    width: 30px;
-    height: 30px;
+    width: 26px;
+    height: 26px;
 
     & > img {
       width: 100%;
       height: 100%;
     }
-  }
-
-  &.red {
-    flex-direction: row-reverse;
   }
 `;
 
@@ -144,6 +168,7 @@ export {
   Spectator,
   SpectatorPlayerList,
   SpectatorPlayer,
+  ChampionStatus,
   GraphContainer,
   CalendarGraphContainer,
   BarGraphContainer,

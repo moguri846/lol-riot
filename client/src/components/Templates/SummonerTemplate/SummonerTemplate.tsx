@@ -97,7 +97,14 @@ function SummonerTemplate({ summoner, matchSummary, spectator, jandi, lineWinOrL
             <React.Fragment key={player.summonerName}>
               <S.SpectatorPlayer className={player.teamId === 100 ? "blue" : "red"}>
                 <span className="name">{player.summonerName}</span>
-                <div className="champion-img">{getDataDragonImg("champion", player.championName)}</div>
+                <S.ChampionStatus>
+                  <ul className="spells">
+                    {player.spells.map((spell) => (
+                      <li key={spell}>{getDataDragonImg("spell", spell)}</li>
+                    ))}
+                  </ul>
+                  <div className="champion-img">{getDataDragonImg("champion", player.championName)}</div>
+                </S.ChampionStatus>
               </S.SpectatorPlayer>
             </React.Fragment>
           ))}

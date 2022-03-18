@@ -1,10 +1,10 @@
 import { combineReducers } from "redux";
-import status from "./status/statusReducer";
+import loading from "./loading/loadingReducer";
 import riot from "./riot/riotRootReducer";
 import user from "./user/userRootReducer";
 
 const rootReducer = combineReducers({
-  status,
+  loading,
   riot,
   user,
 });

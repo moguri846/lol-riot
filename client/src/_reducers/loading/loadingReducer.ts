@@ -1,12 +1,13 @@
-import { IStatus } from "../../_actions/status/interface/status.interface";
-import { LOADING, FULFILLED } from "../../_actions/status/constant/status.constant";
+import { FULFILLED, LOADING } from "../../_actions/loading/constant/loading.constant";
+import { ILoading, LoadingStatusType } from "../../_actions/loading/interface/loading.interface";
 
-const inititalState: IStatus = {
+const inititalState: ILoading = {
   summoner: false,
-  match: false,
+  spectator: false,
+  gameInfo: false,
 };
 
-type ActionType = { type: typeof LOADING; payload: IStatus } | { type: typeof FULFILLED; payload: IStatus };
+type ActionType = { type: LoadingStatusType; payload: ILoading };
 
 const reducer = (state = inititalState, action: ActionType) => {
   switch (action.type) {

@@ -5,7 +5,7 @@ import { RootReducerType } from "../../_reducers/rootReducer";
 
 const SummonerPage = () => {
   const state = useSelector((state: RootReducerType) => state.riot);
-  const loading = useSelector((state: RootReducerType) => state.status);
+  const loading = useSelector((state: RootReducerType) => state.loading);
 
   return (
     <>

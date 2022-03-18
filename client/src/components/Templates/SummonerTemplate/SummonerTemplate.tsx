@@ -8,7 +8,7 @@ import BarGraph from "../../Graph/BarGraph/BarGraph";
 import CalendarGraph from "../../Graph/CalendarGraph/CalendarGraph";
 import SummonerMatchItem from "../../SummonerMatchItem/SummonerMatchItem";
 import { getDataDragonImg } from "../../../pages/common/commonFunc";
-import { IStatus } from "../../../_actions/status/interface/status.interface";
+import { ILoading } from "../../../_actions/loading/interface/loading.interface";
 import { toLocaleString } from "../../common/function/common.function";
 import * as S from "./style";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -23,7 +23,7 @@ interface IProps {
   matchSummary: ComparingWithEnemyType[];
   jandi: Jandi[];
   lineWinOrLose: LineWinOrLoseType[];
-  loading: IStatus;
+  loading: ILoading;
 }
 
 function SummonerTemplate({ summoner, matchSummary, spectator, jandi, lineWinOrLose, loading }: IProps) {
@@ -143,7 +143,7 @@ function SummonerTemplate({ summoner, matchSummary, spectator, jandi, lineWinOrL
         </S.Spectator>
       ) : (
         <>
-          {loading.match ? (
+          {loading.gameInfo ? (
             <>
               <S.GraphContainer>
                 <S.CalendarGraphContainer>

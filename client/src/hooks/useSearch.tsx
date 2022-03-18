@@ -5,8 +5,8 @@ import { summonerInfo, matchInfo } from "../_actions/riot/riotActions";
 import { MatchListFilterType } from "../_actions/riot/interface/dispatch.interface";
 import { COMPARING_WITH_ENEMY } from "../_actions/riot/constant/riot.constant";
 import { RootReducerType } from "../_reducers/rootReducer";
-import { statusAction } from "../_actions/status/statusActions";
-import { LOADING, FULFILLED } from "../_actions/status/constant/status.constant";
+import { loadingAction } from "../_actions/loading/loadingActions";
+import { LOADING, FULFILLED } from "../_actions/loading/constant/loading.constant";
 import { SummonerType } from "../_actions/riot/interface/summoner.interface";
 import useSnackBar from "./useSnackBar";
 
@@ -65,15 +65,15 @@ const useSearch = (): IUseSearch => {
 
   const searchSummoner = async (summonerName: string, type: MatchListFilterType) => {
     try {
-      dispatch(statusAction(LOADING, { summoner: true, match: true }));
+      dispatch(loadingAction(LOADING, { summoner: true, gameInfo: true }));
 
       const { puuid } = (await dispatch(summonerInfo(summonerName, type))) as unknown as SummonerType;
 
-      dispatch(statusAction(FULFILLED, { summoner: false }));
+      dispatch(loadingAction(FULFILLED, { summoner: false }));
 
       await dispatch(matchInfo(puuid));
 
-      dispatch(statusAction(FULFILLED, { match: false }));
+      dispatch(loadingAction(FULFILLED, { gameInfo: false }));
     } catch (err: any) {
       snackbar(err, "error");
     }

@@ -14,6 +14,9 @@ import * as S from "./style";
 import "react-loading-skeleton/dist/skeleton.css";
 import { ISpectator } from "../../../_actions/riot/interface/spectator.interface";
 import Button from "../../Atoms/Button/Button";
+import { useDispatch } from "react-redux";
+import { spectatorInfo } from "../../../_actions/riot/riotActions";
+
 interface IProps {
   summoner: SummonerType;
   spectator: ISpectator;
@@ -24,10 +27,22 @@ interface IProps {
 }
 
 function SummonerTemplate({ summoner, matchSummary, spectator, jandi, lineWinOrLose, loading }: IProps) {
+  const dispatch = useDispatch();
+
   const [spectatorToggle, setSpectatorToggle] = useState(false);
 
   const handleSpectatorToggle = () => {
     setSpectatorToggle(!spectatorToggle);
+
+    if (spectatorToggle) {
+      return;
+    }
+
+    getSpectatorInfo(summoner.id);
+  };
+
+  const getSpectatorInfo = (id: string) => {
+    dispatch(spectatorInfo(id));
   };
 
   return (

@@ -8,7 +8,11 @@ import BarGraph from "../../Graph/BarGraph/BarGraph";
 import CalendarGraph from "../../Graph/CalendarGraph/CalendarGraph";
 import SummonerMatchItem from "../../SummonerMatchItem/SummonerMatchItem";
 import { getDataDragonImg } from "../../../pages/common/commonFunc";
-import { ILoading } from "../../../_actions/loading/interface/loading.interface";
+import {
+  ILoading,
+  ILoadingStatusParameter,
+  LoadingStatusType,
+} from "../../../_actions/loading/interface/loading.interface";
 import { toLocaleString } from "../../common/function/common.function";
 import * as S from "./style";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -16,6 +20,8 @@ import { ISpectator } from "../../../_actions/riot/interface/spectator.interface
 import Button from "../../Atoms/Button/Button";
 import { useDispatch } from "react-redux";
 import { spectatorInfo } from "../../../_actions/riot/riotActions";
+import { loadingAction } from "../../../_actions/loading/loadingActions";
+import { FULFILLED, LOADING } from "../../../_actions/loading/constant/loading.constant";
 
 interface IProps {
   summoner: SummonerType;
@@ -38,7 +44,19 @@ function SummonerTemplate({ summoner, matchSummary, spectator, jandi, lineWinOrL
       return;
     }
 
-    getSpectatorInfo(summoner.id);
+    try {
+      setSatusInfo(LOADING, { spectator: true });
+
+      getSpectatorInfo(summoner.id);
+
+      setSatusInfo(FULFILLED, { spectator: false });
+    } catch (err: any) {
+      setSatusInfo(FULFILLED, { spectator: false });
+    }
+  };
+
+  const setSatusInfo = (type: LoadingStatusType, status: ILoadingStatusParameter) => {
+    dispatch(loadingAction(type, status));
   };
 
   const getSpectatorInfo = (id: string) => {
@@ -116,30 +134,38 @@ function SummonerTemplate({ summoner, matchSummary, spectator, jandi, lineWinOrL
       </S.SummonerContainer>
       {spectatorToggle ? (
         <S.Spectator>
-          <S.SpectatorPlayerList>
-            {spectator.players.map((player) => (
-              <React.Fragment key={player.summonerName}>
-                <S.SpectatorPlayer className={player.teamId === 100 ? "blue" : "red"}>
-                  <span className="name">
-                    <a href={`/summoner=${player.summonerName}`}>{player.summonerName}</a>
-                  </span>
-                  <S.ChampionStatus>
-                    <ul className="spells">
-                      {player.spells.map((spell) => (
-                        <li key={spell}>{getDataDragonImg("spell", spell)}</li>
-                      ))}
-                    </ul>
-                    <div className="champion-img">{getDataDragonImg("champion", player.championName)}</div>
-                  </S.ChampionStatus>
-                </S.SpectatorPlayer>
-              </React.Fragment>
-            ))}
-          </S.SpectatorPlayerList>
-          <S.BannedChampionList>
-            {spectator.bannedChampions.map((bannedChampion) => (
-              <S.BannedChampion>{getDataDragonImg("champion", bannedChampion.championName)}</S.BannedChampion>
-            ))}
-          </S.BannedChampionList>
+          {loading.spectator ? (
+            <>
+              <Skeleton width="100%" height="100%" />
+            </>
+          ) : (
+            <>
+              <S.SpectatorPlayerList>
+                {spectator.players.map((player) => (
+                  <React.Fragment key={player.summonerName}>
+                    <S.SpectatorPlayer className={player.teamId === 100 ? "blue" : "red"}>
+                      <span className="name">
+                        <a href={`/summoner=${player.summonerName}`}>{player.summonerName}</a>
+                      </span>
+                      <S.ChampionStatus>
+                        <ul className="spells">
+                          {player.spells.map((spell) => (
+                            <li key={spell}>{getDataDragonImg("spell", spell)}</li>
+                          ))}
+                        </ul>
+                        <div className="champion-img">{getDataDragonImg("champion", player.championName)}</div>
+                      </S.ChampionStatus>
+                    </S.SpectatorPlayer>
+                  </React.Fragment>
+                ))}
+              </S.SpectatorPlayerList>
+              <S.BannedChampionList>
+                {spectator.bannedChampions.map((bannedChampion) => (
+                  <S.BannedChampion>{getDataDragonImg("champion", bannedChampion.championName)}</S.BannedChampion>
+                ))}
+              </S.BannedChampionList>
+            </>
+          )}
         </S.Spectator>
       ) : (
         <>

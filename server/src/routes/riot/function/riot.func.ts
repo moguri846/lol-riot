@@ -1,3 +1,16 @@
+const changeQueueIdToName = (id: number) => {
+  switch (id) {
+    case 420:
+      return "솔랭";
+    case 430:
+      return "일반";
+    case 440:
+      return "자유 5:5 랭크";
+    default:
+      return "none";
+  }
+};
+
 const changeSpellIdToName = (id: number) => {
   switch (id) {
     case 21:
@@ -362,4 +375,4 @@ const changeChampionIdToName = (id: number) => {
   }
 };
 
-export { changeSpellIdToName, changeChampionIdToName };
+export { changeQueueIdToName, changeSpellIdToName, changeChampionIdToName };

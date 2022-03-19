@@ -5,13 +5,13 @@ import { ComparingWithEnemyType } from "../../../_actions/riot/interface/matchSu
 import LineGraph from "../../Molecules/LineGraph/LineGraph";
 import useSnackBar from "../../../hooks/useSnackBar";
 import { TOTAL_CS, TOTAL_GOLD, XP } from "../../Molecules/LineGraph/constant/LineGraph.constant";
-import { LineOptionsType } from "../../Molecules/LineGraph/interface/LineGraph.interface";
+import { TimelineOptionsType } from "../../Molecules/LineGraph/interface/LineGraph.interface";
 import { getDataDragonImg } from "../../../pages/common/commonFunc";
 
 import "moment/locale/ko";
 import ProgressBar from "../../Molecules/ProgressBar/ProgressBar";
 import { ANALYSIS, TIMELINE } from "./constant/SummonerMatchItem.constant";
-import { OptionType } from "./interface/SummonerMatchItem.interface";
+import { MatchDetailOptionsType } from "./interface/SummonerMatchItem.interface";
 import { matchDetailInfo } from "../../../_actions/riot/riotActions";
 
 import * as S from "./style";
@@ -35,48 +35,10 @@ const SummonerMatchItem = ({ match }: IProps) => {
   const dispatch = useDispatch();
   const { snackbar } = useSnackBar();
 
-  const [options, setOptions] = useState<OptionType[]>([ANALYSIS, TIMELINE]);
-  const [selectOption, setSelectOption] = useState<OptionType>(ANALYSIS);
-  const [timelineOptions, setTimelineOptions] = useState<LineOptionsType[]>([TOTAL_GOLD, TOTAL_CS, XP]);
-  const [selectTimeLineOption, setSelectTimeLineOption] = useState<LineOptionsType>(TOTAL_GOLD);
-
-  const onSelectOption = (e: React.MouseEvent<HTMLLIElement>) => {
-    let option: LineOptionsType;
-
-    switch (e.currentTarget.id) {
-      case TOTAL_GOLD:
-        option = TOTAL_GOLD;
-        break;
-      case TOTAL_CS:
-        option = TOTAL_CS;
-        break;
-      case XP:
-        option = XP;
-        break;
-      default:
-        option = TOTAL_GOLD;
-        break;
-    }
-
-    setSelectTimeLineOption(option);
-  };
-
-  const engToKor = (eng: string) => {
-    switch (eng) {
-      case TOTAL_GOLD:
-        return "골드";
-      case TOTAL_CS:
-        return "미니언";
-      case XP:
-        return "경험치";
-      case ANALYSIS:
-        return "경기 분석";
-      case TIMELINE:
-        return "타임라인";
-      default:
-        return "";
-    }
-  };
+  const [matchDetailOptions, setMatchDetailOptions] = useState<MatchDetailOptionsType[]>([ANALYSIS, TIMELINE]);
+  const [matchDetailSelected, setSelectMatchDetailOption] = useState<MatchDetailOptionsType>(ANALYSIS);
+  const [timelineOptions, setTimelineOptions] = useState<TimelineOptionsType[]>([TOTAL_GOLD, TOTAL_CS, XP]);
+  const [timelineSelected, setSelectTimelineOption] = useState<TimelineOptionsType>(TOTAL_GOLD);
 
   const gameDuration = (gameEndTimestamp: number | null, gameDuration: number) => {
     let m;
@@ -93,8 +55,8 @@ const SummonerMatchItem = ({ match }: IProps) => {
     return `${m}분 ${s}초`;
   };
 
-  const handleSelectOption = (e: React.MouseEvent<HTMLLIElement>) => {
-    let option: OptionType;
+  const handleSelectMatchDetailOption = (e: React.MouseEvent<HTMLLIElement>) => {
+    let option: MatchDetailOptionsType;
 
     switch (e.currentTarget.id) {
       case ANALYSIS:
@@ -107,7 +69,28 @@ const SummonerMatchItem = ({ match }: IProps) => {
         option = ANALYSIS;
         break;
     }
-    setSelectOption(option);
+    setSelectMatchDetailOption(option);
+  };
+
+  const handleSelectTimelineOption = (e: React.MouseEvent<HTMLLIElement>) => {
+    let option: TimelineOptionsType;
+
+    switch (e.currentTarget.id) {
+      case TOTAL_GOLD:
+        option = TOTAL_GOLD;
+        break;
+      case TOTAL_CS:
+        option = TOTAL_CS;
+        break;
+      case XP:
+        option = XP;
+        break;
+      default:
+        option = TOTAL_GOLD;
+        break;
+    }
+
+    setSelectTimelineOption(option);
   };
 
   const handleMatchDetailToggle = (match: ComparingWithEnemyType) => {
@@ -128,6 +111,41 @@ const SummonerMatchItem = ({ match }: IProps) => {
     } catch (err: any) {
       snackbar(err, "error");
     }
+  };
+
+  interface IOptionsList {
+    matchDetailOptions: MatchDetailOptionsType[] | TimelineOptionsType[];
+    target: MatchDetailOptionsType | TimelineOptionsType;
+    onClick: (e: React.MouseEvent<HTMLLIElement>) => void;
+  }
+
+  const engToKor = (eng: string) => {
+    switch (eng) {
+      case TOTAL_GOLD:
+        return "골드";
+      case TOTAL_CS:
+        return "미니언";
+      case XP:
+        return "경험치";
+      case ANALYSIS:
+        return "경기 분석";
+      case TIMELINE:
+        return "타임라인";
+      default:
+        return "";
+    }
+  };
+
+  const optionList = ({ matchDetailOptions, target, onClick }: IOptionsList) => {
+    return (
+      <S.OptionList>
+        {matchDetailOptions.map((option) => (
+          <S.OptionItem className={option === target ? "selected" : ""} onClick={onClick} id={option} key={option}>
+            {engToKor(option)}
+          </S.OptionItem>
+        ))}
+      </S.OptionList>
+    );
   };
 
   return (
@@ -183,19 +201,8 @@ const SummonerMatchItem = ({ match }: IProps) => {
             </S.MatchStatusContainer>
           </S.MatchItem>
         </summary>
-        <S.OptionList>
-          {options.map((option) => (
-            <S.OptionItem
-              className={option === selectOption ? "selected" : ""}
-              onClick={handleSelectOption}
-              id={option}
-              key={option}
-            >
-              {engToKor(option)}
-            </S.OptionItem>
-          ))}
-        </S.OptionList>
-        {selectOption === ANALYSIS && (
+        {optionList({ matchDetailOptions, target: matchDetailSelected, onClick: handleSelectMatchDetailOption })}
+        {matchDetailSelected === ANALYSIS && (
           <ul style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-around" }}>
             {progressObjs.map(({ title, key }) => {
               const isPlayerData = key === "kills" || key === "wardsPlaced";
@@ -220,21 +227,14 @@ const SummonerMatchItem = ({ match }: IProps) => {
             })}
           </ul>
         )}
-        {selectOption === TIMELINE && (
+        {matchDetailSelected === TIMELINE && (
           <S.LineGraphContainer>
-            <S.OptionList>
-              {timelineOptions.map((option) => (
-                <S.OptionItem
-                  className={option === selectTimeLineOption ? "selected" : ""}
-                  onClick={onSelectOption}
-                  id={option}
-                  key={option}
-                >
-                  {engToKor(option)}
-                </S.OptionItem>
-              ))}
-            </S.OptionList>
-            <LineGraph timeline={match.detail?.timeLine} option={selectTimeLineOption} />
+            {optionList({
+              matchDetailOptions: timelineOptions,
+              target: timelineSelected,
+              onClick: handleSelectTimelineOption,
+            })}
+            <LineGraph timeline={match.detail?.timeLine} option={timelineSelected} />
           </S.LineGraphContainer>
         )}
       </details>

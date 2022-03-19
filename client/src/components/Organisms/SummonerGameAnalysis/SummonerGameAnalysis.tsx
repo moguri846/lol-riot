@@ -1,0 +1,46 @@
+import React from "react";
+import Skeleton from "react-loading-skeleton";
+import { Jandi } from "../../../_actions/riot/interface/jandi.interface";
+import { LineWinOrLoseType } from "../../../_actions/riot/interface/lineWinOrLose.interface";
+import BarGraph from "../../Graph/BarGraph/BarGraph";
+import CalendarGraph from "../../Graph/CalendarGraph/CalendarGraph";
+
+import * as S from "./style";
+
+interface IProps {
+  loading: boolean;
+  jandi: Jandi[];
+  lineWinOrLose: LineWinOrLoseType[];
+}
+
+const SummonerGameAnalysis = ({ loading, jandi, lineWinOrLose }: IProps) => {
+  return (
+    <>
+      {loading ? (
+        <>
+          <S.GraphContainer>
+            <S.CalendarGraphContainer>
+              <Skeleton width="25%" height="200px" />
+            </S.CalendarGraphContainer>
+            <S.BarGraphContainer>
+              <Skeleton width="100%" height="200px" />
+            </S.BarGraphContainer>
+          </S.GraphContainer>
+        </>
+      ) : (
+        <>
+          <S.GraphContainer>
+            <S.CalendarGraphContainer>
+              <CalendarGraph jandi={jandi} />
+            </S.CalendarGraphContainer>
+            <S.BarGraphContainer>
+              <BarGraph lineWinOrLose={lineWinOrLose} />
+            </S.BarGraphContainer>
+          </S.GraphContainer>
+        </>
+      )}
+    </>
+  );
+};
+
+export default SummonerGameAnalysis;

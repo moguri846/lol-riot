@@ -3,13 +3,13 @@ import { Line } from "react-chartjs-2";
 import { CategoryScale } from "chart.js";
 import Chart from "chart.js/auto";
 import { ITimeLine } from "../../../_actions/riot/interface/matchSummary.interface";
-import { LineOptionsType } from "./interface/LineGraph.interface";
+import { TimelineOptionsType } from "./interface/LineGraph.interface";
 
 Chart.register(CategoryScale);
 
 interface IProps {
   timeline: ITimeLine[] | undefined;
-  option: LineOptionsType;
+  option: TimelineOptionsType;
 }
 
 const LineGraph = ({ timeline, option }: IProps) => {

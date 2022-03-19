@@ -11,7 +11,7 @@ import {
 } from "../../API/riot";
 import { resFunc } from "../common/ResSuccessOrFalse.function";
 import { MATCH_SUMMARY, COMPARING_WITH_ENEMY } from "./constant/riot.constant";
-import { changeChampionIdToName, changeSpellIdToName } from "./function/riot.func";
+import { changeChampionIdToName, changeQueueIdToName, changeSpellIdToName } from "./function/riot.func";
 import { Summoner, SummonerDetailInfo } from "./interface/summonerInfo.interface";
 import { Jandi, Match } from "./interface/summonerGameInfointerface";
 import { ISpectator } from "./interface/spectatorInfo.interface";
@@ -72,14 +72,26 @@ router.get("/summonerInfo", async (req: Request, res: Response) => {
     const summonerName = req.query.summonerName as string;
 
     // 유저 검색
-    const summoner: AxiosResponse<Summoner> = await getSummonerInfo(summonerName);
+    const { data: summoner }: AxiosResponse<Summoner> = await getSummonerInfo(summonerName);
 
     // 유저 디테일 정보
-    const summonerDetailInfo: AxiosResponse<SummonerDetailInfo[] | []> = await getSummonerDetailInfo(summoner.data.id);
+    const { data: summonerDetailInfo }: AxiosResponse<SummonerDetailInfo[] | []> = await getSummonerDetailInfo(
+      summoner.id
+    );
+
+    const summonerDetailInitState = {
+      queueType: "",
+      tier: "",
+      rank: "",
+      wins: "",
+      losses: "",
+      leaguePoints: 0,
+    };
 
     const responseObj = {
-      ...summoner.data,
-      ...summonerDetailInfo.data.filter((summonerDetail) => summonerDetail.queueType === "RANKED_SOLO_5x5")[0],
+      ...summoner,
+      ...(summonerDetailInfo.filter((summonerDetail) => summonerDetail.queueType === "RANKED_SOLO_5x5")[0] ||
+        summonerDetailInitState),
     };
 
     resFunc({ res, data: responseObj });
@@ -229,7 +241,7 @@ router.get("/summonerMatchList", async (req: Request, res: Response) => {
             gameId: match.data.info.gameId,
             gameEndTimestamp: match.data.info.gameEndTimestamp ? match.data.info.gameEndTimestamp : null,
             gameDuration: match.data.info.gameDuration,
-            gameMode: match.data.info.gameMode,
+            gameMode: changeQueueIdToName(match.data.info.queueId),
             player,
             enemy,
             players,

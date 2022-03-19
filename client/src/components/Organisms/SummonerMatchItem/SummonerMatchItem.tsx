@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import moment from "moment";
-import { ComparingWithEnemyType } from "../../_actions/riot/interface/matchSummary.interface";
-import LineGraph from "../Graph/LineGraph/LineGraph";
-import useSnackBar from "../../hooks/useSnackBar";
-import { TOTAL_CS, TOTAL_GOLD, XP } from "../Graph/LineGraph/constant/LineGraph.constant";
-import { LineOptionsType } from "../Graph/LineGraph/interface/LineGraph.interface";
-import { getDataDragonImg } from "../../pages/common/commonFunc";
+import { ComparingWithEnemyType } from "../../../_actions/riot/interface/matchSummary.interface";
+import LineGraph from "../../Molecules/LineGraph/LineGraph";
+import useSnackBar from "../../../hooks/useSnackBar";
+import { TOTAL_CS, TOTAL_GOLD, XP } from "../../Molecules/LineGraph/constant/LineGraph.constant";
+import { LineOptionsType } from "../../Molecules/LineGraph/interface/LineGraph.interface";
+import { getDataDragonImg } from "../../../pages/common/commonFunc";
 
 import "moment/locale/ko";
-import ProgressBar from "../ProgressBar/ProgressBar";
+import ProgressBar from "../../Molecules/ProgressBar/ProgressBar";
 import { ANALYSIS, TIMELINE } from "./constant/SummonerMatchItem.constant";
 import { OptionType } from "./interface/SummonerMatchItem.interface";
-import { matchDetailInfo } from "../../_actions/riot/riotActions";
+import { matchDetailInfo } from "../../../_actions/riot/riotActions";
 
 import * as S from "./style";
 interface IProps {

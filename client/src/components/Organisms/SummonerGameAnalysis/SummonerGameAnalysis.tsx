@@ -2,8 +2,8 @@ import React from "react";
 import Skeleton from "react-loading-skeleton";
 import { Jandi } from "../../../_actions/riot/interface/jandi.interface";
 import { LineWinOrLoseType } from "../../../_actions/riot/interface/lineWinOrLose.interface";
-import BarGraph from "../../Graph/BarGraph/BarGraph";
-import CalendarGraph from "../../Graph/CalendarGraph/CalendarGraph";
+import BarGraph from "../../Molecules/BarGraph/BarGraph";
+import CalendarGraph from "../../Molecules/CalendarGraph/CalendarGraph";
 
 import * as S from "./style";
 

@@ -1,7 +1,7 @@
 import React from "react";
 import * as S from "./style";
-import { getDataDragonImg } from "../../pages/common/commonFunc";
-import { toLocaleString } from "../common/function/common.function";
+import { getDataDragonImg } from "../../../pages/common/commonFunc";
+import { toLocaleString } from "../../common/function/common.function";
 
 interface IProps {
   title: string;

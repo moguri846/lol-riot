@@ -9,10 +9,13 @@ import {
   getMatchTimeLine,
   loadSpectatorInfo,
 } from "../../API/riot";
-import { Match, Summoner, Jandi, SummonerDetailInfo, MatchTimeLine, ISpectator } from "./interface/riot.interface";
 import { resFunc } from "../common/ResSuccessOrFalse.function";
 import { MATCH_SUMMARY, COMPARING_WITH_ENEMY } from "./constant/riot.constant";
 import { changeChampionIdToName, changeSpellIdToName } from "./function/riot.func";
+import { Summoner, SummonerDetailInfo } from "./interface/summonerInfo.interface";
+import { Jandi, Match } from "./interface/summonerGameInfointerface";
+import { ISpectator } from "./interface/spectatorInfo.interface";
+import { MatchTimeLine } from "./interface/matchInfo.interface";
 const router = Router();
 
 /**

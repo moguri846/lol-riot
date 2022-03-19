@@ -11,7 +11,7 @@ import { getDataDragonImg } from "../../../pages/common/commonFunc";
 import "moment/locale/ko";
 import ProgressBar from "../../Molecules/ProgressBar/ProgressBar";
 import { ANALYSIS, TIMELINE } from "./constant/SummonerMatchItem.constant";
-import { MatchDetailOptionsType } from "./interface/SummonerMatchItem.interface";
+import { IOptionsList, MatchDetailOptionsType } from "./interface/SummonerMatchItem.interface";
 import { matchDetailInfo } from "../../../_actions/riot/riotActions";
 
 import * as S from "./style";
@@ -112,12 +112,6 @@ const SummonerMatchItem = ({ match }: IProps) => {
       snackbar(err, "error");
     }
   };
-
-  interface IOptionsList {
-    matchDetailOptions: MatchDetailOptionsType[] | TimelineOptionsType[];
-    target: MatchDetailOptionsType | TimelineOptionsType;
-    onClick: (e: React.MouseEvent<HTMLLIElement>) => void;
-  }
 
   const engToKor = (eng: string) => {
     switch (eng) {

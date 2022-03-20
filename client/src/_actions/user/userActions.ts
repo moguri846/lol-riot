@@ -101,7 +101,8 @@ const logoutOAuth = () => async (dispatch: Dispatch<OAuthLogout>) => {
   }
 };
 
-const oAuthTokenCheck = () => async (dispatch: Dispatch<OAuthTokenCheck>) => {
+// const oAuthTokenCheck = () => async (dispatch: Dispatch<OAuthTokenCheck>) => {
+const oAuthTokenCheck = () => async (dispatch: Dispatch<any>) => {
   const accessExpiresIn = parseInt(localStorage.getItem(ACCESS_TOKEN_EXPIRES_IN) as string);
   const now = moment().valueOf();
   const accessDiffTime = accessExpiresIn - now;
@@ -115,30 +116,14 @@ const oAuthTokenCheck = () => async (dispatch: Dispatch<OAuthTokenCheck>) => {
     // diffTime이 10분 이하 && 2분 이상인 경우
     if (accessDiffTime <= 600000 && accessDiffTime >= 150000) {
       try {
-        const { data }: AxiosResponse<IToken> = await reissueToken();
-
-        saveLocalStorage(data);
-
+        await reissueToken();
         tokenStatus.type = REISSUE_TOKEN;
         tokenStatus.isLogin = true;
         tokenStatus.message = "토큰 갱신";
       } catch (err: any) {
-        const status = err.response.status;
         tokenStatus.type = FAIL;
         tokenStatus.message = err.message;
-
-        dispatch({
-          type: FAIL,
-          payload: {
-            status,
-            isLogin: tokenStatus.isLogin,
-            errMessage: tokenStatus.message,
-          },
-        });
-
-        return tokenStatus;
       }
-
       // diffTime이 2분 미만인 경우
     } else if (accessDiffTime < 150000) {
       const refreshExpiresIn = parseInt(localStorage.getItem(REFRESH_TOKEN_EXPIRES_IN) as string);
@@ -146,28 +131,13 @@ const oAuthTokenCheck = () => async (dispatch: Dispatch<OAuthTokenCheck>) => {
 
       if (refreshDiffTime >= 150000) {
         try {
-          const { data }: AxiosResponse<IToken> = await reissueToken();
-
-          saveLocalStorage(data);
-
+          await reissueToken();
           tokenStatus.type = REISSUE_TOKEN;
           tokenStatus.isLogin = true;
           tokenStatus.message = "토큰 갱신";
         } catch (err: any) {
-          const status = err.response.status;
           tokenStatus.type = FAIL;
           tokenStatus.message = err.message;
-
-          dispatch({
-            type: FAIL,
-            payload: {
-              status,
-              isLogin: tokenStatus.isLogin,
-              errMessage: tokenStatus.message,
-            },
-          });
-
-          return tokenStatus;
         }
       } else {
         tokenStatus.type = EXPIRED_TOKEN;
@@ -199,7 +169,8 @@ const reissueToken = async () => {
     const type = localStorage.getItem("OAUTH_TYPE") as OAuthType;
 
     const { data } = await oAuthReissueToken(type.toLowerCase());
-    return data;
+
+    saveLocalStorage(data);
   } catch (err: any) {
     const errMessage = err.response.data.data || err.message;
 

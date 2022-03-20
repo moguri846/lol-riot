@@ -1,6 +1,8 @@
 import { Router, Request, Response } from "express";
 import { User } from "../../models/User";
 import { resFunc } from "../common/ResSuccessOrFalse.function";
+import jwt from "jsonwebtoken";
+import { jwtSecretConfig } from "../../config/config";
 
 const router = Router();
 
@@ -36,7 +38,14 @@ router.post("/login", (req: Request, res: Response) => {
         if (!isMatch) {
           return resFunc({ res, err: { message: "이메일 혹은 비밀번호가 다릅니다." } });
         }
-        return resFunc({ res, data: user });
+
+        // @ts-ignore
+        user.generateToken(function (err: any, token: any) {
+          if (err) {
+            resFunc({ res, err });
+          }
+          resFunc({ res, data: token });
+        });
       });
     }
   });

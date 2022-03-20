@@ -6,7 +6,7 @@ import { FAIL } from "../common/constant/common.constant";
 import {
   ACCESS_TOKEN,
   EXPIRED_TOKEN,
-  EXPIRES_IN,
+  ACCESS_TOKEN_EXPIRES_IN,
   MY_INFO,
   NON_EXISTENT_TOKEN,
   OAUTH_LOGIN,
@@ -15,6 +15,7 @@ import {
   REFRESH_TOKEN,
   REISSUE_TOKEN,
   VALID_TOKEN,
+  REFRESH_TOKEN_EXPIRES_IN,
 } from "./constant/user.constant";
 import { OAuthLogin, OAuthLogout, OAuthMyInfo, OAuthTokenCheck } from "./interface/dispatch.interface";
 import { IOAuthLoginPrameter, IOAuthLoginResponse, IToken, ITokenStatus, OAuthType } from "./interface/user.interface";
@@ -101,18 +102,18 @@ const logoutOAuth = () => async (dispatch: Dispatch<OAuthLogout>) => {
 };
 
 const oAuthTokenCheck = () => async (dispatch: Dispatch<OAuthTokenCheck>) => {
-  const expiresIn = parseInt(localStorage.getItem(EXPIRES_IN) as string);
+  const accessExpiresIn = parseInt(localStorage.getItem(ACCESS_TOKEN_EXPIRES_IN) as string);
   const now = moment().valueOf();
-  const diffTime = expiresIn - now;
+  const accessDiffTime = accessExpiresIn - now;
   const tokenStatus: ITokenStatus = {
     type: NON_EXISTENT_TOKEN,
     isLogin: false,
     message: "존재하지 않은 토큰",
   };
 
-  if (diffTime) {
+  if (accessDiffTime) {
     // diffTime이 10분 이하 && 2분 이상인 경우
-    if (diffTime <= 600000 && diffTime >= 150000) {
+    if (accessDiffTime <= 600000 && accessDiffTime >= 150000) {
       try {
         const { data }: AxiosResponse<IToken> = await reissueToken();
 
@@ -139,9 +140,39 @@ const oAuthTokenCheck = () => async (dispatch: Dispatch<OAuthTokenCheck>) => {
       }
 
       // diffTime이 2분 미만인 경우
-    } else if (diffTime < 150000) {
-      tokenStatus.type = EXPIRED_TOKEN;
-      tokenStatus.message = "만료된 토큰";
+    } else if (accessDiffTime < 150000) {
+      const refreshExpiresIn = parseInt(localStorage.getItem(REFRESH_TOKEN_EXPIRES_IN) as string);
+      const refreshDiffTime = refreshExpiresIn - now;
+
+      if (refreshDiffTime >= 150000) {
+        try {
+          const { data }: AxiosResponse<IToken> = await reissueToken();
+
+          saveLocalStorage(data);
+
+          tokenStatus.type = REISSUE_TOKEN;
+          tokenStatus.isLogin = true;
+          tokenStatus.message = "토큰 갱신";
+        } catch (err: any) {
+          const status = err.response.status;
+          tokenStatus.type = FAIL;
+          tokenStatus.message = err.message;
+
+          dispatch({
+            type: FAIL,
+            payload: {
+              status,
+              isLogin: tokenStatus.isLogin,
+              errMessage: tokenStatus.message,
+            },
+          });
+
+          return tokenStatus;
+        }
+      } else {
+        tokenStatus.type = EXPIRED_TOKEN;
+        tokenStatus.message = "만료된 토큰";
+      }
     } else {
       tokenStatus.type = VALID_TOKEN;
       tokenStatus.isLogin = true;
@@ -180,9 +211,15 @@ export { loginOAuth, myInfoOAuth, oAuthTokenCheck, reissueToken, logoutOAuth };
 
 const saveLocalStorage = (token: IToken, oAuthType?: OAuthType) => {
   localStorage.setItem(ACCESS_TOKEN, token.access_token);
-  localStorage.setItem(EXPIRES_IN, String(moment().add(token.expires_in, "second").valueOf()));
+  localStorage.setItem(ACCESS_TOKEN_EXPIRES_IN, String(moment().add(token.expires_in, "second").valueOf()));
   if (token.refresh_token) {
     localStorage.setItem(REFRESH_TOKEN, token.refresh_token);
+  }
+  if (token.refresh_token_expires_in) {
+    localStorage.setItem(
+      REFRESH_TOKEN_EXPIRES_IN,
+      String(moment().add(token.refresh_token_expires_in, "second").valueOf())
+    );
   }
   if (oAuthType) {
     localStorage.setItem(OAUTH_TYPE, oAuthType);

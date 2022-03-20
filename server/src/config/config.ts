@@ -6,6 +6,10 @@ const mongoDBConfig = {
   mongoDBUri: process.env.MONGODB_URI as string,
 };
 
+const jwtSecretConfig = {
+  jwtSecret: process.env.JWT_SECRET as string,
+};
+
 const riotConfig = {
   apiKey: process.env.RIOT_API_KEY as string,
 };
@@ -22,4 +26,4 @@ const naverConfig = {
   redirectUri: process.env.NAVER_REDIRECT_URI as string,
 };
 
-export { mongoDBConfig, riotConfig, kakaoConfig, naverConfig };
+export { mongoDBConfig, jwtSecretConfig, riotConfig, kakaoConfig, naverConfig };

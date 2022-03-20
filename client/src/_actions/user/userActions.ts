@@ -168,9 +168,11 @@ const reissueToken = async () => {
   try {
     const type = localStorage.getItem("OAUTH_TYPE") as OAuthType;
 
-    const { data } = await oAuthReissueToken(type.toLowerCase());
+    const {
+      data: { data: token },
+    } = await oAuthReissueToken(type.toLowerCase());
 
-    saveLocalStorage(data);
+    saveLocalStorage(token);
   } catch (err: any) {
     const errMessage = err.response.data.data || err.message;
 

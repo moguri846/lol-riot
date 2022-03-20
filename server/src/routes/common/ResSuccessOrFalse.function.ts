@@ -6,7 +6,7 @@ export const resFunc = ({ res, err, data }: ResFuncType) => {
 
   if (err) {
     const response = err?.response;
-    status = response?.status || 500;
+    status = err.status | response?.status || 500;
     success = false;
     const errMessage = response?.statusText || err?.message || "서버 에러";
 

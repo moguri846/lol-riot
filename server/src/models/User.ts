@@ -31,6 +31,29 @@ const userSchema = new Schema<IUser & mongoose.Document>(
   { timestamps: true }
 );
 
+userSchema.pre("save", function (next) {
+  const user = this;
+
+  if (user.isModified("password")) {
+    bcrypt.genSalt(saltRounds, function (err, salt) {
+      if (err) {
+        next(err);
+      }
+      bcrypt.hash(user.password, salt, function (err, hash) {
+        if (err) {
+          next(err);
+        }
+
+        user.password = hash;
+
+        next();
+      });
+    });
+  } else {
+    next();
+  }
+});
+
 const User = mongoose.model<IUser & mongoose.Document>("User", userSchema);
 
 export { User };

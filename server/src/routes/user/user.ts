@@ -3,6 +3,7 @@ import { User } from "../../models/User";
 import { resFunc } from "../common/ResSuccessOrFalse.function";
 import jwt from "jsonwebtoken";
 import { jwtSecretConfig } from "../../config/config";
+import moment from "moment";
 
 const router = Router();
 
@@ -48,6 +49,42 @@ router.post("/login", (req: Request, res: Response) => {
         });
       });
     }
+  });
+});
+
+router.post("/reissue", (req: Request, res: Response) => {
+  const { access_token, refresh_token } = req.body;
+
+  User.findOne({ access_token, refresh_token }).exec((err, user) => {
+    if (err) {
+      resFunc({ res, err });
+    }
+
+    if (!user) {
+      resFunc({ res, err: { status: 404, message: "찾지 못함" } });
+    }
+
+    const accessToken = jwt.sign({}, jwtSecretConfig.jwtSecret, { expiresIn: "30m" });
+    const accessTokenExp = moment().add("30", "minute").valueOf();
+
+    let reissueToken: any = {
+      access_token: accessToken,
+      expires_in: accessTokenExp,
+    };
+
+    // 한 달 보다 적게 남으면
+    if (refresh_token <= 1650377527659) {
+      const refreshToken = jwt.sign({}, jwtSecretConfig.jwtSecret, { expiresIn: "30m" });
+      const refreshTokenExp = moment().add("30", "minute").valueOf();
+
+      reissueToken = {
+        ...reissueToken,
+        refresh_token: refreshToken,
+        refresh_token_expires_in: refreshTokenExp,
+      };
+    }
+
+    resFunc({ res, data: reissueToken });
   });
 });
 

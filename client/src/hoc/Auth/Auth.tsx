@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
-import { ITokenStatus } from "../../_actions/user/interface/user.interface";
-import { myInfoOAuth, oAuthTokenCheck } from "../../_actions/user/userActions";
+import { ITokenStatus } from "../../_actions/user/interface/oAuth.interface";
+import { myInfoOAuth, oAuthTokenCheck } from "../../_actions/user/oAuthActions";
 
 const auth = (SpecificComponent: React.FC, option: boolean | null) => {
   const AuthenticationCheck = () => {

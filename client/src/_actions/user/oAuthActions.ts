@@ -18,7 +18,7 @@ import {
   REFRESH_TOKEN_EXPIRES_IN,
 } from "./constant/user.constant";
 import { OAuthLogin, OAuthLogout, OAuthMyInfo, OAuthTokenCheck } from "./interface/dispatch.interface";
-import { IOAuthLoginPrameter, IOAuthLoginResponse, IToken, ITokenStatus, OAuthType } from "./interface/user.interface";
+import { IOAuthLoginPrameter, IOAuthLoginResponse, IToken, ITokenStatus, OAuthType } from "./interface/oAuth.interface";
 
 const loginOAuth = (loginPrameter: IOAuthLoginPrameter) => async (dispatch: Dispatch<OAuthLogin>) => {
   try {
@@ -36,7 +36,7 @@ const loginOAuth = (loginPrameter: IOAuthLoginPrameter) => async (dispatch: Disp
 
     saveLocalStorage(token, loginPrameter.type);
   } catch (err: any) {
-    const status = err.response.status;
+    const status = err.response.status || 500;
     const errMessage = err.response.data.data || err.message;
 
     dispatch({
@@ -61,7 +61,7 @@ const myInfoOAuth = () => async (dispatch: Dispatch<OAuthMyInfo>) => {
       payload: info,
     });
   } catch (err: any) {
-    const status = err.response.status;
+    const status = err.response.status || 500;
     const errMessage = err.response.data.data || err.message;
 
     dispatch({
@@ -89,7 +89,9 @@ const logoutOAuth = () => async (dispatch: Dispatch<OAuthLogout>) => {
       },
     });
   } catch (err: any) {
-    const status = err.response.status;
+    console.log("err", err);
+
+    const status = err.response.status || 500;
     const errMessage = err.response.data.data || err.message;
 
     dispatch({

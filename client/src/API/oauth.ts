@@ -1,7 +1,7 @@
 import Send from "./interceptor";
 import { makeQueryString } from "./common/commonFunc";
 import { Methods } from "./common/methods";
-import { IOAuthLoginPrameter } from "../_actions/user/interface/user.interface";
+import { IOAuthLoginPrameter } from "../_actions/user/interface/oAuth.interface";
 import { REFRESH_TOKEN } from "../_actions/user/constant/user.constant";
 
 const oAuthLogin = ({ code, state, type }: IOAuthLoginPrameter) => {

@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { oAuthLogin } from "../API/oauth";
 import { useDispatch } from "react-redux";
-import { loginOAuth } from "../_actions/user/userActions";
-import { IOAuthLoginPrameter, OAuthType } from "../_actions/user/interface/user.interface";
+import { loginOAuth } from "../_actions/user/oAuthActions";
+import { IOAuthLoginPrameter, OAuthType } from "../_actions/user/interface/oAuth.interface";
 
 const OAuth = () => {
   const location = useLocation();

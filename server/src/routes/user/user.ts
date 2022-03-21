@@ -74,8 +74,8 @@ router.post("/reissue", (req: Request, res: Response) => {
 
     // 한 달 보다 적게 남으면
     if (refresh_token <= 1650377527659) {
-      const refreshToken = jwt.sign({}, jwtSecretConfig.jwtSecret, { expiresIn: "30m" });
-      const refreshTokenExp = moment().add("30", "minute").valueOf();
+      const refreshToken = jwt.sign({}, jwtSecretConfig.jwtSecret, { expiresIn: "60d" });
+      const refreshTokenExp = moment().add("60", "day").valueOf();
 
       reissueToken = {
         ...reissueToken,

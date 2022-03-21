@@ -2,7 +2,7 @@ import { TimelineOptionsType } from "../../../Molecules/LineGraph/interface/Line
 import { ANALYSIS, TIMELINE } from "../constant/SummonerMatchItem.constant";
 
 export interface IOptionsList {
-  matchDetailOptions: MatchDetailOptionsType[] | TimelineOptionsType[];
+  options: MatchDetailOptionsType[] | TimelineOptionsType[];
   target: MatchDetailOptionsType | TimelineOptionsType;
   onClick: (e: React.MouseEvent<HTMLLIElement>) => void;
 }

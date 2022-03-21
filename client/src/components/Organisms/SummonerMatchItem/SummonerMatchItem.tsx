@@ -130,10 +130,10 @@ const SummonerMatchItem = ({ match }: IProps) => {
     }
   };
 
-  const optionList = ({ matchDetailOptions, target, onClick }: IOptionsList) => {
+  const optionList = ({ options, target, onClick }: IOptionsList) => {
     return (
       <S.OptionList>
-        {matchDetailOptions.map((option) => (
+        {options.map((option) => (
           <S.OptionItem className={option === target ? "selected" : ""} onClick={onClick} id={option} key={option}>
             {engToKor(option)}
           </S.OptionItem>
@@ -195,7 +195,11 @@ const SummonerMatchItem = ({ match }: IProps) => {
             </S.MatchStatusContainer>
           </S.MatchItem>
         </summary>
-        {optionList({ matchDetailOptions, target: matchDetailSelected, onClick: handleSelectMatchDetailOption })}
+        {optionList({
+          options: matchDetailOptions,
+          target: matchDetailSelected,
+          onClick: handleSelectMatchDetailOption,
+        })}
         {matchDetailSelected === ANALYSIS && (
           <ul style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-around" }}>
             {progressObjs.map(({ title, key }) => {
@@ -224,7 +228,7 @@ const SummonerMatchItem = ({ match }: IProps) => {
         {matchDetailSelected === TIMELINE && (
           <S.LineGraphContainer>
             {optionList({
-              matchDetailOptions: timelineOptions,
+              options: timelineOptions,
               target: timelineSelected,
               onClick: handleSelectTimelineOption,
             })}

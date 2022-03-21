@@ -31,15 +31,11 @@ const userSchema = new Schema<IUser & mongoose.Document>(
     },
     access_token: {
       type: String,
-    },
-    expires_in: {
-      type: Number,
+      default: "",
     },
     refresh_token: {
       type: String,
-    },
-    refresh_token_expires_in: {
-      type: Number,
+      default: "",
     },
   },
   { timestamps: true }
@@ -87,9 +83,7 @@ userSchema.methods.generateToken = function (cb: any) {
   const refreshTokenExp = moment().add("60", "day").valueOf();
 
   user.access_token = accessToken;
-  user.expires_in = accessTokenExp;
   user.refresh_token = refreshToken;
-  user.refresh_token_expires_in = refreshTokenExp;
 
   const token = {
     access_token: accessToken,

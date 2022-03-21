@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getCategoryPosts } from "../../API/post";
-import ArticleSummary from "../../components/ArticleSummary/ArticleSummary";
+import ArticleSummary from "../../components/Organisms/ArticleSummary/ArticleSummary";
 import useSnackBar from "../../hooks/useSnackBar";
 import { DUO, FREE, MOST_POPULAR } from "./constant/indexPage.constant";
 import { CategoryType, Post } from "./interface/indexPage.interface";

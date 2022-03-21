@@ -64,11 +64,6 @@ userSchema.pre("save", function (next) {
   }
 });
 
-interface IUserDoc extends IUser, mongoose.Document {
-  comparePassword: (password: string) => Promise<IComparePassword_R>;
-  generateToken: () => Promise<IGenerateToken_R>;
-}
-
 userSchema.methods.comparePassword = function (password: string): Promise<IComparePassword_R> {
   return bcrypt
     .compare(password, this.password)
@@ -99,6 +94,11 @@ userSchema.methods.generateToken = function (): Promise<IGenerateToken_R> {
     .then(() => token)
     .catch((err: any) => err);
 };
+
+interface IUserDoc extends IUser, mongoose.Document {
+  comparePassword: (password: string) => Promise<IComparePassword_R>;
+  generateToken: () => Promise<IGenerateToken_R>;
+}
 
 const User = mongoose.model<IUserDoc>("User", userSchema);
 

@@ -88,4 +88,27 @@ router.post("/reissue", (req: Request, res: Response) => {
   });
 });
 
+router.post("/logout", (req: Request, res: Response) => {
+  const { access_token } = req.body;
+
+  User.findOne({ access_token }).exec((err, user) => {
+    if (err) {
+      resFunc({ res, err });
+    }
+    if (!user) {
+      resFunc({ res, err: { status: 404, message: "찾지 못함" } });
+    } else {
+      user.access_token = "";
+      user.refresh_token = "";
+
+      user.save((err) => {
+        if (err) {
+          resFunc({ res, err });
+        }
+        resFunc({ res });
+      });
+    }
+  });
+});
+
 export default router;

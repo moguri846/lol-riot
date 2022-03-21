@@ -2,12 +2,12 @@ import mongoose, { Schema } from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import moment from "moment";
-import { IUser } from "./interface/User.interface";
+import { IComparePassword_R, IGenerateToken_R, IUser, Token } from "./interface/User.interface";
 import { jwtSecretConfig } from "../config/config";
 
 const saltRounds = 10;
 
-const userSchema = new Schema<IUser & mongoose.Document>(
+const userSchema = new Schema<IUserDoc>(
   {
     username: {
       type: String,
@@ -64,17 +64,19 @@ userSchema.pre("save", function (next) {
   }
 });
 
-userSchema.methods.comparePassword = function (
-  plainPassword: string,
-  cb: (err: any | null, isMatch?: boolean) => void
-) {
-  bcrypt
-    .compare(plainPassword, this.password)
-    .then((res) => cb(null, res))
-    .catch((err) => cb(err));
+interface IUserDoc extends IUser, mongoose.Document {
+  comparePassword: (password: string) => Promise<IComparePassword_R>;
+  generateToken: () => Promise<IGenerateToken_R>;
+}
+
+userSchema.methods.comparePassword = function (password: string): Promise<IComparePassword_R> {
+  return bcrypt
+    .compare(password, this.password)
+    .then((res) => res)
+    .catch((err) => err);
 };
 
-userSchema.methods.generateToken = function (cb: any) {
+userSchema.methods.generateToken = function (): Promise<IGenerateToken_R> {
   const user = this;
 
   const accessToken = jwt.sign({}, jwtSecretConfig.jwtSecret, { expiresIn: "30m" });
@@ -85,21 +87,19 @@ userSchema.methods.generateToken = function (cb: any) {
   user.access_token = accessToken;
   user.refresh_token = refreshToken;
 
-  const token = {
+  const token: Token = {
     access_token: accessToken,
     expires_in: accessTokenExp,
     refresh_token: refreshToken,
     refresh_token_expires_in: refreshTokenExp,
   };
 
-  user.save((err: any) => {
-    if (err) {
-      cb(err);
-    }
-    cb(null, token);
-  });
+  return user
+    .save()
+    .then(() => token)
+    .catch((err: any) => err);
 };
 
-const User = mongoose.model<IUser & mongoose.Document>("User", userSchema);
+const User = mongoose.model<IUserDoc>("User", userSchema);
 
 export { User };

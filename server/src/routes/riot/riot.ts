@@ -144,7 +144,7 @@ router.get("/summonerMatchList", async (req: Request, res: Response) => {
         let myIndex: number = 0;
         const match: AxiosResponse<Match> = await getMatchInfo(matchId);
 
-        if (match.data.info.gameMode !== "PRACTICETOOL") {
+        if (match.data.info.gameMode === "CLASSIC") {
           // 내 index 찾기
           for (let i = 0; i < match.data.info.participants.length; i++) {
             if (puuid === match.data.info.participants[i].puuid) {

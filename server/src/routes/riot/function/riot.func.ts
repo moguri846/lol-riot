@@ -1,5 +1,7 @@
 const changeQueueIdToName = (id: number) => {
   switch (id) {
+    case 0:
+      return "커스텀";
     case 420:
       return "솔랭";
     case 430:

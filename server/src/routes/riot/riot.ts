@@ -79,19 +79,22 @@ router.get("/summonerInfo", async (req: Request, res: Response) => {
       summoner.id
     );
 
-    const summonerDetailInitState = {
-      queueType: "",
-      tier: "",
-      rank: "",
-      wins: "",
-      losses: "",
-      leaguePoints: 0,
+    const rankedSolo: SummonerDetailInfo = summonerDetailInfo.filter(
+      (summonerDetail) => summonerDetail.queueType === "RANKED_SOLO_5x5"
+    )[0];
+
+    const rankedSoloInfo = {
+      queueType: rankedSolo ? rankedSolo.queueType : "",
+      tier: rankedSolo ? rankedSolo.tier : "",
+      rank: rankedSolo ? rankedSolo.rank : "",
+      wins: rankedSolo ? rankedSolo.wins : "",
+      losses: rankedSolo ? rankedSolo.losses : "",
+      leaguePoints: rankedSolo ? rankedSolo.leaguePoints : "",
     };
 
     const responseObj = {
       ...summoner,
-      ...(summonerDetailInfo.filter((summonerDetail) => summonerDetail.queueType === "RANKED_SOLO_5x5")[0] ||
-        summonerDetailInitState),
+      ...rankedSoloInfo,
     };
 
     resFunc({ res, data: responseObj });

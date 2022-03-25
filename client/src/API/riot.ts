@@ -33,6 +33,16 @@ const loadSpectatorInfo = (encryptedSummonerId: string) => {
   });
 };
 
+const loadMultiSearch = (summonerNames: string[]) => {
+  const queryStringObj = {
+    summonerNames,
+  };
+  return Send({
+    method: Methods.GET,
+    url: `/riot/multiSearch?${makeQueryString(queryStringObj)}`,
+  });
+};
+
 const loadMatchDetailInfo = ({ gameId, player, enemy }: IMatchSummaryDetailParameter) => {
   const queryStringObj = {
     gameId,
@@ -45,4 +55,4 @@ const loadMatchDetailInfo = ({ gameId, player, enemy }: IMatchSummaryDetailParam
   });
 };
 
-export { loadSummonerInfo, loadMatchDetailInfo, loadSpectatorInfo, loadMatchInfo };
+export { loadSummonerInfo, loadMatchDetailInfo, loadSpectatorInfo, loadMultiSearch, loadMatchInfo };

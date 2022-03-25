@@ -1,9 +1,17 @@
 import { AxiosResponse } from "axios";
 import { Dispatch } from "redux";
-import { loadSummonerInfo, loadMatchInfo, loadMatchDetailInfo, loadSpectatorInfo } from "../../API/riot";
+import {
+  loadSummonerInfo,
+  loadMatchInfo,
+  loadMatchDetailInfo,
+  loadSpectatorInfo,
+  loadMultiSearch,
+} from "../../API/riot";
 import {
   GAME_INFO_FAIL,
   MATCH_DETAIL_FAIL,
+  MULTI_SEARCH,
+  MULTI_SEARCH_FAIL,
   REMOVE_RIOT_FAIL,
   SPECTATOR_FAIL,
   SUMMONER_FAIL,
@@ -109,6 +117,31 @@ const spectatorInfo = (encryptedSummonerId: string) => async (dispatch: Dispatch
   }
 };
 
+const multiSearchInfo = (summonerNames: string[]) => async (dispatch: Dispatch<any>) => {
+  try {
+    const {
+      data: { data: multiSearch },
+    } = await loadMultiSearch(summonerNames);
+
+    dispatch({
+      type: MULTI_SEARCH,
+      payload: multiSearch,
+    });
+  } catch (err: any) {
+    console.log("err", err);
+
+    const status = err.response.status;
+    const errMessage = err.response.data.data || err.message;
+
+    dispatch({
+      type: MULTI_SEARCH_FAIL,
+      payload: { status, errMessage },
+    });
+
+    throw errMessage;
+  }
+};
+
 const matchDetailInfo =
   (parameterObj: IMatchSummaryDetailParameter) =>
   async (dispatch: Dispatch<SuccessMatchDetailInfo<IComparingWithEnemyDetail[]>>) => {
@@ -132,4 +165,4 @@ const matchDetailInfo =
     }
   };
 
-export { summonerInfo, matchInfo, spectatorInfo, matchDetailInfo };
+export { summonerInfo, matchInfo, spectatorInfo, multiSearchInfo, matchDetailInfo };

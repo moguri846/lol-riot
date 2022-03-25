@@ -5,6 +5,7 @@ import spectator from "./spectatorReducer";
 import matchSummary from "./matchSummaryReducer";
 import jandi from "./jandiReducer";
 import lineWinOrLose from "./lineWinOrLoseReducer";
+import multiSearch from "./multiSearchReducer";
 import fail from "./failReducer";
 
 const riotRootReducer = combineReducers({
@@ -13,6 +14,7 @@ const riotRootReducer = combineReducers({
   matchSummary,
   jandi,
   lineWinOrLose,
+  multiSearch,
   fail,
 });
 

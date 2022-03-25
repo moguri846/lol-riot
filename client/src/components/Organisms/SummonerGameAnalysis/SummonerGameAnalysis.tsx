@@ -1,7 +1,7 @@
 import React from "react";
 import Skeleton from "react-loading-skeleton";
 import { Jandi } from "../../../_actions/riot/interface/jandi.interface";
-import { LineWinOrLoseType } from "../../../_actions/riot/interface/lineWinOrLose.interface";
+import { ILineWinLoseRate } from "../../../_actions/riot/interface/lineWinOrLose.interface";
 import BarGraph from "../../Molecules/BarGraph/BarGraph";
 import CalendarGraph from "../../Molecules/CalendarGraph/CalendarGraph";
 
@@ -10,7 +10,7 @@ import * as S from "./style";
 interface IProps {
   loading: boolean;
   jandi: Jandi[];
-  lineWinOrLose: LineWinOrLoseType[];
+  lineWinOrLose: ILineWinLoseRate[];
 }
 
 const SummonerGameAnalysis = ({ loading, jandi, lineWinOrLose }: IProps) => {

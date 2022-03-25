@@ -8,7 +8,7 @@ import {
 import { Jandi } from "./jandi.interface";
 import { ComparingWithEnemyType, IComparingWithEnemyDetail } from "./matchSummary.interface";
 import { SummonerType } from "./summoner.interface";
-import { LineWinOrLoseType } from "./lineWinOrLose.interface";
+import { ILineWinLoseRate } from "./lineWinOrLose.interface";
 import { Fail } from "../../common/interface/common.interface";
 
 export type MatchListFilterType = typeof COMPARING_WITH_ENEMY;
@@ -27,7 +27,7 @@ export interface IMatchInfo {
   data: {
     matchArr: ComparingWithEnemyType[];
     jandi: Jandi[];
-    lineWinOrLose: LineWinOrLoseType[];
+    lineWinOrLose: ILineWinLoseRate[];
   };
 }
 

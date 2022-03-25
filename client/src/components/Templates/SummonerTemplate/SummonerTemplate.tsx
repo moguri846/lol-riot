@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Jandi } from "../../../_actions/riot/interface/jandi.interface";
-import { LineWinOrLoseType } from "../../../_actions/riot/interface/lineWinOrLose.interface";
+import { ILineWinLoseRate } from "../../../_actions/riot/interface/lineWinOrLose.interface";
 import { ComparingWithEnemyType } from "../../../_actions/riot/interface/matchSummary.interface";
 import { SummonerType } from "../../../_actions/riot/interface/summoner.interface";
 import {
@@ -26,7 +26,7 @@ interface IProps {
   summoner: SummonerType;
   spectator: ISpectator;
   jandi: Jandi[];
-  lineWinOrLose: LineWinOrLoseType[];
+  lineWinOrLose: ILineWinLoseRate[];
   matchSummary: ComparingWithEnemyType[];
   fail: IRiotFail;
 }

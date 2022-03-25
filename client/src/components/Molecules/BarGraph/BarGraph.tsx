@@ -2,12 +2,12 @@ import React from "react";
 import { Bar } from "react-chartjs-2";
 import { CategoryScale } from "chart.js";
 import Chart from "chart.js/auto";
-import { LineWinOrLoseType } from "../../../_actions/riot/interface/lineWinOrLose.interface";
+import { ILineWinLoseRate } from "../../../_actions/riot/interface/lineWinOrLose.interface";
 
 Chart.register(CategoryScale);
 
 interface IProps {
-  lineWinOrLose: LineWinOrLoseType[];
+  lineWinOrLose: ILineWinLoseRate[];
 }
 
 const BarGraph = ({ lineWinOrLose }: IProps) => {

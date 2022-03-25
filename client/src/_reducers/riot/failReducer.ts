@@ -1,6 +1,7 @@
 import {
   GAME_INFO_FAIL,
   MATCH_DETAIL_FAIL,
+  MULTI_SEARCH_FAIL,
   REMOVE_RIOT_FAIL,
   SPECTATOR_FAIL,
   SUMMONER_FAIL,
@@ -34,6 +35,9 @@ const reducer = (state = initialState, action: ActionType) => {
       return { ...state, gameInfo: action.payload };
     }
     case MATCH_DETAIL_FAIL: {
+      return { ...state, matchDetail: action.payload };
+    }
+    case MULTI_SEARCH_FAIL: {
       return { ...state, matchDetail: action.payload };
     }
     case REMOVE_RIOT_FAIL: {

@@ -1,6 +1,7 @@
 import {
   GAME_INFO_FAIL,
   MATCH_DETAIL_FAIL,
+  MULTI_SEARCH_FAIL,
   REMOVE_RIOT_FAIL,
   SPECTATOR_FAIL,
   SUMMONER_FAIL,
@@ -11,6 +12,7 @@ export type RiotFailType =
   | typeof SUMMONER_FAIL
   | typeof SPECTATOR_FAIL
   | typeof GAME_INFO_FAIL
+  | typeof MULTI_SEARCH_FAIL
   | typeof MATCH_DETAIL_FAIL
   | typeof REMOVE_RIOT_FAIL;
 

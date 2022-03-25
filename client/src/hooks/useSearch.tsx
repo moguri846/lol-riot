@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
-import { summonerInfo, matchInfo } from "../_actions/riot/riotActions";
+import { summonerInfo, matchInfo, multiSearchInfo } from "../_actions/riot/riotActions";
 import { MatchListFilterType } from "../_actions/riot/interface/dispatch.interface";
 import { COMPARING_WITH_ENEMY } from "../_actions/riot/constant/riot.constant";
 import { RootReducerType } from "../_reducers/rootReducer";
@@ -15,6 +15,7 @@ export interface IUseSearch {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onEnter: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  multiSearch: (searchValue: string) => Promise<void>;
 }
 
 const useSearch = (): IUseSearch => {
@@ -42,8 +43,12 @@ const useSearch = (): IUseSearch => {
   const onEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       if (beforeDispatch(summonerName)) {
-        searchSummoner(summonerName, COMPARING_WITH_ENEMY);
-        routerPush(summonerName);
+        if (summonerName.includes(",")) {
+          multiSearch(summonerName);
+        } else {
+          searchSummoner(summonerName, COMPARING_WITH_ENEMY);
+          routerPush(summonerName);
+        }
       }
     }
   };
@@ -61,6 +66,16 @@ const useSearch = (): IUseSearch => {
       return false;
     }
     return true;
+  };
+
+  const multiSearch = async (searchValue: string) => {
+    try {
+      const summonerNames = searchValue.split(",");
+
+      await dispatch(multiSearchInfo(summonerNames));
+    } catch (err: any) {
+      snackbar(err, "error");
+    }
   };
 
   const searchSummoner = async (summonerName: string, type: MatchListFilterType) => {
@@ -83,7 +98,7 @@ const useSearch = (): IUseSearch => {
     navigate(`/summoner=${summonerName}`);
   };
 
-  return { summonerName, onChange, onEnter, onClick };
+  return { summonerName, onChange, onEnter, onClick, multiSearch };
 };
 
 export default useSearch;

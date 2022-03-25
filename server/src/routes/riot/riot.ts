@@ -124,6 +124,250 @@ router.get("/summonerInfo", async (req: Request, res: Response) => {
 
 /**
  * @swagger
+ * /api/riot/multiSearch:
+ *   get:
+ *     tags:
+ *       - Summoner
+ *     summary: 유저 정보 가져옴
+ *     description: 유저 정보 가져옴
+ *     parameters:
+ *       - in: query
+ *         name: summonerNames
+ *         required: true
+ *         type: string
+ *     responses:
+ *       '200':
+ *         description: 유저 정보 가져오기 성공
+ *         schema:
+ *           type: object
+ *           properties:
+ *             success:
+ *               type: boolean
+ *             data:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   summonerInfo:
+ *                     type: object
+ *                     properties:
+ *                       accountId:
+ *                         type: string
+ *                       id:
+ *                         type: string
+ *                       name:
+ *                         type: string
+ *                       profileIconId:
+ *                         type: integer
+ *                       puuid:
+ *                         type: string
+ *                       summonerLevel:
+ *                         type: integer
+ *                       queueType:
+ *                         type: string
+ *                       tier:
+ *                         type: string
+ *                       rank:
+ *                         type: string
+ *                       leaguePoints:
+ *                         type: integer
+ *                       wins:
+ *                         type: integer
+ *                       losses:
+ *                         type: integer
+ *                   lineWinOrLose:
+ *                     type: object
+ *                     properties:
+ *                       TOP:
+ *                         type: object
+ *                         properties:
+ *                           win:
+ *                             type: integer
+ *                           lose:
+ *                             type: integer
+ *                       JUNGLE:
+ *                         type: object
+ *                         properties:
+ *                           win:
+ *                             type: integer
+ *                           lose:
+ *                             type: integer
+ *                       MIDDLE:
+ *                         type: object
+ *                         properties:
+ *                           win:
+ *                             type: integer
+ *                           lose:
+ *                             type: integer
+ *                       BOTTOM:
+ *                         type: object
+ *                         properties:
+ *                           win:
+ *                             type: integer
+ *                           lose:
+ *                             type: integer
+ *                       UTILITY:
+ *                         type: object
+ *                         properties:
+ *                           win:
+ *                             type: integer
+ *                           lose:
+ *                             type: integer
+ *                   matchArr:
+ *                     type: array
+ *                     items:
+ *                       type: object
+ *                       properties:
+ *                         gameCreation:
+ *                           type: integer
+ *                         win:
+ *                           type: boolean
+ *                         championName:
+ *                           type: string
+ *                         kills:
+ *                           type: integer
+ *                         deaths:
+ *                           type: integer
+ *                         assists:
+ *                           type: integer
+ *       '403':
+ *         description: api key 만료
+ *         schema:
+ *           type: object
+ *           properties:
+ *             success:
+ *               type: boolean
+ *               example: false
+ *             err:
+ *               type: object
+ *       '500':
+ *         description: 유저 게임 리스트 가져오기 실패
+ *         schema:
+ *           type: object
+ *           properties:
+ *             success:
+ *               type: boolean
+ *               example: false
+ *             err:
+ *               type: object
+ */
+router.get("/multiSearch", async (req: Request, res: Response) => {
+  const summonerNames = req.query.summonerNames as string;
+
+  const summonerArr: string[] = summonerNames.split(",");
+
+  const userInfo: any[] = [];
+
+  try {
+    await Promise.all(
+      summonerArr.map(async (summonerNames) => {
+        let matchArr: any[] = [];
+        let lineWinOrLose: any = {
+          TOP: {
+            win: 0,
+            lose: 0,
+          },
+          JUNGLE: {
+            win: 0,
+            lose: 0,
+          },
+          MIDDLE: {
+            win: 0,
+            lose: 0,
+          },
+          BOTTOM: {
+            win: 0,
+            lose: 0,
+          },
+          UTILITY: {
+            win: 0,
+            lose: 0,
+          },
+        };
+
+        // 유저 검색
+        const { data: summoner }: AxiosResponse<Summoner> = await getSummonerInfo(summonerNames);
+
+        // if(summoner)
+
+        // 유저 디테일 정보
+        const { data: summonerDetailInfo }: AxiosResponse<SummonerDetailInfo[] | []> = await getSummonerDetailInfo(
+          summoner.id
+        );
+
+        const rankedSolo: SummonerDetailInfo = summonerDetailInfo.filter(
+          (summonerDetail) => summonerDetail.queueType === "RANKED_SOLO_5x5"
+        )[0];
+
+        const rankedSoloInfo = {
+          queueType: rankedSolo ? rankedSolo.queueType : "",
+          tier: rankedSolo ? rankedSolo.tier : "",
+          rank: rankedSolo ? rankedSolo.rank : "",
+          wins: rankedSolo ? rankedSolo.wins : "",
+          losses: rankedSolo ? rankedSolo.losses : "",
+          leaguePoints: rankedSolo ? rankedSolo.leaguePoints : "",
+        };
+
+        const summonerInfo = {
+          ...summoner,
+          ...rankedSoloInfo,
+        };
+
+        // 유저 puuid 사용해서 matchId list
+        const matchIds: AxiosResponse<string[]> = await getMatchIds(summoner.puuid);
+
+        // matchId로 match 데이터 받아온 후 matchArr에 push
+        await Promise.all(
+          matchIds.data.map(async (matchId: string) => {
+            let myIndex: number = 0;
+            const match: AxiosResponse<Match> = await getMatchInfo(matchId);
+
+            if (match.data.info.gameMode === "CLASSIC") {
+              // 내 index 찾기
+              for (let i = 0; i < match.data.info.participants.length; i++) {
+                if (summoner.puuid === match.data.info.participants[i].puuid) {
+                  myIndex = i;
+                  break;
+                }
+              }
+
+              // 라인별 승패
+              if (match.data.info.participants[myIndex].individualPosition !== "Invalid") {
+                if (match.data.info.participants[myIndex].win) {
+                  lineWinOrLose[match.data.info.participants[myIndex].individualPosition].win++;
+                } else {
+                  lineWinOrLose[match.data.info.participants[myIndex].individualPosition].lose++;
+                }
+              }
+
+              const appendValues = {
+                gameCreation: match.data.info.gameCreation,
+                championName: match.data.info.participants[myIndex].championName,
+                kills: match.data.info.participants[myIndex].kills,
+                deaths: match.data.info.participants[myIndex].deaths,
+                assists: match.data.info.participants[myIndex].assists,
+                win: match.data.info.participants[myIndex].win,
+              };
+
+              matchArr.push({ ...appendValues });
+            }
+          })
+        );
+        // gameCreation기준 내림차순 정렬
+        matchArr.sort((a, b) => b.gameCreation - a.gameCreation);
+
+        userInfo.push({ summonerInfo, lineWinOrLose, matchArr });
+      })
+    );
+
+    resFunc({ res, data: userInfo });
+  } catch (err) {
+    resFunc({ res, err });
+  }
+});
+
+/**
+ * @swagger
  * /api/riot/summonerMatchList:
  *   get:
  *     tags:

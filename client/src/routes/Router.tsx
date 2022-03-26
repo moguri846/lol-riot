@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import React from "react";
 import IndexPage from "../pages/IndexPage/IndexPage";
 import SummonerPage from "../pages/SummonerPage/SummonerPage";
+import MultiSearchPage from "../pages/MultiSearchPage/MultiSearchPage";
 import LoginPage from "../pages/LoginPage/LoginPage";
 import OAuth from "../components/OAuth";
 import Auth from "../hoc/Auth/Auth";
@@ -20,6 +21,7 @@ const Router = () => {
     <Routes>
       <Route path="/" element={Auth(IndexPage, null)} />
       <Route path="/summoner=:summonerName" element={Auth(SummonerPage, null)} />
+      <Route path="/multi_search=:summonerName" element={Auth(MultiSearchPage, null)} />
       <Route path="/login" element={Auth(LoginPage, false)} />
       <Route path="/oauth/:type" element={Auth(OAuth, false)} />
       <Route path="/post/:type" element={Auth(PostPage, true)} />

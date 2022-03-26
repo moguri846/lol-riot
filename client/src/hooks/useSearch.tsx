@@ -44,26 +44,14 @@ const useSearch = (): IUseSearch => {
   const onEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       if (checkSearchValue(summonerName)) {
-        if (summonerName.includes(",")) {
-          multiSearch(summonerName);
-          routerPush(MULTI_SEARCH, summonerName);
-        } else {
-          searchSummoner(summonerName, COMPARING_WITH_ENEMY);
-          routerPush(SUMMONER, summonerName);
-        }
+        searchSummonerOrMulti();
       }
     }
   };
 
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (checkSearchValue(summonerName)) {
-      if (summonerName.includes(",")) {
-        multiSearch(summonerName);
-        routerPush(MULTI_SEARCH, summonerName);
-      } else {
-        searchSummoner(summonerName, COMPARING_WITH_ENEMY);
-        routerPush(SUMMONER, summonerName);
-      }
+      searchSummonerOrMulti();
     }
   };
 
@@ -73,6 +61,16 @@ const useSearch = (): IUseSearch => {
       return false;
     }
     return true;
+  };
+
+  const searchSummonerOrMulti = () => {
+    if (summonerName.includes(",")) {
+      multiSearch(summonerName);
+      routerPush(MULTI_SEARCH, summonerName);
+    } else {
+      searchSummoner(summonerName, COMPARING_WITH_ENEMY);
+      routerPush(SUMMONER, summonerName);
+    }
   };
 
   const multiSearch = async (searchValue: string) => {

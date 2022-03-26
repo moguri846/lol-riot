@@ -74,7 +74,11 @@ const useSearch = (): IUseSearch => {
     try {
       const summonerNames = searchValue.split(",");
 
+      dispatch(loadingAction(LOADING, { multiSearch: true }));
+
       await dispatch(multiSearchInfo(summonerNames));
+
+      dispatch(loadingAction(FULFILLED, { multiSearch: false }));
     } catch (err: any) {
       snackbar(err, "error");
     }

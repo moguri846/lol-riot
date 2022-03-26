@@ -5,6 +5,7 @@ const inititalState: ILoading = {
   summoner: false,
   spectator: false,
   gameInfo: false,
+  multiSearch: false,
 };
 
 type ActionType = { type: LoadingStatusType; payload: ILoading };

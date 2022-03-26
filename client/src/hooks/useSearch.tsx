@@ -43,7 +43,7 @@ const useSearch = (): IUseSearch => {
 
   const onEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      if (beforeDispatch(summonerName)) {
+      if (checkSearchValue(summonerName)) {
         if (summonerName.includes(",")) {
           multiSearch(summonerName);
           routerPush(MULTI_SEARCH, summonerName);
@@ -56,13 +56,18 @@ const useSearch = (): IUseSearch => {
   };
 
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (beforeDispatch(summonerName)) {
-      searchSummoner(summonerName, COMPARING_WITH_ENEMY);
-      routerPush(SUMMONER, summonerName);
+    if (checkSearchValue(summonerName)) {
+      if (summonerName.includes(",")) {
+        multiSearch(summonerName);
+        routerPush(MULTI_SEARCH, summonerName);
+      } else {
+        searchSummoner(summonerName, COMPARING_WITH_ENEMY);
+        routerPush(SUMMONER, summonerName);
+      }
     }
   };
 
-  const beforeDispatch = (summonerName: string) => {
+  const checkSearchValue = (summonerName: string) => {
     if (!summonerName) {
       snackbar("소환사 이름을 입력해주세요!", "warning");
       return false;

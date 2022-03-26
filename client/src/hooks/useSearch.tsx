@@ -3,12 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import { summonerInfo, matchInfo, multiSearchInfo } from "../_actions/riot/riotActions";
 import { MatchListFilterType } from "../_actions/riot/interface/dispatch.interface";
-import { COMPARING_WITH_ENEMY } from "../_actions/riot/constant/riot.constant";
+import { COMPARING_WITH_ENEMY, MULTI_SEARCH, SUMMONER } from "../_actions/riot/constant/riot.constant";
 import { RootReducerType } from "../_reducers/rootReducer";
 import { loadingAction } from "../_actions/loading/loadingActions";
 import { LOADING, FULFILLED } from "../_actions/loading/constant/loading.constant";
 import { SummonerType } from "../_actions/riot/interface/summoner.interface";
 import useSnackBar from "./useSnackBar";
+import { RouterPushType } from "./interface/useSearch.interface";
 
 export interface IUseSearch {
   summonerName: string;
@@ -45,9 +46,10 @@ const useSearch = (): IUseSearch => {
       if (beforeDispatch(summonerName)) {
         if (summonerName.includes(",")) {
           multiSearch(summonerName);
+          routerPush(MULTI_SEARCH, summonerName);
         } else {
           searchSummoner(summonerName, COMPARING_WITH_ENEMY);
-          routerPush(summonerName);
+          routerPush(SUMMONER, summonerName);
         }
       }
     }
@@ -56,7 +58,7 @@ const useSearch = (): IUseSearch => {
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (beforeDispatch(summonerName)) {
       searchSummoner(summonerName, COMPARING_WITH_ENEMY);
-      routerPush(summonerName);
+      routerPush(SUMMONER, summonerName);
     }
   };
 
@@ -94,8 +96,8 @@ const useSearch = (): IUseSearch => {
     }
   };
 
-  const routerPush = (summonerName: string) => {
-    navigate(`/summoner=${summonerName}`);
+  const routerPush = (type: RouterPushType, summonerName: string) => {
+    navigate(`/${type.toLocaleLowerCase()}=${summonerName}`);
   };
 
   return { summonerName, onChange, onEnter, onClick, multiSearch };

@@ -42,6 +42,7 @@ const inititalState: IMultiSearch[] = [
     matchArr: [
       {
         gameCreation: 0,
+        gameEndTimestamp: 0,
         championName: "",
         kills: 0,
         assists: 0,

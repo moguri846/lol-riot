@@ -12,6 +12,7 @@ export interface IMultiSearch {
   };
   matchArr: {
     gameCreation: number;
+    gameEndTimestamp: number;
     championName: string;
     kills: number;
     assists: number;

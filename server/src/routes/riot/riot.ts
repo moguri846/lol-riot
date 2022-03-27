@@ -266,22 +266,27 @@ router.get("/multiSearch", async (req: Request, res: Response) => {
           TOP: {
             win: 0,
             lose: 0,
+            total: 0,
           },
           JUNGLE: {
             win: 0,
             lose: 0,
+            total: 0,
           },
           MIDDLE: {
             win: 0,
             lose: 0,
+            total: 0,
           },
           BOTTOM: {
             win: 0,
             lose: 0,
+            total: 0,
           },
           UTILITY: {
             win: 0,
             lose: 0,
+            total: 0,
           },
         };
 
@@ -338,10 +343,12 @@ router.get("/multiSearch", async (req: Request, res: Response) => {
                 } else {
                   lineWinOrLose[match.data.info.participants[myIndex].individualPosition].lose++;
                 }
+                lineWinOrLose[match.data.info.participants[myIndex].individualPosition].total++;
               }
 
               const appendValues = {
                 gameCreation: match.data.info.gameCreation,
+                gameEndTimestamp: match.data.info.gameEndTimestamp,
                 championName: match.data.info.participants[myIndex].championName,
                 kills: match.data.info.participants[myIndex].kills,
                 deaths: match.data.info.participants[myIndex].deaths,
@@ -356,7 +363,14 @@ router.get("/multiSearch", async (req: Request, res: Response) => {
         // gameCreation기준 내림차순 정렬
         matchArr.sort((a, b) => b.gameCreation - a.gameCreation);
 
-        userInfo.push({ summonerInfo, lineWinOrLose, matchArr });
+        const [[mostLine]] = Object.entries(lineWinOrLose).sort((a, b) => {
+          const [ALine, AWinLose]: any = Object.entries(a);
+          const [BLine, BWinLose]: any = Object.entries(b);
+
+          return BWinLose[1].total - AWinLose[1].total;
+        });
+
+        userInfo.push({ summonerInfo, mostLine, matchArr });
       })
     );
 

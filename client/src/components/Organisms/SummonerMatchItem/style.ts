@@ -55,7 +55,7 @@ const MatchInfo = styled.div`
   justify-content: center;
   align-items: center;
 
-  & > .game-mode {
+  & > .mode {
     font-weight: bold;
   }
 

@@ -77,6 +77,7 @@ function SummonerTemplate({ summoner, matchSummary, spectator, jandi, lineWinOrL
         summoner={summoner}
         spectatorToggle={spectatorToggle}
         onSpectatorToggle={handleSpectatorToggle}
+        searchSummoner
       />
       {spectatorToggle ? (
         <Spectator

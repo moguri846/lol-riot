@@ -8,13 +8,14 @@ import * as S from "./style";
 import Button from "../../Atoms/Button/Button";
 
 interface IProps {
-  loading: boolean;
+  loading?: boolean;
   summoner: SummonerType;
-  spectatorToggle: boolean;
-  onSpectatorToggle: () => Promise<void>;
+  spectatorToggle?: boolean;
+  onSpectatorToggle?: () => Promise<void>;
+  searchSummoner?: boolean;
 }
 
-const SummonerInfo = ({ loading, summoner, spectatorToggle, onSpectatorToggle }: IProps) => {
+const SummonerInfo = ({ loading, summoner, spectatorToggle, onSpectatorToggle, searchSummoner }: IProps) => {
   return (
     <S.SummonerContainer>
       {loading ? (
@@ -49,14 +50,16 @@ const SummonerInfo = ({ loading, summoner, spectatorToggle, onSpectatorToggle }:
         </>
       ) : (
         <>
-          <S.ProfileImgContainer>
-            {getDataDragonImg("profileicon", summoner.profileIconId)}
-            <div className="level">
-              <span>
-                Level. <span>{toLocaleString(summoner.summonerLevel)}</span>
-              </span>
-            </div>
-          </S.ProfileImgContainer>
+          {searchSummoner && (
+            <S.ProfileImgContainer>
+              {getDataDragonImg("profileicon", summoner.profileIconId)}
+              <div className="level">
+                <span>
+                  Level. <span>{toLocaleString(summoner.summonerLevel)}</span>
+                </span>
+              </div>
+            </S.ProfileImgContainer>
+          )}
           <S.SummonerInfo>
             <div className="info">
               <span className="name">{summoner.name}</span>
@@ -78,7 +81,9 @@ const SummonerInfo = ({ loading, summoner, spectatorToggle, onSpectatorToggle }:
                 <span>승률 {Math.ceil((summoner.wins / (summoner.wins + summoner.losses)) * 100) || 0}%</span>
               </div>
             </S.SummonerRank>
-            <Button onClick={onSpectatorToggle}>{spectatorToggle ? "종합 정보" : "인게임 정보"}</Button>
+            {searchSummoner && (
+              <Button onClick={onSpectatorToggle}>{spectatorToggle ? "종합 정보" : "인게임 정보"}</Button>
+            )}
           </S.SummonerInfo>
         </>
       )}

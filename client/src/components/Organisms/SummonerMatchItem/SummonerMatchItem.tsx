@@ -60,7 +60,7 @@ const SummonerMatchItem = ({ match }: IProps) => {
               <span className="game-mode">{match.gameMode}</span>
               <span className="win-lose">{match.win ? "승리" : "패배"}</span>
               <span className="game-duration">{gameDuration(match.gameEndTimestamp, match.gameDuration)}</span>
-              <span className="game-creation">{moment(match.gameCreation).startOf("minute").fromNow()}</span>
+              <span className="game-creation">{moment(match.gameEndTimestamp).startOf("minute").fromNow()}</span>
             </S.MatchInfo>
             <S.MatchStatusContainer>
               <S.ChampionStatus className="champion-status">

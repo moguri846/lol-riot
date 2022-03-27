@@ -34,6 +34,11 @@ const useSearch = (): IUseSearch => {
       const summonerName = decodeURIComponent(location.pathname.slice(10));
       setSummonerName(summonerName);
       searchSummoner(summonerName, COMPARING_WITH_ENEMY);
+    } else if (location.pathname.includes("/multi_search") && state?.riot.multiSearch[0].summonerInfo.puuid === "") {
+      const summonerNames = decodeURIComponent(location.pathname.slice(14));
+
+      setSummonerName(summonerNames);
+      multiSearch(summonerNames);
     }
   }, []);
 

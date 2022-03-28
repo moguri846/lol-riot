@@ -4,6 +4,7 @@ import { resFunc } from "../common/ResSuccessOrFalse.function";
 import jwt from "jsonwebtoken";
 import { jwtSecretConfig } from "../../config/config";
 import moment from "moment";
+import { authChecker } from "../../middleware/auth";
 
 const router = Router();
 
@@ -84,26 +85,14 @@ router.post("/reissue", (req: Request, res: Response) => {
   });
 });
 
-router.post("/logout", (req: Request, res: Response) => {
-  const { access_token } = req.body;
+router.post("/logout", authChecker, (req: Request, res: Response) => {
+  const { access_token, refresh_token } = req.user;
 
-  User.findOne({ access_token }).exec((err, user) => {
+  User.findOneAndUpdate({ access_token, refresh_token }, { access_token: "", refresh_token: "" }, (err: any) => {
     if (err) {
-      resFunc({ res, err });
+      return resFunc({ res, err });
     }
-    if (!user) {
-      resFunc({ res, err: { status: 404, message: "찾지 못함" } });
-    } else {
-      user.access_token = "";
-      user.refresh_token = "";
-
-      user.save((err) => {
-        if (err) {
-          resFunc({ res, err });
-        }
-        resFunc({ res });
-      });
-    }
+    return resFunc({ res });
   });
 });
 

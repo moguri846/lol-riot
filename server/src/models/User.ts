@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema, Model, Document } from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import moment from "moment";
@@ -95,11 +95,31 @@ userSchema.methods.generateToken = function (): Promise<IGenerateToken_R> {
     .catch((err: any) => err);
 };
 
-interface IUserDoc extends IUser, mongoose.Document {
+userSchema.statics.findByToken = function (access_token: string): Promise<any | IUser> {
+  return new Promise((resolve, reject) => {
+    jwt.verify(access_token, jwtSecretConfig.jwtSecret, (err) => {
+      if (err) {
+        reject(err);
+      }
+      this.findOne({ access_token }).exec((err: any, user: IUser) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(user);
+      });
+    });
+  });
+};
+
+interface IUserDoc extends IUser, Document {
   comparePassword: (password: string) => Promise<IComparePassword_R>;
   generateToken: () => Promise<IGenerateToken_R>;
 }
 
-const User = mongoose.model<IUserDoc>("User", userSchema);
+interface IUserModel extends Model<IUserDoc> {
+  findByToken: (access_token: string) => Promise<any | IUser>;
+}
+
+const User = mongoose.model<IUserDoc, IUserModel>("User", userSchema);
 
 export { User };

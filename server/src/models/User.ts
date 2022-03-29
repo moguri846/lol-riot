@@ -75,9 +75,9 @@ userSchema.methods.generateToken = function (): Promise<IGenerateToken_R> {
   const user = this;
 
   const accessToken = jwt.sign({}, jwtSecretConfig.jwtSecret, { expiresIn: "30m" });
-  const accessTokenExp = moment().add("30", "minute").valueOf();
+  const accessTokenExp = moment().add("30", "minute").unix();
   const refreshToken = jwt.sign({ id: user._id }, jwtSecretConfig.jwtSecret, { expiresIn: "60d" });
-  const refreshTokenExp = moment().add("60", "day").valueOf();
+  const refreshTokenExp = moment().add("60", "day").unix();
 
   user.access_token = accessToken;
   user.refresh_token = refreshToken;

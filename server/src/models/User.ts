@@ -119,10 +119,11 @@ userSchema.statics.reissueToken = function (refresh_token: string): Promise<any 
         if (typeof verify === "string") {
           return reject(verify);
         } else {
-          if (verify.iat) {
-            const diffTime = moment().add(verify.iat, "second").valueOf();
+          if (verify.exp) {
+            const now = moment().unix();
+            const exp = verify.exp;
 
-            if (diffTime <= 1650377527659) {
+            if (exp - now <= getTimeToSec(30, "day")) {
               const refreshToken = jwt.sign({ id: user._id }, jwtSecretConfig.jwtSecret, { expiresIn: "60d" });
               const refreshTokenExp = getTimeToSec(60, "day");
               token = {
@@ -132,8 +133,7 @@ userSchema.statics.reissueToken = function (refresh_token: string): Promise<any 
               };
             }
           }
-          const iat = moment().add(verify.iat, "second").valueOf();
-          return resolve({ token, iat });
+          return resolve(token);
         }
       }
     });

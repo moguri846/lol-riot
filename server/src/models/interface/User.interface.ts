@@ -12,12 +12,12 @@ export interface IComparePassword_R {
 }
 
 export interface IGenerateToken_R {
-  token: Token;
+  token: IUserToken;
 }
 
-export interface Token {
+export interface IUserToken {
   access_token: string;
   expires_in: number;
-  refresh_token: string;
-  refresh_token_expires_in: number;
+  refresh_token?: string;
+  refresh_token_expires_in?: number;
 }

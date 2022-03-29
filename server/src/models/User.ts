@@ -2,7 +2,7 @@ import mongoose, { Schema, Model, Document } from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import moment from "moment";
-import { IComparePassword_R, IGenerateToken_R, IUser, Token } from "./interface/User.interface";
+import { IComparePassword_R, IGenerateToken_R, IUser, IUserToken } from "./interface/User.interface";
 import { jwtSecretConfig } from "../config/config";
 
 const saltRounds = 10;
@@ -82,7 +82,7 @@ userSchema.methods.generateToken = function (): Promise<IGenerateToken_R> {
   user.access_token = accessToken;
   user.refresh_token = refreshToken;
 
-  const token: Token = {
+  const token: IUserToken = {
     access_token: accessToken,
     expires_in: accessTokenExp,
     refresh_token: refreshToken,

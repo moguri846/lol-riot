@@ -74,10 +74,12 @@ userSchema.methods.comparePassword = function (password: string): Promise<ICompa
 userSchema.methods.generateToken = function (): Promise<IGenerateToken_R> {
   const user = this;
 
+  moment().add(3, "M");
+
   const accessToken = jwt.sign({}, jwtSecretConfig.jwtSecret, { expiresIn: "30m" });
-  const accessTokenExp = moment().add("30", "minute").unix();
+  const accessTokenExp = getTimeToSec(30, "minute");
   const refreshToken = jwt.sign({ id: user._id }, jwtSecretConfig.jwtSecret, { expiresIn: "60d" });
-  const refreshTokenExp = moment().add("60", "day").unix();
+  const refreshTokenExp = getTimeToSec(60, "day");
 
   user.access_token = accessToken;
   user.refresh_token = refreshToken;
@@ -97,7 +99,7 @@ userSchema.methods.generateToken = function (): Promise<IGenerateToken_R> {
 
 userSchema.statics.reissueToken = function (refresh_token: string): Promise<any | string | IUserToken> {
   const accessToken = jwt.sign({}, jwtSecretConfig.jwtSecret, { expiresIn: "30m" });
-  const accessTokenExp = moment().add("30", "minute").valueOf();
+  const accessTokenExp = getTimeToSec(30, "minute");
 
   let token: IUserToken = {
     access_token: accessToken,
@@ -122,7 +124,7 @@ userSchema.statics.reissueToken = function (refresh_token: string): Promise<any 
 
             if (diffTime <= 1650377527659) {
               const refreshToken = jwt.sign({ id: user._id }, jwtSecretConfig.jwtSecret, { expiresIn: "60d" });
-              const refreshTokenExp = moment().add("60", "day").valueOf();
+              const refreshTokenExp = getTimeToSec(60, "day");
               token = {
                 ...token,
                 refresh_token: refreshToken,
@@ -167,3 +169,7 @@ interface IUserModel extends Model<IUserDoc> {
 const User = mongoose.model<IUserDoc, IUserModel>("User", userSchema);
 
 export { User };
+
+const getTimeToSec = (number: number, type: moment.unitOfTime.DurationConstructor) => {
+  return moment().add(number, type).unix() - moment().unix();
+};

@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
 import { User } from "../../models/User";
 import { resFunc } from "../common/ResSuccessOrFalse.function";
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import { jwtSecretConfig } from "../../config/config";
 import moment from "moment";
 import { authChecker } from "../../middleware/auth";
@@ -49,40 +49,18 @@ router.post("/login", (req: Request, res: Response) => {
   });
 });
 
-router.post("/reissue", (req: Request, res: Response) => {
-  const { access_token, refresh_token } = req.body;
+router.post("/reissue", authChecker, async (req: Request, res: Response) => {
+  try {
+    const { refresh_token } = req.headers;
 
-  User.findOne({ access_token, refresh_token }).exec((err, user) => {
-    if (err) {
-      resFunc({ res, err });
-    }
-
-    if (!user) {
-      resFunc({ res, err: { status: 404, message: "찾지 못함" } });
-    }
-
-    const accessToken = jwt.sign({}, jwtSecretConfig.jwtSecret, { expiresIn: "30m" });
-    const accessTokenExp = moment().add("30", "minute").valueOf();
-
-    let reissueToken: any = {
-      access_token: accessToken,
-      expires_in: accessTokenExp,
-    };
-
-    // 한 달 보다 적게 남으면
-    if (refresh_token <= 1650377527659) {
-      const refreshToken = jwt.sign({}, jwtSecretConfig.jwtSecret, { expiresIn: "60d" });
-      const refreshTokenExp = moment().add("60", "day").valueOf();
-
-      reissueToken = {
-        ...reissueToken,
-        refresh_token: refreshToken,
-        refresh_token_expires_in: refreshTokenExp,
-      };
-    }
+    const reissueToken = await User.reissueToken(refresh_token as string);
 
     resFunc({ res, data: reissueToken });
-  });
+  } catch (err: any) {
+    console.log("err", err);
+
+    resFunc({ res, err });
+  }
 });
 
 router.post("/logout", authChecker, (req: Request, res: Response) => {

@@ -95,6 +95,49 @@ userSchema.methods.generateToken = function (): Promise<IGenerateToken_R> {
     .catch((err: any) => err);
 };
 
+userSchema.statics.reissueToken = function (refresh_token: string): Promise<any | string | IUserToken> {
+  const accessToken = jwt.sign({}, jwtSecretConfig.jwtSecret, { expiresIn: "30m" });
+  const accessTokenExp = moment().add("30", "minute").valueOf();
+
+  let token: IUserToken = {
+    access_token: accessToken,
+    expires_in: accessTokenExp,
+  };
+
+  return new Promise((resolve, reject) => {
+    this.findOne({ refresh_token }).exec((err: any, user: any) => {
+      if (err) {
+        return reject(err);
+      }
+      if (!user) {
+        return reject(user);
+      } else {
+        const verify = jwt.verify(refresh_token, jwtSecretConfig.jwtSecret);
+
+        if (typeof verify === "string") {
+          return reject(verify);
+        } else {
+          if (verify.iat) {
+            const diffTime = moment().add(verify.iat, "second").valueOf();
+
+            if (diffTime <= 1650377527659) {
+              const refreshToken = jwt.sign({ id: user._id }, jwtSecretConfig.jwtSecret, { expiresIn: "60d" });
+              const refreshTokenExp = moment().add("60", "day").valueOf();
+              token = {
+                ...token,
+                refresh_token: refreshToken,
+                refresh_token_expires_in: refreshTokenExp,
+              };
+            }
+          }
+          const iat = moment().add(verify.iat, "second").valueOf();
+          return resolve({ token, iat });
+        }
+      }
+    });
+  });
+};
+
 userSchema.statics.findByToken = function (access_token: string): Promise<any | IUser> {
   return new Promise((resolve, reject) => {
     jwt.verify(access_token, jwtSecretConfig.jwtSecret, (err) => {
@@ -118,6 +161,7 @@ interface IUserDoc extends IUser, Document {
 
 interface IUserModel extends Model<IUserDoc> {
   findByToken: (access_token: string) => Promise<any | IUser>;
+  reissueToken: (refresh_token: string) => Promise<any | string | IUserToken>;
 }
 
 const User = mongoose.model<IUserDoc, IUserModel>("User", userSchema);

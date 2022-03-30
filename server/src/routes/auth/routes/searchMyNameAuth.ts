@@ -1,10 +1,7 @@
 import { Router, Request, Response } from "express";
-import { User } from "../../models/User";
-import { resFunc } from "../common/ResSuccessOrFalse.function";
-import jwt, { JwtPayload } from "jsonwebtoken";
-import { jwtSecretConfig } from "../../config/config";
-import moment from "moment";
-import { authChecker } from "../../middleware/auth";
+import { User } from "../../../models/User";
+import { resFunc } from "../../common/ResSuccessOrFalse.function";
+import { authChecker } from "../../../middleware/auth";
 
 const router = Router();
 
@@ -49,7 +46,7 @@ router.post("/login", (req: Request, res: Response) => {
   });
 });
 
-router.post("/reissue", authChecker, async (req: Request, res: Response) => {
+router.post("/reissueToken", authChecker, async (req: Request, res: Response) => {
   try {
     const { refresh_token } = req.headers;
 

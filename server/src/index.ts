@@ -3,7 +3,6 @@ import cors from "cors";
 import mongoose from "mongoose";
 import { swaggerUi, specs } from "./config/swagger";
 
-import userRoute from "./routes/user/user";
 import authRoute from "./routes/auth/auth";
 import riotRoute from "./routes/riot/riot";
 import postRoute from "./routes/post/post";
@@ -38,7 +37,6 @@ const connect = mongoose
 
 app.use(cors(corsOptions));
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
-app.use("/api/user", userRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/riot", riotRoute);
 app.use("/api/post", postRoute);

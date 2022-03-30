@@ -5,9 +5,9 @@ import { kakaoConfig } from "../../../config/config";
 
 const router = Router();
 
-router.get("/login", async (req: Request, res: Response) => {
+router.post("/login", async (req: Request, res: Response) => {
   try {
-    const code = req.query.code as string;
+    const code = req.body.code as string;
 
     const body: any = {
       grant_type: "authorization_code",
@@ -61,7 +61,7 @@ router.get("/myInfo", async (req: Request, res: Response) => {
   }
 });
 
-router.get("/logout", async (req: Request, res: Response) => {
+router.post("/logout", async (req: Request, res: Response) => {
   try {
     const authorization = req.headers.authorization as string;
 

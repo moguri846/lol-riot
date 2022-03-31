@@ -9,8 +9,8 @@ import {
   ACCESS_TOKEN_EXPIRES_IN,
   MY_INFO,
   NON_EXISTENT_TOKEN,
-  OAUTH_LOGIN,
-  OAUTH_LOGOUT,
+  SIGN_IN,
+  LOGOUT,
   OAUTH_TYPE,
   REFRESH_TOKEN,
   REISSUE_TOKEN,
@@ -27,7 +27,7 @@ const loginOAuth = (loginPrameter: IAuthLoginPrameter) => async (dispatch: Dispa
     }: AxiosResponse<IAuthLoginResponse> = await signIn(loginPrameter);
 
     dispatch({
-      type: OAUTH_LOGIN,
+      type: SIGN_IN,
       payload: {
         isLogin: true,
         message: "로그인",
@@ -82,7 +82,7 @@ const logoutOAuth = () => async (dispatch: Dispatch<LogoutType>) => {
     localStorage.clear();
 
     dispatch({
-      type: OAUTH_LOGOUT,
+      type: LOGOUT,
       payload: {
         isLogin: false,
         message: "로그아웃",

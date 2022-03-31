@@ -3,8 +3,8 @@ import {
   EXPIRED_TOKEN,
   MY_INFO,
   NON_EXISTENT_TOKEN,
-  OAUTH_LOGIN,
-  OAUTH_LOGOUT,
+  SIGN_IN,
+  LOGOUT,
   REISSUE_TOKEN,
   VALID_TOKEN,
 } from "../constant/user.constant";
@@ -24,7 +24,7 @@ interface ISuccessAuthPayload {
 }
 
 export interface ISuccessAuthSignIn extends ISuccessAuthPayload {
-  type: typeof OAUTH_LOGIN;
+  type: typeof SIGN_IN;
 }
 
 export interface ISuccessAuthMyInfo {
@@ -35,7 +35,7 @@ export interface ISuccessAuthMyInfo {
 }
 
 export interface ISuccessAuthLogout extends ISuccessAuthPayload {
-  type: typeof OAUTH_LOGOUT;
+  type: typeof LOGOUT;
 }
 
 export interface IReissueAuthPayload extends ISuccessAuthPayload {

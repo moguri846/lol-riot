@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { loginOAuth } from "../_actions/user/oAuthActions";
-import { IOAuthLoginPrameter, OAuthType } from "../_actions/user/interface/oAuth.interface";
+import { loginOAuth } from "../_actions/user/authActions";
+import { IAuthLoginPrameter, OAuthType } from "../_actions/user/interface/auth.interface";
 
 const OAuth = () => {
   const location = useLocation();
@@ -10,11 +10,13 @@ const OAuth = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const type: OAuthType = location.pathname.slice(7).toUpperCase() as OAuthType;
+    const type: OAuthType = location.pathname.slice(7) as OAuthType;
 
     const [key, code, state] = location.search.split("=");
 
-    const test = async ({ code, state, type }: IOAuthLoginPrameter) => {
+    console.log("type", type);
+
+    const test = async ({ code, state, type }: IAuthLoginPrameter) => {
       try {
         await dispatch(loginOAuth({ code, state, type }));
 

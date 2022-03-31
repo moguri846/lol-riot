@@ -18,13 +18,13 @@ import {
   REFRESH_TOKEN_EXPIRES_IN,
 } from "./constant/user.constant";
 import { OAuthLogin, OAuthLogout, OAuthMyInfo, OAuthTokenCheck } from "./interface/dispatch.interface";
-import { IOAuthLoginPrameter, IOAuthLoginResponse, IToken, ITokenStatus, OAuthType } from "./interface/oAuth.interface";
+import { IAuthLoginPrameter, IAuthLoginResponse, IToken, ITokenStatus, OAuthType } from "./interface/auth.interface";
 
-const loginOAuth = (loginPrameter: IOAuthLoginPrameter) => async (dispatch: Dispatch<OAuthLogin>) => {
+const loginOAuth = (loginPrameter: IAuthLoginPrameter) => async (dispatch: Dispatch<OAuthLogin>) => {
   try {
     const {
       data: { data: token },
-    }: AxiosResponse<IOAuthLoginResponse> = await signIn(loginPrameter);
+    }: AxiosResponse<IAuthLoginResponse> = await signIn(loginPrameter);
 
     dispatch({
       type: OAUTH_LOGIN,

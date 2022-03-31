@@ -1,16 +1,17 @@
 import { FAIL } from "../../common/constant/common.constant";
-import { KAKAO, NAVER } from "../constant/user.constant";
+import { SEARCH_MY_NAME, KAKAO, NAVER } from "../constant/user.constant";
 import { ReissueType } from "./dispatch.interface";
 
-export type OAuthType = typeof KAKAO | typeof NAVER;
+export type OAuthType = typeof SEARCH_MY_NAME | typeof KAKAO | typeof NAVER;
 
-export interface IOAuthLoginPrameter {
-  code: string;
+export interface IAuthLoginPrameter {
+  code?: string;
   state?: string;
   type: OAuthType;
+  info?: any;
 }
 
-export interface IOAuthLoginResponse {
+export interface IAuthLoginResponse {
   success: boolean;
   data: IToken;
 }

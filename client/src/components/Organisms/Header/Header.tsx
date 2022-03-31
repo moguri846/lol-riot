@@ -3,7 +3,7 @@ import { Button } from "../../Atoms/Button/style";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootReducerType } from "../../../_reducers/rootReducer";
-import { logoutOAuth } from "../../../_actions/user/oAuthActions";
+import { logoutOAuth } from "../../../_actions/user/authActions";
 import Flicking from "@egjs/react-flicking";
 import { AutoPlay } from "@egjs/flicking-plugins";
 import SearchSummoner from "../SearchSummoner/SearchSummoner";

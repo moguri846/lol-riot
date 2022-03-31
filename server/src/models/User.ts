@@ -112,7 +112,10 @@ userSchema.statics.reissueToken = function (refresh_token: string): Promise<any 
         return reject(err);
       }
       if (!user) {
-        return reject(user);
+        const status = 404;
+        const message = "Not Found";
+
+        return reject({ status, message });
       } else {
         const verify = jwt.verify(refresh_token, jwtSecretConfig.jwtSecret);
 

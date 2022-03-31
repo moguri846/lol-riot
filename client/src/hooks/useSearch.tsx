@@ -16,7 +16,7 @@ export interface IUseSearch {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onEnter: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  multiSearch: (searchValue: string) => Promise<void>;
+  multiSearch: (summonerNames: string[]) => Promise<void>;
 }
 
 const useSearch = (): IUseSearch => {
@@ -36,9 +36,8 @@ const useSearch = (): IUseSearch => {
       searchSummoner(summonerName, COMPARING_WITH_ENEMY);
     } else if (location.pathname.includes("/multi_search") && state?.riot.multiSearch[0].summonerInfo.puuid === "") {
       const summonerNames = decodeURIComponent(location.pathname.slice(14));
-
       setSummonerName(summonerNames);
-      multiSearch(summonerNames);
+      multiSearch(summonerNames.split(","));
     }
   }, []);
 
@@ -69,8 +68,21 @@ const useSearch = (): IUseSearch => {
   };
 
   const searchSummonerOrMulti = () => {
-    if (summonerName.includes(",")) {
-      multiSearch(summonerName);
+    if (summonerName.includes(",") || summonerName.includes(".")) {
+      if (summonerName.includes(",")) {
+        multiSearch(summonerName.split(","));
+      } else {
+        const names = summonerName
+          .split(".")
+          .map((summoner) => {
+            const [name] = summoner.split("님");
+            return name.trim();
+          })
+          .slice(0, -1);
+
+        multiSearch(names);
+      }
+
       routerPush(MULTI_SEARCH, summonerName);
     } else {
       searchSummoner(summonerName, COMPARING_WITH_ENEMY);
@@ -78,10 +90,8 @@ const useSearch = (): IUseSearch => {
     }
   };
 
-  const multiSearch = async (searchValue: string) => {
+  const multiSearch = async (summonerNames: string[]) => {
     try {
-      const summonerNames = searchValue.split(",");
-
       dispatch(loadingAction(LOADING, { multiSearch: true }));
 
       await dispatch(multiSearchInfo(summonerNames));

@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 import moment from "moment";
 import { Dispatch } from "redux";
-import { signIn, logout, myInfo, reissueToken } from "../../API/oauth";
+import { signIn, logout, myInfo, reissueToken } from "../../API/auth";
 import { FAIL } from "../common/constant/common.constant";
 import {
   ACCESS_TOKEN,
@@ -17,10 +17,10 @@ import {
   VALID_TOKEN,
   REFRESH_TOKEN_EXPIRES_IN,
 } from "./constant/user.constant";
-import { OAuthLogin, OAuthLogout, OAuthMyInfo, OAuthTokenCheck } from "./interface/dispatch.interface";
+import { SignInType, LogoutType, MyInfoType } from "./interface/dispatch.interface";
 import { IAuthLoginPrameter, IAuthLoginResponse, IToken, ITokenStatus, OAuthType } from "./interface/auth.interface";
 
-const loginOAuth = (loginPrameter: IAuthLoginPrameter) => async (dispatch: Dispatch<OAuthLogin>) => {
+const loginOAuth = (loginPrameter: IAuthLoginPrameter) => async (dispatch: Dispatch<SignInType>) => {
   try {
     const {
       data: { data: token },
@@ -48,7 +48,7 @@ const loginOAuth = (loginPrameter: IAuthLoginPrameter) => async (dispatch: Dispa
   }
 };
 
-const myInfoOAuth = () => async (dispatch: Dispatch<OAuthMyInfo>) => {
+const myInfoOAuth = () => async (dispatch: Dispatch<MyInfoType>) => {
   try {
     const type = localStorage.getItem("OAUTH_TYPE") as string;
 
@@ -73,7 +73,7 @@ const myInfoOAuth = () => async (dispatch: Dispatch<OAuthMyInfo>) => {
   }
 };
 
-const logoutOAuth = () => async (dispatch: Dispatch<OAuthLogout>) => {
+const logoutOAuth = () => async (dispatch: Dispatch<LogoutType>) => {
   try {
     const type = localStorage.getItem("OAUTH_TYPE") as string;
 
@@ -103,7 +103,7 @@ const logoutOAuth = () => async (dispatch: Dispatch<OAuthLogout>) => {
   }
 };
 
-// const oAuthTokenCheck = () => async (dispatch: Dispatch<OAuthTokenCheck>) => {
+// const oAuthTokenCheck = () => async (dispatch: Dispatch<ReissueAuthType>) => {
 const oAuthTokenCheck = () => async (dispatch: Dispatch<any>) => {
   const accessExpiresIn = parseInt(localStorage.getItem(ACCESS_TOKEN_EXPIRES_IN) as string);
   const type = localStorage.getItem(OAUTH_TYPE) as string;

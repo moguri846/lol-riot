@@ -9,10 +9,10 @@ import {
   VALID_TOKEN,
 } from "../constant/user.constant";
 
-export type AuthLogin = ISuccessAuthLogin | Fail;
-export type AuthMyInfo = ISuccessAuthMyInfo | Fail;
-export type AuthLogout = ISuccessAuthLogout | Fail;
-export type AuthTokenCheck = IReissueAuthPayload | Fail;
+export type SignInType = ISuccessAuthSignIn | Fail;
+export type MyInfoType = ISuccessAuthMyInfo | Fail;
+export type LogoutType = ISuccessAuthLogout | Fail;
+export type ReissueAuthType = IReissueAuthPayload | Fail;
 
 export type ReissueType = typeof REISSUE_TOKEN | typeof VALID_TOKEN | typeof EXPIRED_TOKEN | typeof NON_EXISTENT_TOKEN;
 
@@ -23,7 +23,7 @@ interface ISuccessAuthPayload {
   };
 }
 
-export interface ISuccessAuthLogin extends ISuccessAuthPayload {
+export interface ISuccessAuthSignIn extends ISuccessAuthPayload {
   type: typeof OAUTH_LOGIN;
 }
 

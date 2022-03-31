@@ -126,6 +126,8 @@ userSchema.statics.reissueToken = function (refresh_token: string): Promise<any 
             const now = moment().unix();
             const exp = verify.exp;
 
+            user.access_token = accessToken;
+
             if (exp - now <= getTimeToSec(30, "day")) {
               const refreshToken = jwt.sign({ id: user._id }, jwtSecretConfig.jwtSecret, { expiresIn: "60d" });
               const refreshTokenExp = getTimeToSec(60, "day");
@@ -134,9 +136,15 @@ userSchema.statics.reissueToken = function (refresh_token: string): Promise<any 
                 refresh_token: refreshToken,
                 refresh_token_expires_in: refreshTokenExp,
               };
+
+              user.refresh_token = refreshToken;
             }
           }
-          return resolve(token);
+
+          return user
+            .save()
+            .then(() => resolve(token))
+            .catch((err: any) => reject(err));
         }
       }
     });

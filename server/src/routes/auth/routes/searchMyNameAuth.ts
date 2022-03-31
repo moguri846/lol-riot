@@ -48,14 +48,12 @@ router.post("/login", (req: Request, res: Response) => {
 
 router.post("/reissueToken", authChecker, async (req: Request, res: Response) => {
   try {
-    const { refresh_token } = req.headers;
+    const { refresh_token } = req.body;
 
     const reissueToken = await User.reissueToken(refresh_token as string);
 
     resFunc({ res, data: reissueToken });
   } catch (err: any) {
-    console.log("err", err);
-
     resFunc({ res, err });
   }
 });

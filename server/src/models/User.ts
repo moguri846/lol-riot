@@ -161,7 +161,14 @@ userSchema.statics.findByToken = function (access_token: string): Promise<any | 
         if (err) {
           reject(err);
         }
-        resolve(user);
+
+        if (!user) {
+          const status = 404;
+          const message = "Not Found";
+          reject({ status, message });
+        } else {
+          resolve(user);
+        }
       });
     });
   });

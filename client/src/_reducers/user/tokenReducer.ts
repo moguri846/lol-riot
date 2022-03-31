@@ -1,16 +1,16 @@
 import {
-  OAUTH_LOGIN,
+  SIGN_IN,
   REISSUE_TOKEN,
   VALID_TOKEN,
   EXPIRED_TOKEN,
   NON_EXISTENT_TOKEN,
-  OAUTH_LOGOUT,
+  LOGOUT,
 } from "../../_actions/user/constant/user.constant";
 import {
   IInitialState,
-  ISuccessOAuthLogin,
-  ISuccessOAuthLogout,
-  IReissueOAuthPayload,
+  ISuccessAuthSignIn,
+  ISuccessAuthLogout,
+  IReissueAuthPayload,
 } from "../../_actions/user/interface/dispatch.interface";
 
 const inititalState: IInitialState = {
@@ -19,16 +19,16 @@ const inititalState: IInitialState = {
 };
 
 type ActionType =
-  | { type: typeof OAUTH_LOGIN; payload: ISuccessOAuthLogin }
-  | { type: typeof REISSUE_TOKEN; payload: IReissueOAuthPayload }
-  | { type: typeof VALID_TOKEN; payload: IReissueOAuthPayload }
-  | { type: typeof EXPIRED_TOKEN; payload: IReissueOAuthPayload }
-  | { type: typeof NON_EXISTENT_TOKEN; payload: IReissueOAuthPayload }
-  | { type: typeof OAUTH_LOGOUT; payload: ISuccessOAuthLogout };
+  | { type: typeof SIGN_IN; payload: ISuccessAuthSignIn }
+  | { type: typeof REISSUE_TOKEN; payload: IReissueAuthPayload }
+  | { type: typeof VALID_TOKEN; payload: IReissueAuthPayload }
+  | { type: typeof EXPIRED_TOKEN; payload: IReissueAuthPayload }
+  | { type: typeof NON_EXISTENT_TOKEN; payload: IReissueAuthPayload }
+  | { type: typeof LOGOUT; payload: ISuccessAuthLogout };
 
 const reducer = (state = inititalState, action: ActionType) => {
   switch (action.type) {
-    case OAUTH_LOGIN: {
+    case SIGN_IN: {
       return { ...state, ...action.payload };
     }
     case REISSUE_TOKEN: {
@@ -43,7 +43,7 @@ const reducer = (state = inititalState, action: ActionType) => {
     case NON_EXISTENT_TOKEN: {
       return { ...state, ...action.payload };
     }
-    case OAUTH_LOGOUT: {
+    case LOGOUT: {
       return { ...state, ...action.payload };
     }
     default: {

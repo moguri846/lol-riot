@@ -5,7 +5,7 @@ import { kakaoConfig } from "../../../config/config";
 
 const router = Router();
 
-router.post("/login", async (req: Request, res: Response) => {
+router.post("/signIn", async (req: Request, res: Response) => {
   try {
     const code = req.body.code as string;
 

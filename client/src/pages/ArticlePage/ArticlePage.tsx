@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { getPost } from "../../API/post";
+import { useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
+import { deletePost, getPost } from "../../API/post";
+import Button from "../../components/Atoms/Button/Button";
 import useSnackBar from "../../hooks/useSnackBar";
+import { RootReducerType } from "../../_reducers/rootReducer";
 import * as S from "./style";
 
 const ArticlePage = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const user = useSelector((state: RootReducerType) => state.user.info);
 
   const { snackbar } = useSnackBar();
 
@@ -29,25 +35,44 @@ const ArticlePage = () => {
 
         setArticle(article);
       } catch (err: any) {
-        snackbar(err, "error");
+        navigate("/");
+        window.location.reload();
       }
     };
     getArticle();
   }, []);
 
+  const deleteArticle = async () => {
+    try {
+      await deletePost(article._id);
+
+      snackbar("삭제 성공!", "success");
+
+      navigate("/");
+    } catch (err: any) {
+      const errMessage = err.response.data.data || err.message;
+      snackbar(errMessage, "error");
+    }
+  };
+
   return (
     <S.ArticleContainer>
       <S.ArticleTop>
-        <div>
+        <S.Title>
           <h1>{article.title}</h1>
-        </div>
-        <div>
+        </S.Title>
+        <S.ArticleStatus>
           <S.Category>{article.category}</S.Category>
           <S.Views>views {article.views}</S.Views>
-        </div>
+        </S.ArticleStatus>
       </S.ArticleTop>
       <S.ArticleBottom>
         <S.Content>{article.content}</S.Content>
+        {article.writer === user.email && (
+          <div className="delete">
+            <Button onClick={deleteArticle}>삭제</Button>
+          </div>
+        )}
       </S.ArticleBottom>
     </S.ArticleContainer>
   );

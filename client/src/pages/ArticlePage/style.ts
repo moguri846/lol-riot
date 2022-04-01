@@ -12,6 +12,14 @@ const ArticleTop = styled.div`
   border-bottom: 1px solid black;
 `;
 
+const Title = styled.div``;
+
+const ArticleStatus = styled.div`
+  width: 100px;
+  display: flex;
+  justify-content: space-between;
+`;
+
 const Category = styled.span``;
 
 const Views = styled.span``;
@@ -24,4 +32,4 @@ const Content = styled.div`
   margin-top: 10px;
 `;
 
-export { ArticleContainer, ArticleTop, Category, Views, ArticleBottom, Content };
+export { ArticleContainer, ArticleTop, Title, ArticleStatus, Category, Views, ArticleBottom, Content };

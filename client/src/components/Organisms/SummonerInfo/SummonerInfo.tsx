@@ -37,7 +37,12 @@ const SummonerInfo = ({ loading, summoner, spectatorToggle, onSpectatorToggle, s
                 <Skeleton width="154px" height="21px" />
               </div>
               <div className="tier-rank">
-                <Skeleton width="154px" height="21px" />
+                <div className="tier">
+                  <Skeleton width="100px" height="114px" />
+                </div>
+                <div className="rank">
+                  <Skeleton width="20px" height="21px" />
+                </div>
               </div>
               <div className="league-points">
                 <Skeleton width="154px" height="21px" />
@@ -69,7 +74,13 @@ const SummonerInfo = ({ loading, summoner, spectatorToggle, onSpectatorToggle, s
                 <span>{summoner.queueType}</span>
               </div>
               <div className="tier-rank">
-                <span className="tier">{summoner.tier || "Unranked"} </span>
+                <span className="tier">
+                  {summoner.tier ? (
+                    <img src={`/assets/image/emblem/${summoner.tier}.png`} alt={summoner.tier} />
+                  ) : (
+                    "Unranked"
+                  )}
+                </span>
                 <span className="rank">{summoner.rank}</span>
               </div>
               <div className="league-points">

@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 import moment from "moment";
 import { Dispatch } from "redux";
-import { signIn, logout, myInfo, reissueToken } from "../../API/auth";
+import { signIn, logout, myInfo, reissueToken, signUp } from "../../API/auth";
 import { FAIL } from "../common/constant/common.constant";
 import {
   ACCESS_TOKEN,
@@ -16,9 +16,41 @@ import {
   REISSUE_TOKEN,
   VALID_TOKEN,
   REFRESH_TOKEN_EXPIRES_IN,
+  SIGN_UP,
 } from "./constant/user.constant";
 import { SignInType, LogoutType, MyInfoType } from "./interface/dispatch.interface";
-import { IAuthLoginPrameter, IAuthLoginResponse, IToken, ITokenStatus, OAuthType } from "./interface/auth.interface";
+import {
+  IAuthLoginPrameter,
+  IAuthLoginResponse,
+  ISignUpParameter,
+  IToken,
+  ITokenStatus,
+  OAuthType,
+} from "./interface/auth.interface";
+
+const signUpAction = (info: ISignUpParameter) => async (dispatch: Dispatch<any>) => {
+  try {
+    await signUp(info);
+
+    dispatch({
+      type: SIGN_UP,
+      payload: {
+        isLogin: false,
+        message: "회원가입",
+      },
+    });
+  } catch (err: any) {
+    const status = err.response.status || 500;
+    const errMessage = err.response.data.data || err.message;
+
+    dispatch({
+      type: FAIL,
+      payload: { status, errMessage },
+    });
+
+    throw errMessage;
+  }
+};
 
 const loginOAuth = (loginPrameter: IAuthLoginPrameter) => async (dispatch: Dispatch<SignInType>) => {
   try {
@@ -183,7 +215,7 @@ const reissueTokenAction = async () => {
   }
 };
 
-export { loginOAuth, myInfoOAuth, oAuthTokenCheck, reissueToken, logoutOAuth };
+export { signUpAction, loginOAuth, myInfoOAuth, oAuthTokenCheck, reissueToken, logoutOAuth };
 
 const saveLocalStorage = (token: IToken, oAuthType?: OAuthType) => {
   console.log(

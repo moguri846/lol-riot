@@ -7,6 +7,7 @@ import {
   LOGOUT,
   REISSUE_TOKEN,
   VALID_TOKEN,
+  SIGN_UP,
 } from "../constant/user.constant";
 
 export type SignInType = ISuccessAuthSignIn | Fail;
@@ -21,6 +22,10 @@ interface ISuccessAuthPayload {
     isLogin: boolean;
     message: string;
   };
+}
+
+export interface ISuccessAuthSignUp extends ISuccessAuthPayload {
+  type: typeof SIGN_UP;
 }
 
 export interface ISuccessAuthSignIn extends ISuccessAuthPayload {

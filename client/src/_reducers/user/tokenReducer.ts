@@ -5,9 +5,11 @@ import {
   EXPIRED_TOKEN,
   NON_EXISTENT_TOKEN,
   LOGOUT,
+  SIGN_UP,
 } from "../../_actions/user/constant/user.constant";
 import {
   IInitialState,
+  ISuccessAuthSignUp,
   ISuccessAuthSignIn,
   ISuccessAuthLogout,
   IReissueAuthPayload,
@@ -19,6 +21,7 @@ const inititalState: IInitialState = {
 };
 
 type ActionType =
+  | { type: typeof SIGN_UP; payload: ISuccessAuthSignUp }
   | { type: typeof SIGN_IN; payload: ISuccessAuthSignIn }
   | { type: typeof REISSUE_TOKEN; payload: IReissueAuthPayload }
   | { type: typeof VALID_TOKEN; payload: IReissueAuthPayload }
@@ -28,6 +31,9 @@ type ActionType =
 
 const reducer = (state = inititalState, action: ActionType) => {
   switch (action.type) {
+    case SIGN_UP: {
+      return { ...state, ...action.payload };
+    }
     case SIGN_IN: {
       return { ...state, ...action.payload };
     }

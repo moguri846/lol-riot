@@ -24,7 +24,7 @@ const auth = (SpecificComponent: React.FC, option: boolean | null) => {
             dispatch(myInfoOAuth());
           } else {
             if (option) {
-              navigate("/login");
+              navigate("/signIn");
             }
 
             if (message === "만료된 토큰") {

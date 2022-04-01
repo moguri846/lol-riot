@@ -75,6 +75,7 @@ const LoginButtonContainer = styled.div`
 const HeaderBottom = styled.div`
   display: flex;
   align-items: center;
+  padding: 5px 0px;
 
   & > div > .flicking-viewport {
     height: 20px;

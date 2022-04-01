@@ -44,12 +44,15 @@ const Header = () => {
         </S.LoginButtonContainer>
       </S.HeadeTop>
       <S.HeaderBottom>
-        <nav>
+        {/* <nav>
           <S.Ul>
             <S.Li onClick={selecetHandler}>랭킹</S.Li>
             <S.Li onClick={selecetHandler}>커뮤니티</S.Li>
           </S.Ul>
-        </nav>
+        </nav> */}
+        <span style={{ cursor: "pointer" }}>
+          <Link to="/post/create">글 쓰기</Link>
+        </span>
         <div className="famous-saying">
           <Flicking circular horizontal={false} plugins={[new AutoPlay({ duration: 3000 })]}>
             {famousSayingJson.map((item) => (

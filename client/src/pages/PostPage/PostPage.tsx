@@ -7,6 +7,7 @@ import { RootReducerType } from "../../_reducers/rootReducer";
 import { useLocation, useNavigate } from "react-router-dom";
 import { createPost } from "../../API/post";
 import { DUO, FREE } from "../IndexPage/constant/indexPage.constant";
+import useSnackBar from "../../hooks/useSnackBar";
 
 interface IPost {
   category: string;
@@ -17,6 +18,8 @@ interface IPost {
 const PostPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
+
+  const { snackbar } = useSnackBar();
 
   const info = useSelector((state: RootReducerType) => state.user.info);
 
@@ -47,12 +50,12 @@ const PostPage = () => {
       const res = await createPost(body);
 
       if (res.data.success) {
-        alert("게시물 등록 성공!");
+        snackbar(`성공!`, "success");
 
         navigate("/");
       }
     } catch (err: any) {
-      alert(`무언가 이상해요! ${err.message}`);
+      snackbar(`무언가 이상해요! ${err.message}`, "error");
     }
   };
 
@@ -60,7 +63,7 @@ const PostPage = () => {
     if (post.category && post.title && post.content) {
       handleSubmit(post);
     } else {
-      alert("모든 곳에 값을 넣어주세요!");
+      snackbar("모든 곳에 값을 넣어주세요!", "warning");
     }
   };
 

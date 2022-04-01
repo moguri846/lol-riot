@@ -40,7 +40,7 @@ const updatePost = (post: any) => {
   });
 };
 
-const deletePost = (id: number) => {
+const deletePost = (id: string) => {
   const queryStringObj = {
     id,
   };

@@ -1,7 +1,8 @@
 import { Request, Response, Router } from "express";
 import { resFunc } from "../common/ResSuccessOrFalse.function";
-import { Post } from "../../models/post";
+import { Post } from "../../models/Post";
 import { MOST_POPULAR } from "./constant/post.constant";
+import { authChecker } from "../../middleware/auth";
 
 const router = Router();
 
@@ -45,7 +46,11 @@ router.get("/getPost", (req: Request, res: Response) => {
     if (err) {
       resFunc({ res, err });
     }
-    resFunc({ res, data: post });
+    if (!post) {
+      resFunc({ res, err: { status: 404, message: "Not Found" } });
+    } else {
+      resFunc({ res, data: post });
+    }
   });
 });
 
@@ -61,7 +66,7 @@ router.post("/updatePost", (req: Request, res: Response) => {
   });
 });
 
-router.get("/deletePost", (req: Request, res: Response) => {
+router.get("/deletePost", authChecker, (req: Request, res: Response) => {
   const id = req.query.id;
 
   Post.deleteOne({ _id: id }).exec((err: any) => {

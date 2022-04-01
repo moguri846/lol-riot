@@ -3,6 +3,14 @@ import { Methods } from "./common/methods";
 import { IAuthLoginPrameter } from "../_actions/user/interface/auth.interface";
 import { REFRESH_TOKEN } from "../_actions/user/constant/user.constant";
 
+const signUp = (info: { email: string; password: string; username: string }) => {
+  return Send({
+    method: Methods.POST,
+    url: "/auth/searchMyName/signUp",
+    data: { info },
+  });
+};
+
 const signIn = ({ code, state, info, type }: IAuthLoginPrameter) => {
   const body = {
     code: code || null,
@@ -43,4 +51,4 @@ const logout = (type: string) => {
   });
 };
 
-export { signIn, reissueToken, myInfo, logout };
+export { signUp, signIn, reissueToken, myInfo, logout };

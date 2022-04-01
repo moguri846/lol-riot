@@ -17,32 +17,12 @@ const inititalState: IMultiSearch[] = [
       wins: 0,
       losses: 0,
     },
-    lineWinOrLose: {
-      TOP: {
-        win: 0,
-        lose: 0,
-      },
-      JUNGLE: {
-        win: 0,
-        lose: 0,
-      },
-      MIDDLE: {
-        win: 0,
-        lose: 0,
-      },
-      BOTTOM: {
-        win: 0,
-        lose: 0,
-      },
-      UTILITY: {
-        win: 0,
-        lose: 0,
-      },
-    },
+    mostLine: "",
     matchArr: [
       {
         gameCreation: 0,
         gameEndTimestamp: 0,
+        individualPosition: "",
         championName: "",
         kills: 0,
         assists: 0,

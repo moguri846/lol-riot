@@ -3,16 +3,11 @@ import { SummonerType } from "./summoner.interface";
 
 export interface IMultiSearch {
   summonerInfo: SummonerType;
-  lineWinOrLose: {
-    TOP: ILineWinLose;
-    JUNGLE: ILineWinLose;
-    MIDDLE: ILineWinLose;
-    BOTTOM: ILineWinLose;
-    UTILITY: ILineWinLose;
-  };
+  mostLine: string;
   matchArr: {
     gameCreation: number;
     gameEndTimestamp: number;
+    individualPosition: string;
     championName: string;
     kills: number;
     assists: number;

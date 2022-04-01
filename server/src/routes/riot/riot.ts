@@ -349,6 +349,7 @@ router.get("/multiSearch", async (req: Request, res: Response) => {
               const appendValues = {
                 gameCreation: match.data.info.gameCreation,
                 gameEndTimestamp: match.data.info.gameEndTimestamp,
+                individualPosition: match.data.info.participants[myIndex].individualPosition,
                 championName: match.data.info.participants[myIndex].championName,
                 kills: match.data.info.participants[myIndex].kills,
                 deaths: match.data.info.participants[myIndex].deaths,

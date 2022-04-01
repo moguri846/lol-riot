@@ -27,13 +27,13 @@ router.post("/signIn", (req: Request, res: Response) => {
     }
 
     if (!user) {
-      resFunc({ res, err: { message: "이메일 혹은 비밀번호가 다릅니다." } });
+      resFunc({ res, err: { status: 404, message: "이메일 혹은 비밀번호가 다릅니다." } });
     } else {
       try {
         const isMatch = await user.comparePassword(password);
 
         if (!isMatch) {
-          resFunc({ res, err: { status: 404, message: "유저가 없습니다." } });
+          resFunc({ res, err: { status: 404, message: "이메일 혹은 비밀번호가 다릅니다." } });
         } else {
           const token = await user.generateToken();
 

@@ -5,7 +5,7 @@ import { authChecker } from "../../../middleware/auth";
 
 const router = Router();
 
-router.post("/register", (req: Request, res: Response) => {
+router.post("/signUp", (req: Request, res: Response) => {
   const info = req.body.info;
 
   const user = new User(info);

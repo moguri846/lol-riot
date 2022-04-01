@@ -37,7 +37,7 @@ const Header = () => {
           {isLogin ? (
             <Button onClick={logout}>로그아웃</Button>
           ) : (
-            <Link to="/login">
+            <Link to="/signIn">
               <Button>로그인</Button>
             </Link>
           )}

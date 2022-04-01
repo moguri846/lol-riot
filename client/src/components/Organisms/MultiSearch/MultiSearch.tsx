@@ -17,25 +17,36 @@ const MultiSearch = ({ loading, multiSearch }: IProps) => {
     <>
       {loading ? (
         <>
-          <Skeleton width="1080px" height="394px" />
+          <Skeleton width="1550px" height="480px" />
         </>
       ) : (
         <S.SummonerList>
-          {multiSearch.map(({ summonerInfo, matchArr }) => (
+          {multiSearch.map(({ summonerInfo, mostLine, matchArr }) => (
             <S.SummonerItem key={summonerInfo.puuid}>
               <SummonerInfo loading={loading} summoner={summonerInfo} />
-              <S.MatchSummaryList>
-                {matchArr.map((match) => (
-                  <S.MatchSummaryItem className={`${match.win ? "win" : "lose"}`} key={match.gameCreation}>
-                    <div className="champion">{getDataDragonImg("champion", match.championName)}</div>
-                    <div className="kda">
-                      <span className="kills">{match.kills}</span> / <span className="deaths">{match.deaths}</span> /
-                      <span className="assists"> {match.assists}</span>
-                    </div>
-                    <div className="time-stamp">{moment(match.gameCreation).startOf("minute").fromNow()}</div>
-                  </S.MatchSummaryItem>
-                ))}
-              </S.MatchSummaryList>
+              <div className="game-info">
+                <div className="most-line">
+                  <img src={`/assets/image/line/${mostLine}.png`} alt={mostLine} />
+                </div>
+                <S.MatchSummaryList>
+                  {matchArr.map((match) => (
+                    <S.MatchSummaryItem className={`${match.win ? "win" : "lose"}`} key={match.gameCreation}>
+                      <div className="champion">{getDataDragonImg("champion", match.championName)}</div>
+                      <div className="line">
+                        <img
+                          src={`/assets/image/line/${match.individualPosition}.png`}
+                          alt={match.individualPosition}
+                        />
+                      </div>
+                      <div className="kda">
+                        <span className="kills">{match.kills}</span> / <span className="deaths">{match.deaths}</span> /
+                        <span className="assists"> {match.assists}</span>
+                      </div>
+                      <div className="time-stamp">{moment(match.gameCreation).startOf("minute").fromNow()}</div>
+                    </S.MatchSummaryItem>
+                  ))}
+                </S.MatchSummaryList>
+              </div>
             </S.SummonerItem>
           ))}
         </S.SummonerList>

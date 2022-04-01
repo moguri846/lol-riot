@@ -1,22 +1,27 @@
 import styled from "styled-components";
 
 const SummonerList = styled.ul`
-  width: 1250px;
   display: flex;
   flex-direction: row;
   justify-content: center;
 `;
 
 const SummonerItem = styled.li`
-  width: 250px;
-  height: 450px;
+  width: 300px;
+  height: 470px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
   margin: 5px;
 
-  & > div {
-    height: 150px;
+  & > .game-info {
+    width: 100%;
+    height: 270px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
   }
 `;
 
@@ -31,6 +36,16 @@ const MatchSummaryItem = styled.li`
   padding: 5px;
 
   & > .champion {
+    width: 30px;
+    height: 30px;
+
+    & > img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  & > .line {
     width: 30px;
     height: 30px;
 

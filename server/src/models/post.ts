@@ -1,6 +1,7 @@
 import mongoose, { Schema } from "mongoose";
+import { IPost } from "./interface/Post.interface";
 
-const postSchema = new mongoose.Schema(
+const postSchema = new Schema<IPost>(
   {
     writer: {
       type: String,
@@ -22,6 +23,6 @@ const postSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Post = mongoose.model("Post", postSchema);
+const Post = mongoose.model<IPost>("Post", postSchema);
 
 export { Post };

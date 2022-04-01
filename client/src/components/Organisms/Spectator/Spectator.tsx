@@ -10,7 +10,7 @@ interface IProps {
   loading: boolean;
   spectator: ISpectator;
   summonerName: string;
-  fail: IFailInitial;
+  fail: IFailInitial | null;
 }
 
 const Spectator = ({ loading, spectator, summonerName, fail }: IProps) => {

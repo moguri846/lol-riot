@@ -20,6 +20,7 @@ import SummonerInfo from "../../Organisms/SummonerInfo/SummonerInfo";
 import Spectator from "../../Organisms/Spectator/Spectator";
 import SummonerGameAnalysis from "../../Organisms/SummonerGameAnalysis/SummonerGameAnalysis";
 import SummonerMatchList from "../../Organisms/SummonerMatchList/SummonerMatchList";
+import { removeFailAction } from "../../../_actions/common/failActions";
 
 interface IProps {
   loading: ILoading;
@@ -46,6 +47,8 @@ function SummonerTemplate({ summoner, matchSummary, spectator, jandi, lineWinOrL
     }
 
     try {
+      dispatch(removeFailAction());
+
       setSatusInfo(LOADING, { spectator: true });
 
       await getSpectatorInfo(summoner.id);
@@ -84,7 +87,7 @@ function SummonerTemplate({ summoner, matchSummary, spectator, jandi, lineWinOrL
           loading={loading.spectator}
           spectator={spectator}
           summonerName={summoner.name}
-          fail={fail.spectator}
+          fail={fail.spectator.status ? fail.spectator : null}
         />
       ) : (
         <>

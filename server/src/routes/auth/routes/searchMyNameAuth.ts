@@ -46,6 +46,14 @@ router.post("/signIn", (req: Request, res: Response) => {
   });
 });
 
+router.get("/myInfo", authChecker, async (req: Request, res: Response) => {
+  try {
+    resFunc({ res, data: req.user });
+  } catch (err) {
+    resFunc({ res, err });
+  }
+});
+
 router.post("/reissueToken", authChecker, async (req: Request, res: Response) => {
   try {
     const { refresh_token } = req.body;

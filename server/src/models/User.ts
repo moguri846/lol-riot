@@ -97,7 +97,7 @@ userSchema.methods.generateToken = function (): Promise<IGenerateToken_R> {
     .catch((err: any) => err);
 };
 
-userSchema.statics.reissueToken = function (refresh_token: string): Promise<any | string | IUserToken> {
+userSchema.statics.reissueToken = function (refresh_token: string): Promise<string | IUserToken> {
   const accessToken = jwt.sign({}, jwtSecretConfig.jwtSecret, { expiresIn: "30m" });
   const accessTokenExp = getTimeToSec(30, "minute");
 
@@ -151,7 +151,7 @@ userSchema.statics.reissueToken = function (refresh_token: string): Promise<any 
   });
 };
 
-userSchema.statics.findByToken = function (access_token: string): Promise<any | IUser> {
+userSchema.statics.findByToken = function (access_token: string): Promise<IUser> {
   return new Promise((resolve, reject) => {
     jwt.verify(access_token, jwtSecretConfig.jwtSecret, (err) => {
       if (err) {

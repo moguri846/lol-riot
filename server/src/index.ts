@@ -4,8 +4,8 @@ import mongoose from "mongoose";
 import { swaggerUi, specs } from "./config/swagger";
 
 import authRoute from "./routes/auth/auth";
-import riotRoute from "./routes/riot/riot";
-import postRoute from "./routes/post/post";
+import riotRoute from "./routes/riot/riot.route";
+import postRoute from "./routes/post/post.route";
 
 import { mongoDBConfig } from "./config/config";
 

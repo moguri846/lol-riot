@@ -48,7 +48,11 @@ router.post("/signIn", (req: Request, res: Response) => {
 
 router.get("/myInfo", authChecker, async (req: Request, res: Response) => {
   try {
-    resFunc({ res, data: req.user });
+    const responseData = {
+      eamil: req.user.email,
+    };
+
+    resFunc({ res, data: responseData });
   } catch (err) {
     resFunc({ res, err });
   }

@@ -379,7 +379,7 @@ router.get("/multiSearch", controller.multiSearch);
  */
 router.get("/summonerMatchList", controller.summonerMatchList);
 
-router.get("/spectatorInfo", controller.summonerInfo);
+router.get("/spectatorInfo", controller.spectatorInfo);
 
 /**
  * @swagger

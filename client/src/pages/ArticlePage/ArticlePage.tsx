@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { deletePost, getPost } from "../../API/post";
 import Button from "../../components/Atoms/Button/Button";
 import useSnackBar from "../../hooks/useSnackBar";
@@ -70,7 +70,16 @@ const ArticlePage = () => {
         <S.Content>{article.content}</S.Content>
         {article.writer === user.email && (
           <div className="delete">
-            <Button onClick={deleteArticle}>삭제</Button>
+            <Button>
+              <Link
+                to={`/post/update?category=${article.category}&title=${encodeURIComponent(
+                  article.title
+                )}&content=${encodeURIComponent(article.content)}`}
+              >
+                수정하기
+              </Link>
+            </Button>
+            <Button onClick={deleteArticle}>삭제하기</Button>
           </div>
         )}
       </S.ArticleBottom>

@@ -198,7 +198,7 @@ const oAuthTokenCheck = () => async (dispatch: Dispatch<any>) => {
   return tokenStatus;
 };
 
-const reissueTokenAction = async () => {
+export const reissueTokenAction = async () => {
   try {
     const type = localStorage.getItem("OAUTH_TYPE") as OAuthType;
 

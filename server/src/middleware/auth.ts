@@ -14,14 +14,17 @@ export const authChecker = async (req: Request, res: Response, next: NextFunctio
       next();
     } catch (err: any) {
       if (err.message === "jwt expired") {
-        try {
-          const refresh_token = req.body.refresh_token as string;
+        const refresh_token = req.body.refresh_token as string;
+        if (refresh_token) {
+          try {
+            const reissueToken = await User.reissueToken(refresh_token);
 
-          const reissueToken = await User.reissueToken(refresh_token);
-
-          return resFunc({ res, data: reissueToken });
-        } catch (err: any) {
-          return resFunc({ res, err: { message: err.message } });
+            return resFunc({ res, data: reissueToken });
+          } catch (err: any) {
+            return resFunc({ res, err: { message: err.message } });
+          }
+        } else {
+          return resFunc({ res, err: { status: 401, message: "Unauthorized" } });
         }
       } else {
         return resFunc({ res, err: { status: 401, message: "Unauthorized" } });

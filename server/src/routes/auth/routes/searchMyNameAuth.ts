@@ -49,7 +49,7 @@ router.post("/signIn", (req: Request, res: Response) => {
 router.get("/myInfo", authChecker, async (req: Request, res: Response) => {
   try {
     const responseData = {
-      eamil: req.user.email,
+      email: req.user.email,
     };
 
     resFunc({ res, data: responseData });

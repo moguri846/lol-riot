@@ -15,6 +15,10 @@ const SummonerItem = styled.li`
   align-items: center;
   margin: 5px;
 
+  & > div:nth-of-type(1) {
+    min-height: 233px;
+  }
+
   & > .game-info {
     width: 100%;
     height: 270px;
@@ -22,6 +26,10 @@ const SummonerItem = styled.li`
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+
+    & > .most-line > img {
+      width: 30px;
+    }
   }
 `;
 

@@ -266,12 +266,10 @@ export default {
             }
 
             // 라인별 승패
-            if (match.data.info.participants[myIndex].individualPosition !== "Invalid") {
-              if (match.data.info.participants[myIndex].win) {
-                lineWinOrLose[match.data.info.participants[myIndex].individualPosition].win++;
-              } else {
-                lineWinOrLose[match.data.info.participants[myIndex].individualPosition].lose++;
-              }
+            if (match.data.info.participants[myIndex].win) {
+              lineWinOrLose[match.data.info.participants[myIndex].individualPosition].win++;
+            } else {
+              lineWinOrLose[match.data.info.participants[myIndex].individualPosition].lose++;
             }
 
             const player = {

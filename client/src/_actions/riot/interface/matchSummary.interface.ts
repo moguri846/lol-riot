@@ -15,6 +15,24 @@ export interface ComparingWithEnemyType {
 
 export interface IComparingWithEnemyDetail {
   gameId: number;
+  lineMatch: {
+    player: {
+      level: number;
+      xp: number;
+      totalCs: number;
+      totalDamageDoneToChampions: number;
+      totalDamageTaken: number;
+      totalGold: number;
+    };
+    enemy: {
+      level: number;
+      xp: number;
+      totalCs: number;
+      totalDamageDoneToChampions: number;
+      totalDamageTaken: number;
+      totalGold: number;
+    };
+  };
   timeLine: ITimeLine[];
   player: {
     totalCs: number;

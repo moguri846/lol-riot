@@ -4,7 +4,7 @@ import { TOTAL_CS, TOTAL_GOLD, XP } from "../../Molecules/LineGraph/constant/Lin
 import { TimelineOptionsType } from "../../Molecules/LineGraph/interface/LineGraph.interface";
 import LineGraph from "../../Molecules/LineGraph/LineGraph";
 import ProgressBar from "../../Molecules/ProgressBar/ProgressBar";
-import { ANALYSIS, TIMELINE } from "../SummonerMatchItem/constant/SummonerMatchItem.constant";
+import { LINE_MATCH, ANALYSIS, TIMELINE } from "../SummonerMatchItem/constant/SummonerMatchItem.constant";
 import { IOptionsList, MatchDetailOptionsType } from "../SummonerMatchItem/interface/SummonerMatchItem.interface";
 
 import * as S from "./style";
@@ -25,8 +25,24 @@ const progressObjs: {
   { title: "CS", key: "totalCs" },
 ];
 
+const lineMatchs: {
+  title: string;
+  key: "level" | "xp" | "totalGold" | "totalDamageDoneToChampions" | "totalDamageTaken" | "totalCs";
+}[] = [
+  { title: "레벨", key: "level" },
+  { title: "경험치", key: "xp" },
+  { title: "골드 획득량", key: "totalGold" },
+  { title: "가한 피해량", key: "totalDamageDoneToChampions" },
+  { title: "받은 피해량", key: "totalDamageTaken" },
+  { title: "CS", key: "totalCs" },
+];
+
 const SummonerMatchDetail = ({ match }: IProps) => {
-  const [matchDetailOptions, setMatchDetailOptions] = useState<MatchDetailOptionsType[]>([ANALYSIS, TIMELINE]);
+  const [matchDetailOptions, setMatchDetailOptions] = useState<MatchDetailOptionsType[]>([
+    LINE_MATCH,
+    ANALYSIS,
+    TIMELINE,
+  ]);
   const [matchDetailSelected, setSelectMatchDetailOption] = useState<MatchDetailOptionsType>(ANALYSIS);
   const [timelineOptions, setTimelineOptions] = useState<TimelineOptionsType[]>([TOTAL_GOLD, TOTAL_CS, XP]);
   const [timelineSelected, setSelectTimelineOption] = useState<TimelineOptionsType>(TOTAL_GOLD);
@@ -35,6 +51,9 @@ const SummonerMatchDetail = ({ match }: IProps) => {
     let option: MatchDetailOptionsType;
 
     switch (e.currentTarget.id) {
+      case LINE_MATCH:
+        option = LINE_MATCH;
+        break;
       case ANALYSIS:
         option = ANALYSIS;
         break;
@@ -71,6 +90,8 @@ const SummonerMatchDetail = ({ match }: IProps) => {
 
   const engToKor = (eng: string) => {
     switch (eng) {
+      case LINE_MATCH:
+        return "라인전(14분 기준)";
       case TOTAL_GOLD:
         return "골드";
       case TOTAL_CS:
@@ -105,6 +126,30 @@ const SummonerMatchDetail = ({ match }: IProps) => {
         target: matchDetailSelected,
         onClick: handleSelectMatchDetailOption,
       })}
+      {matchDetailSelected === LINE_MATCH && (
+        <ul style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-around" }}>
+          {lineMatchs.map(({ title, key }) => {
+            // const isPlayerData = key === "kills" || key === "wardsPlaced";
+            return (
+              <li key={key}>
+                <ProgressBar
+                  title={title}
+                  players={[
+                    {
+                      value: match.detail ? match.detail?.lineMatch.player[key] : null,
+                      champion: match.player.championName,
+                    },
+                    {
+                      value: match.detail ? match.detail?.lineMatch.enemy[key] : null,
+                      champion: match.enemy.championName,
+                    },
+                  ]}
+                />
+              </li>
+            );
+          })}
+        </ul>
+      )}
       {matchDetailSelected === ANALYSIS && (
         <ul style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-around" }}>
           {progressObjs.map(({ title, key }) => {

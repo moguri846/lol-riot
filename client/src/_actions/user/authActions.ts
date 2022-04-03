@@ -135,7 +135,6 @@ const logoutOAuth = () => async (dispatch: Dispatch<LogoutType>) => {
   }
 };
 
-// const oAuthTokenCheck = () => async (dispatch: Dispatch<ReissueAuthType>) => {
 const oAuthTokenCheck = () => async (dispatch: Dispatch<any>) => {
   const accessExpiresIn = parseInt(localStorage.getItem(ACCESS_TOKEN_EXPIRES_IN) as string);
   const type = localStorage.getItem(OAUTH_TYPE) as string;
@@ -151,7 +150,7 @@ const oAuthTokenCheck = () => async (dispatch: Dispatch<any>) => {
     // diffTime이 10분 이하 && 2분 이상인 경우
     if (accessDiffTime <= 600000 && accessDiffTime >= 150000) {
       try {
-        await reissueToken(type);
+        await reissueTokenAction();
         tokenStatus.type = REISSUE_TOKEN;
         tokenStatus.isLogin = true;
         tokenStatus.message = "토큰 갱신";
@@ -166,7 +165,7 @@ const oAuthTokenCheck = () => async (dispatch: Dispatch<any>) => {
 
       if (refreshDiffTime >= 150000) {
         try {
-          await reissueToken(type);
+          await reissueTokenAction();
           tokenStatus.type = REISSUE_TOKEN;
           tokenStatus.isLogin = true;
           tokenStatus.message = "토큰 갱신";
@@ -218,15 +217,6 @@ const reissueTokenAction = async () => {
 export { signUpAction, loginOAuth, myInfoOAuth, oAuthTokenCheck, reissueToken, logoutOAuth };
 
 const saveLocalStorage = (token: IToken, oAuthType?: OAuthType) => {
-  console.log(
-    "expires_in : ",
-    moment(moment().add(token.expires_in, "second").valueOf()).format("YYYY-MM-DD hh:mm:ss")
-  );
-  console.log(
-    "refresh_token_expires_in : ",
-    moment(moment().add(token.refresh_token_expires_in, "second").valueOf()).format("YYYY-MM-DD hh:mm:ss")
-  );
-
   localStorage.setItem(ACCESS_TOKEN, token.access_token);
   localStorage.setItem(ACCESS_TOKEN_EXPIRES_IN, String(moment().add(token.expires_in, "second").valueOf()));
   if (token.refresh_token) {

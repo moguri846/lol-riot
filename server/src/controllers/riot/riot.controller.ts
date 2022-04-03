@@ -422,6 +422,24 @@ export default {
       const responseObj = {
         gameId: data.info.gameId,
         timeLine: timeLineArr,
+        lineMatch: {
+          player: {
+            level: timeLineArr[14].player.level,
+            xp: timeLineArr[14].player.xp,
+            totalCs: timeLineArr[14].player.totalCs,
+            totalDamageTaken: timeLineArr[14].player.damageStats.totalDamageTaken,
+            totalDamageDoneToChampions: timeLineArr[14].player.damageStats.totalDamageDoneToChampions,
+            totalGold: timeLineArr[14].player.totalGold,
+          },
+          enemy: {
+            level: timeLineArr[14].enemy.level,
+            xp: timeLineArr[14].enemy.xp,
+            totalCs: timeLineArr[14].enemy.totalCs,
+            totalDamageTaken: timeLineArr[14].enemy.damageStats.totalDamageTaken,
+            totalDamageDoneToChampions: timeLineArr[14].enemy.damageStats.totalDamageDoneToChampions,
+            totalGold: timeLineArr[14].enemy.totalGold,
+          },
+        },
         player: {
           totalCs: timeLineArr[timeLineArr.length - 1].player.totalCs,
           totalGold: data.info.frames[data.info.frames.length - 1].participantFrames[playerIndex].totalGold,

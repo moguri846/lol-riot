@@ -1,12 +1,13 @@
 import React from "react";
-import { Button } from "../../Atoms/Button/style";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootReducerType } from "../../../_reducers/rootReducer";
 import { logoutOAuth } from "../../../_actions/user/authActions";
+import SearchSummonerInputForm from "../../Molecules/SearchSummonerInputForm/SearchSummonerInputForm";
+import Button from "../../Atoms/Button/Button";
+import useSearch from "../../../hooks/useSearch";
 import Flicking from "@egjs/react-flicking";
 import { AutoPlay } from "@egjs/flicking-plugins";
-import SearchSummoner from "../SearchSummoner/SearchSummoner";
 import * as S from "./style";
 import "@egjs/react-flicking/dist/flicking.css";
 
@@ -15,6 +16,8 @@ import famousSayingJson from "../../../json/famousSaying.json";
 
 const Header = () => {
   const dispatch = useDispatch();
+
+  const events = useSearch();
 
   const isLogin = useSelector((state: RootReducerType) => state.user.token.isLogin);
 
@@ -32,7 +35,10 @@ const Header = () => {
   return (
     <S.Header>
       <S.HeadeTop>
-        <SearchSummoner title="Search My Name" />
+        <S.Title>
+          <Link to="/">Search My Name</Link>
+        </S.Title>
+        <SearchSummonerInputForm {...events} />
         <S.LoginButtonContainer>
           {isLogin ? (
             <Button onClick={logout}>로그아웃</Button>

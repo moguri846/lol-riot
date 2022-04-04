@@ -48,14 +48,21 @@ const IndexPage = () => {
     getPosts(FREE);
   }, []);
 
-  const printArticleSummary = (post: Post[]) => {
-    return post.length === 0 ? (
-      <div className="no-data">no data 🤦‍♂️</div>
-    ) : (
+  const printArticleSummaryList = (title: string, post: Post[]) => {
+    return (
       <>
-        {post.map((post, idx) => (
-          <ArticleSummary key={idx} post={post} />
-        ))}
+        <h1>{title}</h1>
+        {post.length === 0 ? (
+          <>
+            <div className="no-data">no data 🤦‍♂️</div>
+          </>
+        ) : (
+          <>
+            {post.map((post, idx) => (
+              <ArticleSummary key={idx} post={post} />
+            ))}
+          </>
+        )}
       </>
     );
   };
@@ -63,20 +70,11 @@ const IndexPage = () => {
   return (
     <>
       <S.PostTop>
-        <S.MostPopularPost>
-          <h1>인기글</h1>
-          {printArticleSummary(mostPopularPosts)}
-        </S.MostPopularPost>
-        <S.FindDuoPost>
-          <h1>듀오 구함!</h1>
-          {printArticleSummary(duoPosts)}
-        </S.FindDuoPost>
+        <S.MostPopularPost>{printArticleSummaryList("인기글🤣", mostPopularPosts)}</S.MostPopularPost>
+        <S.FindDuoPost>{printArticleSummaryList("듀오 구함😏", duoPosts)}</S.FindDuoPost>
       </S.PostTop>
       <S.PostBottom>
-        <S.FreePost>
-          <h1>자유게시판</h1>
-          {printArticleSummary(freePosts)}
-        </S.FreePost>
+        <S.FreePost>{printArticleSummaryList("자유게시판👋", freePosts)}</S.FreePost>
       </S.PostBottom>
     </>
   );

@@ -49,8 +49,6 @@ const PostPage = () => {
         appendValues[k] = decodeURIComponent(v);
       });
 
-      console.log(appendValues);
-
       setPost({
         ...post,
         ...appendValues,
@@ -69,7 +67,6 @@ const PostPage = () => {
 
   const handleSubmit = async ({ _id, category, title, content }: IPost) => {
     const body = {
-      _id,
       writer: info.email,
       category,
       title,
@@ -77,7 +74,7 @@ const PostPage = () => {
     };
 
     try {
-      const res = type === "CREATE" ? await createPost(body) : await updatePost(body);
+      const res = type === "CREATE" ? await createPost(body) : await updatePost({ ...body, _id });
 
       if (res.data.success) {
         snackbar(`성공!`, "success");

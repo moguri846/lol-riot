@@ -1,9 +1,5 @@
 import styled from "styled-components";
 
-const SearchUserContainer = styled.div``;
-
-const Title = styled.h1``;
-
 const SearchFormContainer = styled.div`
   width: 350px;
   display: flex;
@@ -17,4 +13,4 @@ const SearchFormContainer = styled.div`
   }
 `;
 
-export { SearchUserContainer, Title, SearchFormContainer };
+export { SearchFormContainer };

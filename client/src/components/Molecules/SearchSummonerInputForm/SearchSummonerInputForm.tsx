@@ -2,6 +2,7 @@ import React from "react";
 import Input from "../../Atoms/Input/Input";
 import Button from "../../Atoms/Button/Button";
 import { IUseSearch } from "../../../hooks/useSearch";
+import * as S from "./style";
 
 const SearchSummonerInputForm = ({
   summonerName,
@@ -11,8 +12,10 @@ const SearchSummonerInputForm = ({
 }: Omit<IUseSearch, "onMatchDetail" | "multiSearch">) => {
   return (
     <>
-      <Input type="text" placeholder="소환사 이름" value={summonerName} onChange={onChange} onKeyDown={onEnter} />
-      <Button onClick={onClick}>검색</Button>
+      <S.SearchFormContainer>
+        <Input type="text" placeholder="소환사 이름" value={summonerName} onChange={onChange} onKeyDown={onEnter} />
+        <Button onClick={onClick}>검색</Button>
+      </S.SearchFormContainer>
     </>
   );
 };

@@ -11,8 +11,6 @@ const Header = styled.header`
 
   & > div {
     width: 760px;
-    display: flex;
-    justify-content: space-around;
   }
 
   @media screen and (max-width: 760px) {
@@ -30,12 +28,9 @@ const Header = styled.header`
 
 const HeadeTop = styled.div`
   display: flex;
+  justify-content: space-between;
   align-items: center;
   position: relative;
-
-  & > * {
-    margin: 0px 10px;
-  }
 
   @media screen and (max-width: 760px) {
     flex-direction: column;
@@ -54,6 +49,8 @@ const HeadeTop = styled.div`
     }
   }
 `;
+
+const Title = styled.h1``;
 
 const LoginButtonContainer = styled.div`
   @media screen and (max-width: 760px) {
@@ -74,6 +71,7 @@ const LoginButtonContainer = styled.div`
 
 const HeaderBottom = styled.div`
   display: flex;
+  justify-content: space-around;
   align-items: center;
   padding: 5px 0px;
 
@@ -114,4 +112,4 @@ const Li = styled.li`
   }
 `;
 
-export { Header, HeadeTop, LoginButtonContainer, HeaderBottom, Ul, Li };
+export { Header, HeadeTop, Title, LoginButtonContainer, HeaderBottom, Ul, Li };

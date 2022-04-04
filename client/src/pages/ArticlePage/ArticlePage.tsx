@@ -63,7 +63,7 @@ const ArticlePage = () => {
         </S.Title>
         <S.ArticleStatus>
           <S.Category>{article.category}</S.Category>
-          <S.Views>views {article.views}</S.Views>
+          <S.Views>views {article.views++}</S.Views>
         </S.ArticleStatus>
       </S.ArticleTop>
       <S.ArticleBottom>

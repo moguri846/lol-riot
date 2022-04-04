@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { IPost } from "../../models/interface/Post.interface";
 import { Post } from "../../models/Post";
 import { resFunc } from "../../routes/common/ResSuccessOrFalse.function";
 
@@ -38,10 +39,9 @@ export default {
   },
   async updatePost(req: Request, res: Response) {
     try {
-      const id = req.query.id as string;
-      const newPost: object = req.body;
+      const newPost: Pick<IPost, "_id" | "category" | "title" | "content"> = req.body.post;
 
-      await Post.updatePost(id, newPost);
+      await Post.updatePost(newPost);
 
       return resFunc({ res });
     } catch (err: any) {

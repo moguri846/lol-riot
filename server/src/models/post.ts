@@ -3,7 +3,7 @@ import { MOST_POPULAR } from "../controllers/post/constant/post.constant";
 import { IPost } from "./interface/Post.interface";
 import { IUser } from "./interface/User.interface";
 
-const postSchema = new Schema<IPostDoc, IPostModel>(
+const postSchema = new Schema<IPost & Document, IPostModel>(
   {
     writer: {
       type: String,
@@ -68,12 +68,17 @@ postSchema.statics.getPost = function (_id: string): Promise<IPost> {
   });
 };
 
-postSchema.statics.updatePost = function (_id: string, newPost: object): Promise<void> {
+postSchema.statics.updatePost = function (
+  newPost: Pick<IPost, "_id" | "category" | "title" | "content">
+): Promise<void> {
+  const { _id, category, title, content } = newPost;
+
   return new Promise((resolve, reject) => {
-    Post.updateOne({ _id }, { $set: { ...newPost } }).exec((err: any) => {
+    this.updateOne({ _id }, { $set: { category, title, content } }).exec((err: any) => {
       if (err) {
         return reject(err);
       }
+
       return resolve();
     });
   });
@@ -90,13 +95,13 @@ postSchema.statics.deletePost = function (_id: string): Promise<void> {
   });
 };
 
-interface IPostDoc extends IPost, Document {}
+type IPostDoc = IPost & Document;
 
 interface IPostModel extends Model<IPostDoc> {
   createPost: (postInfo: IPost) => Promise<any>;
   getCategoryPosts: (category: string) => Promise<IPost[]>;
   getPost: (_id: string) => Promise<IPost>;
-  updatePost: (_id: string, newPost: object) => Promise<void>;
+  updatePost: (newPost: Pick<IPost, "_id" | "category" | "title" | "content">) => Promise<void>;
   deletePost: (_id: string) => Promise<void>;
 }
 

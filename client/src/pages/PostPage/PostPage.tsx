@@ -5,11 +5,12 @@ import { Input } from "../../components/Atoms/Input/style";
 import { useSelector } from "react-redux";
 import { RootReducerType } from "../../_reducers/rootReducer";
 import { useLocation, useNavigate } from "react-router-dom";
-import { createPost } from "../../API/post";
+import { createPost, updatePost } from "../../API/post";
 import { DUO, FREE } from "../IndexPage/constant/indexPage.constant";
 import useSnackBar from "../../hooks/useSnackBar";
 
 interface IPost {
+  _id: string;
   category: string;
   title: string;
   content: string;
@@ -26,6 +27,7 @@ const PostPage = () => {
   const [type, setType] = useState("");
 
   const [post, setPost] = useState<IPost>({
+    _id: "",
     category: "",
     title: "",
     content: "",
@@ -65,8 +67,9 @@ const PostPage = () => {
     });
   };
 
-  const handleSubmit = async ({ category, title, content }: IPost) => {
+  const handleSubmit = async ({ _id, category, title, content }: IPost) => {
     const body = {
+      _id,
       writer: info.email,
       category,
       title,
@@ -74,7 +77,7 @@ const PostPage = () => {
     };
 
     try {
-      const res = await createPost(body);
+      const res = type === "CREATE" ? await createPost(body) : await updatePost(body);
 
       if (res.data.success) {
         snackbar(`성공!`, "success");

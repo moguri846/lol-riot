@@ -72,7 +72,7 @@ const ArticlePage = () => {
           <div className="delete">
             <Button>
               <Link
-                to={`/post/update?category=${article.category}&title=${encodeURIComponent(
+                to={`/post/update?_id=${article._id}&category=${article.category}&title=${encodeURIComponent(
                   article.title
                 )}&content=${encodeURIComponent(article.content)}`}
               >

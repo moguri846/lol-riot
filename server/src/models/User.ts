@@ -41,24 +41,21 @@ const userSchema = new Schema<IUserDoc>(
   { timestamps: true }
 );
 
-userSchema.pre("save", function (next) {
+userSchema.pre("save", async function (next) {
   const user = this;
 
   if (user.isModified("password")) {
-    bcrypt.genSalt(saltRounds, function (err, salt) {
-      if (err) {
-        next(err);
-      }
-      bcrypt.hash(user.password, salt, function (err, hash) {
-        if (err) {
-          next(err);
-        }
+    try {
+      const salt = await bcrypt.genSalt(saltRounds);
 
-        user.password = hash;
+      const hash = await bcrypt.hash(user.password, salt);
 
-        next();
-      });
-    });
+      user.password = hash;
+
+      next();
+    } catch (err: any) {
+      return next(err);
+    }
   } else {
     next();
   }
@@ -73,8 +70,6 @@ userSchema.methods.comparePassword = function (password: string): Promise<ICompa
 
 userSchema.methods.generateToken = function (): Promise<IGenerateToken_R> {
   const user = this;
-
-  moment().add(3, "M");
 
   const accessToken = jwt.sign({}, jwtSecretConfig.jwtSecret, { expiresIn: "30m" });
   const accessTokenExp = getTimeToSec(30, "minute");
@@ -106,71 +101,61 @@ userSchema.statics.reissueToken = function (refresh_token: string): Promise<stri
     expires_in: accessTokenExp,
   };
 
-  return new Promise((resolve, reject) => {
-    this.findOne({ refresh_token }).exec((err: any, user: any) => {
-      if (err) {
-        return reject(err);
+  return new Promise(async (resolve, reject) => {
+    try {
+      const user = await this.findOne({ refresh_token });
+
+      const verify = await jwt.verify(refresh_token, jwtSecretConfig.jwtSecret);
+
+      if (typeof verify === "string") {
+        throw new Error(verify);
       }
-      if (!user) {
-        const status = 404;
-        const message = "Not Found";
 
-        return reject({ status, message });
-      } else {
-        const verify = jwt.verify(refresh_token, jwtSecretConfig.jwtSecret);
+      if (verify.exp) {
+        if (verify.exp) {
+          const now = moment().unix();
+          const exp = verify.exp;
 
-        if (typeof verify === "string") {
-          return reject(verify);
-        } else {
-          if (verify.exp) {
-            const now = moment().unix();
-            const exp = verify.exp;
+          user.access_token = accessToken;
 
-            user.access_token = accessToken;
+          if (exp - now <= getTimeToSec(30, "day")) {
+            const refreshToken = jwt.sign({ id: user._id }, jwtSecretConfig.jwtSecret, { expiresIn: "60d" });
+            const refreshTokenExp = getTimeToSec(60, "day");
+            token = {
+              ...token,
+              refresh_token: refreshToken,
+              refresh_token_expires_in: refreshTokenExp,
+            };
 
-            if (exp - now <= getTimeToSec(30, "day")) {
-              const refreshToken = jwt.sign({ id: user._id }, jwtSecretConfig.jwtSecret, { expiresIn: "60d" });
-              const refreshTokenExp = getTimeToSec(60, "day");
-              token = {
-                ...token,
-                refresh_token: refreshToken,
-                refresh_token_expires_in: refreshTokenExp,
-              };
-
-              user.refresh_token = refreshToken;
-            }
+            user.refresh_token = refreshToken;
           }
-
           return user
             .save()
             .then(() => resolve(token))
             .catch((err: any) => reject(err));
         }
       }
-    });
+    } catch (err: any) {
+      reject(err);
+    }
   });
 };
 
 userSchema.statics.findByToken = function (access_token: string): Promise<IUser> {
-  return new Promise((resolve, reject) => {
-    jwt.verify(access_token, jwtSecretConfig.jwtSecret, (err) => {
-      if (err) {
-        reject(err);
-      }
-      this.findOne({ access_token }).exec((err: any, user: IUser) => {
-        if (err) {
-          reject(err);
-        }
+  return new Promise(async (resolve, reject) => {
+    try {
+      await jwt.verify(access_token, jwtSecretConfig.jwtSecret);
 
-        if (!user) {
-          const status = 404;
-          const message = "Not Found";
-          reject({ status, message });
-        } else {
-          resolve(user);
-        }
-      });
-    });
+      const user = await this.findOne({ access_token });
+
+      if (!user) {
+        throw new Error("Not Found");
+      }
+
+      return resolve(user);
+    } catch (err: any) {
+      return reject(err);
+    }
   });
 };
 

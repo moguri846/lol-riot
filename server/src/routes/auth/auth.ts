@@ -1,7 +1,7 @@
 import { Router } from "express";
-import SearchMyNameRoute from "./routes/searchMyNameAuth";
-import kakaoRoute from "./routes/kakaoOAuth";
-import naverRoute from "./routes/naverOAuth";
+import SearchMyNameRoute from "./routes/searchMyNameAuth.route";
+import kakaoRoute from "./routes/kakaoOAuth.route";
+import naverRoute from "./routes/naverOAuth.route";
 
 const router = Router();
 

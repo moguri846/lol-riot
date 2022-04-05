@@ -174,8 +174,15 @@ const oAuthTokenCheck = () => async (dispatch: Dispatch<any>) => {
           tokenStatus.message = err.message;
         }
       } else {
-        tokenStatus.type = EXPIRED_TOKEN;
-        tokenStatus.message = "만료된 토큰";
+        try {
+          await reissueTokenAction();
+          tokenStatus.type = REISSUE_TOKEN;
+          tokenStatus.isLogin = true;
+          tokenStatus.message = "토큰 갱신";
+        } catch (err: any) {
+          tokenStatus.type = FAIL;
+          tokenStatus.message = err.message;
+        }
       }
     } else {
       tokenStatus.type = VALID_TOKEN;

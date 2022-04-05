@@ -1,5 +1,4 @@
 import axios, { AxiosInstance } from "axios";
-import { reissueTokenAction } from "../_actions/user/authActions";
 
 const instance: AxiosInstance = axios.create({
   baseURL: "http://localhost:5000/api",
@@ -24,20 +23,7 @@ instance.interceptors.response.use(
 
     return response;
   },
-  async (err: any) => {
-    const response = err.response;
-    const status = response.status;
-
-    if (status === 401) {
-      try {
-        await reissueTokenAction();
-      } catch (err) {
-        return Promise.reject(err);
-      }
-    }
-
-    return Promise.reject(err);
-  }
+  (err: any) => Promise.reject(err)
 );
 
 export default instance;

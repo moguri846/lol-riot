@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Skeleton from "react-loading-skeleton";
 import { getCategoryPosts } from "../../API/post";
 import ArticleSummary from "../../components/Organisms/ArticleSummary/ArticleSummary";
 import useSnackBar from "../../hooks/useSnackBar";
@@ -7,60 +8,89 @@ import { CategoryType, Post } from "./interface/indexPage.interface";
 import * as S from "./style";
 
 const IndexPage = () => {
-  const [mostPopularPosts, setMostPopularPosts] = useState<Post[]>([]);
-  const [duoPosts, setDuoPosts] = useState<Post[]>([]);
-  const [freePosts, setFreePosts] = useState<Post[]>([]);
+  const [posts, setPosts] = useState({
+    mostPopular: [],
+    duo: [],
+    free: [],
+  });
+
+  const [loadings, setLoadings] = useState({
+    mostPopular: false,
+    duo: false,
+    free: false,
+  });
 
   const { snackbar } = useSnackBar();
 
-  const getPosts = async (category: CategoryType) => {
-    const {
-      data: { data: posts },
-    } = await getCategoryPosts(category);
-
-    switch (category) {
-      case MOST_POPULAR: {
-        setMostPopularPosts(posts);
-        break;
-      }
-      case DUO: {
-        setDuoPosts(posts);
-        break;
-      }
-      case FREE: {
-        setFreePosts(posts);
-        break;
-      }
-      default: {
-        break;
-      }
-    }
-
+  const getPosts = async (category: CategoryType, postType: string) => {
     try {
+      const {
+        data: { data: postss },
+      } = await getCategoryPosts(category);
+
+      setPosts((post) => {
+        return {
+          ...post,
+          [postType]: postss,
+        };
+      });
+
+      setLoadings((loading) => {
+        return {
+          ...loading,
+          [postType]: false,
+        };
+      });
     } catch (err: any) {
       snackbar(err, "error");
     }
   };
 
   useEffect(() => {
-    getPosts(MOST_POPULAR);
-    getPosts(DUO);
-    getPosts(FREE);
+    setLoadings({
+      mostPopular: true,
+      duo: true,
+      free: true,
+    });
+
+    getPosts(MOST_POPULAR, "mostPopular");
+    getPosts(DUO, "duo");
+    getPosts(FREE, "free");
   }, []);
 
-  const printArticleSummaryList = (title: string, post: Post[]) => {
+  const printArticleSummaryList = (loading: boolean, title: string, post: Post[]) => {
     return (
       <>
-        <h1>{title}</h1>
-        {post.length === 0 ? (
+        {loading ? (
           <>
-            <div className="no-data">no data 🤦‍♂️</div>
+            <Skeleton width="100%" height="42px" />
+            <div className="loading">
+              <Skeleton width="100%" height="21px" />
+              <Skeleton width="100%" height="21px" />
+              <Skeleton width="100%" height="21px" />
+              <Skeleton width="100%" height="21px" />
+              <Skeleton width="100%" height="21px" />
+              <Skeleton width="100%" height="21px" />
+              <Skeleton width="100%" height="21px" />
+              <Skeleton width="100%" height="21px" />
+              <Skeleton width="100%" height="21px" />
+              <Skeleton width="100%" height="21px" />
+            </div>
           </>
         ) : (
           <>
-            {post.map((post, idx) => (
-              <ArticleSummary key={idx} post={post} />
-            ))}
+            <h1>{title}</h1>
+            {post.length === 0 ? (
+              <>
+                <div className="no-data">no data 🤦‍♂️</div>
+              </>
+            ) : (
+              <>
+                {post.map((post, idx) => (
+                  <ArticleSummary key={idx} post={post} />
+                ))}
+              </>
+            )}
           </>
         )}
       </>
@@ -70,11 +100,13 @@ const IndexPage = () => {
   return (
     <>
       <S.PostTop>
-        <S.MostPopularPost>{printArticleSummaryList("인기글🤣", mostPopularPosts)}</S.MostPopularPost>
-        <S.FindDuoPost>{printArticleSummaryList("듀오 구함😏", duoPosts)}</S.FindDuoPost>
+        <S.MostPopularPost>
+          {printArticleSummaryList(loadings.mostPopular, "인기글🤣", posts.mostPopular)}
+        </S.MostPopularPost>
+        <S.FindDuoPost>{printArticleSummaryList(loadings.duo, "듀오 구함😏", posts.duo)}</S.FindDuoPost>
       </S.PostTop>
       <S.PostBottom>
-        <S.FreePost>{printArticleSummaryList("자유게시판👋", freePosts)}</S.FreePost>
+        <S.FreePost>{printArticleSummaryList(loadings.free, "자유게시판👋", posts.free)}</S.FreePost>
       </S.PostBottom>
     </>
   );

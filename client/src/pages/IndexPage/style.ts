@@ -20,7 +20,7 @@ const PostTop = styled.div`
 `;
 
 const MostPopularPost = styled.div`
-  width: 50%;
+  width: 380px;
 
   & > .no-data {
     height: 100%;
@@ -32,7 +32,7 @@ const MostPopularPost = styled.div`
 `;
 
 const FindDuoPost = styled.div`
-  width: 50%;
+  width: 380px;
 
   & > .no-data {
     height: 100%;
@@ -52,7 +52,7 @@ const PostBottom = styled.div`
 `;
 
 const FreePost = styled.div`
-  width: 100%;
+  width: 750px;
 
   & > .no-data {
     height: 100%;

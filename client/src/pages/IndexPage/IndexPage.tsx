@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import Skeleton from "react-loading-skeleton";
 import { getCategoryPosts } from "../../API/post";
 import ArticleSummary from "../../components/Organisms/ArticleSummary/ArticleSummary";
 import useSnackBar from "../../hooks/useSnackBar";
 import { DUO, FREE, MOST_POPULAR } from "./constant/indexPage.constant";
 import { CategoryType, Post } from "./interface/indexPage.interface";
+import { TailSpin } from "react-loader-spinner";
 import * as S from "./style";
 
 const IndexPage = () => {
@@ -58,28 +58,18 @@ const IndexPage = () => {
     getPosts(FREE, "free");
   }, []);
 
-  const printArticleSummaryList = (loading: boolean, title: string, post: Post[]) => {
+  const printArticleSummaryList = (title: string, loading: boolean, post: Post[]) => {
     return (
       <>
+        <h1>{title}</h1>
         {loading ? (
           <>
-            <Skeleton width="100%" height="42px" />
             <div className="loading">
-              <Skeleton width="100%" height="21px" />
-              <Skeleton width="100%" height="21px" />
-              <Skeleton width="100%" height="21px" />
-              <Skeleton width="100%" height="21px" />
-              <Skeleton width="100%" height="21px" />
-              <Skeleton width="100%" height="21px" />
-              <Skeleton width="100%" height="21px" />
-              <Skeleton width="100%" height="21px" />
-              <Skeleton width="100%" height="21px" />
-              <Skeleton width="100%" height="21px" />
+              <TailSpin wrapperClass="tail-spin-loading" />
             </div>
           </>
         ) : (
           <>
-            <h1>{title}</h1>
             {post.length === 0 ? (
               <>
                 <div className="no-data">no data 🤦‍♂️</div>
@@ -101,12 +91,12 @@ const IndexPage = () => {
     <>
       <S.PostTop>
         <S.MostPopularPost>
-          {printArticleSummaryList(loadings.mostPopular, "인기글🤣", posts.mostPopular)}
+          {printArticleSummaryList("인기글🤣", loadings.mostPopular, posts.mostPopular)}
         </S.MostPopularPost>
-        <S.FindDuoPost>{printArticleSummaryList(loadings.duo, "듀오 구함😏", posts.duo)}</S.FindDuoPost>
+        <S.FindDuoPost>{printArticleSummaryList("듀오 구함😏", loadings.duo, posts.duo)}</S.FindDuoPost>
       </S.PostTop>
       <S.PostBottom>
-        <S.FreePost>{printArticleSummaryList(loadings.free, "자유게시판👋", posts.free)}</S.FreePost>
+        <S.FreePost>{printArticleSummaryList("자유게시판👋", loadings.free, posts.free)}</S.FreePost>
       </S.PostBottom>
     </>
   );

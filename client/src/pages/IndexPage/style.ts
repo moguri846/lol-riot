@@ -9,6 +9,18 @@ const PostTop = styled.div`
     padding: 5px;
   }
 
+  & > div > .loading {
+    height: 426px;
+
+    & > .tail-spin-loading {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
   @media screen and (max-width: 740px) {
     flex-direction: column;
 
@@ -48,6 +60,18 @@ const PostBottom = styled.div`
 
   & > div {
     padding: 5px;
+  }
+
+  & > div > .loading {
+    height: 322px;
+
+    & > .tail-spin-loading {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 `;
 

@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
-import * as S from "./style";
-import Button from "../../components/Atoms/Button/Button";
-import { Input } from "../../components/Atoms/Input/style";
 import { useSelector } from "react-redux";
 import { RootReducerType } from "../../_reducers/rootReducer";
 import { useLocation, useNavigate } from "react-router-dom";
 import { createPost, updatePost } from "../../API/post";
-import { DUO, FREE } from "../IndexPage/constant/indexPage.constant";
 import useSnackBar from "../../hooks/useSnackBar";
+import Template from "../../components/Templates/MainTemplate/MainTemplate";
+import PostCreateOrUpdate from "../../components/Organisms/PostCreateOrUpdate/PostCreateOrUpdate";
 
 interface IPost {
   _id: string;
@@ -26,7 +24,7 @@ const PostPage = () => {
 
   const [type, setType] = useState("");
 
-  const [post, setPost] = useState<IPost>({
+  const [post, setPost] = useState<Pick<IPost, "_id" | "category" | "title" | "content">>({
     _id: "",
     category: "",
     title: "",
@@ -41,22 +39,20 @@ const PostPage = () => {
     if (type === "UPDATE") {
       const qs = location.search.slice(1).split("&");
 
-      let appendValues: any = {};
-
       qs.forEach((qs) => {
         const [k, v] = qs.split("=");
 
-        appendValues[k] = decodeURIComponent(v);
-      });
-
-      setPost({
-        ...post,
-        ...appendValues,
+        setPost((post) => {
+          return {
+            ...post,
+            [k]: decodeURIComponent(v),
+          };
+        });
       });
     }
   }, []);
 
-  const handleChangePostValue = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const onChangePostValue = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const target = e.currentTarget.id;
 
     setPost({
@@ -86,7 +82,7 @@ const PostPage = () => {
     }
   };
 
-  const handleCheckPostValue = () => {
+  const onCheckPostValue = () => {
     if (post.category && post.title && post.content) {
       handleSubmit(post);
     } else {
@@ -94,27 +90,16 @@ const PostPage = () => {
     }
   };
 
-  return (
-    <S.PostContainer>
-      <S.PostTitleContainer>
-        <h1>{type}</h1>
-      </S.PostTitleContainer>
-      <S.SelectContainer>
-        <S.Select id="category" value={post.category} onChange={handleChangePostValue}>
-          <option value="">카테고리를 선택해 주세요.</option>
-          <option value={FREE}>자유</option>
-          <option value={DUO}>듀오</option>
-        </S.Select>
-      </S.SelectContainer>
-      <S.InputTitleContainer>
-        <Input id="title" value={post.title} placeholder="제목을 입력해 주세요" onChange={handleChangePostValue} />
-      </S.InputTitleContainer>
-      <S.InputContentContainer>
-        <textarea id="content" value={post.content} onChange={handleChangePostValue}></textarea>
-      </S.InputContentContainer>
-      <Button onClick={handleCheckPostValue}>{type === "CREATE" ? "만들기" : "수정하기"}</Button>
-    </S.PostContainer>
+  const Content = (
+    <PostCreateOrUpdate
+      type={type}
+      post={post}
+      onChangePostValue={onChangePostValue}
+      onCheckPostValue={onCheckPostValue}
+    />
   );
+
+  return <Template Content={Content} />;
 };
 
 export default PostPage;

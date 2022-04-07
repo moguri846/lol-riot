@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { getCategoryPosts } from "../../API/post";
-import ArticleSummary from "../../components/Organisms/ArticleSummary/ArticleSummary";
 import useSnackBar from "../../hooks/useSnackBar";
-import { DUO, FREE, MOST_POPULAR } from "./constant/indexPage.constant";
-import { CategoryType, Post } from "./interface/indexPage.interface";
-import { TailSpin } from "react-loader-spinner";
-
+import Post from "../../components/Organisms/Post/Post";
 import Template from "../../components/Templates/MainTemplate/MainTemplate";
-
-import * as S from "./style";
+import { CategoryType } from "./interface/indexPage.interface";
+import { DUO, FREE, MOST_POPULAR } from "./constant/indexPage.constant";
 
 const IndexPage = () => {
   const [posts, setPosts] = useState({
@@ -17,7 +13,7 @@ const IndexPage = () => {
     free: [],
   });
 
-  const [loadings, setLoadings] = useState({
+  const [loading, setLoading] = useState({
     mostPopular: false,
     duo: false,
     free: false,
@@ -38,7 +34,7 @@ const IndexPage = () => {
         };
       });
 
-      setLoadings((loading) => {
+      setLoading((loading) => {
         return {
           ...loading,
           [postType]: false,
@@ -50,7 +46,7 @@ const IndexPage = () => {
   };
 
   useEffect(() => {
-    setLoadings({
+    setLoading({
       mostPopular: true,
       duo: true,
       free: true,
@@ -61,48 +57,7 @@ const IndexPage = () => {
     getPosts(FREE, "free");
   }, []);
 
-  const printArticleSummaryList = (title: string, loading: boolean, post: Post[]) => {
-    return (
-      <>
-        <h1>{title}</h1>
-        {loading ? (
-          <>
-            <div className="loading">
-              <TailSpin wrapperClass="tail-spin-loading" />
-            </div>
-          </>
-        ) : (
-          <>
-            {post.length === 0 ? (
-              <>
-                <div className="no-data">no data 🤦‍♂️</div>
-              </>
-            ) : (
-              <>
-                {post.map((post, idx) => (
-                  <ArticleSummary key={idx} post={post} />
-                ))}
-              </>
-            )}
-          </>
-        )}
-      </>
-    );
-  };
-
-  const Content = (
-    <>
-      <S.PostTop>
-        <S.MostPopularPost>
-          {printArticleSummaryList("인기글🤣", loadings.mostPopular, posts.mostPopular)}
-        </S.MostPopularPost>
-        <S.FindDuoPost>{printArticleSummaryList("듀오 구함😏", loadings.duo, posts.duo)}</S.FindDuoPost>
-      </S.PostTop>
-      <S.PostBottom>
-        <S.FreePost>{printArticleSummaryList("자유게시판👋", loadings.free, posts.free)}</S.FreePost>
-      </S.PostBottom>
-    </>
-  );
+  const Content = <Post loading={loading} posts={posts} />;
 
   return <Template Content={Content} />;
 };

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const SignInContainer = styled.div`
+const SignInOrUpContainer = styled.div`
   width: 300px;
   display: flex;
   flex-direction: column;
@@ -21,4 +21,4 @@ const OAuthButtons = styled.div`
   }
 `;
 
-export { SignInContainer, OAuthButtons };
+export { SignInOrUpContainer, OAuthButtons };

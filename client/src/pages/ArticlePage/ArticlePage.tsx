@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { deletePost, getPost } from "../../API/post";
-import Button from "../../components/Atoms/Button/Button";
-import useSnackBar from "../../hooks/useSnackBar";
+import { useLocation, useNavigate } from "react-router-dom";
+import { getPost } from "../../API/post";
 import { RootReducerType } from "../../_reducers/rootReducer";
-import * as S from "./style";
+import Template from "../../components/Templates/MainTemplate/MainTemplate";
 
-import { Watch } from "react-loader-spinner";
+import Article from "../../components/Organisms/Article/Article";
+import { IPost } from "../IndexPage/interface/indexPage.interface";
 
 const ArticlePage = () => {
   const location = useLocation();
@@ -15,9 +14,7 @@ const ArticlePage = () => {
 
   const user = useSelector((state: RootReducerType) => state.user.info);
 
-  const { snackbar } = useSnackBar();
-
-  const [article, setArticle] = useState({
+  const [article, setArticle] = useState<Omit<IPost, "createdAt" | "updatedAt" | "__v">>({
     category: "",
     title: "",
     content: "",
@@ -50,55 +47,9 @@ const ArticlePage = () => {
     getArticle();
   }, []);
 
-  const deleteArticle = async () => {
-    try {
-      await deletePost(article._id);
+  const Content = <Article loading={loading} article={article} user={user} />;
 
-      snackbar("삭제 성공!", "success");
-
-      navigate("/");
-    } catch (err: any) {
-      const errMessage = err.response.data.data || err.message;
-      snackbar(errMessage, "error");
-    }
-  };
-
-  return (
-    <S.ArticleContainer>
-      {loading ? (
-        <Watch width={400} height={200} wrapperClass="watch-loading" />
-      ) : (
-        <>
-          <S.ArticleTop>
-            <S.Title>
-              <h1>{article.title}</h1>
-            </S.Title>
-            <S.ArticleStatus>
-              <S.Category>{article.category}</S.Category>
-              <S.Views>views {article.views++}</S.Views>
-            </S.ArticleStatus>
-          </S.ArticleTop>
-          <S.ArticleBottom>
-            <S.Content>{article.content}</S.Content>
-            {article.writer === user.email && (
-              <div className="delete">
-                <Button>
-                  <Link
-                    to={`/post/update?_id=${article._id}&category=${article.category}&title=${encodeURIComponent(
-                      article.title
-                    )}&content=${encodeURIComponent(article.content)}`}
-                  >
-                    수정하기
-                  </Link>
-                </Button>
-                <Button onClick={deleteArticle}>삭제하기</Button>
-              </div>
-            )}
-          </S.ArticleBottom>
-        </>
-      )}
-    </S.ArticleContainer>
-  );
+  return <Template Content={Content} />;
 };
 
 export default ArticlePage;

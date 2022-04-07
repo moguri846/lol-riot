@@ -7,6 +7,8 @@ import useSnackBar from "../../hooks/useSnackBar";
 import { RootReducerType } from "../../_reducers/rootReducer";
 import * as S from "./style";
 
+import { Watch } from "react-loader-spinner";
+
 const ArticlePage = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -24,6 +26,8 @@ const ArticlePage = () => {
     _id: "",
   });
 
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     const getArticle = async () => {
       try {
@@ -34,11 +38,15 @@ const ArticlePage = () => {
         } = await getPost(id);
 
         setArticle(article);
+
+        setLoading(false);
       } catch (err: any) {
         navigate("/");
+
         window.location.reload();
       }
     };
+    setLoading(true);
     getArticle();
   }, []);
 
@@ -57,32 +65,38 @@ const ArticlePage = () => {
 
   return (
     <S.ArticleContainer>
-      <S.ArticleTop>
-        <S.Title>
-          <h1>{article.title}</h1>
-        </S.Title>
-        <S.ArticleStatus>
-          <S.Category>{article.category}</S.Category>
-          <S.Views>views {article.views++}</S.Views>
-        </S.ArticleStatus>
-      </S.ArticleTop>
-      <S.ArticleBottom>
-        <S.Content>{article.content}</S.Content>
-        {article.writer === user.email && (
-          <div className="delete">
-            <Button>
-              <Link
-                to={`/post/update?_id=${article._id}&category=${article.category}&title=${encodeURIComponent(
-                  article.title
-                )}&content=${encodeURIComponent(article.content)}`}
-              >
-                수정하기
-              </Link>
-            </Button>
-            <Button onClick={deleteArticle}>삭제하기</Button>
-          </div>
-        )}
-      </S.ArticleBottom>
+      {loading ? (
+        <Watch width={400} height={200} wrapperClass="watch-loading" />
+      ) : (
+        <>
+          <S.ArticleTop>
+            <S.Title>
+              <h1>{article.title}</h1>
+            </S.Title>
+            <S.ArticleStatus>
+              <S.Category>{article.category}</S.Category>
+              <S.Views>views {article.views++}</S.Views>
+            </S.ArticleStatus>
+          </S.ArticleTop>
+          <S.ArticleBottom>
+            <S.Content>{article.content}</S.Content>
+            {article.writer === user.email && (
+              <div className="delete">
+                <Button>
+                  <Link
+                    to={`/post/update?_id=${article._id}&category=${article.category}&title=${encodeURIComponent(
+                      article.title
+                    )}&content=${encodeURIComponent(article.content)}`}
+                  >
+                    수정하기
+                  </Link>
+                </Button>
+                <Button onClick={deleteArticle}>삭제하기</Button>
+              </div>
+            )}
+          </S.ArticleBottom>
+        </>
+      )}
     </S.ArticleContainer>
   );
 };

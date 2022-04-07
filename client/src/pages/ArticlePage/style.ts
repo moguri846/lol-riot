@@ -1,8 +1,14 @@
 import styled from "styled-components";
 
 const ArticleContainer = styled.div`
-  width: 95%;
-  margin-top: 50px;
+  width: 100%;
+
+  & > .watch-loading {
+    height: 92vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 const ArticleTop = styled.div`

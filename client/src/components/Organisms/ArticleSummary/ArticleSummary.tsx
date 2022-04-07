@@ -2,10 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import * as S from "./style";
-import { Post } from "../../../pages/IndexPage/interface/indexPage.interface";
+import { IPost } from "../../../pages/IndexPage/interface/indexPage.interface";
 
 interface IProps {
-  post: Post;
+  post: IPost;
 }
 
 const ArticleSummary = ({ post }: IProps) => {

@@ -1,6 +1,6 @@
 import { DUO, FREE, MOST_POPULAR } from "../constant/indexPage.constant";
 
-export interface Post {
+export interface IPost {
   category: string;
   content: string;
   createdAt: string;

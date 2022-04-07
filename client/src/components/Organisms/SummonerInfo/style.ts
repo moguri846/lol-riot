@@ -6,7 +6,6 @@ const SummonerContainer = styled.div`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  margin-top: 30px;
 `;
 
 const ProfileImgContainer = styled.div`

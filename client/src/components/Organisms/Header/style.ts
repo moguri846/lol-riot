@@ -8,6 +8,7 @@ const Header = styled.header`
   justify-content: center;
   align-items: center;
   border-bottom: 1px solid black;
+  margin-bottom: 20px;
 
   & > div {
     width: 760px;

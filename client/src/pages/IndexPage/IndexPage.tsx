@@ -5,6 +5,9 @@ import useSnackBar from "../../hooks/useSnackBar";
 import { DUO, FREE, MOST_POPULAR } from "./constant/indexPage.constant";
 import { CategoryType, Post } from "./interface/indexPage.interface";
 import { TailSpin } from "react-loader-spinner";
+
+import Template from "../../components/Templates/MainTemplate/MainTemplate";
+
 import * as S from "./style";
 
 const IndexPage = () => {
@@ -87,7 +90,7 @@ const IndexPage = () => {
     );
   };
 
-  return (
+  const Content = (
     <>
       <S.PostTop>
         <S.MostPopularPost>
@@ -100,6 +103,8 @@ const IndexPage = () => {
       </S.PostBottom>
     </>
   );
+
+  return <Template Content={Content} />;
 };
 
 export default IndexPage;

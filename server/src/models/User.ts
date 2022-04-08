@@ -9,11 +9,6 @@ const saltRounds = 10;
 
 const userSchema = new Schema<IUserDoc>(
   {
-    username: {
-      type: String,
-      unique: 1,
-      required: true,
-    },
     email: {
       type: String,
       trim: true,

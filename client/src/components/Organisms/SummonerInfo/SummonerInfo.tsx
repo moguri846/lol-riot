@@ -13,9 +13,17 @@ interface IProps {
   spectatorToggle?: boolean;
   onSpectatorToggle?: () => Promise<void>;
   searchSummoner?: boolean;
+  multiSearch?: boolean;
 }
 
-const SummonerInfo = ({ loading, summoner, spectatorToggle, onSpectatorToggle, searchSummoner }: IProps) => {
+const SummonerInfo = ({
+  loading,
+  summoner,
+  spectatorToggle,
+  onSpectatorToggle,
+  searchSummoner,
+  multiSearch,
+}: IProps) => {
   return (
     <S.SummonerContainer>
       {loading ? (
@@ -83,18 +91,44 @@ const SummonerInfo = ({ loading, summoner, spectatorToggle, onSpectatorToggle, s
                 </span>
                 <span className="rank">{summoner.rank}</span>
               </div>
-              <div className="league-points">
-                <span className="lp">{toLocaleString(summoner.leaguePoints)} LP</span> /{" "}
-                <span className="wins">{toLocaleString(summoner.wins)}승</span> /{" "}
-                <span className="losses"> {toLocaleString(summoner.losses)}패</span>
-              </div>
-              <div className="win-rate">
-                <span>승률 {Math.ceil((summoner.wins / (summoner.wins + summoner.losses)) * 100) || 0}%</span>
-              </div>
+              {searchSummoner && (
+                <>
+                  <div className="league-points">
+                    <span className="lp">{toLocaleString(summoner.leaguePoints)} LP</span> /{" "}
+                    <span className="wins">{toLocaleString(summoner.wins)}승</span> /{" "}
+                    <span className="losses"> {toLocaleString(summoner.losses)}패</span>
+                  </div>
+                  <div className="win-rate">
+                    <span>승률 {Math.ceil((summoner.wins / (summoner.wins + summoner.losses)) * 100) || 0}%</span>
+                  </div>
+                  <Button onClick={onSpectatorToggle}>{spectatorToggle ? "종합 정보" : "인게임 정보"}</Button>
+                </>
+              )}
+              {multiSearch && (
+                <>
+                  <S.Graph>
+                    <div className="radio">
+                      <div
+                        className="win"
+                        style={{
+                          width: `${Math.ceil((summoner.wins / (summoner.wins + summoner.losses)) * 100)}%`,
+                        }}
+                      >
+                        <span>{summoner.wins}승</span>
+                      </div>
+                      <span className="lose">{summoner.losses}패</span>
+                    </div>
+                    <div
+                      className={`win-rate ${
+                        Math.ceil((summoner.wins / (summoner.wins + summoner.losses)) * 100) >= 50 ? "high" : "low"
+                      }`}
+                    >
+                      <span>{Math.ceil((summoner.wins / (summoner.wins + summoner.losses)) * 100) || 0}%</span>
+                    </div>
+                  </S.Graph>
+                </>
+              )}
             </S.SummonerRank>
-            {searchSummoner && (
-              <Button onClick={onSpectatorToggle}>{spectatorToggle ? "종합 정보" : "인게임 정보"}</Button>
-            )}
           </S.SummonerInfo>
         </>
       )}

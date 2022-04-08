@@ -7,13 +7,13 @@ const SummonerList = styled.ul`
 `;
 
 const SummonerItem = styled.li`
-  width: 300px;
+  width: 220px;
   height: 470px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  margin: 5px;
+  padding: 5px 10px;
 
   & > div:nth-of-type(1) {
     min-height: 233px;
@@ -38,10 +38,11 @@ const MatchSummaryList = styled.ul`
 `;
 
 const MatchSummaryItem = styled.li`
+  width: 100%;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
-  padding: 5px;
+  padding: 5px 0px;
 
   & > .champion {
     width: 30px;
@@ -72,15 +73,17 @@ const MatchSummaryItem = styled.li`
   }
 
   & > .kda {
-    width: 90px;
+    width: 75px;
     text-align: center;
-    padding: 5px 10px;
+    padding: 5px;
     border-radius: 5px;
+    font-size: 13px;
   }
 
   & > .time-stamp {
-    width: 70px;
+    width: 60px;
     text-align: end;
+    font-size: 13px;
   }
 `;
 export { SummonerList, SummonerItem, MatchSummaryList, MatchSummaryItem };

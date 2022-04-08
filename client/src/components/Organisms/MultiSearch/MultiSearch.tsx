@@ -17,13 +17,13 @@ const MultiSearch = ({ loading, multiSearch }: IProps) => {
     <>
       {loading ? (
         <>
-          <Skeleton width="1550px" height="480px" />
+          <Skeleton width="1200px" height="480px" />
         </>
       ) : (
         <S.SummonerList>
           {multiSearch.map(({ summonerInfo, mostLine, matchArr }) => (
             <S.SummonerItem key={summonerInfo.puuid}>
-              <SummonerInfo loading={loading} summoner={summonerInfo} />
+              <SummonerInfo loading={loading} summoner={summonerInfo} multiSearch />
               <div className="game-info">
                 <div className="most-line">
                   <img src={`/assets/image/line/${mostLine}.png`} alt={mostLine} />

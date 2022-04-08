@@ -67,10 +67,6 @@ const SignInOrUp = ({ signIn }: IProps) => {
         <label htmlFor="password">비밀번호</label>
         <Input onChange={handleChangeInput} id="password" type="password" />
       </div>
-      <div>
-        <label htmlFor="username">닉네임</label>
-        <Input onChange={handleChangeInput} id="username" type="text" />
-      </div>
       <Button onClick={handleSubmit}> {signIn ? "로그인" : "회원가입"}</Button>
       {signIn && (
         <>

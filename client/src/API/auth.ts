@@ -1,9 +1,9 @@
 import Send from "./interceptor";
 import { Methods } from "./common/methods";
-import { IAuthLoginPrameter } from "../_actions/user/interface/auth.interface";
+import { IAuthLoginPrameter, ISignUpParameter } from "../_actions/user/interface/auth.interface";
 import { REFRESH_TOKEN } from "../_actions/user/constant/user.constant";
 
-const signUp = (info: { email: string; password: string; username: string }) => {
+const signUp = (info: ISignUpParameter) => {
   return Send({
     method: Methods.POST,
     url: "/auth/searchMyName/signUp",

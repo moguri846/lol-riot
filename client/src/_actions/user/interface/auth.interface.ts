@@ -7,7 +7,6 @@ export type OAuthType = typeof SEARCH_MY_NAME | typeof KAKAO | typeof NAVER;
 export interface ISignUpParameter {
   email: string;
   password: string;
-  username: string;
 }
 
 export interface IAuthLoginPrameter {

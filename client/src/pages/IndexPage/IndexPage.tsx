@@ -41,7 +41,7 @@ const IndexPage = () => {
         };
       });
     } catch (err: any) {
-      snackbar(err, "error");
+      snackbar(err.message, "error");
     }
   };
 

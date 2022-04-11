@@ -9,10 +9,12 @@ const PostTop = styled.div`
     padding: 5px;
   }
 
-  & > div > .loading {
+  & > div > .loading,
+  & > div > .err {
     height: 426px;
 
-    & > .tail-spin-loading {
+    & > .tail-spin-loading,
+    & > span {
       width: 100%;
       height: 100%;
       display: flex;
@@ -62,10 +64,12 @@ const PostBottom = styled.div`
     padding: 5px;
   }
 
-  & > div > .loading {
+  & > div > .loading,
+  & > div > .err {
     height: 322px;
 
-    & > .tail-spin-loading {
+    & > .tail-spin-loading,
+    & > span {
       width: 100%;
       height: 100%;
       display: flex;

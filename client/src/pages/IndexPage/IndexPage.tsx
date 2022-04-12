@@ -13,10 +13,19 @@ const IndexPage = () => {
     free: [],
   });
 
-  const [loading, setLoading] = useState({
-    mostPopular: false,
-    duo: false,
-    free: false,
+  const [status, setStatus] = useState({
+    mostPopular: {
+      loading: false,
+      failed: false,
+    },
+    duo: {
+      loading: false,
+      failed: false,
+    },
+    free: {
+      loading: false,
+      failed: false,
+    },
   });
 
   const { snackbar } = useSnackBar();
@@ -34,22 +43,44 @@ const IndexPage = () => {
         };
       });
 
-      setLoading((loading) => {
+      setStatus((status) => {
         return {
-          ...loading,
-          [postType]: false,
+          ...status,
+          [postType]: {
+            ...[postType],
+            loading: false,
+          },
         };
       });
     } catch (err: any) {
-      snackbar(err, "error");
+      setStatus((status) => {
+        return {
+          ...status,
+          [postType]: {
+            loading: false,
+            failed: true,
+          },
+        };
+      });
+
+      snackbar(err.message, "error");
     }
   };
 
   useEffect(() => {
-    setLoading({
-      mostPopular: true,
-      duo: true,
-      free: true,
+    setStatus({
+      mostPopular: {
+        loading: true,
+        failed: false,
+      },
+      duo: {
+        loading: true,
+        failed: false,
+      },
+      free: {
+        loading: true,
+        failed: false,
+      },
     });
 
     getPosts(MOST_POPULAR, "mostPopular");
@@ -57,7 +88,7 @@ const IndexPage = () => {
     getPosts(FREE, "free");
   }, []);
 
-  const Content = <Post loading={loading} posts={posts} />;
+  const Content = <Post status={status} posts={posts} />;
 
   return <Template Content={Content} />;
 };

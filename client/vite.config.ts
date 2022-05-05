@@ -4,7 +4,7 @@ import react from "@vitejs/plugin-react";
 import { visualizer } from "rollup-plugin-visualizer";
 
 export default defineConfig({
-  mode: "developement",
+  mode: "production",
   plugins: [
     react(),
     splitVendorChunkPlugin(),

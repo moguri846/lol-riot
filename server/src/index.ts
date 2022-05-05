@@ -23,9 +23,7 @@ const corsOptions = {
     if (whitelist.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
-      // FIXME: origin이 undefined로 나와서 임시로 사용
-      callback(null, true);
-      // callback(new Error("Not Allowed Origin!"));
+      callback(new Error("Not Allowed Origin!"));
     }
   },
 };

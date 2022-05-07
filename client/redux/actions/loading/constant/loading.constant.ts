@@ -1,0 +1,4 @@
+const LOADING = "LOADING";
+const FULFILLED = "FULFILLED";
+
+export { LOADING, FULFILLED };

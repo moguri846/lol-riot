@@ -70,8 +70,19 @@ const SummonerMatchItem = ({ match }: IProps) => {
                 </div>
               </S.ChampionStatus>
               <S.Kda className="kda">
-                <span className="kill">{match.player.kills}</span>/<span className="deaths">{match.player.deaths}</span>
-                /<span className="assists">{match.player.assists}</span>
+                <div className="k-d-a">
+                  <span className="kill">{match.player.kills}</span>/
+                  <span className="deaths">{match.player.deaths}</span>/
+                  <span className="assists">{match.player.assists}</span>
+                </div>
+                <div>
+                  <span className="ratio">
+                    {match.player.deaths === 0
+                      ? "Perfect"
+                      : `${((match.player.kills + match.player.assists) / match.player.deaths).toFixed(2)} `}
+                  </span>
+                  평점
+                </div>
               </S.Kda>
               <S.PlayerStatus className="player-status">
                 <div className="lelvel">

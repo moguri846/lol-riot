@@ -135,18 +135,24 @@ const Kda = styled.div`
   width: 80px;
   height: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  & > span {
+  & > .k-d-a > span {
     width: 20%;
     text-align: center;
     font-weight: bold;
   }
 
-  & > .deaths {
+  & > .k-d-a > .deaths {
     color: #c6443e;
   }
+
+  & > div > .ratio {
+    font-weight: bold;
+  }
+
   @media screen and (max-width: 760px) {
     width: 60px;
     justify-content: space-evenly;

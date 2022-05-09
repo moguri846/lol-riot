@@ -26,7 +26,7 @@ const Name = ({ summoner }) => {
       await dispatch(matchInfo(summoner.puuid));
       dispatch(loadingAction(FULFILLED, { gameInfo: false }));
     })();
-  }, []);
+  }, [summoner]);
 
   const loading = useSelector((state: RootReducerType) => state.loading);
 

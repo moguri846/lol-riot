@@ -1,14 +1,16 @@
 import React, { ReactElement } from "react";
+import Header from "../../Organisms/Header/Header";
 import * as S from "./style";
 
 interface IProps {
-  Content: ReactElement;
+  children: ReactElement;
 }
 
-const MainTemplate = ({ Content }: IProps) => {
+const MainTemplate = ({ children }: IProps) => {
   return (
     <S.Wrap>
-      <S.Container>{Content}</S.Container>
+      <Header />
+      <S.Container>{children}</S.Container>
     </S.Wrap>
   );
 };

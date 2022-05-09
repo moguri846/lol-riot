@@ -1,5 +1,5 @@
 import type { AppProps } from "next/app";
-import Layout from "../components/Layout/Layout";
+import MainTemplate from "../components/Templates/MainTemplate/MainTemplate";
 import { wrapper } from "../redux/index";
 import { SnackbarProvider } from "notistack";
 import "../styles/globals.css";
@@ -16,9 +16,9 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       }}
       autoHideDuration={3500}
     >
-      <Layout>
+      <MainTemplate>
         <Component {...pageProps} />
-      </Layout>
+      </MainTemplate>
     </SnackbarProvider>
   );
 };

@@ -1,13 +1,19 @@
 import type { NextPage } from "next";
 import { getCategoryPosts } from "../API/post";
 import Post from "../components/Organisms/Post/Post";
+import Seo from "../components/Seo/Seo";
 
 const MOST_POPULAR = "MOST_POPULAR";
 const DUO = "DUO";
 const FREE = "FREE";
 
 const Home: NextPage = ({ posts }: { posts: object[] }) => {
-  return <Post posts={posts} />;
+  return (
+    <>
+      <Seo title="Hello" />
+      <Post posts={posts} />
+    </>
+  );
 };
 
 export default Home;

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { createPost } from "../../API/post";
 import PostCreateOrUpdate from "../../components/Organisms/PostCreateOrUpdate/PostCreateOrUpdate";
+import Seo from "../../components/Seo/Seo";
 import useSnackBar from "../../hooks/useSnackBar";
 import { RootReducerType } from "../../redux/reducers/rootReducer";
 
@@ -58,7 +59,12 @@ const CreatePage = () => {
     }
   };
 
-  return <PostCreateOrUpdate create onChangePostValue={onChangePostValue} onCheckPostValue={onCheckPostValue} />;
+  return (
+    <>
+      <Seo title="Create" />
+      <PostCreateOrUpdate create onChangePostValue={onChangePostValue} onCheckPostValue={onCheckPostValue} />
+    </>
+  );
 };
 
 export default CreatePage;

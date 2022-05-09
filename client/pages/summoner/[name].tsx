@@ -7,6 +7,7 @@ import Spectator from "../../components/Organisms/Spectator/Spectator";
 import SummonerGameAnalysis from "../../components/Organisms/SummonerGameAnalysis/SummonerGameAnalysis";
 import SummonerInfo from "../../components/Organisms/SummonerInfo/SummonerInfo";
 import SummonerMatchList from "../../components/Organisms/SummonerMatchList/SummonerMatchList";
+import Seo from "../../components/Seo/Seo";
 import useSnackBar from "../../hooks/useSnackBar";
 import { removeFailAction } from "../../redux/actions/common/failActions";
 import { FULFILLED, LOADING } from "../../redux/actions/loading/constant/loading.constant";
@@ -70,9 +71,7 @@ const Name = ({ summoner }) => {
 
   return (
     <>
-      <Head>
-        <title>{summoner.name} | Search My Name</title>
-      </Head>
+      <Seo title={summoner.name} />
       <SummonerInfo
         summoner={summoner}
         spectatorToggle={spectatorToggle}

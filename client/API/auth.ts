@@ -3,15 +3,23 @@ import { Methods } from "./common/methods";
 import { IAuthLoginPrameter, ISignUpParameter } from "../redux/actions/user/interface/auth.interface";
 import { REFRESH_TOKEN } from "../redux/actions/user/constant/user.constant";
 
-const signUp = (info: ISignUpParameter) => {
+const signUp = (data: { email: string; password: string }) => {
   return Send({
     method: Methods.POST,
     url: "/auth/searchMyName/signUp",
-    data: { info },
+    data,
   });
 };
 
-const signIn = ({ code, state, info, type }: IAuthLoginPrameter) => {
+const signIn = (data: { email: string; password: string }) => {
+  return Send({
+    method: Methods.POST,
+    url: "/auth/searchMyName/signIn",
+    data,
+  });
+};
+
+const authSignIn = ({ code, state, info, type }: IAuthLoginPrameter) => {
   const body = {
     code: code || null,
     state: state || null,
@@ -25,10 +33,12 @@ const signIn = ({ code, state, info, type }: IAuthLoginPrameter) => {
   });
 };
 
-const myInfo = (type: string) => {
+// const myInfo = (type: string) => {
+const myInfo = () => {
   return Send({
     method: Methods.GET,
-    url: `/auth/${type}/myInfo`,
+    // url: `/auth/${type}/myInfo`,
+    url: `/auth/searchMyName/myInfo`,
   });
 };
 

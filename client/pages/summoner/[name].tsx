@@ -13,8 +13,13 @@ import { useAppDispatch, useAppSelector } from "../../hooks/useRedux";
 import { selectGameInfo } from "../../toolkit/riot/gameInfoSlice/gameInfoSlice";
 import { gameInfoAction } from "../../toolkit/riot/gameInfoSlice/func/gameInfoSlice.func";
 import { spectatorInfo } from "../../toolkit/riot/spectatorSlice/func/spectatorSlice.func";
+import { ISummoner } from "../../toolkit/riot/gameInfoSlice/interface/summoner.interface";
 
-const Name = ({ summoner }) => {
+interface IProps {
+  summoner: ISummoner;
+}
+
+const Name = ({ summoner }: IProps) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
@@ -64,7 +69,6 @@ const Name = ({ summoner }) => {
         onSpectatorToggle={handleSpectatorToggle}
         searchSummoner
       />
-      {loading.gameInfo && "LOADING..."}
       {spectatorToggle ? (
         // <Spectator
         // loading={loading.spectator}

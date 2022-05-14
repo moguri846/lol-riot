@@ -5,6 +5,7 @@ export interface IProps {
   value?: any;
   disabled?: boolean;
   onClick?: any;
+  label: string;
   children?: any;
 }
 

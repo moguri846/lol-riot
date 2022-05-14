@@ -1,5 +1,5 @@
 import React from "react";
-import { IPost } from "../../../pages/post/interface/post.interface";
+import { IPost } from "../../../pages/IndexPage/interface/indexPage.interface";
 import Button from "../../Atoms/Button/Button";
 import Input from "../../Atoms/Input/Input";
 import * as S from "./style";

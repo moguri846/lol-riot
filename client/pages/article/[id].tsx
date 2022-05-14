@@ -1,11 +1,11 @@
+import { useSelector } from "react-redux";
 import { getPost } from "../../API/post";
 import Article from "../../components/Organisms/Article/Article";
 import Seo from "../../components/Seo/Seo";
-import { useAppSelector } from "../../hooks/useRedux";
-import { selectInfo } from "../../toolkit/user/infoSlice/infoSlice";
+import { RootReducerType } from "../../redux/reducers/rootReducer";
 
 const ArticlePage = ({ article }) => {
-  const user = useAppSelector(selectInfo);
+  const user = useSelector((state: RootReducerType) => state.user.info);
 
   return (
     <>

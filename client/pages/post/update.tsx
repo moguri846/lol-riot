@@ -6,7 +6,6 @@ import PostCreateOrUpdate from "../../components/Organisms/PostCreateOrUpdate/Po
 import Seo from "../../components/Seo/Seo";
 import useSnackBar from "../../hooks/useSnackBar";
 import { RootReducerType } from "../../redux/reducers/rootReducer";
-import { IPost } from "./interface/post.interface";
 
 const UpdatePage = () => {
   const router = useRouter();
@@ -46,12 +45,7 @@ const UpdatePage = () => {
     });
   };
 
-  const handleSubmit = async ({
-    _id,
-    category,
-    title,
-    content,
-  }: Pick<IPost, "_id" | "category" | "title" | "content">) => {
+  const handleSubmit = async ({ _id, category, title, content }: IPost) => {
     const body = {
       writer: info.email,
       category,

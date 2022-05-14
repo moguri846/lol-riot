@@ -2,21 +2,12 @@ import type { NextPage } from "next";
 import { getCategoryPosts } from "../API/post";
 import Post from "../components/Organisms/Post/Post";
 import Seo from "../components/Seo/Seo";
-import { IPost } from "./post/interface/post.interface";
 
 const MOST_POPULAR = "MOST_POPULAR";
 const DUO = "DUO";
 const FREE = "FREE";
 
-const Home: NextPage = ({
-  posts,
-}: {
-  posts: {
-    mostPopular: IPost[];
-    duo: IPost[];
-    free: IPost[];
-  };
-}) => {
+const Home: NextPage = ({ posts }: { posts: object[] }) => {
   return (
     <>
       <Seo title="Hello" />

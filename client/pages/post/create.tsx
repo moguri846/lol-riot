@@ -6,6 +6,7 @@ import PostCreateOrUpdate from "../../components/Organisms/PostCreateOrUpdate/Po
 import Seo from "../../components/Seo/Seo";
 import useSnackBar from "../../hooks/useSnackBar";
 import { RootReducerType } from "../../redux/reducers/rootReducer";
+import { IPost } from "./interface/post.interface";
 
 const CreatePage = () => {
   const router = useRouter();
@@ -14,8 +15,7 @@ const CreatePage = () => {
 
   const info = useSelector((state: RootReducerType) => state.user.info);
 
-  const [post, setPost] = useState<Pick<IPost, "_id" | "category" | "title" | "content">>({
-    _id: "",
+  const [post, setPost] = useState<Pick<IPost, "category" | "title" | "content">>({
     category: "",
     title: "",
     content: "",
@@ -30,7 +30,7 @@ const CreatePage = () => {
     });
   };
 
-  const handleSubmit = async ({ _id, category, title, content }: IPost) => {
+  const handleSubmit = async ({ category, title, content }: Pick<IPost, "category" | "title" | "content">) => {
     const body = {
       writer: info.email,
       category,

@@ -1,7 +1,6 @@
 import React from "react";
 import Skeleton from "react-loading-skeleton";
-import { Jandi } from "../../../redux/actions/riot/interface/jandi.interface";
-import { ILineWinLoseRate } from "../../../redux/actions/riot/interface/lineWinOrLose.interface";
+import { Jandi, ILineWinLoseRate } from "../../../toolkit/riot/gameInfoSlice/interface/gameInfo.interface";
 import BarGraph from "../../Molecules/BarGraph/BarGraph";
 import CalendarGraph from "../../Molecules/CalendarGraph/CalendarGraph";
 

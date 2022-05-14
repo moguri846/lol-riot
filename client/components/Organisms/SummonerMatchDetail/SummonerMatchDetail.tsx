@@ -1,25 +1,28 @@
 import React, { useState } from "react";
 import { ComparingWithEnemyType } from "../../../redux/actions/riot/interface/matchSummary.interface";
-import { TimelineOptionsType } from "../../Molecules/LineGraph/interface/LineGraph.interface";
-import LineGraph from "../../Molecules/LineGraph/LineGraph";
-import ProgressBar from "../../Molecules/ProgressBar/ProgressBar";
-import { LINE_MATCH, ANALYSIS, TIMELINE } from "../SummonerMatchItem/constant/SummonerMatchItem.constant";
-import { IOptionsList, MatchDetailOptionsType } from "../SummonerMatchItem/interface/SummonerMatchItem.interface";
 import {
+  ANALYSIS,
   KILLS,
   LEVEL,
+  LINE_MATCH,
+  TIMELINE,
   TOTAL_CS,
   TOTAL_DAMAGE_DONE_TO_CHAMPIONS,
   TOTAL_DAMAGE_TAKEN,
   TOTAL_GOLD,
   WARDS_PLACED,
   XP,
-} from "./constant/SummonerMatchDetail.constant";
+} from "../../../toolkit/riot/gameInfoSlice/constant/gameInfoSlice.interface";
 import {
   CommonMatchDetailType,
   LineMatchType,
   MatchDetailAnalysisType,
-} from "./interface/SummonerMatchDetail.interface";
+} from "../../../toolkit/riot/gameInfoSlice/interface/matchDetail.interface";
+import { TimelineOptionsType } from "../../Molecules/LineGraph/interface/LineGraph.interface";
+import LineGraph from "../../Molecules/LineGraph/LineGraph";
+import ProgressBar from "../../Molecules/ProgressBar/ProgressBar";
+import { IOptionsList, MatchDetailOptionsType } from "../SummonerMatchItem/interface/SummonerMatchItem.interface";
+
 import * as S from "./style";
 
 interface IProps {

@@ -2,7 +2,7 @@ import React from "react";
 import { Bar } from "react-chartjs-2";
 import { CategoryScale } from "chart.js";
 import Chart from "chart.js/auto";
-import { ILineWinLoseRate } from "../../../redux/actions/riot/interface/lineWinOrLose.interface";
+import { ILineWinLoseRate } from "../../../toolkit/riot/gameInfoSlice/interface/gameInfo.interface";
 
 Chart.register(CategoryScale);
 

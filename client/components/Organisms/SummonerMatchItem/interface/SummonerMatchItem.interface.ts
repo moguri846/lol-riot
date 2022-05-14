@@ -1,5 +1,9 @@
+import {
+  ANALYSIS,
+  LINE_MATCH,
+  TIMELINE,
+} from "../../../../toolkit/riot/gameInfoSlice/constant/gameInfoSlice.interface";
 import { TimelineOptionsType } from "../../../Molecules/LineGraph/interface/LineGraph.interface";
-import { LINE_MATCH, ANALYSIS, TIMELINE } from "../constant/SummonerMatchItem.constant";
 
 export interface IOptionsList {
   options: MatchDetailOptionsType[] | TimelineOptionsType[];

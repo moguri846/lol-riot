@@ -1,34 +1,45 @@
 import Send from "./interceptor";
 import { Methods } from "./common/methods";
 import { IAuthLoginPrameter, ISignUpParameter } from "../redux/actions/user/interface/auth.interface";
-import { REFRESH_TOKEN } from "../redux/actions/user/constant/user.constant";
 
-const signUp = (info: ISignUpParameter) => {
+const REFRESH_TOKEN = "REFRESH_TOKEN";
+
+const signUp = (data: { email: string; password: string }) => {
   return Send({
     method: Methods.POST,
     url: "/auth/searchMyName/signUp",
-    data: { info },
+    data,
   });
 };
 
-const signIn = ({ code, state, info, type }: IAuthLoginPrameter) => {
-  const body = {
-    code: code || null,
-    state: state || null,
-    info: info || null,
-  };
-
+const signIn = (data: { email: string; password: string }) => {
   return Send({
     method: Methods.POST,
-    url: `/auth/${type}/signIn`,
-    data: body,
+    url: "/auth/searchMyName/signIn",
+    data,
   });
 };
 
-const myInfo = (type: string) => {
+// const authSignIn = ({ code, state, info, type }: IAuthLoginPrameter) => {
+//   const body = {
+//     code: code || null,
+//     state: state || null,
+//     info: info || null,
+//   };
+
+//   return Send({
+//     method: Methods.POST,
+//     url: `/auth/${type}/signIn`,
+//     data: body,
+//   });
+// };
+
+// const myInfo = (type: string) => {
+const myInfo = () => {
   return Send({
     method: Methods.GET,
-    url: `/auth/${type}/myInfo`,
+    // url: `/auth/${type}/myInfo`,
+    url: `/auth/searchMyName/myInfo`,
   });
 };
 

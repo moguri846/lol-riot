@@ -4,7 +4,7 @@ import { resFunc } from "../../routes/common/ResSuccessOrFalse.function";
 
 export default {
   async signUp(req: Request, res: Response) {
-    const info = req.body.info;
+    const info = req.body;
 
     const user = new User(info);
 
@@ -16,7 +16,7 @@ export default {
     });
   },
   async signIn(req: Request, res: Response) {
-    const { email, password } = req.body.info;
+    const { email, password } = req.body;
 
     User.findOne({ email }).exec(async (err, user) => {
       if (err) {

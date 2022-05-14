@@ -1,59 +1,49 @@
-import Link from "next/link";
+import React from "react";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import Link from "next/link";
 import useSnackBar from "../../../hooks/useSnackBar";
-import { loginOAuth, signUpAction } from "../../../redux/actions/user/authActions";
-import { SEARCH_MY_NAME } from "../../../redux/actions/user/constant/user.constant";
 import Button from "../../Atoms/Button/Button";
 import Input from "../../Atoms/Input/Input";
 
 import * as S from "./style";
+import { ISignInOrUpParameter, ISignInOrUpResponse } from "./interface/SignInOrUp.interface";
 
 interface IProps {
   signIn?: boolean;
   signUp?: boolean;
+  inputs: ISignInOrUpParameter;
+  onChangeInputs: (target: string, value: string) => void;
+  on로그인아니면회원가입: (body: ISignInOrUpParameter) => Promise<ISignInOrUpResponse>;
 }
 
-const SignInOrUp = ({ signIn }: IProps) => {
+const SignInOrUp = ({ signIn, signUp, inputs, onChangeInputs, on로그인아니면회원가입 }: IProps) => {
   const { snackbar } = useSnackBar();
   const router = useRouter();
 
-  const dispatch = useDispatch();
-  const [inputs, setInputs] = useState({
-    email: "",
-    password: "",
-  });
-
   const handleSubmit = async () => {
-    if (!inputs.email || !inputs.password) {
-      return;
+    for (const items in inputs) {
+      if (!inputs[items]) {
+        return;
+      }
     }
 
-    try {
-      const appendValues = { email: inputs.email, password: inputs.password };
+    const res = await on로그인아니면회원가입(inputs);
 
-      if (signIn) {
-        await dispatch(loginOAuth({ type: SEARCH_MY_NAME, info: appendValues }));
-
-        router.push("/");
-      } else {
-        await dispatch(signUpAction(appendValues));
-
-        router.push("/login");
+    if (res.success) {
+      router.push(signIn ? "/" : "/signIn");
+    } else {
+      if (typeof res.data === "string") {
+        snackbar(res.data, "error");
       }
-    } catch (err: any) {
-      snackbar(err, "error");
     }
   };
 
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const target = e.currentTarget.id;
+    const currentTarget = e.currentTarget;
+    const target = currentTarget.id;
+    const value = currentTarget.value;
 
-    setInputs({
-      ...inputs,
-      [target]: e.currentTarget.value,
-    });
+    onChangeInputs(target, value);
   };
 
   return (
@@ -67,7 +57,7 @@ const SignInOrUp = ({ signIn }: IProps) => {
         <label htmlFor="password">비밀번호</label>
         <Input onChange={handleChangeInput} id="password" type="password" />
       </div>
-      <Button label={signIn ? "로그인" : "회원가입"} onClick={handleSubmit}></Button>
+      <Button onClick={handleSubmit}>{signIn ? "로그인" : "회원가입"}</Button>
       {signIn && (
         <>
           <p>

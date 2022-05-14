@@ -1,5 +1,5 @@
-import { ITimeLine } from "../../../../redux/actions/riot/interface/matchSummary.interface";
-import { TOTAL_CS, TOTAL_GOLD, XP } from "../../../Organisms/SummonerMatchDetail/constant/SummonerMatchDetail.constant";
+import { TOTAL_CS, TOTAL_GOLD, XP } from "../../../../toolkit/riot/gameInfoSlice/constant/gameInfoSlice.interface";
+import { ITimeLine } from "../../../../toolkit/riot/gameInfoSlice/interface/matchDetail.interface";
 
 export interface IProps {
   loading: boolean;

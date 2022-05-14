@@ -1,19 +1,19 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 import moment from "moment";
 import SummonerMatchDetail from "../SummonerMatchDetail/SummonerMatchDetail";
 import { ComparingWithEnemyType } from "../../../redux/actions/riot/interface/matchSummary.interface";
 import useSnackBar from "../../../hooks/useSnackBar";
 import { getDataDragonImg } from "../../../pages/common/commonFunc";
 import "moment/locale/ko";
-import { matchDetailInfo } from "../../../redux/actions/riot/riotActions";
 import * as S from "./style";
+import { matchDetailAction } from "../../../toolkit/riot/gameInfoSlice/func/gameInfoSlice.func";
+import { useAppDispatch } from "../../../hooks/useRedux";
 interface IProps {
   match: ComparingWithEnemyType;
 }
 
 const SummonerMatchItem = ({ match }: IProps) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { snackbar } = useSnackBar();
 
   const gameDuration = (gameEndTimestamp: number | null, gameDuration: number) => {
@@ -45,7 +45,7 @@ const SummonerMatchItem = ({ match }: IProps) => {
         enemy: match.enemyIndex,
       };
 
-      await dispatch(matchDetailInfo(args));
+      await dispatch(matchDetailAction(args));
     } catch (err: any) {
       snackbar(err, "error");
     }

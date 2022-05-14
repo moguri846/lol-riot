@@ -1,8 +1,8 @@
 import React from "react";
 import CalendarHeatmap from "react-calendar-heatmap";
 import ReactTooltip from "react-tooltip";
-import { Jandi } from "../../../redux/actions/riot/interface/jandi.interface";
 import moment from "moment";
+import { Jandi } from "../../../toolkit/riot/gameInfoSlice/interface/gameInfo.interface";
 // import "./style.css";
 
 interface IProps {

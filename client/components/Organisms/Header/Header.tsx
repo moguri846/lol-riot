@@ -1,8 +1,5 @@
 import React from "react";
 
-import { useDispatch, useSelector } from "react-redux";
-import { RootReducerType } from "../../../redux/reducers/rootReducer";
-import { logoutOAuth } from "../../../redux/actions/user/authActions";
 import SearchSummonerInputForm from "../../Molecules/SearchSummonerInputForm/SearchSummonerInputForm";
 import Button from "../../Atoms/Button/Button";
 import useSearch from "../../../hooks/useSearch";
@@ -14,24 +11,28 @@ import Link from "next/link";
 
 // TODO: DB로 옮기기
 import famousSayingJson from "../../../json/famousSaying.json";
+import { selectToken, tokenStatusUpdate } from "../../../toolkit/user/tokenSlice/tokenSlice";
+import { logout } from "../../../API/auth";
+import { useAppDispatch, useAppSelector } from "../../../hooks/useRedux";
+import useSnackBar from "../../../hooks/useSnackBar";
 
 const Header = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+
+  const { snackbar } = useSnackBar();
 
   const events = useSearch();
 
-  const isLogin = useSelector((state: RootReducerType) => state.user.token.isLogin);
+  const isLogin = useAppSelector(selectToken).isLogin;
 
-  // const selecetHandler = (e: React.MouseEvent<HTMLLIElement>) => {
-  //   const lis = document.querySelectorAll("ul li");
-  //   lis.forEach((li) => li.classList.remove("selected"));
+  const handleLogout = async () => {
+    try {
+      await logout("searchMyName");
 
-  //   e.currentTarget.classList.add("selected");
-  // };
-
-  const logout = () => {
-    dispatch(logoutOAuth());
-    // dispatch(logoutOAuth());
+      dispatch(tokenStatusUpdate({ isLogin: false, message: "유효하지 않은 토큰" }));
+    } catch (err) {
+      snackbar(err.message, "error");
+    }
   };
 
   return (
@@ -43,13 +44,11 @@ const Header = () => {
         <SearchSummonerInputForm {...events} />
         <S.LoginButtonContainer>
           {isLogin ? (
-            <Button label="로그아웃" />
+            <Button onClick={handleLogout}>로그아웃</Button>
           ) : (
-            <Link href="/signIn">
-              <button>로그인</button>
-              {/* FIXME: ref 참조 에러 발생 */}
-              {/* <Button label="로그인" /> */}
-            </Link>
+            <Button>
+              <Link href="/signIn">로그인</Link>
+            </Button>
           )}
         </S.LoginButtonContainer>
       </S.HeadeTop>

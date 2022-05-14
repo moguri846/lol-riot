@@ -101,7 +101,7 @@ const SummonerInfo = ({
                   <div className="win-rate">
                     <span>승률 {Math.ceil((summoner.wins / (summoner.wins + summoner.losses)) * 100) || 0}%</span>
                   </div>
-                  <Button label={spectatorToggle ? "종합 정보" : "인게임 정보"} onClick={onSpectatorToggle}></Button>
+                  <Button onClick={onSpectatorToggle}>{spectatorToggle ? "종합 정보" : "인게임 정보"}</Button>
                 </>
               )}
               {multiSearch && (

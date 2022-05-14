@@ -1,13 +1,13 @@
 import React from "react";
 import moment from "moment";
 import SummonerMatchDetail from "../SummonerMatchDetail/SummonerMatchDetail";
-import { ComparingWithEnemyType } from "../../../redux/actions/riot/interface/matchSummary.interface";
 import useSnackBar from "../../../hooks/useSnackBar";
 import { getDataDragonImg } from "../../../pages/common/commonFunc";
 import "moment/locale/ko";
 import * as S from "./style";
 import { matchDetailAction } from "../../../toolkit/riot/gameInfoSlice/func/gameInfoSlice.func";
 import { useAppDispatch } from "../../../hooks/useRedux";
+import { ComparingWithEnemyType } from "../../../toolkit/riot/gameInfoSlice/interface/gameInfo.interface";
 interface IProps {
   match: ComparingWithEnemyType;
 }

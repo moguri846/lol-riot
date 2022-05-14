@@ -1,6 +1,6 @@
 import React from "react";
 import Skeleton from "react-loading-skeleton";
-import { ComparingWithEnemyType } from "../../../redux/actions/riot/interface/matchSummary.interface";
+import { ComparingWithEnemyType } from "../../../toolkit/riot/gameInfoSlice/interface/gameInfo.interface";
 import SummonerMatchItem from "../SummonerMatchItem/SummonerMatchItem";
 import "react-loading-skeleton/dist/skeleton.css";
 

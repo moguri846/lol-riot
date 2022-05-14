@@ -4,17 +4,12 @@ import Button from "../../Atoms/Button/Button";
 import { IUseSearch } from "../../../hooks/useSearch";
 import * as S from "./style";
 
-const SearchSummonerInputForm = ({
-  summonerName,
-  onChange,
-  onEnter,
-  onClick,
-}: Omit<IUseSearch, "onMatchDetail" | "multiSearch">) => {
+const SearchSummonerInputForm = ({ summonerName, onChange, onEnter, onClick }: IUseSearch) => {
   return (
     <>
       <S.SearchFormContainer>
         <Input type="text" placeholder="소환사 이름" value={summonerName} onChange={onChange} onKeyDown={onEnter} />
-        <Button label="검색" onClick={onClick} />
+        <Button onClick={onClick}>검색</Button>
       </S.SearchFormContainer>
     </>
   );

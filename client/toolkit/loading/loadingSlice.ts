@@ -5,6 +5,7 @@ import { ILoading, ILoadingParameter, LoadingStatusType } from "./interface/load
 
 const initialLoadingSliceState: ILoading = {
   loading: {
+    summonerInfo: false,
     spectator: false,
     gameInfo: false,
   },

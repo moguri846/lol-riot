@@ -1,8 +1,8 @@
 import React from "react";
 import moment from "moment";
 import * as S from "./style";
-import { IPost } from "../../../pages/IndexPage/interface/indexPage.interface";
 import Link from "next/link";
+import { IPost } from "../../../pages/post/interface/post.interface";
 
 interface IProps {
   post: IPost;

@@ -5,7 +5,7 @@ import { signIn } from "../API/auth";
 import { ISignInOrUpParameter } from "../components/Organisms/SiginInOrUp/interface/SignInOrUp.interface";
 import SignInOrUp from "../components/Organisms/SiginInOrUp/SignInOrUp";
 import Seo from "../components/Seo/Seo";
-import { tokenStatusUpdate } from "../toolkit/user/token/tokenSlice";
+import { tokenStatusUpdate } from "../toolkit/user/tokenSlice/tokenSlice";
 
 const SignIn = () => {
   const [inputs, setInputs] = useState({

@@ -1,9 +1,9 @@
 import React from "react";
 import { getDataDragonImg } from "../../../pages/common/commonFunc";
 import { toLocaleString } from "../../common/function/common.function";
-import { ISummoner } from "../../../toolkit/riot/gameInfoSlice/interface/summoner.interface";
 import Button from "../../Atoms/Button/Button";
 import * as S from "./style";
+import { ISummoner } from "../../../toolkit/riot/summonerInfoSlice/interface/summonerInfoSlice.interface";
 
 interface IProps {
   summoner: ISummoner;

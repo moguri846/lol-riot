@@ -1,6 +1,5 @@
 import Send from "./interceptor";
 import { Methods } from "./common/methods";
-import { IAuthLoginPrameter, ISignUpParameter } from "../redux/actions/user/interface/auth.interface";
 
 const REFRESH_TOKEN = "REFRESH_TOKEN";
 

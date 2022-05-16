@@ -1,15 +1,9 @@
 import { LOADING, FULFILLED } from "../constant/loadingSlice.constant";
 
-export interface ILoadingParameter {
+export interface ILoading {
+  summonerInfo?: boolean;
   spectator?: boolean;
   gameInfo?: boolean;
-}
-
-export interface ILoading {
-  loading: {
-    spectator?: boolean;
-    gameInfo?: boolean;
-  };
 }
 
 export type LoadingStatusType = typeof LOADING | typeof FULFILLED;

@@ -13,7 +13,7 @@ interface IProps {
 }
 
 const Post = ({ posts }: IProps) => {
-  const printArticleSummaryList = (title: string, post: object[]) => {
+  const printArticleSummaryList = (title: string, post: IPost[]) => {
     return (
       <>
         <h1>{title}</h1>

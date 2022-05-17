@@ -4,7 +4,8 @@ import React from "react";
 import { Watch } from "react-loader-spinner";
 import { deletePost } from "../../../API/post";
 import useSnackBar from "../../../hooks/useSnackBar";
-import { IPost } from "../../../pages/IndexPage/interface/indexPage.interface";
+import { IPost } from "../../../pages/post/interface/post.interface";
+
 import Button from "../../Atoms/Button/Button";
 import * as S from "./style";
 
@@ -55,7 +56,7 @@ const Article = ({ loading, article, user }: IProps) => {
               <Button>수정하기</Button>
             </Link>
             {/* </Button> */}
-            <Button label="삭제하기" onClick={deleteArticle} />
+            <Button onClick={deleteArticle}>삭제하기</Button>
           </div>
         )}
       </S.ArticleBottom>

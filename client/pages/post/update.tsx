@@ -1,18 +1,19 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { updatePost } from "../../API/post";
 import PostCreateOrUpdate from "../../components/Organisms/PostCreateOrUpdate/PostCreateOrUpdate";
 import Seo from "../../components/Seo/Seo";
+import { useAppSelector } from "../../hooks/useRedux";
 import useSnackBar from "../../hooks/useSnackBar";
-import { RootReducerType } from "../../redux/reducers/rootReducer";
+import { selectInfo } from "../../toolkit/user/infoSlice/infoSlice";
+import { IPost } from "./interface/post.interface";
 
 const UpdatePage = () => {
   const router = useRouter();
 
   const { snackbar } = useSnackBar();
 
-  const info = useSelector((state: RootReducerType) => state.user.info);
+  const info = useAppSelector(selectInfo);
 
   const [post, setPost] = useState<Pick<IPost, "_id" | "category" | "title" | "content">>({
     _id: "",
@@ -45,7 +46,12 @@ const UpdatePage = () => {
     });
   };
 
-  const handleSubmit = async ({ _id, category, title, content }: IPost) => {
+  const handleSubmit = async ({
+    _id,
+    category,
+    title,
+    content,
+  }: Pick<IPost, "_id" | "category" | "title" | "content">) => {
     const body = {
       writer: info.email,
       category,

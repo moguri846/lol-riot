@@ -11,19 +11,19 @@ export interface IProps {
 }
 
 const BarGraph = ({ lineWinOrLose }: IProps) => {
-  const labels = lineWinOrLose.map((line) => line.line);
+  const labels = Object.keys(lineWinOrLose).map((line) => line);
 
   const data = {
     labels,
     datasets: [
       {
         label: "승리",
-        data: lineWinOrLose.map((line) => line.win),
+        data: Object.values(lineWinOrLose).map((line) => line.win),
         backgroundColor: "rgba(53, 162, 235, 0.5)",
       },
       {
         label: "패배",
-        data: lineWinOrLose.map((line) => line.lose),
+        data: Object.values(lineWinOrLose).map((line) => line.lose),
         backgroundColor: "rgba(255, 99, 132, 0.5)",
       },
     ],

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { ComparingWithEnemyType } from "../../../redux/actions/riot/interface/matchSummary.interface";
 import {
   ANALYSIS,
   KILLS,
@@ -13,6 +12,7 @@ import {
   WARDS_PLACED,
   XP,
 } from "../../../toolkit/riot/gameInfoSlice/constant/gameInfoSlice.interface";
+import { ComparingWithEnemyType } from "../../../toolkit/riot/gameInfoSlice/interface/gameInfo.interface";
 import {
   CommonMatchDetailType,
   LineMatchType,

@@ -13,7 +13,11 @@ const gameInfoAction = createAsyncThunk(`${RIOT}/${GAME_INFO}`, async (puuid: st
 
     return data;
   } catch (err) {
-    return rejectWithValue(err.response.data);
+    const response = err.response;
+    const status = response.status;
+    const data = response.data;
+
+    return rejectWithValue({ status, ...data });
   }
 });
 
@@ -27,7 +31,11 @@ const matchDetailAction = createAsyncThunk(
 
       return data;
     } catch (err) {
-      return rejectWithValue(err.response.data);
+      const response = err.response;
+      const status = response.status;
+      const data = response.data;
+
+      return rejectWithValue({ status, ...data });
     }
   }
 );

@@ -1,24 +1,10 @@
 import React from "react";
 import { TailSpin } from "react-loader-spinner";
-import { IPost } from "../../../pages/IndexPage/interface/indexPage.interface";
+import { IPost } from "../../../pages/post/interface/post.interface";
 import ArticleSummary from "../ArticleSummary/ArticleSummary";
 import * as S from "./style";
 
 interface IProps {
-  status: {
-    mostPopular: {
-      loading: boolean;
-      failed: boolean;
-    };
-    duo: {
-      loading: boolean;
-      failed: boolean;
-    };
-    free: {
-      loading: boolean;
-      failed: boolean;
-    };
-  };
   posts: {
     mostPopular: IPost[];
     duo: IPost[];
@@ -26,8 +12,8 @@ interface IProps {
   };
 }
 
-const Post = ({ status, posts }: IProps) => {
-  const printArticleSummaryList = (title: string, post: object[]) => {
+const Post = ({ posts }: IProps) => {
+  const printArticleSummaryList = (title: string, post: IPost[]) => {
     return (
       <>
         <h1>{title}</h1>

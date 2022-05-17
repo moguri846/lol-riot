@@ -28,3 +28,14 @@ export interface ISpectator {
     teamId: number;
   }[];
 }
+
+export interface ISpectatorSuccess extends ISpectator {
+  success: true;
+}
+export interface ISpectatorFailed extends ISpectator {
+  success: false;
+  status: number;
+  data: string;
+}
+
+export type SpectatorType = ISpectatorSuccess | ISpectatorFailed;

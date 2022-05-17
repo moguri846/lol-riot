@@ -16,6 +16,8 @@ import { spectatorInfo } from "../../toolkit/riot/spectatorSlice/func/spectatorS
 import { selectSpectator } from "../../toolkit/riot/spectatorSlice/spectatorSlice";
 import { summonerInfoAction } from "../../toolkit/riot/summonerInfoSlice/func/summonerSlice.func";
 import { selectSummonerInfo } from "../../toolkit/riot/summonerInfoSlice/summonerInfoSlice";
+import GameInfo from "../../components/Organisms/GameInfo/GameInfo";
+
 
 interface IProps {
   summonerName: string;
@@ -28,7 +30,7 @@ const Name = ({ summonerName }: IProps) => {
   const loading = useAppSelector(selectLoading);
   const summonerInfo = useAppSelector(selectSummonerInfo);
   const spectator = useAppSelector(selectSpectator);
-  const { jandi, lineWinOrLose, matchArr } = useAppSelector(selectGameInfo);
+  const gameInfo = useAppSelector(selectGameInfo);
 
   useEffect(() => {
     (async () => {
@@ -76,6 +78,7 @@ const Name = ({ summonerName }: IProps) => {
     <>
       <Seo title={summonerName} />
       <SummonerInfo
+        loading={loading.summonerInfo}
         summoner={summonerInfo}
         spectatorToggle={spectatorToggle}
         onSpectatorToggle={handleSpectatorToggle}
@@ -84,10 +87,7 @@ const Name = ({ summonerName }: IProps) => {
       {spectatorToggle ? (
         <Spectator loading={loading.spectator} spectator={spectator} summonerName={summonerName} />
       ) : (
-        <>
-          <SummonerGameAnalysis loading={loading.gameInfo} jandi={jandi} lineWinOrLose={lineWinOrLose} />
-          <SummonerMatchList loading={loading.gameInfo} matchSummary={matchArr} />
-        </>
+        <GameInfo loading={loading.gameInfo} gameInfo={gameInfo} />
       )}
     </>
   );

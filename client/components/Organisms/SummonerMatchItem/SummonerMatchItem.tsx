@@ -8,6 +8,7 @@ import * as S from "./style";
 import { matchDetailAction } from "../../../toolkit/riot/gameInfoSlice/func/gameInfoSlice.func";
 import { useAppDispatch } from "../../../hooks/useRedux";
 import { ComparingWithEnemyType } from "../../../toolkit/riot/gameInfoSlice/interface/gameInfo.interface";
+import Link from "next/link";
 interface IProps {
   match: ComparingWithEnemyType;
 }
@@ -105,10 +106,11 @@ const SummonerMatchItem = ({ match }: IProps) => {
                     key={player.summonerName}
                     className={match.player.summonerName === player.summonerName ? "me" : ""}
                   >
-                    <a href={`/summoner=${player.summonerName}`}>
-                      <div className="champion-img">{getDataDragonImg("champion", player.championName)}</div>
+                    <div className="champion-img">{getDataDragonImg("champion", player.championName)}</div>
+                    <Link href={`/summoner/${player.summonerName}`}>
                       <div className="summoner-name">{player.summonerName}</div>
-                    </a>
+                    </Link>
+                    {/* <a href={`/summoner=${player.summonerName}`}></a> */}
                   </S.Player>
                 ))}
               </S.Players>

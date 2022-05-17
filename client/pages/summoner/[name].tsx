@@ -17,7 +17,7 @@ import { selectSpectator } from "../../toolkit/riot/spectatorSlice/spectatorSlic
 import { summonerInfoAction } from "../../toolkit/riot/summonerInfoSlice/func/summonerSlice.func";
 import { selectSummonerInfo } from "../../toolkit/riot/summonerInfoSlice/summonerInfoSlice";
 import GameInfo from "../../components/Organisms/GameInfo/GameInfo";
-import { match } from "assert";
+
 
 interface IProps {
   summonerName: string;

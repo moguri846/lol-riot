@@ -228,22 +228,22 @@ const Player = styled.li`
     font-weight: bold;
   }
 
-  & > a {
+  & {
     display: flex;
   }
 
-  & a > div {
+  & div {
     height: 16px;
     margin: 2px 0px;
   }
 
-  & > a > .summoner-name {
+  & > .summoner-name {
     margin-left: 5px;
     font-size: 11px;
     line-height: 17px;
   }
 
-  & > a > .champion-img > img {
+  & > .champion-img > img {
     width: 16px;
     height: 100%;
   }

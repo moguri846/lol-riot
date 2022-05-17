@@ -8,10 +8,10 @@ import * as S from "./style";
 
 interface IProps {
   loading: boolean;
-  matchSummary: ComparingWithEnemyType[];
+  matchArr: ComparingWithEnemyType[];
 }
 
-const SummonerMatchList = ({ loading, matchSummary }: IProps) => {
+const SummonerMatchList = ({ loading, matchArr }: IProps) => {
   return (
     <>
       <S.MatchList>
@@ -21,7 +21,7 @@ const SummonerMatchList = ({ loading, matchSummary }: IProps) => {
           </>
         ) : (
           <>
-            {matchSummary.map((match) => (
+            {matchArr.map((match) => (
               <SummonerMatchItem key={match.gameId} match={match} />
             ))}
           </>

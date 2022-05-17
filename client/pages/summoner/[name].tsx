@@ -13,28 +13,42 @@ import { useAppDispatch, useAppSelector } from "../../hooks/useRedux";
 import { selectGameInfo } from "../../toolkit/riot/gameInfoSlice/gameInfoSlice";
 import { gameInfoAction } from "../../toolkit/riot/gameInfoSlice/func/gameInfoSlice.func";
 import { spectatorInfo } from "../../toolkit/riot/spectatorSlice/func/spectatorSlice.func";
-import { ISummoner } from "../../toolkit/riot/gameInfoSlice/interface/summoner.interface";
+import { selectSpectator } from "../../toolkit/riot/spectatorSlice/spectatorSlice";
+import { summonerInfoAction } from "../../toolkit/riot/summonerInfoSlice/func/summonerSlice.func";
+import { selectSummonerInfo } from "../../toolkit/riot/summonerInfoSlice/summonerInfoSlice";
+import GameInfo from "../../components/Organisms/GameInfo/GameInfo";
+import { match } from "assert";
 
 interface IProps {
-  summoner: ISummoner;
+  summonerName: string;
 }
 
-const Name = ({ summoner }: IProps) => {
+const Name = ({ summonerName }: IProps) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
   const loading = useAppSelector(selectLoading);
-  const { jandi, lineWinOrLose, matchArr } = useAppSelector(selectGameInfo);
+  const summonerInfo = useAppSelector(selectSummonerInfo);
+  const spectator = useAppSelector(selectSpectator);
+  const gameInfo = useAppSelector(selectGameInfo);
 
   useEffect(() => {
     (async () => {
+      dispatch(loadingAction({ summonerInfo: true }));
+
+      const {
+        payload: { puuid },
+      } = await dispatch(summonerInfoAction(summonerName));
+
+      dispatch(loadingAction({ summonerInfo: false }));
+
       dispatch(loadingAction({ gameInfo: true }));
 
-      await dispatch(gameInfoAction(summoner.puuid));
+      await dispatch(gameInfoAction(puuid));
 
       dispatch(loadingAction({ gameInfo: false }));
     })();
-  }, []);
+  }, [summonerName]);
 
   const { snackbar } = useSnackBar();
 
@@ -50,7 +64,7 @@ const Name = ({ summoner }: IProps) => {
     try {
       dispatch(loadingAction({ spectator: true }));
 
-      await dispatch(spectatorInfo(summoner.id));
+      await dispatch(spectatorInfo(summonerInfo.id));
 
       dispatch(loadingAction({ spectator: false }));
     } catch (err: any) {
@@ -62,30 +76,18 @@ const Name = ({ summoner }: IProps) => {
 
   return (
     <>
-      <Seo title={summoner.name} />
+      <Seo title={summonerName} />
       <SummonerInfo
-        summoner={summoner}
+        loading={loading.summonerInfo}
+        summoner={summonerInfo}
         spectatorToggle={spectatorToggle}
         onSpectatorToggle={handleSpectatorToggle}
         searchSummoner
       />
       {spectatorToggle ? (
-        // <Spectator
-        // loading={loading.spectator}
-        // spectator={spectator}
-        // summonerName={summoner.name}
-        // fail={fail.spectator.status ? fail.spectator : null}
-        // />
-        <div>Spectator</div>
+        <Spectator loading={loading.spectator} spectator={spectator} summonerName={summonerName} />
       ) : (
-        <>
-          {/* <SummonerGameAnalysis
-            loading={loading.gameInfo}
-            jandi={gameInfo.jandi}
-            lineWinOrLose={gameInfo.lineWinOrLose}
-          /> */}
-          <SummonerMatchList loading={loading.gameInfo} matchSummary={matchArr} />
-        </>
+        <GameInfo loading={loading.gameInfo} gameInfo={gameInfo} />
       )}
     </>
   );
@@ -96,18 +98,9 @@ export default Name;
 export const getServerSideProps = async ({ query }) => {
   const { name } = query;
 
-  try {
-    var {
-      data: { data: summoner },
-    } = await loadSummonerInfo(name);
-  } catch (err) {
-    var errMessage = err.message;
-    console.log("errMessage");
-  }
-
   return {
     props: {
-      summoner,
+      summonerName: name,
     },
   };
 };

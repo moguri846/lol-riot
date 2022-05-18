@@ -35,14 +35,16 @@ const SummonerInfo = ({
               <ErrorForm {...summoner} />
             ) : (
               <>
-                <S.ProfileImgContainer>
-                  {getDataDragonImg("profileicon", summoner.profileIconId)}
-                  <div className="level">
-                    <span>
-                      Level. <span>{toLocaleString(summoner.summonerLevel)}</span>
-                    </span>
-                  </div>
-                </S.ProfileImgContainer>
+                {searchSummoner && (
+                  <S.ProfileImgContainer>
+                    {getDataDragonImg("profileicon", summoner.profileIconId)}
+                    <div className="level">
+                      <span>
+                        Level. <span>{toLocaleString(summoner.summonerLevel)}</span>
+                      </span>
+                    </div>
+                  </S.ProfileImgContainer>
+                )}
                 <S.SummonerInfo>
                   <div className="info">
                     <span className="name">{summoner.name}</span>

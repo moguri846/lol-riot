@@ -4,7 +4,7 @@ import { INFO } from "../constant/user.constant";
 import { myInfoAction } from "./func/infoSlice.func";
 import { IInfo } from "./interface/infoSlice.interface";
 
-const initialInfoSliceState: IInfo = {
+export const initialInfoSliceState: IInfo = {
   email: "",
 };
 

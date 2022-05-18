@@ -7,6 +7,7 @@ const initialLoadingSliceState: ILoading = {
   summonerInfo: false,
   spectator: false,
   gameInfo: false,
+  multiSearch: true,
 };
 
 const loadingSlice = createSlice({

@@ -5,7 +5,7 @@ import { gameInfoAction, matchDetailAction } from "./func/gameInfoSlice.func";
 import { IGameInfo, IGameInfoSuccess } from "./interface/gameInfo.interface";
 import { IComparingWithEnemyDetail } from "./interface/matchDetail.interface";
 
-const initialGameInfoSliceState: IGameInfoSuccess = {
+export const initialGameInfoSliceState: IGameInfoSuccess = {
   success: true,
   jandi: [],
   lineWinOrLose: [],

@@ -43,7 +43,7 @@ const useSearch = (): IUseSearch => {
   };
 
   const searchSummonerOrMulti = () => {
-    if (summonerName.includes(".")) {
+    if (summonerName.includes(".") || summonerName.includes(",")) {
       routerPush("multiSearch", summonerName);
     } else {
       routerPush("summoner", summonerName);

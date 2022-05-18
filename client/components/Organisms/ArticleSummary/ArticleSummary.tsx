@@ -2,7 +2,7 @@ import React from "react";
 import moment from "moment";
 import * as S from "./style";
 import Link from "next/link";
-import { IPost } from "../../../pages/post/interface/post.interface";
+import { IPost } from "../Post/interface/Post.interface";
 
 interface IProps {
   post: IPost;

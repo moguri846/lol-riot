@@ -1,7 +1,7 @@
 import React from "react";
-import { IPost } from "../../../pages/post/interface/post.interface";
 import Button from "../../Atoms/Button/Button";
 import Input from "../../Atoms/Input/Input";
+import { IPost } from "../Post/interface/Post.interface";
 import * as S from "./style";
 
 const DUO = "DUO";

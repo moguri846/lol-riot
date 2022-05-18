@@ -4,10 +4,10 @@ import { LOADING } from "./constant/loadingSlice.constant";
 import { ILoading, LoadingStatusType } from "./interface/loadingSlice.interface";
 
 const initialLoadingSliceState: ILoading = {
-  summonerInfo: false,
-  spectator: false,
-  gameInfo: false,
   multiSearch: true,
+  summonerInfo: true,
+  spectator: true,
+  gameInfo: true,
 };
 
 const loadingSlice = createSlice({

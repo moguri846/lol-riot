@@ -1,7 +1,7 @@
 import React from "react";
 import Skeleton from "react-loading-skeleton";
-import { getDataDragonImg } from "../../../pages/common/commonFunc";
-import { ISpectator, SpectatorType } from "../../../toolkit/riot/spectatorSlice/interface/spectatorSlice.interface";
+import { SpectatorType } from "../../../toolkit/riot/spectatorSlice/interface/spectatorSlice.interface";
+import { getDataDragonImg } from "../../common/func/common.func";
 import ErrorForm from "../../Molecules/ErrorForm/ErrorForm";
 
 import * as S from "./style";

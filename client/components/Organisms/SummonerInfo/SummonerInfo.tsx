@@ -1,10 +1,9 @@
 import React from "react";
-import { getDataDragonImg } from "../../../pages/common/commonFunc";
-import { toLocaleString } from "../../common/function/common.function";
 import Button from "../../Atoms/Button/Button";
 import * as S from "./style";
 import { ISummoner, SummonerType } from "../../../toolkit/riot/summonerInfoSlice/interface/summonerInfoSlice.interface";
 import ErrorForm from "../../Molecules/ErrorForm/ErrorForm";
+import { getDataDragonImg, toLocaleString } from "../../common/func/common.func";
 
 interface IProps {
   loading: boolean;
@@ -36,14 +35,16 @@ const SummonerInfo = ({
               <ErrorForm {...summoner} />
             ) : (
               <>
-                <S.ProfileImgContainer>
-                  {getDataDragonImg("profileicon", summoner.profileIconId)}
-                  <div className="level">
-                    <span>
-                      Level. <span>{toLocaleString(summoner.summonerLevel)}</span>
-                    </span>
-                  </div>
-                </S.ProfileImgContainer>
+                {searchSummoner && (
+                  <S.ProfileImgContainer>
+                    {getDataDragonImg("profileicon", summoner.profileIconId)}
+                    <div className="level">
+                      <span>
+                        Level. <span>{toLocaleString(summoner.summonerLevel)}</span>
+                      </span>
+                    </div>
+                  </S.ProfileImgContainer>
+                )}
                 <S.SummonerInfo>
                   <div className="info">
                     <span className="name">{summoner.name}</span>

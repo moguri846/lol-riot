@@ -4,7 +4,7 @@ import { SUMMONER_INFO } from "../constant/riot.constant";
 import { summonerInfoAction } from "./func/summonerSlice.func";
 import { ISummoner, ISummonerSuccess, SummonerType } from "./interface/summonerInfoSlice.interface";
 
-const initialSummonerInfoSliceState: ISummonerSuccess = {
+export const initialSummonerInfoSliceState: ISummonerSuccess = {
   success: true,
   accountId: "",
   id: "",

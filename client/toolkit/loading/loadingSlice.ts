@@ -4,6 +4,7 @@ import { LOADING } from "./constant/loadingSlice.constant";
 import { ILoading, LoadingStatusType } from "./interface/loadingSlice.interface";
 
 const initialLoadingSliceState: ILoading = {
+  multiSearch: true,
   summonerInfo: true,
   spectator: true,
   gameInfo: true,

@@ -5,7 +5,7 @@ import { initialSummonerInfoSliceState } from "../summonerInfoSlice/summonerInfo
 import { multiSearchAction } from "./func/multiSearchSlice.func";
 import { IMultiSearchSuccess } from "./interface/multiSearchSlice.interface";
 
-const initialMultiSearchSliceState: IMultiSearchSuccess = {
+export const initialMultiSearchSliceState: IMultiSearchSuccess = {
   success: true,
   data: [
     {

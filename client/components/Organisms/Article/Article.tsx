@@ -4,9 +4,9 @@ import React from "react";
 import { Watch } from "react-loader-spinner";
 import { deletePost } from "../../../API/post";
 import useSnackBar from "../../../hooks/useSnackBar";
-import { IPost } from "../../../pages/post/interface/post.interface";
 
 import Button from "../../Atoms/Button/Button";
+import { IPost } from "../Post/interface/Post.interface";
 import * as S from "./style";
 
 interface IProps {

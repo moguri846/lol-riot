@@ -1,7 +1,7 @@
 import React from "react";
 import { TailSpin } from "react-loader-spinner";
-import { IPost } from "../../../pages/post/interface/post.interface";
 import ArticleSummary from "../ArticleSummary/ArticleSummary";
+import { IPost } from "./interface/Post.interface";
 import * as S from "./style";
 
 interface IProps {

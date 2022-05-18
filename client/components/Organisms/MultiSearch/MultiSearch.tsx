@@ -3,9 +3,9 @@ import moment from "moment";
 import Skeleton from "react-loading-skeleton";
 import SummonerInfo from "../SummonerInfo/SummonerInfo";
 import { MultiSearchType } from "../../../toolkit/riot/multiSearchSlice/interface/multiSearchSlice.interface";
-import { getDataDragonImg } from "../../../pages/common/commonFunc";
 import * as S from "./style";
 import ErrorForm from "../../Molecules/ErrorForm/ErrorForm";
+import { getDataDragonImg } from "../../common/func/common.func";
 
 interface IProps {
   loading: boolean;

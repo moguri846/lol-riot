@@ -4,14 +4,21 @@ const SignInOrUpContainer = styled.div`
   width: 300px;
   display: flex;
   flex-direction: column;
-  padding: 10px;
 
   & > h1 {
     text-align: center;
   }
 
+  & > div > input {
+    width: 97.4%;
+  }
+
   & > * {
     margin-bottom: 10px;
+  }
+
+  @media screen and (max-width: 300px) {
+    width: 100%;
   }
 `;
 

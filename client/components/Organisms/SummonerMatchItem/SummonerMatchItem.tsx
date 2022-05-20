@@ -72,8 +72,8 @@ const SummonerMatchItem = ({ match }: IProps) => {
               </S.ChampionStatus>
               <S.Kda className="kda">
                 <div className="k-d-a">
-                  <span className="kill">{match.player.kills}</span>/
-                  <span className="deaths">{match.player.deaths}</span>/
+                  <span className="kill">{match.player.kills}</span>
+                  <span className="deaths">{match.player.deaths}</span>
                   <span className="assists">{match.player.assists}</span>
                 </div>
                 <div>

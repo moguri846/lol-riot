@@ -4,6 +4,7 @@ import { createPost } from "../../API/post";
 import { IPost } from "../../components/Organisms/Post/interface/Post.interface";
 import PostCreateOrUpdate from "../../components/Organisms/PostCreateOrUpdate/PostCreateOrUpdate";
 import Seo from "../../components/Seo/Seo";
+import WithAuth from "../../hoc";
 import { useAppSelector } from "../../hooks/useRedux";
 import useSnackBar from "../../hooks/useSnackBar";
 import { selectInfo } from "../../toolkit/user/infoSlice/infoSlice";
@@ -67,4 +68,4 @@ const CreatePage = () => {
   );
 };
 
-export default CreatePage;
+export default WithAuth(CreatePage, true);

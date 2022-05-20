@@ -1,13 +1,16 @@
-import React from "react";
+import { useRouter } from "next/router";
+import React, { useEffect } from "react";
 
-const index = () => {
-  return (
-    <h1>
-      <a href="/assets/riot.txt" download="riot.txt">
-        riot.txt DOWNLOAD BUTTON
-      </a>
-    </h1>
-  );
+const Riot = () => {
+  const router = useRouter();
+
+  useEffect(() => {
+    (() => {
+      router.push("http://localhost:3000/assets/riot.txt");
+    })();
+  }, []);
+
+  return <></>;
 };
 
-export default index;
+export default Riot;

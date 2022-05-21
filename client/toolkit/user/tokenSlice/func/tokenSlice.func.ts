@@ -80,7 +80,7 @@ const reissueTokenAction = async () => {
       data: { data },
     } = await reissueToken("searchMyName");
 
-    saveToken(data.data);
+    saveToken(data);
   } catch (err) {
     console.log("Err", err);
   }

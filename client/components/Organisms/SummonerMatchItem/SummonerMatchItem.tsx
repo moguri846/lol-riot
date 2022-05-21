@@ -2,12 +2,13 @@ import React from "react";
 import moment from "moment";
 import SummonerMatchDetail from "../SummonerMatchDetail/SummonerMatchDetail";
 import useSnackBar from "../../../hooks/useSnackBar";
-import { getDataDragonImg } from "../../../pages/common/commonFunc";
 import "moment/locale/ko";
 import * as S from "./style";
 import { matchDetailAction } from "../../../toolkit/riot/gameInfoSlice/func/gameInfoSlice.func";
 import { useAppDispatch } from "../../../hooks/useRedux";
 import { ComparingWithEnemyType } from "../../../toolkit/riot/gameInfoSlice/interface/gameInfo.interface";
+import Link from "next/link";
+import { getDataDragonImg } from "../../common/func/common.func";
 interface IProps {
   match: ComparingWithEnemyType;
 }
@@ -71,8 +72,8 @@ const SummonerMatchItem = ({ match }: IProps) => {
               </S.ChampionStatus>
               <S.Kda className="kda">
                 <div className="k-d-a">
-                  <span className="kill">{match.player.kills}</span>/
-                  <span className="deaths">{match.player.deaths}</span>/
+                  <span className="kill">{match.player.kills}</span>
+                  <span className="deaths">{match.player.deaths}</span>
                   <span className="assists">{match.player.assists}</span>
                 </div>
                 <div>
@@ -105,10 +106,11 @@ const SummonerMatchItem = ({ match }: IProps) => {
                     key={player.summonerName}
                     className={match.player.summonerName === player.summonerName ? "me" : ""}
                   >
-                    <a href={`/summoner=${player.summonerName}`}>
-                      <div className="champion-img">{getDataDragonImg("champion", player.championName)}</div>
+                    <div className="champion-img">{getDataDragonImg("champion", player.championName)}</div>
+                    <Link href={`/summoner/${player.summonerName}`}>
                       <div className="summoner-name">{player.summonerName}</div>
-                    </a>
+                    </Link>
+                    {/* <a href={`/summoner=${player.summonerName}`}></a> */}
                   </S.Player>
                 ))}
               </S.Players>

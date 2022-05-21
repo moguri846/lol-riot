@@ -2,10 +2,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootReducerType } from "../../store";
 import { GAME_INFO } from "../constant/riot.constant";
 import { gameInfoAction, matchDetailAction } from "./func/gameInfoSlice.func";
-import { IGameInfo } from "./interface/gameInfo.interface";
+import { IGameInfo, IGameInfoSuccess } from "./interface/gameInfo.interface";
 import { IComparingWithEnemyDetail } from "./interface/matchDetail.interface";
 
-const initialGameInfoSliceState: IGameInfo = {
+export const initialGameInfoSliceState: IGameInfoSuccess = {
+  success: true,
   jandi: [],
   lineWinOrLose: [],
   matchArr: [],
@@ -18,10 +19,12 @@ const gameInfoSlice = createSlice({
   extraReducers: (builder) => {
     // gameInfoAction
     builder.addCase(gameInfoAction.pending, (state, { type, payload }) => {});
-    builder.addCase(gameInfoAction.fulfilled, (state, { type, payload }: PayloadAction<IGameInfo, string>) => {
+    builder.addCase(gameInfoAction.fulfilled, (state, { type, payload }: PayloadAction<any, string>) => {
       return { ...payload };
     });
-    builder.addCase(gameInfoAction.rejected, (state, { type, payload }) => {});
+    builder.addCase(gameInfoAction.rejected, (state, { type, payload }: PayloadAction<any, string>) => {
+      return { ...payload };
+    });
 
     // matchDetailAction
     builder.addCase(matchDetailAction.pending, (state, { type, payload }) => {});

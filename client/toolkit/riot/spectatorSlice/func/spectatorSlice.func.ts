@@ -13,8 +13,11 @@ const spectatorInfo = createAsyncThunk(
       }: AxiosResponse<{ data: ISpectator }> = await loadSpectatorInfo(encryptedSummonerId);
       return spectator;
     } catch (err) {
-      const errData = err.response.data;
-      return rejectWithValue(errData);
+      const response = err.response;
+      const status = response.status;
+      const data = response.data;
+
+      return rejectWithValue({ status, ...data });
     }
   }
 );

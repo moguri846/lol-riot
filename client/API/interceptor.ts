@@ -1,8 +1,10 @@
 import axios, { AxiosInstance } from "axios";
 
 const instance: AxiosInstance = axios.create({
-  baseURL: "http://localhost:5000/api",
-  // baseURL: "http://54.164.251.180:8080/api",
+  baseURL:
+    process.env.NODE_ENV === "production"
+      ? "https://server-searchmyname.herokuapp.com/api"
+      : "http://localhost:5000/api",
 });
 
 instance.interceptors.request.use(

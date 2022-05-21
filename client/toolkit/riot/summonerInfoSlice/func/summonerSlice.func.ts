@@ -12,7 +12,11 @@ const summonerInfoAction = createAsyncThunk(
 
       return summonerInfo;
     } catch (err) {
-      return rejectWithValue(err.response.data);
+      const response = err.response;
+      const status = response.status;
+      const data = response.data;
+
+      return rejectWithValue({ status, ...data });
     }
   }
 );

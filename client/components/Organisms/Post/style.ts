@@ -4,37 +4,21 @@ const PostTop = styled.div`
   width: 100%;
   height: 50vh;
   display: flex;
+  justify-content: space-between;
 
-  & > div {
-    padding: 5px;
-  }
-
-  & > div > .loading,
-  & > div > .err {
-    height: 426px;
-
-    & > .tail-spin-loading,
-    & > span {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-  }
-
-  @media screen and (max-width: 740px) {
+  @media screen and (max-width: 750px) {
     flex-direction: column;
 
     & > div {
       width: 100%;
       height: 100%;
+      padding: 5px 0px;
     }
   }
 `;
 
 const MostPopularPost = styled.div`
-  width: 380px;
+  width: 370px;
 
   & > .no-data {
     height: 100%;
@@ -46,7 +30,7 @@ const MostPopularPost = styled.div`
 `;
 
 const FindDuoPost = styled.div`
-  width: 380px;
+  width: 370px;
 
   & > .no-data {
     height: 100%;
@@ -61,20 +45,12 @@ const PostBottom = styled.div`
   width: 100%;
 
   & > div {
-    padding: 5px;
+    width: 100%;
   }
 
-  & > div > .loading,
-  & > div > .err {
-    height: 322px;
-
-    & > .tail-spin-loading,
-    & > span {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+  @media screen and (max-width: 750px) {
+    & > div {
+      padding: 5px 0px;
     }
   }
 `;

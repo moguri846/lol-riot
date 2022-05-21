@@ -1,12 +1,12 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { updatePost } from "../../API/post";
+import { IPost } from "../../components/Organisms/Post/interface/Post.interface";
 import PostCreateOrUpdate from "../../components/Organisms/PostCreateOrUpdate/PostCreateOrUpdate";
 import Seo from "../../components/Seo/Seo";
 import { useAppSelector } from "../../hooks/useRedux";
 import useSnackBar from "../../hooks/useSnackBar";
 import { selectInfo } from "../../toolkit/user/infoSlice/infoSlice";
-import { IPost } from "./interface/post.interface";
 
 const UpdatePage = () => {
   const router = useRouter();

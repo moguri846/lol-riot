@@ -1,8 +1,7 @@
 import Send from "./interceptor";
-import { MatchListFilterType } from "../redux/actions/riot/interface/dispatch.interface";
 import { makeQueryString } from "./common/commonFunc";
-import { IMatchSummaryDetailParameter } from "../redux/actions/riot/interface/matchSummary.interface";
 import { Methods } from "./common/methods";
+import { IMatchDetailParameter } from "../toolkit/riot/gameInfoSlice/interface/matchDetail.interface";
 
 const loadSummonerInfo = (summonerName: string) => {
   const queryStringObj = {
@@ -43,7 +42,7 @@ const loadMultiSearch = (summonerNames: string[]) => {
   });
 };
 
-const loadMatchDetailInfo = ({ gameId, player, enemy }: IMatchSummaryDetailParameter) => {
+const loadMatchDetailInfo = ({ gameId, player, enemy }: IMatchDetailParameter) => {
   const queryStringObj = {
     gameId,
     player,

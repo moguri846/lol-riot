@@ -1,8 +1,8 @@
 import type { NextPage } from "next";
 import { getCategoryPosts } from "../API/post";
+import { IPost } from "../components/Organisms/Post/interface/Post.interface";
 import Post from "../components/Organisms/Post/Post";
 import Seo from "../components/Seo/Seo";
-import { IPost } from "./post/interface/post.interface";
 
 const MOST_POPULAR = "MOST_POPULAR";
 const DUO = "DUO";

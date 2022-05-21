@@ -4,4 +4,8 @@ const getDataDragonImg = (key: "champion" | "spell" | "item" | "profileicon", va
   );
 };
 
-export { getDataDragonImg };
+const toLocaleString = (number: number) => {
+  return number.toLocaleString(navigator.language);
+};
+
+export { getDataDragonImg, toLocaleString };

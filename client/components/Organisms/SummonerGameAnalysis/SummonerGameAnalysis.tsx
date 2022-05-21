@@ -1,6 +1,6 @@
 import React from "react";
 import Skeleton from "react-loading-skeleton";
-import { Jandi, ILineWinLoseRate } from "../../../toolkit/riot/gameInfoSlice/interface/gameInfo.interface";
+import { IJandi, ILineWinLoseRate } from "../../../toolkit/riot/gameInfoSlice/interface/gameInfo.interface";
 import BarGraph from "../../Molecules/BarGraph/BarGraph";
 import CalendarGraph from "../../Molecules/CalendarGraph/CalendarGraph";
 
@@ -8,7 +8,7 @@ import * as S from "./style";
 
 interface IProps {
   loading: boolean;
-  jandi: Jandi[];
+  jandi: IJandi[];
   lineWinOrLose: ILineWinLoseRate[];
 }
 

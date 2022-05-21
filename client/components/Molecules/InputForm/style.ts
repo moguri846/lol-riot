@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
-const SearchFormContainer = styled.div`
-  width: 350px;
+const InputFormContainer = styled.div`
+  width: 100%;
   display: flex;
 
   & > input {
-    flex: 5;
+    flex: 8;
   }
 
   & > button {
@@ -13,4 +13,4 @@ const SearchFormContainer = styled.div`
   }
 `;
 
-export { SearchFormContainer };
+export { InputFormContainer };

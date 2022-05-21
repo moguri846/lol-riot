@@ -5,6 +5,11 @@ export interface IPost {
   title: string;
   content: string;
   views: number;
+  comments: {
+    _id?: string;
+    writer: string;
+    comment: string;
+  }[];
   createdAt: string;
   updatedAt: string;
 }

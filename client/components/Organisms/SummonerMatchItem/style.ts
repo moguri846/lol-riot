@@ -140,23 +140,43 @@ const Kda = styled.div`
   align-items: center;
 
   & > .k-d-a > span {
-    width: 20%;
     text-align: center;
     font-weight: bold;
+  }
+
+  & > .k-d-a > span::after {
+    content: "/";
+    margin: 0px 3px;
+    color: black;
+  }
+
+  & > .k-d-a > span:last-child::after {
+    content: "";
+    margin: 0px 0px;
   }
 
   & > .k-d-a > .deaths {
     color: #c6443e;
   }
 
+  & > div {
+    display: flex;
+  }
+
   & > div > .ratio {
     font-weight: bold;
+    font-size: 13px;
   }
 
   @media screen and (max-width: 760px) {
     width: 60px;
-    justify-content: space-evenly;
+    justify-content: center;
     font-size: 13px;
+
+    & > .k-d-a > span::after {
+      content: "/";
+      margin: 0px 2px;
+    }
   }
 `;
 

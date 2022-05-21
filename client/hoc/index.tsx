@@ -12,7 +12,7 @@ import { selectToken } from "../toolkit/user/tokenSlice/tokenSlice";
  */
 
 const WithAuth = (Component: React.FC, option: boolean | null) => {
-  const AuthenticationCheck = () => {
+  const AuthenticationCheck = (props) => {
     const router = useRouter();
 
     let { isLogin } = useAppSelector(selectToken);
@@ -33,7 +33,7 @@ const WithAuth = (Component: React.FC, option: boolean | null) => {
       })();
     }, [isLogin]);
 
-    return <Component />;
+    return <Component {...props} />;
   };
   return AuthenticationCheck;
 };

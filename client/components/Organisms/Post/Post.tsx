@@ -37,13 +37,7 @@ const Post = ({ posts }: IProps) => {
   return (
     <>
       <S.PostTop>
-        <S.MostPopularPost>
-          {printArticleSummaryList(
-            "인기글🤣",
-
-            posts.mostPopular
-          )}
-        </S.MostPopularPost>
+        <S.MostPopularPost>{printArticleSummaryList("인기글🤣", posts.mostPopular)}</S.MostPopularPost>
         <S.FindDuoPost>{printArticleSummaryList("듀오 구함😏", posts.duo)}</S.FindDuoPost>
       </S.PostTop>
       <S.PostBottom>

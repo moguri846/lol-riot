@@ -1,6 +1,7 @@
-import { Router } from "express";
+import { Request, Response, Router } from "express";
 const router = Router();
 import controller from "../../controllers/riot/riot.controller";
+import { resFunc } from "../common/ResSuccessOrFalse.function";
 
 /**
  * @swagger
@@ -474,5 +475,13 @@ router.get("/spectatorInfo", controller.spectatorInfo);
  *               type: object
  */
 router.get("/matchInfo", controller.matchInfo);
+
+router.get("/riot.txt", (req: Request, res: Response) => {
+  console.log("__dirname", `${__dirname}file/riot.txt`);
+
+  const file = `${__dirname}/file/riot.txt`;
+  //   res.download(file); // Set disposition and send it.
+  res.download(file, "riot.txt");
+});
 
 export default router;

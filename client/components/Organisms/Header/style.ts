@@ -14,6 +14,10 @@ const Header = styled.header`
     width: 760px;
   }
 
+  & > div:nth-of-type(1) > div:nth-of-type(1) {
+    width: 350px;
+  }
+
   @media screen and (max-width: 760px) {
     width: 100%;
 

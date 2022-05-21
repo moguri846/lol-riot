@@ -5,4 +5,8 @@ export interface IPost {
   title: string;
   content: string;
   views: number;
+  comments: {
+    writer: string;
+    comment: string;
+  }[];
 }

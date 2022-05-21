@@ -14,4 +14,6 @@ router.post("/updatePost", authChecker, controller.updatePost);
 
 router.get("/deletePost", authChecker, controller.deletePost);
 
+router.post("/addComment", controller.addComment);
+
 export default router;

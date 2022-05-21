@@ -1,6 +1,6 @@
 import React from "react";
 
-import SearchSummonerInputForm from "../../Molecules/SearchSummonerInputForm/SearchSummonerInputForm";
+import InputForm from "../../Molecules/InputForm/InputForm";
 import Button from "../../Atoms/Button/Button";
 import useSearch from "../../../hooks/useSearch";
 import Flicking from "@egjs/react-flicking";
@@ -43,7 +43,7 @@ const Header = () => {
         <S.Title>
           <Link href="/">Search My Name</Link>
         </S.Title>
-        <SearchSummonerInputForm {...events} />
+        <InputForm {...events} placeholder="소환사 이름" buttonValue="검색" />
         <S.LoginButtonContainer>
           {isLogin ? (
             <Button onClick={handleLogout}>로그아웃</Button>

@@ -8,6 +8,7 @@ import SignInOrUp from "../components/Organisms/SiginInOrUp/SignInOrUp";
 import Seo from "../components/Seo/Seo";
 import { saveToken } from "../toolkit/user/tokenSlice/func/tokenSlice.func";
 import { IToken } from "../toolkit/user/tokenSlice/interface/tokenSlice.interface";
+import WithAuth from "../hoc";
 import { tokenStatusUpdate } from "../toolkit/user/tokenSlice/tokenSlice";
 
 const SignIn = () => {
@@ -50,4 +51,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default WithAuth(SignIn, false);

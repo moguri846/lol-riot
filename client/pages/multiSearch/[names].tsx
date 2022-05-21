@@ -4,6 +4,7 @@ import { loadingAction, selectLoading } from "../../toolkit/loading/loadingSlice
 import { multiSearchAction } from "../../toolkit/riot/multiSearchSlice/func/multiSearchSlice.func";
 import { selectMultiSearch } from "../../toolkit/riot/multiSearchSlice/multiSearchSlice";
 import MultiSearch from "../../components/Organisms/MultiSearch/MultiSearch";
+import WithAuth from "../../hoc";
 
 const MultiSearchPage = ({ summonerNames }) => {
   const dispatch = useAppDispatch();
@@ -24,7 +25,7 @@ const MultiSearchPage = ({ summonerNames }) => {
   return <MultiSearch loading={loading.multiSearch} multiSearch={multiSearch} />;
 };
 
-export default MultiSearchPage;
+export default WithAuth(MultiSearchPage, null);
 
 export const getServerSideProps = async ({ query }) => {
   const { names } = query;

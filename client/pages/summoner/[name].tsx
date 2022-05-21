@@ -17,13 +17,13 @@ import { selectSpectator } from "../../toolkit/riot/spectatorSlice/spectatorSlic
 import { summonerInfoAction } from "../../toolkit/riot/summonerInfoSlice/func/summonerSlice.func";
 import { selectSummonerInfo } from "../../toolkit/riot/summonerInfoSlice/summonerInfoSlice";
 import GameInfo from "../../components/Organisms/GameInfo/GameInfo";
-
+import WithAuth from "../../hoc";
 
 interface IProps {
   summonerName: string;
 }
 
-const Name = ({ summonerName }: IProps) => {
+const Summoner = ({ summonerName }: IProps) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
@@ -93,7 +93,7 @@ const Name = ({ summonerName }: IProps) => {
   );
 };
 
-export default Name;
+export default WithAuth(Summoner, null);
 
 export const getServerSideProps = async ({ query }) => {
   const { name } = query;

@@ -5,6 +5,7 @@ import InputForm from "../../components/Molecules/InputForm/InputForm";
 import Article from "../../components/Organisms/Article/Article";
 import { IPost } from "../../components/Organisms/Post/interface/Post.interface";
 import Seo from "../../components/Seo/Seo";
+import WithAuth from "../../hoc";
 import { useAppSelector } from "../../hooks/useRedux";
 import useSnackBar from "../../hooks/useSnackBar";
 import { selectInfo } from "../../toolkit/user/infoSlice/infoSlice";
@@ -86,7 +87,7 @@ const ArticlePage = ({ article }: IProps) => {
   );
 };
 
-export default ArticlePage;
+export default WithAuth(ArticlePage, null);
 
 export const getServerSideProps = async ({ params }) => {
   const {

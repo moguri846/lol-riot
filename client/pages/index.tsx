@@ -3,6 +3,7 @@ import { getCategoryPosts } from "../API/post";
 import { IPost } from "../components/Organisms/Post/interface/Post.interface";
 import Post from "../components/Organisms/Post/Post";
 import Seo from "../components/Seo/Seo";
+import WithAuth from "../hoc";
 
 const MOST_POPULAR = "MOST_POPULAR";
 const DUO = "DUO";
@@ -25,7 +26,7 @@ const Home: NextPage = ({
   );
 };
 
-export default Home;
+export default WithAuth(Home, null);
 
 export const getServerSideProps = async () => {
   try {

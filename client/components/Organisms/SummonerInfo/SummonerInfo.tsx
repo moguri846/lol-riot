@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "../../Atoms/Button/Button";
 import * as S from "./style";
-import { ISummoner, SummonerType } from "../../../toolkit/riot/summonerInfoSlice/interface/summonerInfoSlice.interface";
+import { SummonerType } from "../../../toolkit/riot/summonerInfoSlice/interface/summonerInfoSlice.interface";
 import ErrorForm from "../../Molecules/ErrorForm/ErrorForm";
 import { getDataDragonImg, toLocaleString } from "../../common/func/common.func";
 

@@ -1,11 +1,8 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { loadSummonerInfo } from "../../API/riot";
 import Spectator from "../../components/Organisms/Spectator/Spectator";
-import SummonerGameAnalysis from "../../components/Organisms/SummonerGameAnalysis/SummonerGameAnalysis";
 import SummonerInfo from "../../components/Organisms/SummonerInfo/SummonerInfo";
-import SummonerMatchList from "../../components/Organisms/SummonerMatchList/SummonerMatchList";
 import Seo from "../../components/Seo/Seo";
 import useSnackBar from "../../hooks/useSnackBar";
 import { loadingAction, selectLoading } from "../../toolkit/loading/loadingSlice";

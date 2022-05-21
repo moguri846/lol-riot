@@ -30,6 +30,8 @@ const Header = () => {
       await logout("searchMyName");
 
       dispatch(tokenStatusUpdate({ isLogin: false, message: "유효하지 않은 토큰" }));
+
+      localStorage.clear();
     } catch (err) {
       snackbar(err.message, "error");
     }

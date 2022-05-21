@@ -3,6 +3,18 @@ import { MOST_POPULAR } from "../controllers/post/constant/post.constant";
 import { IPost } from "./interface/Post.interface";
 import { IUser } from "./interface/User.interface";
 
+const commandSchema = new Schema<{ writer: string; comment: string }>(
+  {
+    writer: {
+      type: String,
+    },
+    comment: {
+      type: String,
+    },
+  },
+  { timestamps: true }
+);
+
 const postSchema = new Schema<IPost & Document, IPostModel>(
   {
     writer: {
@@ -21,6 +33,7 @@ const postSchema = new Schema<IPost & Document, IPostModel>(
       type: Number,
       default: 0,
     },
+    comments: [commandSchema],
   },
   { timestamps: true }
 );
@@ -95,6 +108,27 @@ postSchema.statics.deletePost = function (_id: string): Promise<void> {
   });
 };
 
+postSchema.statics.addComment = function (_id: string, comment: { writer: string; comment: string }): Promise<void> {
+  return new Promise((reslove, reject) => {
+    // this.updateOne({ _id }, {});
+    this.findOne({ _id }).exec((err: any, post) => {
+      if (err) {
+        reject(err);
+      }
+
+      // @ts-ignore
+      const newComments = [...post.comments, comment];
+
+      this.updateOne({ _id }, { $set: { comments: newComments } }).exec((err) => {
+        if (err) {
+          reject(err);
+        }
+        reslove();
+      });
+    });
+  });
+};
+
 type IPostDoc = IPost & Document;
 
 interface IPostModel extends Model<IPostDoc> {
@@ -103,6 +137,7 @@ interface IPostModel extends Model<IPostDoc> {
   getPost: (_id: string) => Promise<IPost>;
   updatePost: (newPost: Pick<IPost, "_id" | "category" | "title" | "content">) => Promise<void>;
   deletePost: (_id: string) => Promise<void>;
+  addComment: (_id: string, comment: { writer: string; comment: string }) => Promise<any>;
 }
 
 const Post = mongoose.model<IPostDoc, IPostModel>("Post", postSchema);

@@ -5,6 +5,7 @@ import { signIn } from "../API/auth";
 import { ISignInOrUpParameter } from "../components/Organisms/SiginInOrUp/interface/SignInOrUp.interface";
 import SignInOrUp from "../components/Organisms/SiginInOrUp/SignInOrUp";
 import Seo from "../components/Seo/Seo";
+import WithAuth from "../hoc";
 import { tokenStatusUpdate } from "../toolkit/user/tokenSlice/tokenSlice";
 
 const SignIn = () => {
@@ -64,4 +65,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default WithAuth(SignIn, false);

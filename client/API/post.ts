@@ -51,4 +51,12 @@ const deletePost = (id: string) => {
   });
 };
 
-export { createPost, getPost, getCategoryPosts, updatePost, deletePost };
+const addComment = (body: { _id: string; comment: { writer: string; comment: string } }) => {
+  return Send({
+    method: Methods.POST,
+    url: `/post/addComment`,
+    data: body,
+  });
+};
+
+export { createPost, getPost, getCategoryPosts, updatePost, deletePost, addComment };

@@ -59,4 +59,14 @@ export default {
       return resFunc({ res, err });
     }
   },
+  async addComment(req: Request, res: Response) {
+    try {
+      const { _id, comment } = req.body;
+
+      await Post.addComment(_id, comment);
+      return resFunc({ res });
+    } catch (err) {
+      return resFunc({ res, err });
+    }
+  },
 };

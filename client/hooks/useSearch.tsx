@@ -3,7 +3,7 @@ import useSnackBar from "./useSnackBar";
 import { useRouter } from "next/router";
 
 export interface IUseSearch {
-  summonerName: string;
+  value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onEnter: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -54,7 +54,7 @@ const useSearch = (): IUseSearch => {
     router.push(`/${type}/${summonerName}`);
   };
 
-  return { summonerName, onChange, onEnter, onClick };
+  return { value: summonerName, onChange, onEnter, onClick };
 };
 
 export default useSearch;

@@ -1,6 +1,6 @@
 import React from "react";
 import Skeleton from "react-loading-skeleton";
-import { ComparingWithEnemyType } from "../../../toolkit/riot/gameInfoSlice/interface/gameInfo.interface";
+import { IComparingWithEnemy } from "../../../toolkit/riot/gameInfoSlice/interface/gameInfo.interface";
 import SummonerMatchItem from "../SummonerMatchItem/SummonerMatchItem";
 import "react-loading-skeleton/dist/skeleton.css";
 
@@ -8,7 +8,7 @@ import * as S from "./style";
 
 interface IProps {
   loading: boolean;
-  matchArr: ComparingWithEnemyType[];
+  matchArr: IComparingWithEnemy[];
 }
 
 const SummonerMatchList = ({ loading, matchArr }: IProps) => {

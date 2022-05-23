@@ -6,11 +6,11 @@ import "moment/locale/ko";
 import * as S from "./style";
 import { matchDetailAction } from "../../../toolkit/riot/gameInfoSlice/func/gameInfoSlice.func";
 import { useAppDispatch } from "../../../hooks/useRedux";
-import { ComparingWithEnemyType } from "../../../toolkit/riot/gameInfoSlice/interface/gameInfo.interface";
+import { IComparingWithEnemy } from "../../../toolkit/riot/gameInfoSlice/interface/gameInfo.interface";
 import Link from "next/link";
 import { getDataDragonImg } from "../../common/func/common.func";
 interface IProps {
-  match: ComparingWithEnemyType;
+  match: IComparingWithEnemy;
 }
 
 const SummonerMatchItem = ({ match }: IProps) => {
@@ -32,13 +32,13 @@ const SummonerMatchItem = ({ match }: IProps) => {
     return `${m}분 ${s}초`;
   };
 
-  const handleMatchDetailToggle = (match: ComparingWithEnemyType) => {
+  const handleMatchDetailToggle = (match: IComparingWithEnemy) => {
     if (!match.detail) {
       handleMatchDetail(match);
     }
   };
 
-  const handleMatchDetail = async (match: ComparingWithEnemyType) => {
+  const handleMatchDetail = async (match: IComparingWithEnemy) => {
     try {
       const args = {
         gameId: match.gameId,

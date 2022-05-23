@@ -12,7 +12,7 @@ import {
   WARDS_PLACED,
   XP,
 } from "../../../toolkit/riot/gameInfoSlice/constant/gameInfoSlice.interface";
-import { ComparingWithEnemyType } from "../../../toolkit/riot/gameInfoSlice/interface/gameInfo.interface";
+import { IComparingWithEnemy } from "../../../toolkit/riot/gameInfoSlice/interface/gameInfo.interface";
 import {
   CommonMatchDetailType,
   LineMatchType,
@@ -26,7 +26,7 @@ import { IOptionsList, MatchDetailOptionsType } from "../SummonerMatchItem/inter
 import * as S from "./style";
 
 interface IProps {
-  match: ComparingWithEnemyType;
+  match: IComparingWithEnemy;
 }
 
 const commonDetailKeys: {

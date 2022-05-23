@@ -2,11 +2,11 @@ import React from "react";
 import CalendarHeatmap from "react-calendar-heatmap";
 import ReactTooltip from "react-tooltip";
 import moment from "moment";
-import { Jandi } from "../../../toolkit/riot/gameInfoSlice/interface/gameInfo.interface";
+import { IJandi } from "../../../toolkit/riot/gameInfoSlice/interface/gameInfo.interface";
 // import "./style.css";
 
 interface IProps {
-  jandi: Jandi[];
+  jandi: IJandi[];
 }
 
 const CalendarGraph = ({ jandi }: IProps) => {
@@ -22,7 +22,7 @@ const CalendarGraph = ({ jandi }: IProps) => {
     };
   };
 
-  const classForValue = (jandi: Jandi) => {
+  const classForValue = (jandi: IJandi) => {
     if (jandi === null || jandi.count === 0) {
       return "color-empty";
     }
@@ -48,7 +48,7 @@ const CalendarGraph = ({ jandi }: IProps) => {
         startDate={makeDate(20)}
         endDate={makeDate(0)}
         values={jandi}
-        classForValue={(jandi: Jandi) => classForValue(jandi)}
+        classForValue={(jandi: IJandi) => classForValue(jandi)}
         tooltipDataAttrs={(value: any) => getTooltipDataAttrs(value)}
       />
       <ReactTooltip />

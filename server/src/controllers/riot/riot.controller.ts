@@ -34,7 +34,7 @@ export default {
       )[0];
 
       const rankedSoloInfo = {
-        queueType: rankedSolo ? rankedSolo.queueType : "",
+        queueType: rankedSolo ? "솔로랭크" : "",
         tier: rankedSolo ? rankedSolo.tier : "",
         rank: rankedSolo ? rankedSolo.rank : "",
         wins: rankedSolo ? rankedSolo.wins : "",
@@ -106,7 +106,7 @@ export default {
           )[0];
 
           const rankedSoloInfo = {
-            queueType: rankedSolo ? rankedSolo.queueType : "",
+            queueType: rankedSolo ? "솔로랭크" : "",
             tier: rankedSolo ? rankedSolo.tier : "",
             rank: rankedSolo ? rankedSolo.rank : "",
             wins: rankedSolo ? rankedSolo.wins : "",

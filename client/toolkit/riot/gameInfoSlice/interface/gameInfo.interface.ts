@@ -1,6 +1,6 @@
 import { IComparingWithEnemyDetail } from "./matchDetail.interface";
 
-export interface ComparingWithEnemyType {
+export interface IComparingWithEnemy {
   gameId: number;
   gameMode: string;
   gameCreation: number;
@@ -30,7 +30,7 @@ export interface IPlayer {
   wardsKilled: number;
 }
 
-export interface Jandi {
+export interface IJandi {
   date: string;
   win: number;
   lose: number;
@@ -52,8 +52,8 @@ export interface IMatchInfoResponse {
 }
 
 export interface IGameInfo {
-  matchArr: ComparingWithEnemyType[];
-  jandi: Jandi[];
+  matchArr: IComparingWithEnemy[];
+  jandi: IJandi[];
   lineWinOrLose: ILineWinLoseRate[];
 }
 

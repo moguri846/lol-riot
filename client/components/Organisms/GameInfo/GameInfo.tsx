@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  ComparingWithEnemyType,
-  GameInfoType,
-  ILineWinLoseRate,
-  Jandi,
-} from "../../../toolkit/riot/gameInfoSlice/interface/gameInfo.interface";
+import { GameInfoType } from "../../../toolkit/riot/gameInfoSlice/interface/gameInfo.interface";
 import ErrorForm from "../../Molecules/ErrorForm/ErrorForm";
 import SummonerGameAnalysis from "../SummonerGameAnalysis/SummonerGameAnalysis";
 import SummonerMatchList from "../SummonerMatchList/SummonerMatchList";

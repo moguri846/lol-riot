@@ -6,6 +6,7 @@ import { MultiSearchType } from "../../../toolkit/riot/multiSearchSlice/interfac
 import * as S from "./style";
 import ErrorForm from "../../Molecules/ErrorForm/ErrorForm";
 import { getDataDragonImg } from "../../common/func/common.func";
+import Image from "next/image";
 
 interface IProps {
   loading: boolean;
@@ -30,14 +31,18 @@ const MultiSearch = ({ loading, multiSearch }: IProps) => {
                   <SummonerInfo loading={loading} summoner={summonerInfo} multiSearch />
                   <div className="game-info">
                     <div className="most-line">
-                      <img src={`/assets/image/line/${mostLine}.png`} alt={mostLine} />
+                      <Image width={30} height={30} src={`/assets/image/line/${mostLine}.png`} alt={mostLine} />
                     </div>
                     <S.MatchSummaryList>
                       {matchArr.map((match) => (
                         <S.MatchSummaryItem className={`${match.win ? "win" : "lose"}`} key={match.gameCreation}>
-                          <div className="champion">{getDataDragonImg("champion", match.championName)}</div>
+                          <div className="champion">
+                            {getDataDragonImg({ width: 30, height: 30, key: "champion", value: match.championName })}
+                          </div>
                           <div className="line">
-                            <img
+                            <Image
+                              width={30}
+                              height={30}
                               src={`/assets/image/line/${match.individualPosition}.png`}
                               alt={match.individualPosition}
                             />

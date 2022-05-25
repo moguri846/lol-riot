@@ -48,7 +48,7 @@ const MatchSummaryItem = styled.li`
     width: 30px;
     height: 30px;
 
-    & > img {
+    & > span {
       width: 100%;
       height: 100%;
     }
@@ -58,7 +58,7 @@ const MatchSummaryItem = styled.li`
     width: 30px;
     height: 30px;
 
-    & > img {
+    & > span {
       width: 100%;
       height: 100%;
     }

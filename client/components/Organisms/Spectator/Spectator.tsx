@@ -38,10 +38,14 @@ const Spectator = ({ loading, spectator, summonerName }: IProps) => {
                         <S.ChampionStatus>
                           <ul className="spells">
                             {player.spells.map((spell) => (
-                              <li key={spell}>{getDataDragonImg("spell", spell)}</li>
+                              <li key={spell}>
+                                {getDataDragonImg({ width: 12, height: 12, key: "spell", value: spell })}
+                              </li>
                             ))}
                           </ul>
-                          <div className="champion-img">{getDataDragonImg("champion", player.championName)}</div>
+                          <div className="champion-img">
+                            {getDataDragonImg({ width: 26, height: 26, key: "champion", value: player.championName })}
+                          </div>
                         </S.ChampionStatus>
                       </S.SpectatorPlayer>
                     </React.Fragment>
@@ -50,7 +54,7 @@ const Spectator = ({ loading, spectator, summonerName }: IProps) => {
                 <S.BannedChampionList>
                   {spectator.bannedChampions.map((bannedChampion, i) => (
                     <S.BannedChampion key={i}>
-                      {getDataDragonImg("champion", bannedChampion.championName)}
+                      {getDataDragonImg({ width: 30, height: 30, key: "champion", value: bannedChampion.championName })}
                     </S.BannedChampion>
                   ))}
                 </S.BannedChampionList>

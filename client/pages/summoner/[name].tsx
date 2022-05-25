@@ -31,15 +31,13 @@ const Summoner = ({ summonerName }: IProps) => {
 
   useEffect(() => {
     (async () => {
-      dispatch(loadingAction({ summonerInfo: true }));
+      dispatch(loadingAction({ summonerInfo: true, gameInfo: true }));
 
       const {
         payload: { puuid },
       } = await dispatch(summonerInfoAction(summonerName));
 
       dispatch(loadingAction({ summonerInfo: false }));
-
-      dispatch(loadingAction({ gameInfo: true }));
 
       await dispatch(gameInfoAction(puuid));
 

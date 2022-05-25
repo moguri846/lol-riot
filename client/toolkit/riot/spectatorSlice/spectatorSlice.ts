@@ -19,8 +19,8 @@ const spectatorSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(spectatorInfo.pending, (state, { type, payload }) => {});
-    builder.addCase(spectatorInfo.fulfilled, (state, { type, payload }: PayloadAction<any, string>) => {
-      return { ...payload };
+    builder.addCase(spectatorInfo.fulfilled, (state, { type, payload }: PayloadAction<ISpectator, string>) => {
+      return { success: true, ...payload };
     });
     builder.addCase(spectatorInfo.rejected, (state, { type, payload }: PayloadAction<any, string>) => {
       return { ...payload };

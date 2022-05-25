@@ -19,8 +19,8 @@ const gameInfoSlice = createSlice({
   extraReducers: (builder) => {
     // gameInfoAction
     builder.addCase(gameInfoAction.pending, (state, { type, payload }) => {});
-    builder.addCase(gameInfoAction.fulfilled, (state, { type, payload }: PayloadAction<any, string>) => {
-      return { ...payload };
+    builder.addCase(gameInfoAction.fulfilled, (state, { type, payload }: PayloadAction<IGameInfo, string>) => {
+      return { success: true, ...payload };
     });
     builder.addCase(gameInfoAction.rejected, (state, { type, payload }: PayloadAction<any, string>) => {
       return { ...payload };

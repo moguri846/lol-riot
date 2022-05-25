@@ -8,7 +8,7 @@ const nextConfig = {
     return [
       {
         source: "/riot.txt",
-        destination: `http://localhost:5000/api/riot/riot.txt`,
+        destination: `https://server-searchmyname.herokuapp.com/api/riot/riot.txt`,
       },
     ];
   },

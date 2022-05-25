@@ -1,16 +1,16 @@
 import React from "react";
 
 interface IProps {
-  success: boolean;
-  status: number;
-  data: string;
+  success?: boolean;
+  status?: number;
+  message: string;
 }
 
-const ErrorForm = ({ status, data }: IProps) => {
+const ErrorForm = ({ status, message }: IProps) => {
   return (
     <>
       <h1>{status}</h1>
-      <p>{data}</p>
+      <p>{message}</p>
     </>
   );
 };

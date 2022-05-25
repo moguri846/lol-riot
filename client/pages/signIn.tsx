@@ -44,7 +44,7 @@ const SignIn = () => {
 
   return (
     <>
-      <Seo title="SignIn" />
+      <Seo title="SignIn" socialtitle="로그인" socialDesc="SearchMyName 로그인하기" socialUrl="/signIn" />
       <SignInOrUp signIn on로그인아니면회원가입={onLogin} inputs={inputs} onChangeInputs={onChangeInputs} />
     </>
   );

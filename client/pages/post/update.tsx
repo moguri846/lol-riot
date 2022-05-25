@@ -83,7 +83,7 @@ const UpdatePage = () => {
 
   return (
     <>
-      <Seo title="Update" />
+      <Seo title="Update" socialtitle="게시글 생성" socialDesc="게시글 생성하기" socialUrl="/post/update" />
       <PostCreateOrUpdate
         update
         post={post}

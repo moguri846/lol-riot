@@ -62,7 +62,7 @@ const CreatePage = () => {
 
   return (
     <>
-      <Seo title="Create" />
+      <Seo title="Create" socialtitle="게시글 생성" socialDesc="게시글 생성하기" socialUrl="/post/create" />
       <PostCreateOrUpdate create onChangePostValue={onChangePostValue} onCheckPostValue={onCheckPostValue} />
     </>
   );

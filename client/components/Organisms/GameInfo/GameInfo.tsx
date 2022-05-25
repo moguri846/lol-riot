@@ -14,7 +14,7 @@ const GameInfo = ({ loading, gameInfo }: IProps) => {
     <>
       {gameInfo.success === false ? (
         <>
-          <ErrorForm {...gameInfo} />
+          <ErrorForm message={gameInfo.data} {...gameInfo} />
         </>
       ) : (
         <>

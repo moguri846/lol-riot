@@ -13,9 +13,7 @@ const SummonerContainer = styled.div`
 `;
 
 const ProfileImgContainer = styled.div`
-  & > img {
-    width: 120px;
-    height: 120px;
+  & > span {
     border-radius: 50%;
   }
 
@@ -54,10 +52,6 @@ const SummonerRank = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
-
-  & > .tier-rank > .tier > img {
-    width: 100px;
   }
 
   & > .tier-rank > .rank {

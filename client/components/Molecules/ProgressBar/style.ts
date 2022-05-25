@@ -25,7 +25,7 @@ const Player = styled.div`
 `;
 
 const Icon = styled.div`
-  & > img {
+  & > span {
     width: 20px;
     height: 20px;
   }

@@ -13,3 +13,9 @@ export interface IPost {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface IPostPromiseRusult {
+  status: "fulfilled" | "rejected";
+  key: string;
+  data: IPost[] | [];
+}

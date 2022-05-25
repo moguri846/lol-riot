@@ -71,7 +71,12 @@ const Summoner = ({ summonerName }: IProps) => {
 
   return (
     <>
-      <Seo title={summonerName} />
+      <Seo
+        title={summonerName}
+        socialtitle={`${summonerName}님의 롤 전적`}
+        socialDesc={`${summonerName}님의 롤 전적`}
+        socialUrl={`${router.asPath}`}
+      />
       <SummonerInfo
         loading={loading.summonerInfo}
         summoner={summonerInfo}

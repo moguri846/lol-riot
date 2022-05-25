@@ -5,6 +5,7 @@ import { SummonerType } from "../../../toolkit/riot/summonerInfoSlice/interface/
 import ErrorForm from "../../Molecules/ErrorForm/ErrorForm";
 import { getDataDragonImg, toLocaleString } from "../../common/func/common.func";
 import Skeleton from "react-loading-skeleton";
+import Image from "next/image";
 
 interface IProps {
   loading: boolean;
@@ -69,12 +70,12 @@ const SummonerInfo = ({
         ) : (
           <>
             {summoner.success === false ? (
-              <ErrorForm {...summoner} />
+              <ErrorForm message={summoner.data} {...summoner} />
             ) : (
               <>
                 {searchSummoner && (
                   <S.ProfileImgContainer>
-                    {getDataDragonImg("profileicon", summoner.profileIconId)}
+                    {getDataDragonImg({ width: 120, height: 120, key: "profileicon", value: summoner.profileIconId })}
                     <div className="level">
                       <span>
                         Level. <span>{toLocaleString(summoner.summonerLevel)}</span>
@@ -93,7 +94,12 @@ const SummonerInfo = ({
                     <div className="tier-rank">
                       <span className="tier">
                         {summoner.tier ? (
-                          <img src={`/assets/image/emblem/${summoner.tier}.png`} alt={summoner.tier} />
+                          <Image
+                            src={`/assets/image/emblem/${summoner.tier}.png`}
+                            width={100}
+                            height={114}
+                            alt={summoner.tier}
+                          />
                         ) : (
                           "Unranked"
                         )}

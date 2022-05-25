@@ -22,7 +22,7 @@ const MultiSearch = ({ loading, multiSearch }: IProps) => {
       ) : (
         <>
           {multiSearch.success === false ? (
-            <ErrorForm {...multiSearch} />
+            <ErrorForm message={multiSearch.data} {...multiSearch} />
           ) : (
             <S.SummonerList>
               {multiSearch.data.map(({ summonerInfo, mostLine, matchArr }) => (

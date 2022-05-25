@@ -96,11 +96,11 @@ const ChampionStatus = styled.div`
   & > .champion-img-container {
     display: flex;
     align-items: center;
+    margin-right: 5px;
 
-    & > img {
+    & > span {
       width: 50px;
       height: 50px;
-      margin: 0px 5px;
       border-radius: 50%;
     }
   }
@@ -111,7 +111,7 @@ const ChampionStatus = styled.div`
     justify-content: center;
     align-items: center;
 
-    & > img {
+    & > span {
       width: 30px;
       height: 30px;
       margin: 2px 0px;
@@ -120,12 +120,12 @@ const ChampionStatus = styled.div`
   }
 
   @media screen and (max-width: 760px) {
-    & > .champion-img-container > img {
+    & > .champion-img-container > span {
       width: 45px;
       height: 45px;
     }
 
-    & > .spell-img-container > img {
+    & > .spell-img-container > span {
       width: 25px;
       height: 25px;
   }
@@ -215,7 +215,7 @@ const Item = styled.li`
     background-color: #ccc;
   }
 
-  & > img {
+  & > span {
     width: 100%;
     height: 100%;
     border-radius: 5px;
@@ -263,7 +263,7 @@ const Player = styled.li`
     line-height: 17px;
   }
 
-  & > .champion-img > img {
+  & > .champion-img > span {
     width: 16px;
     height: 100%;
   }

@@ -29,7 +29,7 @@ const ProgressBar = ({ title, players }: IProps) => {
       <S.PlayerContainer>
         {players?.map((player, idx) => (
           <S.Player key={idx}>
-            <S.Icon>{getDataDragonImg("champion", player.champion)}</S.Icon>
+            <S.Icon>{getDataDragonImg({ width: 24, height: 24, key: "champion", value: player.champion })}</S.Icon>
             <S.ProgressBarContainer>
               <span>{player.value !== null ? toLocaleString(player.value) : "-"}</span>
               <S.Progress

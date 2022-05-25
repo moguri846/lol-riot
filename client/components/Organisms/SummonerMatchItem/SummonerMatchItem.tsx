@@ -65,9 +65,13 @@ const SummonerMatchItem = ({ match }: IProps) => {
             </S.MatchInfo>
             <S.MatchStatusContainer>
               <S.ChampionStatus className="champion-status">
-                <div className="champion-img-container">{getDataDragonImg("champion", match.player.championName)}</div>
+                <div className="champion-img-container">
+                  {getDataDragonImg({ width: 50, height: 50, key: "champion", value: match.player.championName })}
+                </div>
                 <div className="spell-img-container">
-                  {match.player.spells.map((spell) => getDataDragonImg("spell", spell))}
+                  {match.player.spells.map((spell) =>
+                    getDataDragonImg({ width: 30, height: 30, key: "spell", value: spell })
+                  )}
                 </div>
               </S.ChampionStatus>
               <S.Kda className="kda">
@@ -96,7 +100,11 @@ const SummonerMatchItem = ({ match }: IProps) => {
               <S.Items className="items">
                 {match.player.items.map((item, idx) => (
                   <React.Fragment key={idx}>
-                    {item === 0 ? <S.Item className="none" /> : <S.Item>{getDataDragonImg("item", item)}</S.Item>}
+                    {item === 0 ? (
+                      <S.Item className="none" />
+                    ) : (
+                      <S.Item>{getDataDragonImg({ width: 35, height: 35, key: "item", value: item })}</S.Item>
+                    )}
                   </React.Fragment>
                 ))}
               </S.Items>
@@ -106,11 +114,12 @@ const SummonerMatchItem = ({ match }: IProps) => {
                     key={player.summonerName}
                     className={match.player.summonerName === player.summonerName ? "me" : ""}
                   >
-                    <div className="champion-img">{getDataDragonImg("champion", player.championName)}</div>
+                    <div className="champion-img">
+                      {getDataDragonImg({ width: 16, height: 16, key: "champion", value: player.championName })}
+                    </div>
                     <Link href={`/summoner/${player.summonerName}`}>
                       <div className="summoner-name">{player.summonerName}</div>
                     </Link>
-                    {/* <a href={`/summoner=${player.summonerName}`}></a> */}
                   </S.Player>
                 ))}
               </S.Players>

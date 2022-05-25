@@ -18,7 +18,7 @@ const Spectator = ({ loading, spectator, summonerName }: IProps) => {
       <>
         {spectator.success === false ? (
           <>
-            <ErrorForm {...spectator} />
+            <ErrorForm message={spectator.data} {...spectator} />
           </>
         ) : (
           <>

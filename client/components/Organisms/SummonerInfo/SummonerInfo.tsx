@@ -69,7 +69,7 @@ const SummonerInfo = ({
         ) : (
           <>
             {summoner.success === false ? (
-              <ErrorForm {...summoner} />
+              <ErrorForm message={summoner.data} {...summoner} />
             ) : (
               <>
                 {searchSummoner && (

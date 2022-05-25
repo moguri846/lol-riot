@@ -30,7 +30,7 @@ const SignUp = () => {
 
   return (
     <>
-      <Seo title="SignUp" />
+      <Seo title="SignUp" socialtitle="회원가입" socialDesc="SearchMyName 회원가입하기" socialUrl="/signUp" />
       <SignInOrUp signUp on로그인아니면회원가입={onSignUp} inputs={inputs} onChangeInputs={onChangeInputs} />
     </>
   );

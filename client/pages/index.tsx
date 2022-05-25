@@ -10,7 +10,7 @@ import WithAuth from "../hoc";
 const Home: NextPage = ({ posts }: { posts: IPostPromiseRusult[] }) => {
   return (
     <>
-      <Seo title="Hello" />
+      <Seo title="Hello" socialtitle="SearchMyName" socialDesc="롤 전적 검색" socialUrl="/" />
       <Post posts={posts} />
     </>
   );

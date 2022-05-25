@@ -5,9 +5,12 @@ import { multiSearchAction } from "../../toolkit/riot/multiSearchSlice/func/mult
 import { selectMultiSearch } from "../../toolkit/riot/multiSearchSlice/multiSearchSlice";
 import MultiSearch from "../../components/Organisms/MultiSearch/MultiSearch";
 import WithAuth from "../../hoc";
+import Seo from "../../components/Seo/Seo";
+import { useRouter } from "next/router";
 
 const MultiSearchPage = ({ summonerNames }) => {
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const loading = useAppSelector(selectLoading);
   const multiSearch = useAppSelector(selectMultiSearch);
@@ -22,7 +25,17 @@ const MultiSearchPage = ({ summonerNames }) => {
     })();
   }, [summonerNames]);
 
-  return <MultiSearch loading={loading.multiSearch} multiSearch={multiSearch} />;
+  return (
+    <>
+      <Seo
+        title="멀티서치"
+        socialtitle="멀티서치"
+        socialDesc={`${summonerNames} - 멀티서치`}
+        socialUrl={`${router.asPath}`}
+      />
+      <MultiSearch loading={loading.multiSearch} multiSearch={multiSearch} />
+    </>
+  );
 };
 
 export default WithAuth(MultiSearchPage, null);

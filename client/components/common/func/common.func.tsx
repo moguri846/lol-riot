@@ -1,6 +1,15 @@
-const getDataDragonImg = (key: "champion" | "spell" | "item" | "profileicon", value: string | number) => {
+import Image from "next/image";
+import { IGetDataDragonImgParameter } from "../interface/common.interface";
+
+const getDataDragonImg = ({ width, height, key, value }: IGetDataDragonImgParameter) => {
   return (
-    <img key={value} src={`https://ddragon.leagueoflegends.com/cdn/12.4.1/img/${key}/${value}.png`} alt={`${value}`} />
+    <Image
+      width={width}
+      height={height}
+      key={value}
+      src={`https://ddragon.leagueoflegends.com/cdn/12.4.1/img/${key}/${value}.png`}
+      alt={`${value}`}
+    />
   );
 };
 

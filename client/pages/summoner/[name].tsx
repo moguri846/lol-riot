@@ -31,15 +31,13 @@ const Summoner = ({ summonerName }: IProps) => {
 
   useEffect(() => {
     (async () => {
-      dispatch(loadingAction({ summonerInfo: true }));
+      dispatch(loadingAction({ summonerInfo: true, gameInfo: true }));
 
       const {
         payload: { puuid },
       } = await dispatch(summonerInfoAction(summonerName));
 
       dispatch(loadingAction({ summonerInfo: false }));
-
-      dispatch(loadingAction({ gameInfo: true }));
 
       await dispatch(gameInfoAction(puuid));
 
@@ -73,7 +71,12 @@ const Summoner = ({ summonerName }: IProps) => {
 
   return (
     <>
-      <Seo title={summonerName} />
+      <Seo
+        title={summonerName}
+        socialtitle={`${summonerName}님의 롤 전적`}
+        socialDesc={`${summonerName}님의 롤 전적`}
+        socialUrl={`${router.asPath}`}
+      />
       <SummonerInfo
         loading={loading.summonerInfo}
         summoner={summonerInfo}

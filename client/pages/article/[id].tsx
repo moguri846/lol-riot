@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { addComment, getPost } from "../../API/post";
 import Button from "../../components/Atoms/Button/Button";
@@ -16,6 +17,7 @@ interface IProps {
 
 const ArticlePage = ({ article }: IProps) => {
   const user = useAppSelector(selectInfo);
+  const router = useRouter();
 
   const { snackbar } = useSnackBar();
 
@@ -70,7 +72,12 @@ const ArticlePage = ({ article }: IProps) => {
 
   return (
     <>
-      <Seo title={article.title} />
+      <Seo
+        title={article.title}
+        socialtitle={article.title}
+        socialDesc={article.content}
+        socialUrl={`${router.asPath}`}
+      />
       <Article article={article} user={user} />
       <InputForm {...events} placeholder="Comment..." buttonValue="코맨트 남기기" />
       <ul>

@@ -1,32 +1,35 @@
 import React from "react";
-import { TailSpin } from "react-loader-spinner";
+import ErrorForm from "../../Molecules/ErrorForm/ErrorForm";
 import ArticleSummary from "../ArticleSummary/ArticleSummary";
-import { IPost } from "./interface/Post.interface";
+import { DUO, FREE, MOST_POPULAR } from "./constant/Post.constant";
+import { IPostPromiseRusult } from "./interface/Post.interface";
 import * as S from "./style";
 
 interface IProps {
-  posts: {
-    mostPopular: IPost[];
-    duo: IPost[];
-    free: IPost[];
-  };
+  posts: IPostPromiseRusult[];
 }
 
 const Post = ({ posts }: IProps) => {
-  const printArticleSummaryList = (title: string, post: IPost[]) => {
+  const printArticleSummaryList = (title: string, { status, data }: Omit<IPostPromiseRusult, "key">) => {
     return (
       <>
         <h1>{title}</h1>
         <>
-          {post.length === 0 ? (
-            <>
-              <div className="no-data">no data 🤦‍♂️</div>
-            </>
+          {status === "rejected" ? (
+            <ErrorForm message="값을 가져오는데 실패했습니다 :(" />
           ) : (
             <>
-              {post.map((post, idx) => (
-                <ArticleSummary key={idx} post={post} />
-              ))}
+              {data.length === 0 ? (
+                <>
+                  <div className="no-data">no data 🤦‍♂️</div>
+                </>
+              ) : (
+                <>
+                  {data.map((post, idx) => (
+                    <ArticleSummary key={idx} post={post} />
+                  ))}
+                </>
+              )}
             </>
           )}
         </>
@@ -34,14 +37,18 @@ const Post = ({ posts }: IProps) => {
     );
   };
 
+  const filterPost = (posts: IPostPromiseRusult[], type: string) => {
+    return posts.filter((post) => post.key === type)[0];
+  };
+
   return (
     <>
       <S.PostTop>
-        <S.MostPopularPost>{printArticleSummaryList("인기글🤣", posts.mostPopular)}</S.MostPopularPost>
-        <S.FindDuoPost>{printArticleSummaryList("듀오 구함😏", posts.duo)}</S.FindDuoPost>
+        <S.MostPopularPost>{printArticleSummaryList("인기글🤣", filterPost(posts, MOST_POPULAR))}</S.MostPopularPost>
+        <S.FindDuoPost>{printArticleSummaryList("듀오 구함😏", filterPost(posts, DUO))}</S.FindDuoPost>
       </S.PostTop>
       <S.PostBottom>
-        <S.FreePost>{printArticleSummaryList("자유게시판👋", posts.free)}</S.FreePost>
+        <S.FreePost>{printArticleSummaryList("자유게시판👋", filterPost(posts, FREE))}</S.FreePost>
       </S.PostBottom>
     </>
   );

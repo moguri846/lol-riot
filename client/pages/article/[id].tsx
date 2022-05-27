@@ -10,12 +10,14 @@ import WithAuth from "../../hoc";
 import { useAppSelector } from "../../hooks/useRedux";
 import useSnackBar from "../../hooks/useSnackBar";
 import { selectInfo } from "../../toolkit/user/infoSlice/infoSlice";
+import { selectToken } from "../../toolkit/user/tokenSlice/tokenSlice";
 
 interface IProps {
   article: IPost;
 }
 
 const ArticlePage = ({ article }: IProps) => {
+  const isLogin = useAppSelector(selectToken).isLogin;
   const user = useAppSelector(selectInfo);
   const router = useRouter();
 
@@ -51,10 +53,16 @@ const ArticlePage = ({ article }: IProps) => {
   };
 
   const handleAddComment = async () => {
+    if (!isLogin) {
+      snackbar("로그인 해주세요!", "warning");
+      router.push("/signIn");
+      return;
+    }
+
     const body = {
       _id: article._id,
       comment: {
-        writer: article.writer,
+        writer: user.email,
         comment,
       },
     };
@@ -63,6 +71,8 @@ const ArticlePage = ({ article }: IProps) => {
       await addComment(body);
 
       setComments([...comments, body.comment]);
+
+      setComment("");
     } catch (err) {
       snackbar(err.message, "error");
     }

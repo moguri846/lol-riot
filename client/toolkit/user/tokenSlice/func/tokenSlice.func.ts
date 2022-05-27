@@ -1,5 +1,7 @@
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import moment from "moment";
 import { reissueToken } from "../../../../API/auth";
+import { TOKEN_CHECK, USER } from "../../constant/user.constant";
 import {
   ACCESS_TOKEN,
   ACCESS_TOKEN_EXPIRES_IN,
@@ -11,57 +13,23 @@ import {
   REISSUE_TOKEN,
   VALID_TOKEN,
 } from "../constant/tokenSlice.constant";
-import { IToken } from "../interface/tokenSlice.interface";
+import { IToken, ITokenStatus } from "../interface/tokenSlice.interface";
 
-const checkToken = async (): Promise<{ type: string; isLogin: boolean; message: string }> => {
+const checkToken = createAsyncThunk(`${USER}/${TOKEN_CHECK}`, async (arg: "", { rejectWithValue }) => {
   const accessExpiresIn = parseInt(localStorage.getItem(ACCESS_TOKEN_EXPIRES_IN) as string);
   const Otype = localStorage.getItem(AUTH_TYPE) as string;
   const now = moment().valueOf();
   const accessDiffTime = accessExpiresIn - now;
-  const tokenStatus: any = {
+  let tokenStatus: ITokenStatus = {
     type: NON_EXISTENT_TOKEN,
     isLogin: false,
     message: "존재하지 않은 토큰",
   };
 
   if (accessDiffTime) {
-    // diffTime이 10분 이하 && 2분 이상인 경우
-    if (accessDiffTime <= 600000 && accessDiffTime >= 150000) {
-      try {
-        await reissueTokenAction();
-        tokenStatus.type = REISSUE_TOKEN;
-        tokenStatus.isLogin = true;
-        tokenStatus.message = "토큰 갱신";
-      } catch (err: any) {
-        tokenStatus.type = FAIL;
-        tokenStatus.message = err.message;
-      }
-      // diffTime이 2분 미만인 경우
-    } else if (accessDiffTime < 150000) {
-      const refreshExpiresIn = parseInt(localStorage.getItem(REFRESH_TOKEN_EXPIRES_IN) as string);
-      const refreshDiffTime = refreshExpiresIn - now;
-
-      if (refreshDiffTime >= 150000) {
-        try {
-          await reissueTokenAction();
-          tokenStatus.type = REISSUE_TOKEN;
-          tokenStatus.isLogin = true;
-          tokenStatus.message = "토큰 갱신";
-        } catch (err: any) {
-          tokenStatus.type = FAIL;
-          tokenStatus.message = err.message;
-        }
-      } else {
-        try {
-          await reissueTokenAction();
-          tokenStatus.type = REISSUE_TOKEN;
-          tokenStatus.isLogin = true;
-          tokenStatus.message = "토큰 갱신";
-        } catch (err: any) {
-          tokenStatus.type = FAIL;
-          tokenStatus.message = err.message;
-        }
-      }
+    // diffTime이 10분 이하
+    if (accessDiffTime <= 600000) {
+      tokenStatus = await reissueTokenAction();
     } else {
       tokenStatus.type = VALID_TOKEN;
       tokenStatus.isLogin = true;
@@ -71,18 +39,31 @@ const checkToken = async (): Promise<{ type: string; isLogin: boolean; message: 
     tokenStatus.type = NON_EXISTENT_TOKEN;
     tokenStatus.message = "존재하지 않은 토큰";
   }
+
   return tokenStatus;
-};
+});
 
 const reissueTokenAction = async () => {
+  let tokenStatus: ITokenStatus = {
+    type: REISSUE_TOKEN,
+    isLogin: true,
+    message: "토큰 갱신",
+  };
   try {
     const {
       data: { data },
     } = await reissueToken("searchMyName");
 
     saveToken(data);
+
+    return tokenStatus;
   } catch (err) {
-    console.log("Err", err);
+    tokenStatus = {
+      type: FAIL,
+      isLogin: false,
+      message: err.message,
+    };
+    return tokenStatus;
   }
 };
 

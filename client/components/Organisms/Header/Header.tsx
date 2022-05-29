@@ -15,6 +15,7 @@ import { selectToken, tokenStatusUpdate } from "../../../toolkit/user/tokenSlice
 import { logout } from "../../../API/auth";
 import { useAppDispatch, useAppSelector } from "../../../hooks/useRedux";
 import useSnackBar from "../../../hooks/useSnackBar";
+import { NON_EXISTENT_TOKEN } from "../../../toolkit/user/tokenSlice/constant/tokenSlice.constant";
 
 const Header = () => {
   const dispatch = useAppDispatch();
@@ -29,7 +30,7 @@ const Header = () => {
     try {
       await logout("searchMyName");
 
-      dispatch(tokenStatusUpdate({ isLogin: false, message: "유효하지 않은 토큰" }));
+      dispatch(tokenStatusUpdate({ type: NON_EXISTENT_TOKEN, isLogin: false, message: "유효하지 않은 토큰" }));
 
       localStorage.clear();
     } catch (err) {

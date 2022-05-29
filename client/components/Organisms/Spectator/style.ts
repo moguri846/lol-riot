@@ -57,7 +57,7 @@ const ChampionStatus = styled.div`
 
       display: flex;
 
-      & > img {
+      & > span {
         width: 100%;
         height: 100%;
       }
@@ -68,7 +68,7 @@ const ChampionStatus = styled.div`
     width: 26px;
     height: 26px;
 
-    & > img {
+    & > span {
       width: 100%;
       height: 100%;
     }
@@ -85,7 +85,7 @@ const BannedChampion = styled.li`
   width: 30px;
   height: 30px;
 
-  & > img {
+  & > span
     width: 100%;
     height: 100%;
   }

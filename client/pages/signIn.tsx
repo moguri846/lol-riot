@@ -9,6 +9,7 @@ import { saveToken } from "../toolkit/user/tokenSlice/func/tokenSlice.func";
 import { IToken } from "../toolkit/user/tokenSlice/interface/tokenSlice.interface";
 import WithAuth from "../hoc";
 import { tokenStatusUpdate } from "../toolkit/user/tokenSlice/tokenSlice";
+import { NON_EXISTENT_TOKEN } from "../toolkit/user/tokenSlice/constant/tokenSlice.constant";
 
 const SignIn = () => {
   const [inputs, setInputs] = useState({
@@ -26,7 +27,7 @@ const SignIn = () => {
 
       saveToken(data);
 
-      dispatch(tokenStatusUpdate({ isLogin: true, message: "유효한 토큰" }));
+      dispatch(tokenStatusUpdate({ type: NON_EXISTENT_TOKEN, isLogin: true, message: "유효한 토큰" }));
 
       return data;
     } catch (err) {

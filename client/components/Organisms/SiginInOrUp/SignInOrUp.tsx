@@ -58,6 +58,14 @@ const SignInOrUp = ({ signIn, signUp, inputs, onChangeInputs, on로그인아니�
         <label htmlFor="password">비밀번호</label>
         <Input onChange={handleChangeInput} id="password" type="password" />
       </div>
+      {signUp && (
+        <>
+          <div>
+            <label htmlFor="password">닉네임</label>
+            <Input onChange={handleChangeInput} id="username" type="text" />
+          </div>
+        </>
+      )}
       <Button onClick={handleSubmit}>{signIn ? "로그인" : "회원가입"}</Button>
       {signIn && (
         <>

@@ -11,6 +11,8 @@ import { useAppSelector } from "../../hooks/useRedux";
 import useSnackBar from "../../hooks/useSnackBar";
 import { selectInfo } from "../../toolkit/user/infoSlice/infoSlice";
 import { selectToken } from "../../toolkit/user/tokenSlice/tokenSlice";
+import moment from "moment";
+import ArticleComments from "../../components/Organisms/ArticleComments/ArticleComments";
 
 interface IProps {
   article: IPost;
@@ -62,8 +64,10 @@ const ArticlePage = ({ article }: IProps) => {
     const body = {
       _id: article._id,
       comment: {
-        writer: user.email,
+        username: user.username,
+        email: user.email,
         comment,
+        date: moment(moment()._d).format("YYYY-MM-DD hh:mm:ss"),
       },
     };
 
@@ -90,16 +94,7 @@ const ArticlePage = ({ article }: IProps) => {
       />
       <Article article={article} user={user} />
       <InputForm {...events} placeholder="Comment..." buttonValue="코맨트 남기기" />
-      <ul>
-        {comments.map((c) => (
-          <li key={c._id}>
-            <div>
-              <h2>writer {c.writer}</h2>
-              <p>comment {c.comment}</p>
-            </div>
-          </li>
-        ))}
-      </ul>
+      <ArticleComments comments={comments} />
     </>
   );
 };

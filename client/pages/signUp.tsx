@@ -8,6 +8,7 @@ const SignUp = () => {
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
+    username: "",
   });
 
   const onSignUp = async (body: ISignInOrUpParameter) => {

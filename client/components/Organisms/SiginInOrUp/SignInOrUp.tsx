@@ -23,6 +23,7 @@ const SignInOrUp = ({ signIn, signUp, inputs, onChangeInputs, on로그인아니�
   const handleSubmit = async () => {
     for (const items in inputs) {
       if (!inputs[items]) {
+        snackbar("아이디 혹은 비밀번호를 입력해주세요!", "warning");
         return;
       }
     }
@@ -57,6 +58,14 @@ const SignInOrUp = ({ signIn, signUp, inputs, onChangeInputs, on로그인아니�
         <label htmlFor="password">비밀번호</label>
         <Input onChange={handleChangeInput} id="password" type="password" />
       </div>
+      {signUp && (
+        <>
+          <div>
+            <label htmlFor="password">닉네임</label>
+            <Input onChange={handleChangeInput} id="username" type="text" />
+          </div>
+        </>
+      )}
       <Button onClick={handleSubmit}>{signIn ? "로그인" : "회원가입"}</Button>
       {signIn && (
         <>

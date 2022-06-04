@@ -67,7 +67,7 @@ const ArticlePage = ({ article }: IProps) => {
         username: user.username,
         email: user.email,
         comment,
-        date: moment(moment()._d).format("YYYY-MM-DD hh:mm:ss"),
+        date: moment(moment().toDate()).format("YYYY-MM-DD hh:mm:ss"),
       },
     };
 

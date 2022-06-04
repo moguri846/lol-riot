@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import mongoose from "mongoose";
 import { swaggerUi, specs } from "./config/swagger";
 
@@ -14,11 +15,27 @@ const port: string | number = process.env.PORT || 5000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// 이 주소만 cors 허용
+const whitelist = ["http://localhost:3000", "https://searchmyname.vercel.app"];
+
+const corsOptions = {
+  origin: function (origin: any, callback: any) {
+    if (!origin || whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      console.log("origin", origin);
+
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+};
+
 const connect = mongoose
   .connect(mongoDBConfig.mongoDBUri)
   .then(() => console.log("MongoDB Connected..."))
   .catch((err: any) => console.log(err));
 
+app.use(cors(corsOptions));
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 app.use("/api/auth", authRoute);
 app.use("/api/riot", riotRoute);

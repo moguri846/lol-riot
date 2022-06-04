@@ -20,6 +20,11 @@ const userSchema = new Schema<IUserDoc>(
       required: true,
       minlength: 8,
     },
+    username: {
+      type: String,
+      required: true,
+      maxlength: 10,
+    },
     role: {
       type: Number,
       default: 0,
@@ -155,6 +160,7 @@ userSchema.statics.findByToken = function (access_token: string): Promise<IUser>
 };
 
 interface IUserDoc extends IUser, Document {
+  _id: string;
   comparePassword: (password: string) => Promise<IComparePassword_R>;
   generateToken: () => Promise<IGenerateToken_R>;
 }

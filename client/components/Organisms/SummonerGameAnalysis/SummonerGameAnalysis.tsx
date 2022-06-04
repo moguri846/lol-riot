@@ -1,10 +1,10 @@
 import React from "react";
-import Skeleton from "react-loading-skeleton";
 import { IJandi, ILineWinLoseRate } from "../../../toolkit/riot/gameInfoSlice/interface/gameInfo.interface";
 import BarGraph from "../../Molecules/BarGraph/BarGraph";
 import CalendarGraph from "../../Molecules/CalendarGraph/CalendarGraph";
 
 import * as S from "./style";
+import SummonerGameAnalysisSkeleton from "./SummonerGameAnalysisSkeleton";
 
 interface IProps {
   loading: boolean;
@@ -16,16 +16,7 @@ const SummonerGameAnalysis = ({ loading, jandi, lineWinOrLose }: IProps) => {
   return (
     <>
       {loading ? (
-        <>
-          <S.GraphContainer>
-            <S.CalendarGraphContainer>
-              <Skeleton width="25%" height="200px" />
-            </S.CalendarGraphContainer>
-            <S.BarGraphContainer>
-              <Skeleton width="100%" height="200px" />
-            </S.BarGraphContainer>
-          </S.GraphContainer>
-        </>
+        <SummonerGameAnalysisSkeleton />
       ) : (
         <>
           <S.GraphContainer>

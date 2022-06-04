@@ -1,23 +1,28 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
 import { MOST_POPULAR } from "../controllers/post/constant/post.constant";
-import { IPost } from "./interface/Post.interface";
-import { IUser } from "./interface/User.interface";
+import { IComments, IPost } from "./interface/Post.interface";
 
-const commandSchema = new Schema<{ writer: string; comment: string }>(
-  {
-    writer: {
-      type: String,
-    },
-    comment: {
-      type: String,
-    },
+const commandSchema = new Schema<IComments>({
+  username: {
+    type: String,
   },
-  { timestamps: true }
-);
+  email: {
+    type: String,
+  },
+  comment: {
+    type: String,
+  },
+  date: {
+    type: String,
+  },
+});
 
 const postSchema = new Schema<IPost & Document, IPostModel>(
   {
-    writer: {
+    username: {
+      type: String,
+    },
+    email: {
       type: String,
     },
     category: {
@@ -108,15 +113,13 @@ postSchema.statics.deletePost = function (_id: string): Promise<void> {
   });
 };
 
-postSchema.statics.addComment = function (_id: string, comment: { writer: string; comment: string }): Promise<void> {
+postSchema.statics.addComment = function (_id: string, comment: IComments): Promise<void> {
   return new Promise((reslove, reject) => {
-    // this.updateOne({ _id }, {});
-    this.findOne({ _id }).exec((err: any, post) => {
+    this.findOne({ _id }).exec((err: any, post: any) => {
       if (err) {
         reject(err);
       }
 
-      // @ts-ignore
       const newComments = [...post.comments, comment];
 
       this.updateOne({ _id }, { $set: { comments: newComments } }).exec((err) => {
@@ -137,7 +140,7 @@ interface IPostModel extends Model<IPostDoc> {
   getPost: (_id: string) => Promise<IPost>;
   updatePost: (newPost: Pick<IPost, "_id" | "category" | "title" | "content">) => Promise<void>;
   deletePost: (_id: string) => Promise<void>;
-  addComment: (_id: string, comment: { writer: string; comment: string }) => Promise<any>;
+  addComment: (_id: string, comment: IComments) => Promise<any>;
 }
 
 const Post = mongoose.model<IPostDoc, IPostModel>("Post", postSchema);

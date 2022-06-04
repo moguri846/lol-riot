@@ -1,3 +1,4 @@
+import { IComments } from "../components/Organisms/Post/interface/Post.interface";
 import { makeQueryString } from "./common/commonFunc";
 import { Methods } from "./common/methods";
 import Send from "./interceptor";
@@ -51,7 +52,7 @@ const deletePost = (id: string) => {
   });
 };
 
-const addComment = (body: { _id: string; comment: { writer: string; comment: string } }) => {
+const addComment = (body: { _id: string; comment: Omit<IComments, "_id"> }) => {
   return Send({
     method: Methods.POST,
     url: `/post/addComment`,

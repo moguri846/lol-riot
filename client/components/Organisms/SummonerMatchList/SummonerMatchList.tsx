@@ -1,10 +1,10 @@
 import React from "react";
-import Skeleton from "react-loading-skeleton";
 import { IComparingWithEnemy } from "../../../toolkit/riot/gameInfoSlice/interface/gameInfo.interface";
 import SummonerMatchItem from "../SummonerMatchItem/SummonerMatchItem";
 import "react-loading-skeleton/dist/skeleton.css";
 
 import * as S from "./style";
+import SummonerMatchListSkeleton from "./SummonerMatchListSkeleton";
 
 interface IProps {
   loading: boolean;
@@ -17,7 +17,7 @@ const SummonerMatchList = ({ loading, matchArr }: IProps) => {
       <S.MatchList>
         {loading ? (
           <>
-            <Skeleton width="100%" height="110px" />
+            <SummonerMatchListSkeleton />
           </>
         ) : (
           <>

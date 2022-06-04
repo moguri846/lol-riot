@@ -6,6 +6,8 @@ import { IInfo } from "./interface/infoSlice.interface";
 
 export const initialInfoSliceState: IInfo = {
   email: "",
+  username: "",
+  role: 0,
 };
 
 const infoSlice = createSlice({

@@ -6,7 +6,7 @@ import ErrorForm from "../../Molecules/ErrorForm/ErrorForm";
 import { getDataDragonImg, toLocaleString } from "../../common/func/common.func";
 import Skeleton from "react-loading-skeleton";
 import Image from "next/image";
-import SummonerInfoSkeleton from "./summonerInfoSkeleton";
+import SummonerInfoSkeleton from "./SummonerInfoSkeleton";
 
 interface IProps {
   loading: boolean;

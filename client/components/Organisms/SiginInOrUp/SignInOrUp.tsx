@@ -23,6 +23,7 @@ const SignInOrUp = ({ signIn, signUp, inputs, onChangeInputs, on로그인아니�
   const handleSubmit = async () => {
     for (const items in inputs) {
       if (!inputs[items]) {
+        snackbar("아이디 혹은 비밀번호를 입력해주세요!", "warning");
         return;
       }
     }

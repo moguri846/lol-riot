@@ -1,12 +1,12 @@
 import React from "react";
 import moment from "moment";
-import Skeleton from "react-loading-skeleton";
 import SummonerInfo from "../SummonerInfo/SummonerInfo";
 import { MultiSearchType } from "../../../toolkit/riot/multiSearchSlice/interface/multiSearchSlice.interface";
 import * as S from "./style";
 import ErrorForm from "../../Molecules/ErrorForm/ErrorForm";
 import { getDataDragonImg } from "../../common/func/common.func";
 import Image from "next/image";
+import MultiSearchSkeleton from "./MultiSearchSkeleton";
 
 interface IProps {
   loading: boolean;
@@ -18,7 +18,7 @@ const MultiSearch = ({ loading, multiSearch }: IProps) => {
     <>
       {loading ? (
         <>
-          <Skeleton width="1200px" height="480px" />
+          <MultiSearchSkeleton />
         </>
       ) : (
         <>

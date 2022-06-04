@@ -46,6 +46,8 @@ export default {
     try {
       const responseData = {
         email: req.user.email,
+        username: req.user.username,
+        role: req.user.role,
       };
 
       return resFunc({ res, data: responseData });

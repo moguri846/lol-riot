@@ -1,8 +1,8 @@
 import React from "react";
 import moment from "moment";
-import * as S from "./style";
 import Link from "next/link";
 import { IPost } from "../Post/interface/Post.interface";
+import * as S from "./style";
 
 interface IProps {
   post: IPost;
@@ -11,10 +11,11 @@ interface IProps {
 const ArticleSummary = ({ post }: IProps) => {
   return (
     <S.List>
-      <div>
+      <S.ArticleInfoContainer>
         <Link href={`/article/${post._id}`}>{post.title}</Link>
-      </div>
-      <div>{moment(post.createdAt).startOf("minute").fromNow()}</div>
+        <S.CommentCount> [{post.comments.length}]</S.CommentCount>
+      </S.ArticleInfoContainer>
+      <S.Date>{moment(post.createdAt).startOf("minute").fromNow()}</S.Date>
     </S.List>
   );
 };

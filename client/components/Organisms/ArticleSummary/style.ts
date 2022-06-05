@@ -9,4 +9,12 @@ const List = styled.li`
   }
 `;
 
-export { List };
+const ArticleInfoContainer = styled.div``;
+
+const CommentCount = styled.span`
+  color: #5383e8;
+`;
+
+const Date = styled.span``;
+
+export { List, ArticleInfoContainer, CommentCount, Date };

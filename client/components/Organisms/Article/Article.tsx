@@ -39,8 +39,8 @@ const Article = ({ loading, article, user }: IProps) => {
           <h1>{article.title}</h1>
         </S.Title>
         <S.ArticleStatus>
-          <S.Category>{article.category}</S.Category>
-          <S.Views>views {article.views}</S.Views>
+          <S.CommentCount>댓글 {article.comments.length}</S.CommentCount>
+          <S.Views>조회 {article.views}</S.Views>
         </S.ArticleStatus>
       </S.ArticleTop>
       <S.ArticleBottom>

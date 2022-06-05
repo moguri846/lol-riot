@@ -14,6 +14,10 @@ const Header = styled.header`
     width: 100%;
   }
 
+  @media screen and (max-width: 750px) {
+    margin-bottom: 0px;
+  }
+
   @media screen and (max-width: 500px) {
     flex-direction: column;
     justify-content: flex-start;

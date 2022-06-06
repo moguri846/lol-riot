@@ -33,7 +33,7 @@ const SummonerInfo = ({
         ) : (
           <>
             {summoner.success === false ? (
-              <ErrorForm message={summoner.data} {...summoner} />
+              <ErrorForm message={summoner.data} {...summoner} message404="찾으시려는 소화사는 존재하지 않습니다. ☹" />
             ) : (
               <>
                 {searchSummoner && (

@@ -18,7 +18,7 @@ const Spectator = ({ loading, spectator, summonerName }: IProps) => {
       <>
         {spectator.success === false ? (
           <>
-            <ErrorForm message={spectator.data} {...spectator} />
+            <ErrorForm message={spectator.data} {...spectator} message404={`${summonerName}님은 게임 중이 아닙니다.`} />
           </>
         ) : (
           <>

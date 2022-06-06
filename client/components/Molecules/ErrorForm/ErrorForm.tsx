@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import useSnackBar from "../../../hooks/useSnackBar";
+import * as S from "./style";
 
 interface IProps {
   success?: boolean;
@@ -20,10 +21,10 @@ const ErrorForm = ({ status, message, message404 }: IProps) => {
   }, []);
 
   return (
-    <>
-      <h1>{status}</h1>
-      <p>{message}</p>
-    </>
+    <S.ErrorFormContainer>
+      <S.Status>{status !== 404 && status}</S.Status>
+      <S.Message>{showMessage()}</S.Message>
+    </S.ErrorFormContainer>
   );
 };
 

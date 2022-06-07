@@ -47,13 +47,15 @@ const Article = ({ loading, article, user }: IProps) => {
         <S.Content>{article.content}</S.Content>
         {article.email === user.email && (
           <div className="delete">
-            <Link
-              href={`/post/update?_id=${article._id}&category=${article.category}&title=${encodeURIComponent(
-                article.title
-              )}&content=${encodeURIComponent(article.content)}`}
-            >
-              <Button>수정하기</Button>
-            </Link>
+            <Button>
+              <Link
+                href={`/post/update?_id=${article._id}&category=${article.category}&title=${encodeURIComponent(
+                  article.title
+                )}&content=${encodeURIComponent(article.content)}`}
+              >
+                수정하기
+              </Link>
+            </Button>
             <Button onClick={deleteArticle}>삭제하기</Button>
           </div>
         )}

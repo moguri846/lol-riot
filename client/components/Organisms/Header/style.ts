@@ -10,21 +10,14 @@ const Header = styled.header`
   border-bottom: 1px solid black;
   margin-bottom: 20px;
 
-  & > div {
-    width: 760px;
-  }
-
-  & > div:nth-of-type(1) > div:nth-of-type(1) {
-    width: 350px;
-  }
-
   @media screen and (max-width: 760px) {
     width: 100%;
-
-    & > div {
-      width: 100%;
-    }
   }
+
+  @media screen and (max-width: 750px) {
+    margin-bottom: 0px;
+  }
+
   @media screen and (max-width: 500px) {
     flex-direction: column;
     justify-content: flex-start;
@@ -32,12 +25,19 @@ const Header = styled.header`
 `;
 
 const HeadeTop = styled.div`
+  width: 760px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   position: relative;
 
+  & > div:nth-of-type(1) {
+    width: 350px;
+    background-color: red;
+  }
+
   @media screen and (max-width: 760px) {
+    width: 100%;
     flex-direction: column;
 
     & > h1 {
@@ -75,6 +75,7 @@ const LoginButtonContainer = styled.div`
 `;
 
 const HeaderBottom = styled.div`
+  width: 760px;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -84,11 +85,23 @@ const HeaderBottom = styled.div`
     height: 20px;
   }
 
+  @media screen and (max-width: 760px) {
+    width: 100%;
+  }
+
   @media screen and (max-width: 500px) {
     flex-direction: column;
 
-    & > .famous-saying > .flicking-viewport > .flicking-camera > div {
-      text-align: center;
+    div > .flicking-viewport {
+      width: 100%;
+    }
+
+    & > .famous-saying {
+      width: 100%;
+
+      & > .flicking-viewport > .flicking-camera > div {
+        text-align: center;
+      }
     }
   }
 

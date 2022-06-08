@@ -16,7 +16,7 @@ const Post = ({ posts }: IProps) => {
         <h1>{title}</h1>
         <>
           {status === "rejected" ? (
-            <ErrorForm message="값을 가져오는데 실패했습니다 :(" />
+            <ErrorForm message="값을 가져오는데 실패했습니다 :(" message404="값을 가져오는데 실패했습니다 :(" />
           ) : (
             <>
               {data.length === 0 ? (

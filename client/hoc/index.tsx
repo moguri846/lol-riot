@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../hooks/useRedux";
 import { myInfoAction } from "../toolkit/user/infoSlice/infoSlice";
-import { checkToken } from "../toolkit/user/tokenSlice/func/tokenSlice.func";
+import { checkTokenAction } from "../toolkit/user/tokenSlice/func/tokenSlice.func";
 import { ITokenStatus } from "../toolkit/user/tokenSlice/interface/tokenSlice.interface";
 import { selectToken } from "../toolkit/user/tokenSlice/tokenSlice";
 
@@ -24,7 +24,7 @@ const WithAuth = (Component: React.FC, option: boolean | null) => {
       (async () => {
         const {
           payload: { isLogin },
-        } = (await dispatch(checkToken(""))) as { payload: ITokenStatus };
+        } = (await dispatch(checkTokenAction(""))) as { payload: ITokenStatus };
 
         if (isLogin) {
           await dispatch(myInfoAction(""));

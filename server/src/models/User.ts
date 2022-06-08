@@ -112,28 +112,26 @@ userSchema.statics.reissueToken = function (refresh_token: string): Promise<stri
       }
 
       if (verify.exp) {
-        if (verify.exp) {
-          const now = moment().unix();
-          const exp = verify.exp;
+        const now = moment().unix();
+        const exp = verify.exp;
 
-          user.access_token = accessToken;
+        user.access_token = accessToken;
 
-          if (exp - now <= getTimeToSec(30, "day")) {
-            const refreshToken = jwt.sign({ id: user._id }, jwtSecretConfig.jwtSecret, { expiresIn: "60d" });
-            const refreshTokenExp = getTimeToSec(60, "day");
-            token = {
-              ...token,
-              refresh_token: refreshToken,
-              refresh_token_expires_in: refreshTokenExp,
-            };
+        if (exp - now <= getTimeToSec(30, "day")) {
+          const refreshToken = jwt.sign({ id: user._id }, jwtSecretConfig.jwtSecret, { expiresIn: "60d" });
+          const refreshTokenExp = getTimeToSec(60, "day");
+          token = {
+            ...token,
+            refresh_token: refreshToken,
+            refresh_token_expires_in: refreshTokenExp,
+          };
 
-            user.refresh_token = refreshToken;
-          }
-          return user
-            .save()
-            .then(() => resolve(token))
-            .catch((err: any) => reject(err));
+          user.refresh_token = refreshToken;
         }
+        return user
+          .save()
+          .then(() => resolve(token))
+          .catch((err: any) => reject(err));
       }
     } catch (err: any) {
       reject(err);

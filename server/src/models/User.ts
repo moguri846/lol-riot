@@ -72,18 +72,14 @@ userSchema.methods.generateToken = function (): Promise<IGenerateToken_R> {
   const user = this;
 
   const accessToken = jwt.sign({}, jwtSecretConfig.jwtSecret, { expiresIn: "30m" });
-  const accessTokenExp = getTimeToSec(30, "minute");
   const refreshToken = jwt.sign({ id: user._id }, jwtSecretConfig.jwtSecret, { expiresIn: "60d" });
-  const refreshTokenExp = getTimeToSec(60, "day");
 
   user.access_token = accessToken;
   user.refresh_token = refreshToken;
 
   const token: IUserToken = {
     access_token: accessToken,
-    expires_in: accessTokenExp,
     refresh_token: refreshToken,
-    refresh_token_expires_in: refreshTokenExp,
   };
 
   return user
@@ -94,11 +90,9 @@ userSchema.methods.generateToken = function (): Promise<IGenerateToken_R> {
 
 userSchema.statics.reissueToken = function (refresh_token: string): Promise<string | IUserToken> {
   const accessToken = jwt.sign({}, jwtSecretConfig.jwtSecret, { expiresIn: "30m" });
-  const accessTokenExp = getTimeToSec(30, "minute");
 
   let token: IUserToken = {
     access_token: accessToken,
-    expires_in: accessTokenExp,
   };
 
   return new Promise(async (resolve, reject) => {
@@ -112,28 +106,24 @@ userSchema.statics.reissueToken = function (refresh_token: string): Promise<stri
       }
 
       if (verify.exp) {
-        if (verify.exp) {
-          const now = moment().unix();
-          const exp = verify.exp;
+        const now = moment().unix();
+        const exp = verify.exp;
 
-          user.access_token = accessToken;
+        user.access_token = accessToken;
 
-          if (exp - now <= getTimeToSec(30, "day")) {
-            const refreshToken = jwt.sign({ id: user._id }, jwtSecretConfig.jwtSecret, { expiresIn: "60d" });
-            const refreshTokenExp = getTimeToSec(60, "day");
-            token = {
-              ...token,
-              refresh_token: refreshToken,
-              refresh_token_expires_in: refreshTokenExp,
-            };
+        if (exp - now <= getTimeToSec(30, "day")) {
+          const refreshToken = jwt.sign({ id: user._id }, jwtSecretConfig.jwtSecret, { expiresIn: "60d" });
+          token = {
+            ...token,
+            refresh_token: refreshToken,
+          };
 
-            user.refresh_token = refreshToken;
-          }
-          return user
-            .save()
-            .then(() => resolve(token))
-            .catch((err: any) => reject(err));
+          user.refresh_token = refreshToken;
         }
+        return user
+          .save()
+          .then(() => resolve(token))
+          .catch((err: any) => reject(err));
       }
     } catch (err: any) {
       reject(err);

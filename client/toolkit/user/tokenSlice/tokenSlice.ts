@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootReducerType } from "../../store";
 import { TOKEN } from "../constant/user.constant";
 import { NON_EXISTENT_TOKEN } from "./constant/tokenSlice.constant";
-import { checkToken } from "./func/tokenSlice.func";
+import { checkTokenAction } from "./func/tokenSlice.func";
 import { ITokenStatus } from "./interface/tokenSlice.interface";
 
 export const initialTokenSliceState: ITokenStatus = {
@@ -20,8 +20,8 @@ const tokenSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(checkToken.pending, (state, { type, payload }) => {});
-    builder.addCase(checkToken.fulfilled, (state, { type, payload }) => {
+    builder.addCase(checkTokenAction.pending, (state, { type, payload }) => {});
+    builder.addCase(checkTokenAction.fulfilled, (state, { type, payload }) => {
       return {
         ...payload,
       };

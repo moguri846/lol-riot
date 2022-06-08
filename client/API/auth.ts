@@ -33,6 +33,13 @@ const signIn = (data: { email: string; password: string }) => {
 //   });
 // };
 
+const checkToken = () => {
+  return Send({
+    method: Methods.GET,
+    url: "/auth/searchMyName/checkToken",
+  });
+};
+
 // const myInfo = (type: string) => {
 const myInfo = () => {
   return Send({
@@ -61,4 +68,4 @@ const logout = (type: string) => {
   });
 };
 
-export { signUp, signIn, reissueToken, myInfo, logout };
+export { signUp, signIn, checkToken, reissueToken, myInfo, logout };

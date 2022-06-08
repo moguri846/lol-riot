@@ -76,4 +76,7 @@ export default {
       return resFunc({ res });
     });
   },
+  async checkToken(req: Request, res: Response) {
+    return resFunc({ res });
+  },
 };

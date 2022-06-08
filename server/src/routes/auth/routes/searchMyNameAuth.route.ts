@@ -8,6 +8,8 @@ router.post("/signUp", controller.signUp);
 
 router.post("/signIn", controller.signIn);
 
+router.get("/checkToken", authChecker, controller.checkToken);
+
 router.get("/myInfo", authChecker, controller.myInfo);
 
 router.post("/reissueToken", authChecker, controller.reissueToken);

@@ -21,9 +21,15 @@ const SummonerMatchList = ({ loading, matchArr }: IProps) => {
           </>
         ) : (
           <>
-            {matchArr.map((match) => (
-              <SummonerMatchItem key={match.gameId} match={match} />
-            ))}
+            {matchArr.length === 0 ? (
+              <S.NoMatch>게임 전적이 없습니다.</S.NoMatch>
+            ) : (
+              <>
+                {matchArr.map((match) => (
+                  <SummonerMatchItem key={match.gameId} match={match} />
+                ))}
+              </>
+            )}
           </>
         )}
       </S.MatchList>

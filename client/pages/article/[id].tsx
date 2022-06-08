@@ -72,11 +72,11 @@ const ArticlePage = ({ article }: IProps) => {
     };
 
     try {
-      await addComment(body);
-
       setComments([...comments, body.comment]);
 
       setComment("");
+
+      await addComment(body);
     } catch (err) {
       snackbar(err.message, "error");
     }

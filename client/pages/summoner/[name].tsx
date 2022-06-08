@@ -34,12 +34,14 @@ const Summoner = ({ summonerName }: IProps) => {
       dispatch(loadingAction({ summonerInfo: true, gameInfo: true }));
 
       const {
-        payload: { puuid },
+        payload: { success, puuid },
       } = await dispatch(summonerInfoAction(summonerName));
 
       dispatch(loadingAction({ summonerInfo: false }));
 
-      await dispatch(gameInfoAction(puuid));
+      if (success === undefined) {
+        await dispatch(gameInfoAction(puuid));
+      }
 
       dispatch(loadingAction({ gameInfo: false }));
     })();
@@ -84,10 +86,14 @@ const Summoner = ({ summonerName }: IProps) => {
         onSpectatorToggle={handleSpectatorToggle}
         searchSummoner
       />
-      {spectatorToggle ? (
-        <Spectator loading={loading.spectator} spectator={spectator} summonerName={summonerName} />
-      ) : (
-        <GameInfo loading={loading.gameInfo} gameInfo={gameInfo} />
+      {summonerInfo.success === undefined && (
+        <>
+          {spectatorToggle ? (
+            <Spectator loading={loading.spectator} spectator={spectator} summonerName={summonerName} />
+          ) : (
+            <GameInfo loading={loading.gameInfo} gameInfo={gameInfo} />
+          )}
+        </>
       )}
     </>
   );

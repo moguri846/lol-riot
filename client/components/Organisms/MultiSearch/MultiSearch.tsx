@@ -23,7 +23,7 @@ const MultiSearch = ({ loading, multiSearch }: IProps) => {
       ) : (
         <>
           {multiSearch.success === false ? (
-            <ErrorForm message={multiSearch.data} {...multiSearch} />
+            <ErrorForm message={multiSearch.data} {...multiSearch} message404="유저 정보를 불러오지 못했습니다." />
           ) : (
             <S.SummonerList>
               {multiSearch.data.map(({ summonerInfo, mostLine, matchArr }) => (

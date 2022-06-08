@@ -14,7 +14,7 @@ const GameInfo = ({ loading, gameInfo }: IProps) => {
     <>
       {gameInfo.success === false ? (
         <>
-          <ErrorForm message={gameInfo.data} {...gameInfo} />
+          <ErrorForm message={gameInfo.data} {...gameInfo} message404="게임 정보를 불러오지 못했습니다." />
         </>
       ) : (
         <>

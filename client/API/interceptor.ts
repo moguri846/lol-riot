@@ -1,4 +1,6 @@
-import axios, { AxiosInstance } from "axios";
+import axios, { AxiosInstance, AxiosResponse } from "axios";
+import { saveToken } from "../toolkit/user/tokenSlice/func/tokenSlice.func";
+import { reissueToken } from "./auth";
 
 const instance: AxiosInstance = axios.create({
   baseURL:
@@ -30,7 +32,16 @@ instance.interceptors.response.use(
 
     return response;
   },
-  (err: any) => Promise.reject(err)
+  async (err: any) => {
+    if (err.response.status === 401) {
+      const {
+        data: { data },
+      } = await reissueToken("searchMyName");
+      saveToken(data);
+    }
+
+    return Promise.reject(err);
+  }
 );
 
 export default instance;

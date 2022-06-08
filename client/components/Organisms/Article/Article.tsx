@@ -39,23 +39,23 @@ const Article = ({ loading, article, user }: IProps) => {
           <h1>{article.title}</h1>
         </S.Title>
         <S.ArticleStatus>
-          <S.Category>{article.category}</S.Category>
-          <S.Views>views {article.views}</S.Views>
+          <S.CommentCount>댓글 {article.comments.length}</S.CommentCount>
+          <S.Views>조회 {article.views}</S.Views>
         </S.ArticleStatus>
       </S.ArticleTop>
       <S.ArticleBottom>
         <S.Content>{article.content}</S.Content>
-        {article.writer === user.email && (
+        {article.email === user.email && (
           <div className="delete">
-            <Link
-              href={`/post/update?_id=${article._id}&category=${article.category}&title=${encodeURIComponent(
-                article.title
-              )}&content=${encodeURIComponent(article.content)}`}
-            >
-              {/* <Button label="수정하기" /> */}
-              <Button>수정하기</Button>
-            </Link>
-            {/* </Button> */}
+            <Button>
+              <Link
+                href={`/post/update?_id=${article._id}&category=${article.category}&title=${encodeURIComponent(
+                  article.title
+                )}&content=${encodeURIComponent(article.content)}`}
+              >
+                수정하기
+              </Link>
+            </Button>
             <Button onClick={deleteArticle}>삭제하기</Button>
           </div>
         )}

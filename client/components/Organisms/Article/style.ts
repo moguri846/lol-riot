@@ -2,13 +2,6 @@ import styled from "styled-components";
 
 const ArticleContainer = styled.div`
   width: 100%;
-
-  & > .watch-loading {
-    height: 92vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
 `;
 
 const ArticleTop = styled.div`
@@ -25,14 +18,22 @@ const ArticleTop = styled.div`
 const Title = styled.div``;
 
 const ArticleStatus = styled.div`
-  width: 100px;
   display: flex;
   justify-content: space-between;
 `;
 
-const Category = styled.span``;
+const ArticleStatusSpan = styled.span`
+  &::after {
+    content: "";
+    margin-right: 5px;
+  }
+`;
 
-const Views = styled.span``;
+const CommentCount = styled(ArticleStatusSpan)``;
+
+const Category = styled(ArticleStatusSpan)``;
+
+const Views = styled(ArticleStatusSpan)``;
 
 const ArticleBottom = styled.div``;
 
@@ -42,4 +43,4 @@ const Content = styled.div`
   margin-top: 10px;
 `;
 
-export { ArticleContainer, ArticleTop, Title, ArticleStatus, Category, Views, ArticleBottom, Content };
+export { ArticleContainer, ArticleTop, Title, ArticleStatus, CommentCount, Category, Views, ArticleBottom, Content };

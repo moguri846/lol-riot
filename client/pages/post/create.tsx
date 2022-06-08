@@ -33,7 +33,8 @@ const CreatePage = () => {
 
   const handleSubmit = async ({ category, title, content }: Pick<IPost, "category" | "title" | "content">) => {
     const body = {
-      writer: info.email,
+      username: info.username,
+      email: info.email,
       category,
       title,
       content,

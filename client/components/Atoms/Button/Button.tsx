@@ -10,7 +10,7 @@ const Button = ({ id, className, value, disabled, onClick, size, children }: IPr
       clearTimeout(timer);
     }
 
-    setTimer(setTimeout(onClick, 500));
+    setTimer(setTimeout(onClick, 100));
   };
 
   return (

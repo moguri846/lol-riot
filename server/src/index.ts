@@ -10,20 +10,22 @@ import postRoute from "./routes/post/post.route";
 import { mongoDBConfig } from "./config/config";
 
 const app: express.Application = express();
-const port: number = 5000;
+const port: string | number = process.env.PORT || 5000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // 이 주소만 cors 허용
-const whitelist = ["http://localhost:3000"];
+const whitelist = ["http://localhost:3000", "https://searchmyname.vercel.app"];
 
 const corsOptions = {
   origin: function (origin: any, callback: any) {
-    if (whitelist.indexOf(origin) !== -1) {
+    if (!origin || whitelist.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
-      callback(new Error("Not Allowed Origin!"));
+      console.log("origin", origin);
+
+      callback(new Error("Not allowed by CORS"));
     }
   },
 };
@@ -39,6 +41,6 @@ app.use("/api/auth", authRoute);
 app.use("/api/riot", riotRoute);
 app.use("/api/post", postRoute);
 
-app.listen(port, () => {
+app.listen(typeof port === "string" ? parseInt(port) : port, () => {
   console.log(`connected ${port}`);
 });

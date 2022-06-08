@@ -11,7 +11,7 @@ const Input = (props: IProps) => {
         clearTimeout(timer);
       }
 
-      setTimer(setTimeout(() => props.onKeyDown(e), 500));
+      setTimer(setTimeout(() => props.onKeyDown(e), 100));
     }
   };
 

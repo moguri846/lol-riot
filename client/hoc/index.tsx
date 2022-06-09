@@ -2,7 +2,8 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../hooks/useRedux";
 import { myInfoAction } from "../toolkit/user/infoSlice/infoSlice";
-import { checkTokenAction } from "../toolkit/user/tokenSlice/func/tokenSlice.func";
+import { ACCESS_TOKEN } from "../toolkit/user/tokenSlice/constant/tokenSlice.constant";
+import { tokenStatusAction } from "../toolkit/user/tokenSlice/func/tokenSlice.func";
 import { ITokenStatus } from "../toolkit/user/tokenSlice/interface/tokenSlice.interface";
 import { selectToken } from "../toolkit/user/tokenSlice/tokenSlice";
 
@@ -22,18 +23,26 @@ const WithAuth = (Component: React.FC, option: boolean | null) => {
 
     useEffect(() => {
       (async () => {
-        const {
-          payload: { isLogin },
-        } = (await dispatch(checkTokenAction(""))) as { payload: ITokenStatus };
+        const accessToken = localStorage.getItem(ACCESS_TOKEN);
 
-        if (isLogin) {
-          await dispatch(myInfoAction(""));
+        if (accessToken) {
+          const {
+            payload: { isLogin },
+          } = (await dispatch(tokenStatusAction(""))) as { payload: ITokenStatus };
 
-          if (option === false) {
-            router.push("/");
+          if (isLogin) {
+            await dispatch(myInfoAction(""));
+
+            if (option === false) {
+              router.push("/");
+            }
+          } else {
+            if (option) {
+              router.push("/signIn");
+            }
           }
         } else {
-          if (option) {
+          if (option === true) {
             router.push("/signIn");
           }
         }

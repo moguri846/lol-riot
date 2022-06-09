@@ -1,5 +1,6 @@
 import axios, { AxiosInstance, AxiosResponse } from "axios";
-import { saveToken } from "../toolkit/user/tokenSlice/func/tokenSlice.func";
+import { useAppDispatch } from "../hooks/useRedux";
+import { tokenStatusAction, saveToken } from "../toolkit/user/tokenSlice/func/tokenSlice.func";
 import { reissueToken } from "./auth";
 
 const instance: AxiosInstance = axios.create({
@@ -32,16 +33,7 @@ instance.interceptors.response.use(
 
     return response;
   },
-  async (err: any) => {
-    if (err.response.status === 401) {
-      const {
-        data: { data },
-      } = await reissueToken("searchMyName");
-      saveToken(data);
-    }
-
-    return Promise.reject(err);
-  }
+  async (err: any) => Promise.reject(err)
 );
 
 export default instance;

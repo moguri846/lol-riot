@@ -12,12 +12,26 @@
 ![Redux](https://img.shields.io/badge/redux-764ABC?style=for-the-badge&logo=redux&logoColor=black)
 ![TypeScript](https://img.shields.io/badge/typescript-3178C6?style=for-the-badge&logo=typescript&logoColor=black)
 
+### What did i do?
+
+#### 1. HTML, CSS 이용해 마크업
+#### 2. Media query 이용해 반응형 구현
+#### 3. Redux Toolkit으로 마이그레이션
+#### 4. Redux Toolkit 이용해 상태 관리
+#### 5. Next.js로 마이그레이션
+
 ### 백엔드
 
 ![Node.js](https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=node.js&logoColor=black)
 ![Express](https://img.shields.io/badge/express-000000?style=for-the-badge&logo=express&logoColor=white)
 ![MongoDB](https://img.shields.io/badge/mongodb-47A248?style=for-the-badge&logo=mongodb&logoColor=green)
 ![TypeScript](https://img.shields.io/badge/typescript-3178C6?style=for-the-badge&logo=typescript&logoColor=black)
+
+### What did i do
+
+#### 1. CRUD 구현
+#### 2. Riot API 연동
+#### 3. JWT 이용해 로그인 구현
 
 ## 서비스 소개
 

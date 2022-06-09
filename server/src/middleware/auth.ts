@@ -21,7 +21,7 @@ export const authChecker = async (req: Request, res: Response, next: NextFunctio
 
             return resFunc({ res, data: reissueToken });
           } catch (err: any) {
-            return resFunc({ res, err: { message: err.message } });
+            return resFunc({ res, err: { message: "갱신 실패" } });
           }
         } else {
           return resFunc({ res, err: { status: 401, message: "Unauthorized" } });

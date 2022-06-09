@@ -63,7 +63,7 @@ export default {
 
       return resFunc({ res, data: reissueToken });
     } catch (err: any) {
-      return resFunc({ res, err });
+      return resFunc({ res, err: { message: "갱신 실패" } });
     }
   },
   async logout(req: Request, res: Response) {

@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../hooks/useRedux";
 import { myInfoAction } from "../toolkit/user/infoSlice/infoSlice";
-import { ACCESS_TOKEN } from "../toolkit/user/tokenSlice/constant/tokenSlice.constant";
+import { ACCESS_TOKEN, AUTH_TYPE } from "../toolkit/user/tokenSlice/constant/tokenSlice.constant";
 import { tokenStatusAction } from "../toolkit/user/tokenSlice/func/tokenSlice.func";
 import { ITokenStatus } from "../toolkit/user/tokenSlice/interface/tokenSlice.interface";
 import { selectToken } from "../toolkit/user/tokenSlice/tokenSlice";
@@ -26,12 +26,13 @@ const WithAuth = (Component: React.FC, option: boolean | null) => {
         const accessToken = localStorage.getItem(ACCESS_TOKEN);
 
         if (accessToken) {
+          const authType = localStorage.getItem(AUTH_TYPE) as "searchMyName" | "kakao";
           const {
             payload: { isLogin },
-          } = (await dispatch(tokenStatusAction(""))) as { payload: ITokenStatus };
+          } = (await dispatch(tokenStatusAction(authType))) as { payload: ITokenStatus };
 
           if (isLogin) {
-            await dispatch(myInfoAction(""));
+            await dispatch(myInfoAction(authType));
 
             if (option === false) {
               router.push("/");

@@ -33,19 +33,17 @@ const signIn = (data: { email: string; password: string }) => {
 //   });
 // };
 
-const checkToken = () => {
+const checkToken = (type: "searchMyName" | "kakao") => {
   return Send({
     method: Methods.GET,
-    url: "/auth/searchMyName/checkToken",
+    url: `/auth/${type}/checkToken`,
   });
 };
 
-// const myInfo = (type: string) => {
-const myInfo = () => {
+const myInfo = (type: "searchMyName" | "kakao") => {
   return Send({
     method: Methods.GET,
-    // url: `/auth/${type}/myInfo`,
-    url: `/auth/searchMyName/myInfo`,
+    url: `/auth/${type}/myInfo`,
   });
 };
 

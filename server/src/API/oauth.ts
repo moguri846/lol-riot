@@ -5,6 +5,10 @@ const kakaoLogin = (body: any) => {
   return axios.post("https://kauth.kakao.com/oauth/token", queryStringBody(body));
 };
 
+const kakaoTokenCheck = (config: any) => {
+  return axios.get("https://kapi.kakao.com/v1/user/access_token_info", config);
+};
+
 const kakaoReissueToken = (body: any) => {
   return axios.post("https://kauth.kakao.com/oauth/token", queryStringBody(body));
 };
@@ -36,6 +40,7 @@ const naverLogout = (body: any) => {
 
 export {
   kakaoLogin,
+  kakaoTokenCheck,
   kakaoReissueToken,
   kakaoMyInfo,
   kakaoLogout,

@@ -5,6 +5,8 @@ const router = Router();
 
 router.post("/signIn", controller.signIn);
 
+router.get("/checkToken", controller.checkToken);
+
 router.get("/myInfo", controller.myInfo);
 
 router.post("/reissueToken", controller.reissueToken);

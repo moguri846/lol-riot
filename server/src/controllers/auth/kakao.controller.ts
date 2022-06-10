@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { kakaoLogin, kakaoLogout, kakaoMyInfo, kakaoReissueToken } from "../../API/oauth";
+import { kakaoLogin, kakaoTokenCheck, kakaoLogout, kakaoMyInfo, kakaoReissueToken } from "../../API/oauth";
 import { kakaoConfig } from "../../config/config";
 import { resFunc } from "../../routes/common/ResSuccessOrFalse.function";
 
@@ -21,6 +21,23 @@ export default {
       return resFunc({ res, data: kakao.data });
     } catch (err: any) {
       return resFunc({ res, err });
+    }
+  },
+  async checkToken(req: Request, res: Response) {
+    try {
+      const authorization = req.headers.authorization as string;
+
+      const config = {
+        headers: {
+          Authorization: authorization,
+        },
+      };
+
+      const tokenCheck = await kakaoTokenCheck(config);
+
+      resFunc({ res, data: tokenCheck.data });
+    } catch (err) {
+      resFunc({ res, err });
     }
   },
   async myInfo(req: Request, res: Response) {

@@ -50,9 +50,15 @@ export default {
         },
       };
 
-      const myInfo = await kakaoMyInfo(config);
+      const { data } = await kakaoMyInfo(config);
 
-      return resFunc({ res, data: { email: myInfo.data.kakao_account.email } });
+      const appendValue = {
+        email: data.kakao_account.email,
+        username: data.properties.nickname,
+        role: 0,
+      };
+
+      return resFunc({ res, data: appendValue });
     } catch (err) {
       return resFunc({ res, err });
     }

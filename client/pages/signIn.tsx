@@ -6,10 +6,10 @@ import { ISignInOrUpParameter } from "../components/Organisms/SiginInOrUp/interf
 import SignInOrUp from "../components/Organisms/SiginInOrUp/SignInOrUp";
 import Seo from "../components/Seo/Seo";
 import { saveToken } from "../toolkit/user/tokenSlice/func/tokenSlice.func";
-import { IToken } from "../toolkit/user/tokenSlice/interface/tokenSlice.interface";
+import { ISignInResponse } from "../toolkit/user/tokenSlice/interface/tokenSlice.interface";
 import WithAuth from "../hoc";
 import { tokenStatusUpdate } from "../toolkit/user/tokenSlice/tokenSlice";
-import { NON_EXISTENT_TOKEN } from "../toolkit/user/tokenSlice/constant/tokenSlice.constant";
+import { AUTH_TYPE, NON_EXISTENT_TOKEN } from "../toolkit/user/tokenSlice/constant/tokenSlice.constant";
 
 const SignIn = () => {
   const [inputs, setInputs] = useState({
@@ -23,9 +23,11 @@ const SignIn = () => {
     try {
       const {
         data: { data },
-      }: AxiosResponse<{ data: IToken }> = await signIn(body);
+      }: AxiosResponse<{ data: ISignInResponse }> = await signIn(body);
 
-      saveToken(data);
+      saveToken(data.token);
+
+      localStorage.setItem(AUTH_TYPE, data.type);
 
       dispatch(tokenStatusUpdate({ type: NON_EXISTENT_TOKEN, isLogin: true, message: "유효한 토큰" }));
 

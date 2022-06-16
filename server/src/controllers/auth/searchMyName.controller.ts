@@ -34,7 +34,7 @@ export default {
           } else {
             const token = await user.generateToken();
 
-            return resFunc({ res, data: token });
+            return resFunc({ res, data: { type: "searchMyName", token } });
           }
         } catch (err) {
           return resFunc({ res, err });

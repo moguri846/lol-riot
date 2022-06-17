@@ -43,10 +43,14 @@ const useSearch = (): IUseSearch => {
   };
 
   const searchSummonerOrMulti = () => {
-    if (summonerName.includes(".") || summonerName.includes(",")) {
-      routerPush("multiSearch", summonerName);
+    if (process.env.NODE_ENV !== "production") {
+      if (summonerName.includes(".") || summonerName.includes(",")) {
+        routerPush("multiSearch", summonerName);
+      } else {
+        routerPush("summoner", summonerName);
+      }
     } else {
-      routerPush("summoner", summonerName);
+      snackbar("유저 검색은 불가능합니다", "warning");
     }
   };
 

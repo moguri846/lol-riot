@@ -30,21 +30,25 @@ const Summoner = ({ summonerName }: IProps) => {
   const gameInfo = useAppSelector(selectGameInfo);
 
   useEffect(() => {
-    (async () => {
-      dispatch(loadingAction({ summonerInfo: true, gameInfo: true }));
+    if (process.env.NODE_ENV !== "production") {
+      (async () => {
+        dispatch(loadingAction({ summonerInfo: true, gameInfo: true }));
 
-      const {
-        payload: { success, puuid },
-      } = await dispatch(summonerInfoAction(summonerName));
+        const {
+          payload: { success, puuid },
+        } = await dispatch(summonerInfoAction(summonerName));
 
-      dispatch(loadingAction({ summonerInfo: false }));
+        dispatch(loadingAction({ summonerInfo: false }));
 
-      if (success === undefined) {
-        await dispatch(gameInfoAction(puuid));
-      }
+        if (success === undefined) {
+          await dispatch(gameInfoAction(puuid));
+        }
 
-      dispatch(loadingAction({ gameInfo: false }));
-    })();
+        dispatch(loadingAction({ gameInfo: false }));
+      })();
+    } else {
+      router.push("/");
+    }
   }, [summonerName]);
 
   const { snackbar } = useSnackBar();

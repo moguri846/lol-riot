@@ -16,17 +16,13 @@ const MultiSearchPage = ({ summonerNames }) => {
   const multiSearch = useAppSelector(selectMultiSearch);
 
   useEffect(() => {
-    if (process.env.NODE_ENV !== "production") {
-      (async () => {
-        dispatch(loadingAction({ MultiSearch: true }));
+    (async () => {
+      dispatch(loadingAction({ MultiSearch: true }));
 
-        await dispatch(multiSearchAction(summonerNames));
+      await dispatch(multiSearchAction(summonerNames));
 
-        dispatch(loadingAction({ multiSearch: false }));
-      })();
-    } else {
-      router.push("/");
-    }
+      dispatch(loadingAction({ multiSearch: false }));
+    })();
   }, [summonerNames]);
 
   return (

@@ -1,5 +1,7 @@
 import axios from "axios";
-import { IConfig, IReissueTokenBody, ISignInBody } from "../controllers/auth/interface/kakao.controller.interface";
+import { IConfig } from "../controllers/auth/interface/kakao/Common.interface";
+import { IReissueTokenBody } from "../controllers/auth/interface/kakao/ReissueToken.interface";
+import { ISignInBody } from "../controllers/auth/interface/kakao/SignIn.interface";
 
 // KAKAO
 const kakaoLogin = (body: ISignInBody) => {

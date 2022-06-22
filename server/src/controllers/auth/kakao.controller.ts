@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { kakaoLogin, kakaoTokenCheck, kakaoLogout, kakaoMyInfo, kakaoReissueToken } from "../../API/oauth";
 import { kakaoConfig } from "../../config/config";
 import { resFunc } from "../../routes/common/ResSuccessOrFalse.function";
-import { IConfig, IReissueTokenBody, ISignInBody } from "./interface/kakao.controller.interface";
+import { IConfig, IMyInfo, IReissueTokenBody, ISignInBody } from "./interface/kakao.controller.interface";
 
 export default {
   async signIn(req: Request, res: Response) {
@@ -53,7 +53,7 @@ export default {
 
       const { data } = await kakaoMyInfo(config);
 
-      const appendValue = {
+      const appendValue: IMyInfo = {
         email: data.kakao_account.email,
         username: data.properties.nickname,
         role: 0,

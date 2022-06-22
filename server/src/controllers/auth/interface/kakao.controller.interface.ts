@@ -18,3 +18,9 @@ export interface IConfig {
 export interface IReissueTokenBody extends ICommonBody {
   refresh_token: string;
 }
+
+export interface IMyInfo {
+  email: string;
+  username: string;
+  role: number;
+}

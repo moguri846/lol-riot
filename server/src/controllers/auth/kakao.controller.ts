@@ -2,13 +2,14 @@ import { Request, Response } from "express";
 import { kakaoLogin, kakaoTokenCheck, kakaoLogout, kakaoMyInfo, kakaoReissueToken } from "../../API/oauth";
 import { kakaoConfig } from "../../config/config";
 import { resFunc } from "../../routes/common/ResSuccessOrFalse.function";
+import { IConfig, IReissueTokenBody, ISignInBody } from "./interface/kakao.controller.interface";
 
 export default {
   async signIn(req: Request, res: Response) {
     try {
       const code = req.body.code as string;
 
-      const body: any = {
+      const body: ISignInBody = {
         grant_type: "authorization_code",
         client_id: kakaoConfig.clientId,
         redirect_uri: kakaoConfig.redirectUri,
@@ -27,9 +28,9 @@ export default {
     try {
       const authorization = req.headers.authorization as string;
 
-      const config = {
+      const config: IConfig = {
         headers: {
-          Authorization: authorization,
+          authorization,
         },
       };
 
@@ -44,9 +45,9 @@ export default {
     try {
       const authorization = req.headers.authorization as string;
 
-      const config = {
+      const config: IConfig = {
         headers: {
-          Authorization: authorization,
+          authorization,
         },
       };
 
@@ -67,7 +68,7 @@ export default {
     try {
       const refreshToken = req.body.refreshToken as string;
 
-      const body: any = {
+      const body: IReissueTokenBody = {
         grant_type: "refresh_token",
         client_id: kakaoConfig.clientId,
         client_secret: kakaoConfig.secret,
@@ -84,9 +85,9 @@ export default {
     try {
       const authorization = req.headers.authorization as string;
 
-      const config = {
+      const config: IConfig = {
         headers: {
-          Authorization: authorization,
+          authorization,
         },
       };
 

@@ -17,9 +17,9 @@ export default {
         client_secret: kakaoConfig.secret,
       };
 
-      const kakao = await kakaoLogin(body);
+      const { data } = await kakaoLogin(body);
 
-      return resFunc({ res, data: kakao.data });
+      return resFunc({ res, data: data });
     } catch (err: any) {
       return resFunc({ res, err });
     }
@@ -34,9 +34,9 @@ export default {
         },
       };
 
-      const tokenCheck = await kakaoTokenCheck(config);
+      const { data } = await kakaoTokenCheck(config);
 
-      resFunc({ res, data: tokenCheck.data });
+      resFunc({ res, data: data });
     } catch (err) {
       resFunc({ res, err });
     }
@@ -75,8 +75,9 @@ export default {
         refresh_token: refreshToken,
       };
 
-      const reissue = await kakaoReissueToken(body);
-      return resFunc({ res, data: reissue.data });
+      const { data } = await kakaoReissueToken(body);
+
+      return resFunc({ res, data: data });
     } catch (err) {
       return resFunc({ res, err });
     }
@@ -91,9 +92,9 @@ export default {
         },
       };
 
-      const logout = await kakaoLogout(config);
+      const { data } = await kakaoLogout(config);
 
-      return resFunc({ res, data: logout.data });
+      return resFunc({ res, data: data });
     } catch (err: any) {
       return resFunc({ res, err });
     }

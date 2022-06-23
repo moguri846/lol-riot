@@ -1,5 +1,6 @@
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 import { useAppDispatch } from "../hooks/useRedux";
+import { AUTH_TYPE } from "../toolkit/user/tokenSlice/constant/tokenSlice.constant";
 import { tokenStatusAction, saveToken } from "../toolkit/user/tokenSlice/func/tokenSlice.func";
 import { reissueToken } from "./auth";
 
@@ -16,7 +17,10 @@ instance.interceptors.request.use(
     if (typeof window !== "undefined") {
       const ACCESS_TOKEN = localStorage.getItem("ACCESS_TOKEN");
       if (ACCESS_TOKEN) {
+        const auth_type = localStorage.getItem(AUTH_TYPE);
+
         config.headers = {
+          "Auth-Type": auth_type,
           Authorization: `Bearer ${ACCESS_TOKEN}`,
         };
       }

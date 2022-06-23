@@ -1,23 +1,26 @@
 import axios from "axios";
+import { IConfig } from "../controllers/auth/interface/kakao/Common.interface";
+import { IReissueTokenBody } from "../controllers/auth/interface/kakao/ReissueToken.interface";
+import { ISignInBody } from "../controllers/auth/interface/kakao/SignIn.interface";
 
 // KAKAO
-const kakaoLogin = (body: any) => {
+const kakaoLogin = (body: ISignInBody) => {
   return axios.post("https://kauth.kakao.com/oauth/token", queryStringBody(body));
 };
 
-const kakaoTokenCheck = (config: any) => {
+const kakaoTokenCheck = (config: IConfig) => {
   return axios.get("https://kapi.kakao.com/v1/user/access_token_info", config);
 };
 
-const kakaoReissueToken = (body: any) => {
+const kakaoReissueToken = (body: IReissueTokenBody) => {
   return axios.post("https://kauth.kakao.com/oauth/token", queryStringBody(body));
 };
 
-const kakaoMyInfo = (config: any) => {
+const kakaoMyInfo = (config: IConfig) => {
   return axios.post("https://kapi.kakao.com/v2/user/me", {}, config);
 };
 
-const kakaoLogout = (config: any) => {
+const kakaoLogout = (config: IConfig) => {
   return axios.post(`https://kapi.kakao.com/v1/user/logout`, {}, config);
 };
 

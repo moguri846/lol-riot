@@ -1,14 +1,21 @@
+import { AxiosResponse } from "axios";
 import { Request, Response } from "express";
 import { kakaoLogin, kakaoTokenCheck, kakaoLogout, kakaoMyInfo, kakaoReissueToken } from "../../API/oauth";
 import { kakaoConfig } from "../../config/config";
 import { resFunc } from "../../routes/common/ResSuccessOrFalse.function";
+import { IConfig } from "./interface/kakao/Common.interface";
+import { ISignInBody, ISignInKakaoResponse } from "./interface/kakao/SignIn.interface";
+import { ICheckTokenKakaoResponse } from "./interface/kakao/CheckToken.interface";
+import { IMyInfo, IMyInfoKakaoResponse } from "./interface/kakao/MyInfo.interface";
+import { IReissueTokenBody, IReissueTokenKakaoResponse } from "./interface/kakao/ReissueToken.interface";
+import { ILogoutKakaoResponse } from "./interface/kakao/Logout.interface";
 
 export default {
   async signIn(req: Request, res: Response) {
     try {
       const code = req.body.code as string;
 
-      const body: any = {
+      const body: ISignInBody = {
         grant_type: "authorization_code",
         client_id: kakaoConfig.clientId,
         redirect_uri: kakaoConfig.redirectUri,
@@ -16,9 +23,9 @@ export default {
         client_secret: kakaoConfig.secret,
       };
 
-      const kakao = await kakaoLogin(body);
+      const { data }: AxiosResponse<ISignInKakaoResponse> = await kakaoLogin(body);
 
-      return resFunc({ res, data: kakao.data });
+      return resFunc({ res, data });
     } catch (err: any) {
       return resFunc({ res, err });
     }
@@ -27,15 +34,15 @@ export default {
     try {
       const authorization = req.headers.authorization as string;
 
-      const config = {
+      const config: IConfig = {
         headers: {
-          Authorization: authorization,
+          authorization,
         },
       };
 
-      const tokenCheck = await kakaoTokenCheck(config);
+      const { data }: AxiosResponse<ICheckTokenKakaoResponse> = await kakaoTokenCheck(config);
 
-      resFunc({ res, data: tokenCheck.data });
+      resFunc({ res, data });
     } catch (err) {
       resFunc({ res, err });
     }
@@ -44,15 +51,15 @@ export default {
     try {
       const authorization = req.headers.authorization as string;
 
-      const config = {
+      const config: IConfig = {
         headers: {
-          Authorization: authorization,
+          authorization,
         },
       };
 
-      const { data } = await kakaoMyInfo(config);
+      const { data }: AxiosResponse<IMyInfoKakaoResponse> = await kakaoMyInfo(config);
 
-      const appendValue = {
+      const appendValue: IMyInfo = {
         email: data.kakao_account.email,
         username: data.properties.nickname,
         role: 0,
@@ -67,15 +74,16 @@ export default {
     try {
       const refreshToken = req.body.refreshToken as string;
 
-      const body: any = {
+      const body: IReissueTokenBody = {
         grant_type: "refresh_token",
         client_id: kakaoConfig.clientId,
         client_secret: kakaoConfig.secret,
         refresh_token: refreshToken,
       };
 
-      const reissue = await kakaoReissueToken(body);
-      return resFunc({ res, data: reissue.data });
+      const { data }: AxiosResponse<IReissueTokenKakaoResponse> = await kakaoReissueToken(body);
+
+      return resFunc({ res, data });
     } catch (err) {
       return resFunc({ res, err });
     }
@@ -84,15 +92,15 @@ export default {
     try {
       const authorization = req.headers.authorization as string;
 
-      const config = {
+      const config: IConfig = {
         headers: {
-          Authorization: authorization,
+          authorization,
         },
       };
 
-      const logout = await kakaoLogout(config);
+      const { data }: AxiosResponse<ILogoutKakaoResponse> = await kakaoLogout(config);
 
-      return resFunc({ res, data: logout.data });
+      return resFunc({ res, data });
     } catch (err: any) {
       return resFunc({ res, err });
     }

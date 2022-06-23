@@ -1,34 +1,34 @@
 import { Request, Response, NextFunction } from "express";
-import { User } from "../models/User";
 import { resFunc } from "../routes/common/ResSuccessOrFalse.function";
+import searchMyNameAuthChecker from "./func/searchMyName.authChecker.func";
+import kakaoAuthChecker from "./func/kakao.authChecker.func";
+import { SEARCH_MY_NAME, KAKAO } from "./constant/auth.constant";
 
 export const authChecker = async (req: Request, res: Response, next: NextFunction) => {
   if (req.headers.authorization) {
-    const token = req.headers.authorization.split("Bearer ")[1];
+    const authType: string = req.headers["auth-type"] as string;
+    const token: string = req.headers.authorization.split("Bearer ")[1];
 
     try {
-      const user = await User.findByToken(token);
-
-      req.user = user;
-
+      switch (authType) {
+        case SEARCH_MY_NAME: {
+          await searchMyNameAuthChecker(req, token);
+          break;
+        }
+        case KAKAO: {
+          await kakaoAuthChecker(token);
+          break;
+        }
+        default: {
+          throw new Error("Not Auth-Type!");
+        }
+      }
       next();
     } catch (err: any) {
-      if (err.message === "jwt expired") {
-        const refresh_token = req.body.refresh_token as string;
-        if (refresh_token) {
-          try {
-            const reissueToken = await User.reissueToken(refresh_token);
+      const status: number = err.status;
+      const message: string = err.message;
 
-            return resFunc({ res, data: reissueToken });
-          } catch (err: any) {
-            return resFunc({ res, err: { message: "갱신 실패" } });
-          }
-        } else {
-          return resFunc({ res, err: { status: 401, message: "Unauthorized" } });
-        }
-      } else {
-        return resFunc({ res, err: { status: 401, message: "Unauthorized" } });
-      }
+      return resFunc({ res, err: { status, message } });
     }
   } else {
     return resFunc({ res, err: { status: 401, message: "Unauthorized" } });

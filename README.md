@@ -1,8 +1,6 @@
 # Search My Name
 
-## 서비스 주소 🛫 \*배포 예정\*
-
-### \*배포는 되었지만, Riot Production API Key가 아직 발급되지 않아 못하고 있습니다.\*
+## 서비스 주소 https://searchmyname.vercel.app
 
 ## 기간 2022.01 ~ 진행 중
 

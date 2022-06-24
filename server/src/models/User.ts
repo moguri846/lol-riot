@@ -94,6 +94,10 @@ userSchema.statics.reissueToken = function (refresh_token: string): Promise<stri
     try {
       const user = await this.findOne({ refresh_token });
 
+      if (!user) {
+        throw new Error("토큰을 찾지 못했습니다.");
+      }
+
       const verify = await jwt.verify(refresh_token, jwtSecretConfig.jwtSecret);
 
       if (typeof verify === "string") {

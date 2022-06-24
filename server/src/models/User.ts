@@ -29,10 +29,6 @@ const userSchema = new Schema<IUserDoc>(
       type: Number,
       default: 0,
     },
-    access_token: {
-      type: String,
-      default: "",
-    },
     refresh_token: {
       type: String,
       default: "",
@@ -74,7 +70,6 @@ userSchema.methods.generateToken = function (): Promise<IGenerateToken_R> {
   const accessToken = jwt.sign({}, jwtSecretConfig.jwtSecret, { expiresIn: "30m" });
   const refreshToken = jwt.sign({ id: user._id }, jwtSecretConfig.jwtSecret, { expiresIn: "60d" });
 
-  user.access_token = accessToken;
   user.refresh_token = refreshToken;
 
   const token: IUserToken = {

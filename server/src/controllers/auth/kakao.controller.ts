@@ -27,6 +27,8 @@ export default {
 
       return resFunc({ res, data });
     } catch (err: any) {
+      console.log("signIn err", err);
+
       return resFunc({ res, err });
     }
   },
@@ -44,6 +46,7 @@ export default {
 
       resFunc({ res, data });
     } catch (err) {
+      console.log("checkToken err", err);
       resFunc({ res, err });
     }
   },
@@ -67,6 +70,7 @@ export default {
 
       return resFunc({ res, data: appendValue });
     } catch (err) {
+      console.log("myInfo err", err);
       return resFunc({ res, err });
     }
   },
@@ -85,6 +89,7 @@ export default {
 
       return resFunc({ res, data });
     } catch (err) {
+      console.log("reissueToken err", err);
       return resFunc({ res, err });
     }
   },
@@ -102,6 +107,7 @@ export default {
 
       return resFunc({ res, data });
     } catch (err: any) {
+      console.log("logout err", err);
       return resFunc({ res, err });
     }
   },

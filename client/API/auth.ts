@@ -19,6 +19,14 @@ const signIn = (data: { email: string; password: string }) => {
   });
 };
 
+const oAuthSignIn = (data: { code: string }) => {
+  return Send({
+    method: Methods.POST,
+    url: "/auth/kakao/signIn",
+    data,
+  });
+};
+
 const checkToken = (type: "searchMyName" | "kakao") => {
   return Send({
     method: Methods.GET,
@@ -50,4 +58,4 @@ const logout = (type: string) => {
   });
 };
 
-export { signUp, signIn, checkToken, reissueToken, myInfo, logout };
+export { signUp, signIn, oAuthSignIn, checkToken, reissueToken, myInfo, logout };

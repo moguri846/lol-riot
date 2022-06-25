@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
-import axios from "axios";
 import useSnackBar from "../../hooks/useSnackBar";
 import { saveToken } from "../../toolkit/user/tokenSlice/func/tokenSlice.func";
+import { oAuthSignIn } from "../../API/auth";
 
 const OAuthPage = ({ type, code }) => {
   const router = useRouter();
@@ -11,23 +11,23 @@ const OAuthPage = ({ type, code }) => {
 
   useEffect(() => {
     (async () => {
-      try {
-        const {
-          data: { data },
-        } = await axios.post(`http://localhost:5000/api/auth/${type}/signIn`, { code });
+      const {
+        data: { success, data },
+      } = await oAuthSignIn({ code });
 
+      if (success) {
         saveToken(data);
 
         localStorage.setItem("AUTH_TYPE", type);
 
         router.push("/");
-      } catch (err) {
-        snackbar(err.message, "error");
+      } else {
+        snackbar(data, "error");
       }
     })();
   }, []);
 
-  return <div>OAuthPage</div>;
+  return <div>로그인 중...</div>;
 };
 
 export default OAuthPage;

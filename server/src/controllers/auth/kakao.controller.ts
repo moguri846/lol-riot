@@ -20,9 +20,19 @@ export default {
         client_secret: kakaoConfig.secret,
       };
 
-      const { data } = await kakaoLogin(body);
+      const {
+        data: { access_token, refresh_token },
+      } = await kakaoLogin(body);
 
-      return resFunc({ res, data });
+      const responseObj = {
+        type: "kakao",
+        token: {
+          access_token,
+          refresh_token,
+        },
+      };
+
+      return resFunc({ res, data: responseObj });
     } catch (err: any) {
       console.log("signIn err", err);
 
@@ -41,7 +51,7 @@ export default {
 
       const { data } = await kakaoTokenCheck(config);
 
-      resFunc({ res, data });
+      resFunc({ res });
     } catch (err) {
       console.log("checkToken err", err);
       resFunc({ res, err });
@@ -57,15 +67,20 @@ export default {
         },
       };
 
-      const { data } = await kakaoMyInfo(config);
+      const {
+        data: {
+          kakao_account: { email },
+          properties: { nickname },
+        },
+      } = await kakaoMyInfo(config);
 
-      const appendValue: IMyInfo = {
-        email: data.kakao_account.email,
-        username: data.properties.nickname,
+      const responseObj: IMyInfo = {
+        email,
+        username: nickname,
         role: 0,
       };
 
-      return resFunc({ res, data: appendValue });
+      return resFunc({ res, data: responseObj });
     } catch (err) {
       console.log("myInfo err", err);
       return resFunc({ res, err });
@@ -82,9 +97,16 @@ export default {
         refresh_token: refreshToken,
       };
 
-      const { data } = await kakaoReissueToken(body);
+      const {
+        data: { access_token, refresh_token },
+      } = await kakaoReissueToken(body);
 
-      return resFunc({ res, data });
+      const responseObj = {
+        access_token,
+        refresh_token,
+      };
+
+      return resFunc({ res, data: responseObj });
     } catch (err) {
       console.log("reissueToken err", err);
 
@@ -103,7 +125,7 @@ export default {
 
       const { data } = await kakaoLogout(config);
 
-      return resFunc({ res, data });
+      return resFunc({ res });
     } catch (err: any) {
       console.log("logout err", err);
 

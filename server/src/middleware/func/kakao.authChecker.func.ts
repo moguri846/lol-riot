@@ -11,6 +11,8 @@ const kakaoAuthChecker = async (token: string) => {
 
     await kakaoTokenCheck(config);
   } catch (err: any) {
+    console.log("kakao authChecker err", err);
+
     const status: string = err.status;
     const message: number = err.message;
 

@@ -9,6 +9,7 @@ const searchMyNameAuthChecker = async (req: Request, token: string) => {
 
     return req;
   } catch (err: any) {
+    console.log("searchMyName authChecker err", err);
     const status: string = err.status;
     const message: number = err.message;
 
@@ -20,6 +21,8 @@ const searchMyNameAuthChecker = async (req: Request, token: string) => {
 
           return reissueToken;
         } catch (err: any) {
+          console.log("searchMyname reissue err", err);
+
           throw { status, message: "갱신 실패" };
         }
       } else {

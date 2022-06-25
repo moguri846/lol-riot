@@ -1,14 +1,11 @@
-import { AxiosResponse } from "axios";
 import { Request, Response } from "express";
 import { kakaoLogin, kakaoTokenCheck, kakaoLogout, kakaoMyInfo, kakaoReissueToken } from "../../API/oauth";
 import { kakaoConfig } from "../../config/config";
 import { resFunc } from "../../routes/common/ResSuccessOrFalse.function";
 import { IConfig } from "./interface/kakao/Common.interface";
-import { ISignInBody, ISignInKakaoResponse } from "./interface/kakao/SignIn.interface";
-import { ICheckTokenKakaoResponse } from "./interface/kakao/CheckToken.interface";
-import { IMyInfo, IMyInfoKakaoResponse } from "./interface/kakao/MyInfo.interface";
-import { IReissueTokenBody, IReissueTokenKakaoResponse } from "./interface/kakao/ReissueToken.interface";
-import { ILogoutKakaoResponse } from "./interface/kakao/Logout.interface";
+import { ISignInBody } from "./interface/kakao/SignIn.interface";
+import { IMyInfo } from "./interface/kakao/MyInfo.interface";
+import { IReissueTokenBody } from "./interface/kakao/ReissueToken.interface";
 
 export default {
   async signIn(req: Request, res: Response) {
@@ -23,7 +20,7 @@ export default {
         client_secret: kakaoConfig.secret,
       };
 
-      const { data }: AxiosResponse<ISignInKakaoResponse> = await kakaoLogin(body);
+      const { data } = await kakaoLogin(body);
 
       return resFunc({ res, data });
     } catch (err: any) {
@@ -42,7 +39,7 @@ export default {
         },
       };
 
-      const { data }: AxiosResponse<ICheckTokenKakaoResponse> = await kakaoTokenCheck(config);
+      const { data } = await kakaoTokenCheck(config);
 
       resFunc({ res, data });
     } catch (err) {
@@ -60,7 +57,7 @@ export default {
         },
       };
 
-      const { data }: AxiosResponse<IMyInfoKakaoResponse> = await kakaoMyInfo(config);
+      const { data } = await kakaoMyInfo(config);
 
       const appendValue: IMyInfo = {
         email: data.kakao_account.email,
@@ -85,11 +82,12 @@ export default {
         refresh_token: refreshToken,
       };
 
-      const { data }: AxiosResponse<IReissueTokenKakaoResponse> = await kakaoReissueToken(body);
+      const { data } = await kakaoReissueToken(body);
 
       return resFunc({ res, data });
     } catch (err) {
       console.log("reissueToken err", err);
+
       return resFunc({ res, err });
     }
   },
@@ -103,11 +101,12 @@ export default {
         },
       };
 
-      const { data }: AxiosResponse<ILogoutKakaoResponse> = await kakaoLogout(config);
+      const { data } = await kakaoLogout(config);
 
       return resFunc({ res, data });
     } catch (err: any) {
       console.log("logout err", err);
+
       return resFunc({ res, err });
     }
   },

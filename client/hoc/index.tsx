@@ -48,7 +48,7 @@ const WithAuth = (Component: React.FC, option: boolean | null) => {
           }
         }
       })();
-    }, [isLogin]);
+    }, []);
 
     return <Component {...props} />;
   };

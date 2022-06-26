@@ -1,9 +1,5 @@
-export interface ISignInOrUpParameter {
-  email: string;
-  password: string;
-}
+import { ISignIn, ISignInParameter, ISignUp, ISignUpParameter } from "../../../../API/interface/auth.interface";
 
-export interface ISignInOrUpResponse {
-  success: boolean;
-  data: object | string;
-}
+export interface ISignInOrUpParameter extends ISignUpParameter, ISignInParameter {}
+
+export interface ISignInOrUpResponse extends ISignUp, ISignIn {}

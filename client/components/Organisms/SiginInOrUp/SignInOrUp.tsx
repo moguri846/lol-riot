@@ -4,16 +4,15 @@ import Link from "next/link";
 import useSnackBar from "../../../hooks/useSnackBar";
 import Button from "../../Atoms/Button/Button";
 import Input from "../../Atoms/Input/Input";
-
-import * as S from "./style";
 import { ISignInOrUpParameter, ISignInOrUpResponse } from "./interface/SignInOrUp.interface";
+import * as S from "./style";
 
 interface IProps {
   signIn?: boolean;
   signUp?: boolean;
-  inputs: ISignInOrUpParameter;
+  inputs: Partial<ISignInOrUpParameter>;
   onChangeInputs: (target: string, value: string) => void;
-  on로그인아니면회원가입: (body: ISignInOrUpParameter) => Promise<ISignInOrUpResponse>;
+  on로그인아니면회원가입: (body: Partial<ISignInOrUpParameter>) => Promise<ISignInOrUpResponse>;
 }
 
 const SignInOrUp = ({ signIn, signUp, inputs, onChangeInputs, on로그인아니면회원가입 }: IProps) => {

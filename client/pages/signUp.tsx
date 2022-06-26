@@ -13,9 +13,11 @@ const SignUp = () => {
 
   const onSignUp = async (body: ISignInOrUpParameter) => {
     try {
-      const { data } = await signUp(body);
+      const {
+        data: { success },
+      } = await signUp(body);
 
-      return data;
+      return success;
     } catch (err) {
       const data = err.response.data;
       return data;

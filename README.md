@@ -1,6 +1,7 @@
 # Search My Name
 
 ## 서비스 주소 https://searchmyname.vercel.app
+# *이번 달 Heroku 무료 시간을 모두 사용해서 정상 작동 안 합니다.*
 
 ## 기간 2022.01 ~ 진행 중
 

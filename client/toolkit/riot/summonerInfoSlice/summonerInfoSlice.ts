@@ -27,12 +27,9 @@ const summonerInfoSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(summonerInfoAction.pending, (state, { type, payload }) => {});
-    builder.addCase(
-      summonerInfoAction.fulfilled,
-      (state, { type, payload }: PayloadAction<ISummonerSuccess, string>) => {
-        return { ...payload };
-      }
-    );
+    builder.addCase(summonerInfoAction.fulfilled, (state, { type, payload }: PayloadAction<any, string>) => {
+      return { ...payload };
+    });
     builder.addCase(summonerInfoAction.rejected, (state, { type, payload }: PayloadAction<any, string>) => {
       return { ...payload };
     });

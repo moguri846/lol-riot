@@ -3,9 +3,10 @@ import { AxiosResponse } from "axios";
 import { useDispatch } from "react-redux";
 import { loadingAction, selectLoading } from "../toolkit/loading/loadingSlice";
 import { useAppSelector } from "./useRedux";
+import { LoadingTypes } from "../toolkit/loading/interface/loadingSlice.interface";
 
 interface IProps {
-  loadingType: string;
+  loadingType: LoadingTypes;
   cb: (arg?) => Promise<AxiosResponse<any>>;
   deps: any;
 }

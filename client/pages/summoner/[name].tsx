@@ -38,7 +38,6 @@ const Summoner = ({ summonerName }: IProps) => {
         summonerName={summonerName}
         spectatorToggle={spectatorToggle}
         onSpectatorToggle={handleSpectatorToggle}
-        searchSummoner
       />
       <>{spectatorToggle ? <Spectator id={id} summonerName={summonerName} /> : <GameInfo />}</>
     </>

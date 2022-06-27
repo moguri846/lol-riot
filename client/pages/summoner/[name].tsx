@@ -3,12 +3,6 @@ import { useState } from "react";
 import Spectator from "../../components/Organisms/Spectator/Spectator";
 import SummonerInfo from "../../components/Organisms/SummonerInfo/SummonerInfo";
 import Seo from "../../components/Seo/Seo";
-import useSnackBar from "../../hooks/useSnackBar";
-import { loadingAction, selectLoading } from "../../toolkit/loading/loadingSlice";
-import { useAppDispatch, useAppSelector } from "../../hooks/useRedux";
-import { selectGameInfo } from "../../toolkit/riot/gameInfoSlice/gameInfoSlice";
-import { spectatorInfo } from "../../toolkit/riot/spectatorSlice/func/spectatorSlice.func";
-import { selectSpectator } from "../../toolkit/riot/spectatorSlice/spectatorSlice";
 import GameInfo from "../../components/Organisms/GameInfo/GameInfo";
 import WithAuth from "../../hoc";
 
@@ -17,10 +11,8 @@ interface IProps {
 }
 
 const Summoner = ({ summonerName }: IProps) => {
+  const [id, setId] = useState("");
   const router = useRouter();
-  const dispatch = useAppDispatch();
-
-  const { snackbar } = useSnackBar();
 
   const [spectatorToggle, setSpectatorToggle] = useState(false);
 
@@ -31,17 +23,7 @@ const Summoner = ({ summonerName }: IProps) => {
       return;
     }
 
-    try {
-      dispatch(loadingAction({ spectator: true }));
-
-      await dispatch(spectatorInfo(id));
-
-      dispatch(loadingAction({ spectator: false }));
-    } catch (err: any) {
-      dispatch(loadingAction({ spectator: false }));
-
-      snackbar(err, "error");
-    }
+    setId(id);
   };
 
   return (
@@ -58,13 +40,7 @@ const Summoner = ({ summonerName }: IProps) => {
         onSpectatorToggle={handleSpectatorToggle}
         searchSummoner
       />
-      <>
-        {spectatorToggle ? (
-          <Spectator loading={loading.spectator} spectator={spectator} summonerName={summonerName} />
-        ) : (
-          <GameInfo loading={loading.gameInfo} gameInfo={gameInfo} />
-        )}
-      </>
+      <>{spectatorToggle ? <Spectator id={id} summonerName={summonerName} /> : <GameInfo />}</>
     </>
   );
 };

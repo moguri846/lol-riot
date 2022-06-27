@@ -7,7 +7,7 @@ const getDataDragonImg = ({ width, height, key, value }: IGetDataDragonImgParame
       width={width}
       height={height}
       key={value}
-      src={`https://ddragon.leagueoflegends.com/cdn/12.4.1/img/${key}/${value}.png`}
+      src={`https://ddragon.leagueoflegends.com/cdn/12.12.1/img/${key}/${value}.png`}
       alt={`${value}`}
     />
   );

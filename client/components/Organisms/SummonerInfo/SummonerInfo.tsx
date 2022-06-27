@@ -1,30 +1,33 @@
 import React from "react";
 import Button from "../../Atoms/Button/Button";
-import * as S from "./style";
-import { SummonerType } from "../../../toolkit/riot/summonerInfoSlice/interface/summonerInfoSlice.interface";
+import { ISummoner } from "../../../toolkit/riot/summonerInfoSlice/interface/summonerInfoSlice.interface";
 import ErrorForm from "../../Molecules/ErrorForm/ErrorForm";
 import { getDataDragonImg, toLocaleString } from "../../common/func/common.func";
-import Skeleton from "react-loading-skeleton";
 import Image from "next/image";
 import SummonerInfoSkeleton from "./SummonerInfoSkeleton";
+import useGetData from "../../../hooks/useGetData";
+import { loadSummonerInfo } from "../../../API/riot";
+import * as S from "./style";
 
 interface IProps {
-  loading: boolean;
-  summoner: SummonerType;
+  summonerName: string;
   spectatorToggle?: boolean;
-  onSpectatorToggle?: () => Promise<void>;
+  onSpectatorToggle?: (id: string) => Promise<void>;
   searchSummoner?: boolean;
   multiSearch?: boolean;
 }
 
-const SummonerInfo = ({
-  loading,
-  summoner,
-  spectatorToggle,
-  onSpectatorToggle,
-  searchSummoner,
-  multiSearch,
-}: IProps) => {
+const SummonerInfo = ({ summonerName, spectatorToggle, onSpectatorToggle, searchSummoner, multiSearch }: IProps) => {
+  const {
+    loading,
+    data: { data: summoner },
+    error,
+  } = useGetData<ISummoner>({
+    loadingType: "summonerInfo",
+    cb: () => loadSummonerInfo(summonerName),
+    deps: summonerName,
+  });
+
   return (
     <S.SummonerContainer>
       <>
@@ -32,8 +35,8 @@ const SummonerInfo = ({
           <SummonerInfoSkeleton searchSummoner={searchSummoner && searchSummoner} />
         ) : (
           <>
-            {summoner.success === false ? (
-              <ErrorForm message={summoner.data} {...summoner} message404="찾으시려는 소화사는 존재하지 않습니다. ☹" />
+            {error.isError ? (
+              <ErrorForm message={error.message} {...error} message404="찾으시려는 소화사는 존재하지 않습니다. ☹" />
             ) : (
               <>
                 {searchSummoner && (
@@ -79,7 +82,9 @@ const SummonerInfo = ({
                         <div className="win-rate">
                           <span>승률 {Math.ceil((summoner.wins / (summoner.wins + summoner.losses)) * 100) || 0}%</span>
                         </div>
-                        <Button onClick={onSpectatorToggle}>{spectatorToggle ? "종합 정보" : "인게임 정보"}</Button>
+                        <Button onClick={() => onSpectatorToggle(summoner.id)}>
+                          {spectatorToggle ? "종합 정보" : "인게임 정보"}
+                        </Button>
                       </>
                     )}
                     {multiSearch && (

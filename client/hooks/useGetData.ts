@@ -56,9 +56,11 @@ const useGetData = <T>({ loadingType, cb, deps }: IProps) => {
         const status = response.status;
         const message = response.data;
 
-        setError({ isError: true, status, message });
+        setError(() => {
+          setTimeoutLoadingStateUpdate(false);
 
-        loadingStateUpadte(false);
+          return { isError: true, status, message };
+        });
       }
     })();
   }, [deps]);

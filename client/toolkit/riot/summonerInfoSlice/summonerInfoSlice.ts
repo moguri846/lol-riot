@@ -30,6 +30,8 @@ const summonerInfoSlice = createSlice({
     builder.addCase(
       summonerInfoAction.fulfilled,
       (state, { type, payload }: PayloadAction<ISummonerSuccess, string>) => {
+        console.log("fulfilled", payload);
+
         return { ...payload };
       }
     );

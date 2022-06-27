@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import useSnackBar from "../../hooks/useSnackBar";
 import { saveToken } from "../../toolkit/user/tokenSlice/func/tokenSlice.func";
-import { oAuthSignIn } from "../../API/auth";
+import { signIn } from "../../API/auth";
 
 const OAuthPage = ({ type, code }) => {
   const router = useRouter();
@@ -13,16 +13,16 @@ const OAuthPage = ({ type, code }) => {
     (async () => {
       const {
         data: { success, data },
-      } = await oAuthSignIn({ code });
+      } = await signIn({ code });
 
       if (success) {
-        saveToken(data);
+        saveToken(data.token);
 
-        localStorage.setItem("AUTH_TYPE", type);
+        localStorage.setItem("AUTH_TYPE", data.type);
 
         router.push("/");
       } else {
-        snackbar(data, "error");
+        snackbar("로그인에 실패했습니다.", "error");
       }
     })();
   }, []);

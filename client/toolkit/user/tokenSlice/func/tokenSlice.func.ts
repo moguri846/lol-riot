@@ -1,37 +1,26 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { responseSymbol } from "next/dist/server/web/spec-compliant/fetch-event";
 import { checkToken, reissueToken } from "../../../../API/auth";
-import { useAppDispatch } from "../../../../hooks/useRedux";
+import { AuthTypes, IReissueToken } from "../../../../API/interface/auth.interface";
 import { TOKEN_CHECK, USER } from "../../constant/user.constant";
-import {
-  ACCESS_TOKEN,
-  AUTH_TYPE,
-  FAIL,
-  NON_EXISTENT_TOKEN,
-  REFRESH_TOKEN,
-  REISSUE_TOKEN,
-  VALID_TOKEN,
-} from "../constant/tokenSlice.constant";
-import { IToken, ITokenStatus } from "../interface/tokenSlice.interface";
+import { ACCESS_TOKEN, NON_EXISTENT_TOKEN, REFRESH_TOKEN, VALID_TOKEN } from "../constant/tokenSlice.constant";
+import { IToken, ITokenCheck, ITokenStatus } from "../interface/tokenSlice.interface";
 
-const tokenReissue = async (type: "searchMyName" | "kakao"): Promise<{ success: boolean; token?: IToken }> => {
+const tokenReissue = async (type: AuthTypes): Promise<Partial<IReissueToken>> => {
   try {
     const {
-      data: { data },
+      data: { success, data },
     } = await reissueToken(type);
-    return { success: true, token: data };
+    return { success, data };
   } catch (err) {
     return { success: false };
   }
 };
 
-const tokenCheckAction = async (
-  auth_type: "searchMyName" | "kakao"
-): Promise<{ success: boolean; status?: number }> => {
+const tokenCheckAction = async (authType: AuthTypes): Promise<Partial<ITokenCheck>> => {
   try {
     const {
       data: { success },
-    } = await checkToken(auth_type);
+    } = await checkToken(authType);
     return { success };
   } catch (err) {
     return {
@@ -43,14 +32,14 @@ const tokenCheckAction = async (
 
 const tokenStatusAction = createAsyncThunk(
   `${USER}/${TOKEN_CHECK}`,
-  async (auth_type: "searchMyName" | "kakao", { rejectWithValue }) => {
+  async (authType: AuthTypes, { rejectWithValue }) => {
     const tokenStatus: ITokenStatus = {
       type: NON_EXISTENT_TOKEN,
       isLogin: false,
       message: "존재하지 않은 토큰",
     };
 
-    const { success, status } = await tokenCheckAction(auth_type);
+    const { success, status } = await tokenCheckAction(authType);
 
     if (success) {
       tokenStatus.type = VALID_TOKEN;
@@ -58,7 +47,7 @@ const tokenStatusAction = createAsyncThunk(
       tokenStatus.message = "유효한 토큰";
     } else {
       if (status === 401) {
-        const { success, token } = await tokenReissue(auth_type);
+        const { success, data: token } = await tokenReissue(authType);
 
         if (success) {
           saveToken(token);

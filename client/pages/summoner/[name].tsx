@@ -1,4 +1,3 @@
-import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Spectator from "../../components/Organisms/Spectator/Spectator";
@@ -15,6 +14,8 @@ import { summonerInfoAction } from "../../toolkit/riot/summonerInfoSlice/func/su
 import { selectSummonerInfo } from "../../toolkit/riot/summonerInfoSlice/summonerInfoSlice";
 import GameInfo from "../../components/Organisms/GameInfo/GameInfo";
 import WithAuth from "../../hoc";
+import { PayloadAction } from "@reduxjs/toolkit";
+import { ISummonerSuccess } from "../../toolkit/riot/summonerInfoSlice/interface/summonerInfoSlice.interface";
 
 interface IProps {
   summonerName: string;
@@ -35,7 +36,7 @@ const Summoner = ({ summonerName }: IProps) => {
 
       const {
         payload: { success, puuid },
-      } = await dispatch(summonerInfoAction(summonerName));
+      } = (await dispatch(summonerInfoAction(summonerName))) as PayloadAction<ISummonerSuccess, string>;
 
       dispatch(loadingAction({ summonerInfo: false }));
 

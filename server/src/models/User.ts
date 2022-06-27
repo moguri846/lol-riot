@@ -29,10 +29,6 @@ const userSchema = new Schema<IUserDoc>(
       type: Number,
       default: 0,
     },
-    access_token: {
-      type: String,
-      default: "",
-    },
     refresh_token: {
       type: String,
       default: "",
@@ -74,7 +70,6 @@ userSchema.methods.generateToken = function (): Promise<IGenerateToken_R> {
   const accessToken = jwt.sign({}, jwtSecretConfig.jwtSecret, { expiresIn: "30m" });
   const refreshToken = jwt.sign({ id: user._id }, jwtSecretConfig.jwtSecret, { expiresIn: "60d" });
 
-  user.access_token = accessToken;
   user.refresh_token = refreshToken;
 
   const token: IUserToken = {
@@ -98,6 +93,10 @@ userSchema.statics.reissueToken = function (refresh_token: string): Promise<stri
   return new Promise(async (resolve, reject) => {
     try {
       const user = await this.findOne({ refresh_token });
+
+      if (!user) {
+        throw new Error("토큰을 찾지 못했습니다.");
+      }
 
       const verify = await jwt.verify(refresh_token, jwtSecretConfig.jwtSecret);
 

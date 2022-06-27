@@ -8,9 +8,9 @@ export interface ITokenStatus {
   message: string;
 }
 
-export interface ISignInResponse {
-  type: "searchMyName" | "kakao";
-  token: IToken;
+export interface ITokenCheck {
+  success: boolean;
+  status: number;
 }
 
 export interface IToken {

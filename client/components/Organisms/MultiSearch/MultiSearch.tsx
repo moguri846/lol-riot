@@ -1,6 +1,5 @@
 import React from "react";
 import moment from "moment";
-import { IMultiSearch } from "../../../toolkit/riot/multiSearchSlice/interface/multiSearchSlice.interface";
 import ErrorForm from "../../Molecules/ErrorForm/ErrorForm";
 import { getDataDragonImg } from "../../common/func/common.func";
 import Image from "next/image";
@@ -9,6 +8,7 @@ import useGetData from "../../../hooks/useGetData";
 import { loadMultiSearch } from "../../../API/riot";
 import MultiSearchSummonerInfo from "../MultiSearchSummonerInfo/MultiSearchSummonerInfo";
 import * as S from "./style";
+import { IMultiSearch } from "./interface/MultiSearch.interface";
 
 interface IProps {
   summonerNames: string[];

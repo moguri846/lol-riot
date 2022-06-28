@@ -56,14 +56,3 @@ export interface IGameInfo {
   jandi: IJandi[];
   lineWinOrLose: ILineWinLoseRate[];
 }
-
-export interface IGameInfoSuccess extends IGameInfo {
-  success: true;
-}
-export interface IGameInfoFailed extends IGameInfo {
-  success: false;
-  status: number;
-  data: string;
-}
-
-export type GameInfoType = IGameInfoSuccess | IGameInfoFailed;

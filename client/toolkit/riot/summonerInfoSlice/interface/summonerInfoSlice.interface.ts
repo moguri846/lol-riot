@@ -13,14 +13,3 @@ export interface ISummoner {
   losses: number;
   leaguePoints: number;
 }
-
-export interface ISummonerSuccess extends ISummoner {
-  success: true;
-}
-export interface ISummonerFailed {
-  success: false;
-  status: number;
-  data: string;
-}
-
-export type SummonerType = ISummonerSuccess | ISummonerFailed;

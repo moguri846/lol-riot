@@ -1,37 +1,46 @@
 import React from "react";
 import Skeleton from "react-loading-skeleton";
-import { SpectatorType } from "../../../toolkit/riot/spectatorSlice/interface/spectatorSlice.interface";
+import { loadSpectatorInfo } from "../../../API/riot";
+import useGetData from "../../../hooks/useGetData";
+import { useAppSelector } from "../../../hooks/useRedux";
+import { selectSummonerInfo } from "../../../toolkit/riot/summonerInfoSlice/summonerInfoSlice";
 import { getDataDragonImg } from "../../common/func/common.func";
 import ErrorForm from "../../Molecules/ErrorForm/ErrorForm";
-
+import { ISpectator } from "./interface/Spectator.interface";
 import * as S from "./style";
 
 interface IProps {
-  loading: boolean;
-  spectator: SpectatorType;
   summonerName: string;
 }
 
-const Spectator = ({ loading, spectator, summonerName }: IProps) => {
+const Spectator = ({ summonerName }: IProps) => {
+  const summoner = useAppSelector(selectSummonerInfo);
+
+  const {
+    loading,
+    data: { data: spectator },
+    error,
+  } = useGetData<ISpectator>({
+    loadingType: "spectator",
+    cb: () => loadSpectatorInfo(summoner.id),
+    deps: "",
+  });
+
   return (
     <S.Spectator>
-      <>
-        {spectator.success === false ? (
-          <>
-            <ErrorForm message={spectator.data} {...spectator} message404={`${summonerName}님은 게임 중이 아닙니다.`} />
-          </>
-        ) : (
-          <>
-            {loading ? (
-              <>
-                <Skeleton width="100%" height="100%" />
-              </>
-            ) : (
-              <>
-                <S.SpectatorPlayerList>
-                  {spectator.players.map((player) => (
-                    <React.Fragment key={player.summonerName}>
-                      <S.SpectatorPlayer className={player.teamId === 100 ? "blue" : "red"}>
+      {
+        <>
+          {loading ? (
+            <Skeleton width="100%" height="100%" />
+          ) : (
+            <>
+              {error.isError ? (
+                <ErrorForm message={error.message} {...error} message404={`${summonerName}님은 게임 중이 아닙니다.`} />
+              ) : (
+                <>
+                  <S.SpectatorPlayerList>
+                    {spectator?.players.map((player) => (
+                      <S.SpectatorPlayer key={player.summonerName} className={player.teamId === 100 ? "blue" : "red"}>
                         <span className="name">
                           <a href={`/summoner=${player.summonerName}`}>{player.summonerName}</a>
                         </span>
@@ -44,25 +53,35 @@ const Spectator = ({ loading, spectator, summonerName }: IProps) => {
                             ))}
                           </ul>
                           <div className="champion-img">
-                            {getDataDragonImg({ width: 26, height: 26, key: "champion", value: player.championName })}
+                            {getDataDragonImg({
+                              width: 26,
+                              height: 26,
+                              key: "champion",
+                              value: player.championName,
+                            })}
                           </div>
                         </S.ChampionStatus>
                       </S.SpectatorPlayer>
-                    </React.Fragment>
-                  ))}
-                </S.SpectatorPlayerList>
-                <S.BannedChampionList>
-                  {spectator.bannedChampions.map((bannedChampion, i) => (
-                    <S.BannedChampion key={i}>
-                      {getDataDragonImg({ width: 30, height: 30, key: "champion", value: bannedChampion.championName })}
-                    </S.BannedChampion>
-                  ))}
-                </S.BannedChampionList>
-              </>
-            )}
-          </>
-        )}
-      </>
+                    ))}
+                  </S.SpectatorPlayerList>
+                  <S.BannedChampionList>
+                    {spectator?.bannedChampions.map((bannedChampion, i) => (
+                      <S.BannedChampion key={i}>
+                        {getDataDragonImg({
+                          width: 30,
+                          height: 30,
+                          key: "champion",
+                          value: bannedChampion.championName,
+                        })}
+                      </S.BannedChampion>
+                    ))}
+                  </S.BannedChampionList>
+                </>
+              )}
+            </>
+          )}
+        </>
+      }
     </S.Spectator>
   );
 };

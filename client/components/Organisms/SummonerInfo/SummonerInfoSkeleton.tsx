@@ -2,11 +2,9 @@ import React from "react";
 import Skeleton from "react-loading-skeleton";
 import * as S from "./style";
 
-interface IProps {
-  searchSummoner: boolean;
-}
+interface IProps {}
 
-const SummonerInfoSkeleton = ({ searchSummoner }: IProps) => {
+const SummonerInfoSkeleton = ({}: IProps) => {
   return (
     <S.SummonerContainer>
       <S.ProfileImgContainer>
@@ -34,17 +32,13 @@ const SummonerInfoSkeleton = ({ searchSummoner }: IProps) => {
             </div>
           </div>
         </S.SummonerRank>
-        {searchSummoner && (
-          <>
-            <div className="league-points">
-              <Skeleton width="125px" height="21px" />
-            </div>
-            <div className="win-rate">
-              <Skeleton width="60px" height="18px" />
-            </div>
-            <Skeleton width="125px" height="35px" />
-          </>
-        )}
+        <div className="league-points">
+          <Skeleton width="125px" height="21px" />
+        </div>
+        <div className="win-rate">
+          <Skeleton width="60px" height="18px" />
+        </div>
+        <Skeleton width="125px" height="35px" />
       </S.SummonerInfo>
     </S.SummonerContainer>
   );

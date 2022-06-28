@@ -1,30 +1,22 @@
 import React from "react";
 import Button from "../../Atoms/Button/Button";
-import { ISummoner } from "../../../toolkit/riot/summonerInfoSlice/interface/summonerInfoSlice.interface";
 import ErrorForm from "../../Molecules/ErrorForm/ErrorForm";
 import { getDataDragonImg, toLocaleString } from "../../common/func/common.func";
 import Image from "next/image";
 import SummonerInfoSkeleton from "./SummonerInfoSkeleton";
-import useGetData from "../../../hooks/useGetData";
-import { loadSummonerInfo } from "../../../API/riot";
+import { useAppSelector } from "../../../hooks/useRedux";
+import { selectSummonerInfo } from "../../../toolkit/riot/summonerInfoSlice/summonerInfoSlice";
+import { isError } from "../../../toolkit/riot/common/func/common.func";
 import * as S from "./style";
 
 interface IProps {
-  summonerName: string;
+  loading: boolean;
   spectatorToggle?: boolean;
-  onSpectatorToggle?: (id: string) => Promise<void>;
+  onSpectatorToggle?: () => void;
 }
 
-const SummonerInfo = ({ summonerName, spectatorToggle, onSpectatorToggle }: IProps) => {
-  const {
-    loading,
-    data: { data: summoner },
-    error,
-  } = useGetData<ISummoner>({
-    loadingType: "summonerInfo",
-    cb: () => loadSummonerInfo(summonerName),
-    deps: summonerName,
-  });
+const SummonerInfo = ({ loading, spectatorToggle, onSpectatorToggle }: IProps) => {
+  const summoner = useAppSelector(selectSummonerInfo);
 
   return (
     <S.SummonerContainer>
@@ -33,12 +25,17 @@ const SummonerInfo = ({ summonerName, spectatorToggle, onSpectatorToggle }: IPro
           <SummonerInfoSkeleton />
         ) : (
           <>
-            {error.isError ? (
-              <ErrorForm message={error.message} {...error} message404="찾으시려는 소화사는 존재하지 않습니다. ☹" />
+            {isError(summoner) ? (
+              <ErrorForm {...summoner} message404="찾으시려는 소화사는 존재하지 않습니다. ☹" />
             ) : (
               <>
                 <S.ProfileImgContainer>
-                  {getDataDragonImg({ width: 120, height: 120, key: "profileicon", value: summoner.profileIconId })}
+                  {getDataDragonImg({
+                    width: 120,
+                    height: 120,
+                    key: "profileicon",
+                    value: summoner.profileIconId,
+                  })}
                   <div className="level">
                     <span>
                       Level. <span>{toLocaleString(summoner.summonerLevel)}</span>
@@ -76,9 +73,7 @@ const SummonerInfo = ({ summonerName, spectatorToggle, onSpectatorToggle }: IPro
                     <div className="win-rate">
                       <span>승률 {Math.ceil((summoner.wins / (summoner.wins + summoner.losses)) * 100) || 0}%</span>
                     </div>
-                    <Button onClick={() => onSpectatorToggle(summoner.id)}>
-                      {spectatorToggle ? "종합 정보" : "인게임 정보"}
-                    </Button>
+                    <Button onClick={onSpectatorToggle}>{spectatorToggle ? "종합 정보" : "인게임 정보"}</Button>
                   </S.SummonerRank>
                 </S.SummonerInfo>
               </>

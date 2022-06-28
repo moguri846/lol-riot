@@ -1,11 +1,11 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction, PrepareAction } from "@reduxjs/toolkit";
 import { RootReducerType } from "../../store";
 import { SUMMONER_INFO } from "../constant/riot.constant";
+import { IInitialStateType } from "../common/interface/common.interface";
 import { summonerInfoAction } from "./func/summonerSlice.func";
-import { ISummoner, ISummonerSuccess, SummonerType } from "./interface/summonerInfoSlice.interface";
+import { ISummoner } from "./interface/summonerInfoSlice.interface";
 
-export const initialSummonerInfoSliceState: ISummonerSuccess = {
-  success: true,
+export const initialSummonerInfoSliceState: IInitialStateType<ISummoner> = {
   accountId: "",
   id: "",
   leaguePoints: 0,
@@ -27,14 +27,9 @@ const summonerInfoSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(summonerInfoAction.pending, (state, { type, payload }) => {});
-    builder.addCase(
-      summonerInfoAction.fulfilled,
-      (state, { type, payload }: PayloadAction<ISummonerSuccess, string>) => {
-        console.log("fulfilled", payload);
-
-        return { ...payload };
-      }
-    );
+    builder.addCase(summonerInfoAction.fulfilled, (state, { type, payload }: PayloadAction<ISummoner, string>) => {
+      return { ...payload };
+    });
     builder.addCase(summonerInfoAction.rejected, (state, { type, payload }: PayloadAction<any, string>) => {
       return { ...payload };
     });

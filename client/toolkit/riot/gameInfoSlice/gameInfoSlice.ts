@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootReducerType } from "../../store";
 import { GAME_INFO } from "../constant/riot.constant";
+import { IInitialStateType } from "../common/interface/common.interface";
 import { gameInfoAction, matchDetailAction } from "./func/gameInfoSlice.func";
-import { IGameInfo, IGameInfoSuccess } from "./interface/gameInfo.interface";
+import { IGameInfo } from "./interface/gameInfo.interface";
 import { IComparingWithEnemyDetail } from "./interface/matchDetail.interface";
 
-export const initialGameInfoSliceState: IGameInfoSuccess = {
-  success: true,
+export const initialGameInfoSliceState: IInitialStateType<IGameInfo> = {
   jandi: [],
   lineWinOrLose: [],
   matchArr: [],

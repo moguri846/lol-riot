@@ -1,24 +1,24 @@
-import { IGameInfoSuccess } from "../../toolkit/riot/gameInfoSlice/interface/gameInfo.interface";
+import { IMultiSearch } from "../../components/Organisms/MultiSearch/interface/MultiSearch.interface";
+import { ISpectator } from "../../components/Organisms/Spectator/interface/Spectator.interface";
+import { IGameInfo } from "../../toolkit/riot/gameInfoSlice/interface/gameInfo.interface";
 import { IComparingWithEnemyDetail } from "../../toolkit/riot/gameInfoSlice/interface/matchDetail.interface";
-import { IMultiSearchSuccess } from "../../toolkit/riot/multiSearchSlice/interface/multiSearchSlice.interface";
-import { ISpectatorSuccess } from "../../toolkit/riot/spectatorSlice/interface/spectatorSlice.interface";
-import { ISummonerSuccess } from "../../toolkit/riot/summonerInfoSlice/interface/summonerInfoSlice.interface";
+import { ISummoner } from "../../toolkit/riot/summonerInfoSlice/interface/summonerInfoSlice.interface";
 import { ICommon } from "../common/common.interface";
 
 export interface ISummonerInfo extends ICommon {
-  data: ISummonerSuccess;
+  data: ISummoner;
 }
 
 export interface IMatchInfo extends ICommon {
-  data: IGameInfoSuccess;
+  data: IGameInfo;
 }
 
 export interface ISpectatorInfo extends ICommon {
-  data: ISpectatorSuccess;
+  data: ISpectator;
 }
 
 export interface IMultiSearchInfo extends ICommon {
-  data: IMultiSearchSuccess;
+  data: IMultiSearch;
 }
 
 export interface IMatchDetailInfo extends ICommon {

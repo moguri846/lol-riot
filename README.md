@@ -1,7 +1,5 @@
 # Search My Name
 
-## 서비스 주소 https://searchmyname.vercel.app
-
 ## 기간 2022.01 ~ 2022.06
 
 ### 프론트엔드
